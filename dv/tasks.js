@@ -1,20 +1,22 @@
 
 let _dv;
 
+const creationDateRegex = /\[creation:: [^\]]+\]/g;
 const dueDateRegex = /\[due:: [^\]]+\]/g;
 const detailledStatusRegex = /\[detailledStatus:: [^\]]+\]/g;
-const prioriteRegex = /\[priorité:: [^\]]+\]/g;
+const prioriteRegex = /\[priority:: [^\]]+\]/g;q
 const endOfFirstLineRegex = /$/m;
 
 const green = "rgba(0, 132, 98, 0.7)";
 const red = "rgba(211, 60, 43, 0.7)";
 const grey = "rgba(108, 122, 137, 0.7)";
 const velvet = "rgba(46, 41, 58, 0.7)";
+const blue = "rgba(3, 132, 252, 0.7)";
 const normal = "var(--text-muted)";
 
 const enCoursDetailedStatus = "en cours";
-const prioriteP0 = "P0";
-const prioriteP1 = "P1";
+const priorityP0 = "P0";
+const priorityP1 = "P1";
 
 function renderData(backgroundColor, textColor, displayString) {
 	let span = `<span style= "border-radius:5px; padding:2px 5px; `;
@@ -23,29 +25,29 @@ function renderData(backgroundColor, textColor, displayString) {
 		span += `background-color:${backgroundColor}; `;
 	}
 	if (textColor !== null) {
-		span += `color:${normal}; `;
+		span += `color:${textColor}; `;
 	}
 	span += `">${displayString}</span>`;
 	return span;
 }
 
-function dueDateToShortString(task) {
-	return task.due.toFormat("yyyy-MM-dd");
+function dateToShortString(date) {
+	return date.toFormat("yyyy-MM-dd");
 }
 
 function formatDueDate(task) {
 	if (task.due) {
 		if (task.due.ts == _dv.date('today').ts) {
 			return task.text.replace(dueDateRegex, 
-				renderData(green, null, dueDateToShortString(task)));
+				renderData(green, null, dateToShortString(task.due)));
 		}
 		if (task.due < _dv.date('today')) {
 			return task.text.replace(dueDateRegex, 
-				renderData(red, null, dueDateToShortString(task)));
+				renderData(red, null, dateToShortString(task.due)));
 		}
 		if (task.due > _dv.date('today')) {
 			return task.text.replace(dueDateRegex,
-				renderData(grey, normal, dueDateToShortString(task)));
+				renderData(grey, normal, dateToShortString(task.due)));
 		}
 	}
 	return task.text;
@@ -61,7 +63,7 @@ function formatDetailledStatus(task, visual) {
 
 function formatLink(task, visual) {
 	return visual.replace(endOfFirstLineRegex, 
-		renderData(velvet, null, _dv.fileLink(task.path)));
+		renderData(velvet, normal, _dv.fileLink(task.path)));
 }
 
 function format(task) {
@@ -113,6 +115,11 @@ module.exports = {
 	init: function (dv) {
 		_dv = dv;
 	},
+	renderTasksActive: function () {
+		renderTasks(function (task) {
+			return !task.fullyCompleted;
+		})
+	},
 	renderTasksEnCours: function () {
 		renderTasks(function (task) {
 			return !task.fullyCompleted && task.detailledStatus == enCoursDetailedStatus;
@@ -120,12 +127,12 @@ module.exports = {
 	},
 	renderTasksP0: function () {
 		renderTasks(function (task) {
-			return !task.fullyCompleted && task.priorité == prioriteP0;
+			return !task.fullyCompleted && task.priorité == priorityP0;
 		})
 	},
 	renderTasksP1: function () {
 		renderTasks(function (task) {
-			return !task.fullyCompleted && task.priorité == prioriteP1;
+			return !task.fullyCompleted && task.priorité == priorityP1;
 		})
 	}
 };
