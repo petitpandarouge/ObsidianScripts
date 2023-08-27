@@ -15,14 +15,15 @@ const green = "rgba(0, 132, 98, 0.7)";
 const red = "rgba(211, 60, 43, 0.7)";
 const grey = "rgba(108, 122, 137, 0.7)";
 const lightGrey = "rgba(202, 211, 224, 0.7)";
-const darkGrey = "rgba(38, 38, 38, 0.7)";
+const darkGrey = "rgba(30, 30, 30, 0.7)";
 const velvet = "rgba(46, 41, 58, 0.7)";
 const lightBlue = "rgba(101, 163, 252, 0.7)";
+const darkBlue = "rgba(17, 24, 92, 0.7)";
 const yellow = "rgba(59, 117, 46, 0.7)";
 const normal = "var(--text-muted)";
 
 function renderData(backgroundColor, textColor, displayString) {
-	let span = `<span style="border-radius:5px; padding:2px 5px; `;
+	let span = `<span class="task-tag" style="border-radius:5px; padding:2px 5px; `;
 	span += `font-size:8pt; margin:3px; `;
 	if (backgroundColor !== null) {
 		span += `background-color:${backgroundColor}; `;
@@ -59,7 +60,7 @@ function formatDueDate(task) {
 function formatCreationDate(task, visual) {
 	if (task.creation) {
 		return visual.replace(creationDateRegex,
-			renderData(grey, normal, "🌱 " + dateToShortString(task.creation)));
+			renderData(darkGrey, grey, "🌱 " + dateToShortString(task.creation)));
 	}
 	return visual;
 }
@@ -74,7 +75,7 @@ function formatDetailledStatus(task, visual) {
 
 function formatLink(task, visual) {
 	return visual.replace(endOfFirstLineRegex, 
-		renderData(lightBlue, null, _dv.fileLink(task.path)));
+		renderData(darkBlue, lightBlue, _dv.fileLink(task.path)));
 }
 
 function format(task) {
