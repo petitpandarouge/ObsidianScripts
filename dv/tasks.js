@@ -9,6 +9,7 @@ const creationDateRegex = /\[creation:: [^\]]+\]/g;
 const dueDateRegex = /\[due:: [^\]]+\]/g;
 const detailledStatusRegex = /\[detailledStatus:: [^\]]+\]/g;
 const prioriteRegex = /\[priority:: [^\]]+\]/g;
+const quickRegex = /\[quick:: true\]/g;
 const endOfFirstLineRegex = /$/m;
 
 const green = "rgba(0, 132, 98, 0.7)";
@@ -73,6 +74,11 @@ function formatPriorite(task, visual) {
 	return visual.replace(prioriteRegex, "");
 }
 
+function formatQuick(task, visual) {
+	return visual.replace(quickRegex,
+		renderData(darkGrey, grey, "⚡"));
+}
+
 function formatDetailledStatus(task, visual) {
 	return visual.replace(detailledStatusRegex, "");
 }
@@ -88,6 +94,7 @@ function format(task) {
 	visual = formatDetailledStatus(task, visual);
 	visual = formatLink(task, visual);
 	visual = formatCreationDate(task, visual);
+	visual = formatQuick(task, visual);
 	task.visual = visual;
 	return task;
 }
@@ -132,9 +139,15 @@ module.exports = {
 	init: function (dv) {
 		_dv = dv;
 	},
+	renderTasks: renderTasks,
 	renderTasksActive: function () {
 		renderTasks(function (task) {
 			return !task.fullyCompleted;
+		})
+	},
+	renderTasksFollowed: function () {
+		renderTasks(function (task) {
+			return !task.fullyCompleted && task.detailledStatus;
 		})
 	},
 	renderTasksEnCours: function () {
@@ -150,6 +163,11 @@ module.exports = {
 	renderTasksP1: function () {
 		renderTasks(function (task) {
 			return !task.fullyCompleted && task.priority == priorityP1;
+		})
+	},
+	renderTasksQuick: function () {
+		renderTasks(function (task) {
+			return !task.fullyCompleted && task.quick;
 		})
 	}
 };
