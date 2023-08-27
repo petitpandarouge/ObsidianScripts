@@ -66,6 +66,10 @@ function formatCreationDate(task, visual) {
 }
 
 function formatPriorite(task, visual) {
+	if (task.priority == priorityP0) {
+		return visual.replace(prioriteRegex,
+			renderData(darkGrey, grey, "🔥"));
+	}
 	return visual.replace(prioriteRegex, "");
 }
 
@@ -140,12 +144,12 @@ module.exports = {
 	},
 	renderTasksP0: function () {
 		renderTasks(function (task) {
-			return !task.fullyCompleted && task.priorité == priorityP0;
+			return !task.fullyCompleted && task.priority == priorityP0;
 		})
 	},
 	renderTasksP1: function () {
 		renderTasks(function (task) {
-			return !task.fullyCompleted && task.priorité == priorityP1;
+			return !task.fullyCompleted && task.priority == priorityP1;
 		})
 	}
 };
