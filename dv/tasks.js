@@ -1,13 +1,11 @@
 
 let _dv;
 
-const enCoursDetailedStatus = "en cours";
 const priorityP0 = "P0";
 const priorityP1 = "P1";
 
 const creationDateRegex = /\[creation:: [^\]]+\]/g;
 const dueDateRegex = /\[due:: [^\]]+\]/g;
-const detailledStatusRegex = /\[detailledStatus:: [^\]]+\]/g;
 const prioriteRegex = /\[priority:: [^\]]+\]/g;
 const quickRegex = /\[quick:: true\]/g;
 const endOfFirstLineRegex = /$/m;
@@ -79,10 +77,6 @@ function formatQuick(task, visual) {
 		renderData(darkGrey, grey, "⚡"));
 }
 
-function formatDetailledStatus(task, visual) {
-	return visual.replace(detailledStatusRegex, "");
-}
-
 function formatLink(task, visual) {
 	return visual.replace(endOfFirstLineRegex, 
 		renderData(darkBlue, lightBlue, _dv.fileLink(task.path)));
@@ -91,7 +85,6 @@ function formatLink(task, visual) {
 function format(task) {
 	let visual = formatDueDate(task);
 	visual = formatPriorite(task, visual);
-	visual = formatDetailledStatus(task, visual);
 	visual = formatLink(task, visual);
 	visual = formatCreationDate(task, visual);
 	visual = formatQuick(task, visual);
@@ -140,32 +133,27 @@ module.exports = {
 		_dv = dv;
 	},
 	renderTasks: renderTasks,
-	renderTasksActive: function () {
+	renderActiveTasks: function () {
 		renderTasks(function (task) {
 			return !task.fullyCompleted;
 		})
 	},
-	renderTasksFollowed: function () {
+	renderTasksByStatus: function (status) {
 		renderTasks(function (task) {
-			return !task.fullyCompleted && task.detailledStatus;
+			return !task.fullyCompleted && task.status == status;
 		})
 	},
-	renderTasksEnCours: function () {
-		renderTasks(function (task) {
-			return !task.fullyCompleted && task.detailledStatus == enCoursDetailedStatus;
-		})
-	},
-	renderTasksP0: function () {
+	renderP0Tasks: function () {
 		renderTasks(function (task) {
 			return !task.fullyCompleted && task.priority == priorityP0;
 		})
 	},
-	renderTasksP1: function () {
+	renderP1Tasks: function () {
 		renderTasks(function (task) {
 			return !task.fullyCompleted && task.priority == priorityP1;
 		})
 	},
-	renderTasksQuick: function () {
+	renderQuickTasks: function () {
 		renderTasks(function (task) {
 			return !task.fullyCompleted && task.quick;
 		})
