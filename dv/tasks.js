@@ -35,7 +35,7 @@ function renderData(backgroundColor, textColor, displayString) {
 }
 
 function dateToShortString(date) {
-	return date.toFormat("yyyy-MM-dd");
+	return date.toFormat("dd-MM-yyyy");
 }
 
 function formatDueDate(task) {
@@ -133,8 +133,11 @@ module.exports = {
 		_dv = dv;
 	},
 	renderTasks: renderTasks,
-	renderActiveTasks: function () {
+	renderActiveTasks: function (projectFilePath) {
 		renderTasks(function (task) {
+			if (projectFilePath) {
+				return !task.fullyCompleted && task.path == projectFilePath;
+			}
 			return !task.fullyCompleted;
 		})
 	},
