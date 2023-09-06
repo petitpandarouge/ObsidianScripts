@@ -56,14 +56,6 @@ function formatDueDate(task) {
 	return task.text;
 }
 
-function formatCreationDate(task, visual) {
-	if (task.creation) {
-		return visual.replace(creationDateRegex,
-			renderData(darkGrey, grey, "🌱 " + dateToShortString(task.creation)));
-	}
-	return visual;
-}
-
 function formatPriorite(task, visual) {
 	if (task.priority == priorityP0) {
 		return visual.replace(prioriteRegex,
@@ -86,7 +78,6 @@ function format(task) {
 	let visual = formatDueDate(task);
 	visual = formatPriorite(task, visual);
 	visual = formatLink(task, visual);
-	visual = formatCreationDate(task, visual);
 	visual = formatQuick(task, visual);
 	task.visual = visual;
 	return task;
