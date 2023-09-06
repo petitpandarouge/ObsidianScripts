@@ -42,15 +42,15 @@ function formatDueDate(task) {
 	if (task.due) {
 		if (task.due.ts == _dv.date('today').ts) {
 			return task.text.replace(dueDateRegex, 
-				renderData(green, null, dateToShortString(task.due)));
+				renderData(green, null, "🎯 " + dateToShortString(task.due)));
 		}
 		if (task.due < _dv.date('today')) {
 			return task.text.replace(dueDateRegex, 
-				renderData(red, null, dateToShortString(task.due)));
+				renderData(red, null, "🎯 " + dateToShortString(task.due)));
 		}
 		if (task.due > _dv.date('today')) {
 			return task.text.replace(dueDateRegex,
-				renderData(lightGrey, darkGrey, dateToShortString(task.due)));
+				renderData(lightGrey, darkGrey, "🎯 " + dateToShortString(task.due)));
 		}
 	}
 	return task.text;
