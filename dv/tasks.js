@@ -12,13 +12,10 @@ const endOfFirstLineRegex = /$/m;
 
 const green = "rgba(0, 132, 98, 0.7)";
 const red = "rgba(211, 60, 43, 0.7)";
-const grey = "rgba(108, 122, 137, 0.7)";
 const lightGrey = "rgba(202, 211, 224, 0.7)";
 const darkGrey = "rgba(30, 30, 30, 0.7)";
-const velvet = "rgba(46, 41, 58, 0.7)";
 const lightBlue = "rgba(101, 163, 252, 0.7)";
 const darkBlue = "rgba(17, 24, 92, 0.7)";
-const yellow = "rgba(59, 117, 46, 0.7)";
 const normal = "var(--text-muted)";
 
 function renderData(backgroundColor, textColor, displayString) {
@@ -56,11 +53,6 @@ function formatDueDate(task) {
 	return task.text;
 }
 
-function formatQuick(task, visual) {
-	return visual.replace(quickRegex,
-		renderData(darkGrey, grey, "⚡"));
-}
-
 function formatLink(task, visual) {
 	return visual.replace(endOfFirstLineRegex, 
 		renderData(darkBlue, lightBlue, _dv.fileLink(task.path)));
@@ -69,7 +61,6 @@ function formatLink(task, visual) {
 function format(task) {
 	let visual = formatDueDate(task);
 	visual = formatLink(task, visual);
-	visual = formatQuick(task, visual);
 	task.visual = visual;
 	return task;
 }
