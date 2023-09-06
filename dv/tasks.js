@@ -22,7 +22,7 @@ const yellow = "rgba(59, 117, 46, 0.7)";
 const normal = "var(--text-muted)";
 
 function renderData(backgroundColor, textColor, displayString) {
-	let span = `<span class="task-tag" style="border-radius:5px; padding:2px 5px; `;
+	let span = `<span class="task-tag" style="border-radius:5px; padding:3px; `;
 	span += `font-size:8pt; margin:3px; `;
 	if (backgroundColor !== null) {
 		span += `background-color:${backgroundColor}; `;
@@ -56,14 +56,6 @@ function formatDueDate(task) {
 	return task.text;
 }
 
-function formatPriorite(task, visual) {
-	if (task.priority == priorityP0) {
-		return visual.replace(prioriteRegex,
-			renderData(darkGrey, grey, "🔥"));
-	}
-	return visual.replace(prioriteRegex, "");
-}
-
 function formatQuick(task, visual) {
 	return visual.replace(quickRegex,
 		renderData(darkGrey, grey, "⚡"));
@@ -76,7 +68,6 @@ function formatLink(task, visual) {
 
 function format(task) {
 	let visual = formatDueDate(task);
-	visual = formatPriorite(task, visual);
 	visual = formatLink(task, visual);
 	visual = formatQuick(task, visual);
 	task.visual = visual;
