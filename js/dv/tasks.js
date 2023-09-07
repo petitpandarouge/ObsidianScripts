@@ -197,6 +197,11 @@ function computeUrgency(task) {
 		score += 2.4;
 	}
 
+	if (task.dueIsDefault) {
+		explaination += "due by default : -1.0 &#10;";
+		score += -1.0;
+	}
+
 	if (!task.scheduled) {
 		explaination += "Not scheduled : 0.0 &#10;";
 		score += 0.0;
