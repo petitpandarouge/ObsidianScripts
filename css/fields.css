@@ -1,0 +1,65 @@
+.theme-dark {
+	--gray:  rgba(108, 122, 137, 0.7);
+	--dark-gray: rgba(22, 22, 22, 0.7);
+}
+
+span.dataview.inline-field {
+    white-space: nowrap;
+}
+
+span.dataview.inline-field-key {
+	display: none;
+}
+
+span.dataview.inline-field-value,
+span.dataview.inline-field-standalone-value {
+	padding: 3px;
+	border-radius: 5px;
+    background: var(--dark-gray);
+	color: var(--gray);
+}
+
+
+/******* Creation *******/
+
+span.dataview.inline-field-key:is([data-dv-key=creation]) + span.dataview.inline-field-value::before {
+	content: '🌱 ';
+}
+
+/******* Completion *******/
+
+span.dataview.inline-field-key:is([data-dv-key=completion]) + span.dataview.inline-field-value::before {
+	content: '✔️ ';
+}
+
+/******* Priority *******/
+
+span.dataview.inline-field-key:is([data-dv-key=priority]) + span.dataview.inline-field-value::before {
+	content: '🔥 ';
+}
+
+/******* Due ********/
+
+span.dataview.inline-field-key:is([data-dv-key=due]) + span.dataview.inline-field-value::before {
+	content: '🎯 ';
+}
+
+/******* Person ********/
+
+span.dataview.inline-field-key:is([data-dv-key=person]) + span.dataview.inline-field-value::before {
+	content: '👨‍💼 ';
+}
+
+/******* Quick ********/
+
+span.dataview.inline-field:has(> span.dataview.inline-field-key:is([data-dv-key=quick]))::after {
+	content: '⚡';
+	padding: 1px 3px;
+    border-radius: 5px;
+    background: var(--dark-gray);
+	color: var(--gray);
+}
+
+span.dataview.inline-field-key:is([data-dv-key=quick]) + span.dataview.inline-field-value{
+	display: none;
+}
