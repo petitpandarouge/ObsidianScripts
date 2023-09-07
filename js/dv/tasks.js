@@ -10,25 +10,17 @@ const prioriteRegex = /\[priority:: [^\]]+\]/g;
 const quickRegex = /\[quick:: true\]/g;
 const endOfFirstLineRegex = /$/m;
 
-const green = "rgba(0, 132, 98, 0.7)";
-const red = "rgba(211, 60, 43, 0.7)";
-const lightGrey = "rgba(202, 211, 224, 0.7)";
-const darkGrey = "rgba(30, 30, 30, 0.7)";
-const lightBlue = "rgba(101, 163, 252, 0.7)";
-const darkBlue = "rgba(17, 24, 92, 0.7)";
-const normal = "var(--text-muted)";
-
-function renderData(backgroundColor, textColor, displayString) {
+function renderData(displayString, fieldKey, classNames) {
 	let span = `<span class="dataview inline-field">`;
-	span += `<span class="dataview inline-field-standalone-value inherit-color" style="border-radius:5px; `;
-	span += `font-size:8pt; padding:2px 3px; margin: 0px 3px; `;
-	if (backgroundColor !== null) {
-		span += `background-color:${backgroundColor}; `;
+	span += `<span class="dataview inline-field-standalone-value inherit-color `;
+	if (classNames) {
+		span += `${classNames}`;
 	}
-	if (textColor !== null) {
-		span += `color:${textColor}; `;
+	span += `" `;
+	if (fieldKey) {
+		span += `data-dv-key="${fieldKey}" `;
 	}
-	span += `">${displayString}</span></span>`;
+	span += `>${displayString}</span></span>`;
 	return span;
 }
 
@@ -40,15 +32,15 @@ function formatDueDate(task) {
 	if (task.due) {
 		if (task.due.ts == _dv.date('today').ts) {
 			return task.text.replace(dueDateRegex, 
-				renderData(green, null, "🎯 " + dateToShortString(task.due)));
+				renderData("🎯 " + dateToShortString(task.due), "due", "due-today"));
 		}
 		if (task.due < _dv.date('today')) {
 			return task.text.replace(dueDateRegex, 
-				renderData(red, null, "🎯 " + dateToShortString(task.due)));
+				renderData("🎯 " + dateToShortString(task.due), "due", "overdue"));
 		}
 		if (task.due > _dv.date('today')) {
 			return task.text.replace(dueDateRegex,
-				renderData(lightGrey, darkGrey, "🎯 " + dateToShortString(task.due)));
+				renderData("🎯 " + dateToShortString(task.due), "due"));
 		}
 	}
 	return task.text;
@@ -56,7 +48,7 @@ function formatDueDate(task) {
 
 function formatLink(task, visual) {
 	return visual.replace(endOfFirstLineRegex, 
-		renderData(darkBlue, lightBlue, _dv.fileLink(task.path)));
+		renderData(_dv.fileLink(task.path), "link"));
 }
 
 function format(task) {

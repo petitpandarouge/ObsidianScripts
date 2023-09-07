@@ -1,6 +1,13 @@
 .theme-dark {
-	--gray:  rgba(108, 122, 137, 0.7);
-	--dark-gray: rgba(22, 22, 22, 0.7);
+	--grey:  rgba(108, 122, 137, 0.7);
+	--dark-grey: rgba(22, 22, 22, 0.7);
+	--light-grey: rgba(202, 211, 224, 0.7);
+	--dark-blue: rgba(17, 24, 92, 0.7);
+	--light-blue: rgba(101, 163, 252, 0.7);
+	--red: rgba(211, 60, 43, 0.7);
+	--green: rgba(0, 132, 98, 0.7);
+	--field-border-radius: 5px;
+	--field-padding: 3px;
 }
 
 span.dataview.inline-field {
@@ -13,10 +20,11 @@ span.dataview.inline-field-key {
 
 span.dataview.inline-field-value,
 span.dataview.inline-field-standalone-value {
-	padding: 3px;
-	border-radius: 5px;
-    background: var(--dark-gray);
-	color: var(--gray);
+	padding: var(--field-padding);
+	margin-right: 3px;
+	border-radius: var(--field-border-radius);
+    background: var(--dark-grey);
+	color: var(--grey);
 }
 
 span.dataview.inline-field-value.inherit-color .internal-link,
@@ -48,6 +56,21 @@ span.dataview.inline-field-key:is([data-dv-key=due]) + span.dataview.inline-fiel
 	content: '🎯 ';
 }
 
+span.dataview.inline-field-standalone-value:is([data-dv-key=due]) {
+	background: var(--light-grey);
+	color: var(--dark-grey);
+}
+
+span.dataview.inline-field-standalone-value.overdue:is([data-dv-key=due]) {
+	background: var(--red);
+	color: var(--text-muted);
+}
+
+span.dataview.inline-field-standalone-value.due-today:is([data-dv-key=due]) {
+	background: var(--green);
+	color: var(--text-muted);
+}
+
 /******* Person ********/
 
 span.dataview.inline-field-key:is([data-dv-key=person]) + span.dataview.inline-field-value::before {
@@ -58,15 +81,20 @@ span.dataview.inline-field-key:is([data-dv-key=person]) + span.dataview.inline-f
 
 span.dataview.inline-field:has(> span.dataview.inline-field-key:is([data-dv-key=quick]))::after {
 	content: '⚡';
-	padding: 1px 3px;
-    border-radius: 5px;
-    background: var(--dark-gray);
-	color: var(--gray);
+	padding: var(--field-padding);
+    border-radius: var(--field-border-radius);
+    background: var(--dark-grey);
+	color: var(--grey);
 }
 
 span.dataview.inline-field-key:is([data-dv-key=quick]) + span.dataview.inline-field-value{
 	display: none;
 }
 
+/****** Link *******/
 
+span.dataview.inline-field-standalone-value:is([data-dv-key=link]) {
+	background: var(--dark-blue);
+	color: var(--light-blue);
+}
 
