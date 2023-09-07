@@ -11,7 +11,7 @@ const prioriteRegex = /\[priority:: [^\]]+\]/g;
 const quickRegex = /\[quick:: true\]/g;
 const endOfFirstLineRegex = /$/m;
 
-function renderData(displayString, fieldKey, classNames) {
+function renderData(displayString, fieldKey, classNames, tooltip) {
 	let span = `<span class="dataview inline-field">`;
 	span += `<span class="dataview inline-field-standalone-value inherit-color `;
 	if (classNames) {
@@ -20,6 +20,9 @@ function renderData(displayString, fieldKey, classNames) {
 	span += `" `;
 	if (fieldKey) {
 		span += `data-dv-key="${fieldKey}" `;
+	}
+	if (tooltip) {
+		span += `title="${tooltip}" `;
 	}
 	span += `>${displayString}</span></span>`;
 	return span;
@@ -47,10 +50,10 @@ function formatDueDate(task, visual, isDefaultDueDate) {
 				renderData(displayString, "due", "overdue"));
 		} else if (task.due >= _dv.date('today') && _dv.date('today') >= dueDateMinusOneWeek) {
 			return visual.replace(regexToReplace, 
-				renderData(displayString, "due", "due-soon"));
+				renderData(displayString, "due", "due-soon", "Due dans moins d'une semaine!"));
 		} else if (dueDateMinusOneWeek > _dv.date('today')) {
 			return visual.replace(regexToReplace,
-				renderData(displayString, "due", isDefaultClassNames));
+				renderData(displayString, "due", isDefaultClassNames, "Due dans plus d'une semaine."));
 		}
 	}
 	return visual;
