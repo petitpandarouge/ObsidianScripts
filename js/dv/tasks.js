@@ -207,7 +207,6 @@ function computeUrgency(task) {
 	} 
 
 	explaination += `Priority is '${task.priority}'&#10;`;
-	console.log(task.priority);
 	if (task.priority === priorityHighest) {
 		score += 9.0;
 	} else if (task.priority === priorityHigh) {
