@@ -6,6 +6,7 @@ const priorityP1 = "P1";
 
 const creationDateRegex = /\[creation:: [^\]]+\]/g;
 const dueDateRegex = /\[due:: [^\]]+\]/g;
+const scheduledRegex = /\[scheduled:: [^\]]+\]/g;
 const prioriteRegex = /\[priority:: [^\]]+\]/g;
 const quickRegex = /\[quick:: true\]/g;
 const endOfFirstLineRegex = /$/m;
@@ -39,15 +40,15 @@ function formatDueDate(task, visual, isDefaultDueDate) {
 			isDefaultClassNames = "default";
 		}
 
-		if (task.due.ts == _dv.date('today').ts) {
-			return visual.replace(regexToReplace, 
-				renderData(displayString, "due", "due-today"));
-		}
+		let oneWeek = _dv.duration("1 week");
+		let dueDateMinusOneWeek = task.due.minus(oneWeek);
 		if (task.due < _dv.date('today')) {
 			return visual.replace(regexToReplace, 
 				renderData(displayString, "due", "overdue"));
-		}
-		if (task.due > _dv.date('today')) {
+		} else if (task.due >= _dv.date('today') && _dv.date('today') >= dueDateMinusOneWeek) {
+			return visual.replace(regexToReplace, 
+				renderData(displayString, "due", "due-soon"));
+		} else if (dueDateMinusOneWeek > _dv.date('today')) {
 			return visual.replace(regexToReplace,
 				renderData(displayString, "due", isDefaultClassNames));
 		}

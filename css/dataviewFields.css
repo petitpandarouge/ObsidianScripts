@@ -6,8 +6,10 @@
 	--light-blue: rgba(101, 163, 252, 0.7);
 	--light-red: rgba(252, 173, 165, 0.7);
 	--dark-red: rgba(122, 31, 20, 0.7);
-	--light-green: rgba(115, 243, 211, 0.7);
+	--light-green: rgba(164, 252, 190, 0.7);
 	--dark-green: rgba(13, 77, 61, 0.7);
+	--light-orange: rgba(253, 235, 133, 0.7);
+	--dark-orange: rgba(87, 75, 10, 0.7);
 	--field-border-radius: 5px;
 	--field-padding: 3px;
 }
@@ -64,8 +66,8 @@ span.dataview.inline-field-standalone-value.default:is([data-dv-key=due]) {
 }
 
 span.dataview.inline-field-standalone-value:is([data-dv-key=due]) {
-	background: var(--light-grey);
-	color: var(--dark-grey);
+	background: var(--light-green);
+	color: var(--dark-green);
 }
 
 span.dataview.inline-field-standalone-value.overdue:is([data-dv-key=due]) {
@@ -73,9 +75,9 @@ span.dataview.inline-field-standalone-value.overdue:is([data-dv-key=due]) {
 	color: var(--dark-red);
 }
 
-span.dataview.inline-field-standalone-value.due-today:is([data-dv-key=due]) {
-	background: var(--light-green);
-	color: var(--dark-green);
+span.dataview.inline-field-standalone-value.due-soon:is([data-dv-key=due]) {
+	background: var(--light-orange);
+	color: var(--dark-orange);
 }
 
 /******* Person ********/
