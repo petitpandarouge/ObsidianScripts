@@ -1,5 +1,6 @@
 
 let _dv;
+let _options;
 
 const priorityHighest = "Highest";
 const priorityHigh = "High";
@@ -280,13 +281,14 @@ function sortDate(date1, date2)
 
 function getBy(filter) {
 	let pages = _dv.pages('!"07 TEMPLATES"');
-	return (
-		pages.file.tasks
+	let tasks = pages.file.tasks
 		.map(preFormat)
 		.filter(filter)
-		.map(format)
-		.sort((task) => task.due, "asc", sortDate)
-	);
+		.map(format);
+	if (_options && _options.sortBy === "due") {
+		return tasks.sort((task) => task.due, "asc", sortDate);
+	}
+	return tasks.sort((task) => task.urgency, "desc");
 }
 
 function renderTasks(filter) {
@@ -299,8 +301,9 @@ function renderTasks(filter) {
 }
 
 module.exports = {
-	init: function (dv) {
+	init: function (dv, options) {
 		_dv = dv;
+		_options = options;
 	},
 	renderTasks: renderTasks,
 	renderActiveTasks: function (projectFilePath) {
