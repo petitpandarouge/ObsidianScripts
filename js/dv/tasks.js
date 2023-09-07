@@ -240,20 +240,35 @@ function formatUrgency(task, visual) {
 		renderData("🚨", "urgency", null, tooltip));
 }
 
-function containsErrors(task) {
+function listErrors(task) {
+	let explaination = null;
 	if (!task.creation) {
+		explaination = "No creation date defined &#10;"
+	}
+	if (explaination) {
+		debugger;
+		task.containsErrors = true;
+		task.errorExplaination = explaination;
 		return true;
 	}
+	task.containsErrors = false;
 	return false;
+}
+
+function formatError(task) {
+	task.visual = task.text.replace(endOfFirstLineRegex, 
+		renderData("🐞", "error", null, task.errorExplaination));
 }
 
 function preFormat(task) {
 	definePriority(task);
+	listErrors(task);
 	return task;
 }
 
 function format(task) {
-	if (containsErrors(task)) {
+	if (task.containsErrors) {
+		formatError(task);
 		return task;
 	}
 
@@ -340,6 +355,11 @@ module.exports = {
 	renderQuickTasks: function () {
 		renderTasks(function (task) {
 			return !task.fullyCompleted && task.quick;
+		})
+	},
+	renderTasksInError: function () {
+		renderTasks(function (task) {
+			return !task.fullyCompleted && task.containsErrors;
 		})
 	}
 };
