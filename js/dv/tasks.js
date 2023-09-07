@@ -41,12 +41,12 @@ function dateToShortString(date) {
 	return date.toFormat("dd-MM-yyyy");
 }
 
-function formatDueDate(task, visual, isDefaultDueDate) {
+function formatDueDate(task, visual) {
 	if (task.due) {
 		let displayString = "🎯 " + dateToShortString(task.due);
 		let regexToReplace = dueDateRegex;
 		let isDefaultClassNames = "";
-		if (isDefaultDueDate) {
+		if (task.dueIsDefault) {
 			displayString = "⚙️|" + displayString;
 			regexToReplace = endOfFirstLineRegex;
 			isDefaultClassNames = "default";
@@ -96,9 +96,10 @@ function tryDefineDefaultDueDate(task) {
 	if (!task.due) {
 		let twoMonths = _dv.duration("2 months")
 		task.due = task.creation.plus(twoMonths);
-		return true;
+		task.dueIsDefault = true;
+	} else {
+		task.dueIsDefault = false;
 	}
-	return false;
 }
 
 function definePriority(task) {
@@ -251,11 +252,11 @@ function format(task) {
 		return task;
 	}
 
-	let isDefaultDueDate = tryDefineDefaultDueDate(task);
+	tryDefineDefaultDueDate(task);
 	computeUrgency(task);
 
 	let visual = task.text;
-	visual = formatDueDate(task, visual, isDefaultDueDate);
+	visual = formatDueDate(task, visual);
 	visual = formatScheduledDate(task, visual);
 	visual = formatUrgency(task, visual);
 	visual = formatLink(task, visual);
