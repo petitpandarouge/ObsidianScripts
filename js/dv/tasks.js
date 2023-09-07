@@ -1,14 +1,22 @@
 
 let _dv;
 
-const priorityP0 = "P0";
-const priorityP1 = "P1";
+const priorityHighest = "Highest";
+const priorityHigh = "High";
+const priorityMedium = "Medium";
+const priorityNone = "None";
+const priorityLow = "Low";
+const priorityLowest = "Lowest";
 
 const creationDateRegex = /\[creation:: [^\]]+\]/g;
 const dueDateRegex = /\[due:: [^\]]+\]/g;
 const scheduledRegex = /\[scheduled:: [^\]]+\]/g;
-const prioriteRegex = /\[priority:: [^\]]+\]/g;
 const quickRegex = /\[quick:: true\]/g;
+const priorityHighestRegex = /\[priority_highest:: true\]/g;
+const priorityHighRegex = /\[priority_high:: true\]/g;
+const priorityMediumRegex = /\[priority_medium:: true\]/g;
+const priorityLowRegex = /\[priority_low:: true\]/g;
+const priorityLowestRegex = /\[priority_Lowest:: true\]/g;
 const endOfFirstLineRegex = /$/m;
 
 function renderData(displayString, fieldKey, classNames, tooltip) {
@@ -85,11 +93,14 @@ function formatLink(task, visual) {
 
 function format(task) {
 	let isDefaultDueDate = tryDefineDefaultDueDate(task);
+	definePriority(task);
+
 	let visual = task.text;
 	visual = formatDueDate(task, visual, isDefaultDueDate);
 	visual = formatScheduledDate(task, visual);
 	visual = formatLink(task, visual);
 	task.visual = visual;
+	
 	return task;
 }
 
@@ -100,6 +111,23 @@ function tryDefineDefaultDueDate(task) {
 		return true;
 	}
 	return false;
+}
+
+function definePriority(task) {
+	if (priorityHighestRegex.test(task.text)) {
+		task.priority = priorityHighest;
+	} else if (priorityHighRegex.test(task.text)) {
+		task.priority = priorityHigh;
+	} else if (priorityMediumRegex.test(task.text)) {
+		task.priority = priorityMedium;
+	} else if (priorityLowRegex.test(task.text)) {
+		task.priority = priorityLow;
+	} else if (priorityLowestRegex.test(task.text)) {
+		task.priority = priorityLowest;
+	} else {
+		task.priority = priorityNone;
+	}
+	console.log(task.priority);
 }
 
 function sortDate(date1, date2) 
@@ -123,8 +151,8 @@ function getBy(filter) {
 	let pages = _dv.pages('!"07 TEMPLATES"');
 	return (
 		pages.file.tasks
-		.filter(filter)
 		.map(format)
+		.filter(filter)
 		.sort((task) => task.due, "asc", sortDate)
 	);
 }
@@ -156,14 +184,14 @@ module.exports = {
 			return !task.fullyCompleted && task.status == status;
 		})
 	},
-	renderP0Tasks: function () {
+	renderHighestPriorityTasks: function () {
 		renderTasks(function (task) {
-			return !task.fullyCompleted && task.priority == priorityP0;
+			return !task.fullyCompleted && task.priority == priorityHighest;
 		})
 	},
-	renderP1Tasks: function () {
+	renderHighPriorityTasks: function () {
 		renderTasks(function (task) {
-			return !task.fullyCompleted && task.priority == priorityP1;
+			return !task.fullyCompleted && task.priority == priorityHigh;
 		})
 	},
 	renderQuickTasks: function () {

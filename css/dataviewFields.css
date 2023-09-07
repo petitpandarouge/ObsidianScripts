@@ -25,7 +25,7 @@ span.dataview.inline-field-key {
 span.dataview.inline-field-value,
 span.dataview.inline-field-standalone-value {
 	padding: var(--field-padding);
-	margin-right: 3px;
+	margin-left: 3px;
 	border-radius: var(--field-border-radius);
     background: var(--dark-grey);
 	color: var(--grey);
@@ -50,9 +50,55 @@ span.dataview.inline-field-key:is([data-dv-key=completion]) + span.dataview.inli
 
 /******* Priority *******/
 
-span.dataview.inline-field-key:is([data-dv-key=priority]) + span.dataview.inline-field-value::before {
-	content: '🔥 ';
+span.dataview.inline-field:has(> span.dataview.inline-field-key:is([data-dv-key=priority_highest]))::after {
+	content: '↑↑↑';
+	padding: var(--field-padding);
+    border-radius: var(--field-border-radius);
+    background: var(--dark-red);
+	color: var(--light-red);
 }
+
+span.dataview.inline-field:has(> span.dataview.inline-field-key:is([data-dv-key=priority_high]))::after {
+	content: '↑↑';
+	padding: var(--field-padding);
+    border-radius: var(--field-border-radius);
+    background: var(--dark-orange);
+	color: var(--light-orange);
+}
+
+span.dataview.inline-field:has(> span.dataview.inline-field-key:is([data-dv-key=priority_medium]))::after {
+	content: '↑';
+	padding: var(--field-padding);
+    border-radius: var(--field-border-radius);
+	background: var(--grey);
+	color: var(--light-grey);
+}
+
+span.dataview.inline-field:has(> span.dataview.inline-field-key:is([data-dv-key=priority_low]))::after {
+	content: '↓';
+	padding: var(--field-padding);
+    border-radius: var(--field-border-radius);
+    background: var(--dark-blue);
+	color: var(--light-blue);
+}
+
+span.dataview.inline-field:has(> span.dataview.inline-field-key:is([data-dv-key=priority_lowest]))::after {
+	content: '↓↓';
+	padding: var(--field-padding);
+    border-radius: var(--field-border-radius);
+    background: var(--dark-blue);
+	color: var(--light-blue);
+}
+
+span.dataview.inline-field-key:is([data-dv-key=priority_highest]) + span.dataview.inline-field-value,
+span.dataview.inline-field-key:is([data-dv-key=priority_high]) + span.dataview.inline-field-value,
+span.dataview.inline-field-key:is([data-dv-key=priority_medium]) + span.dataview.inline-field-value,
+span.dataview.inline-field-key:is([data-dv-key=priority_low]) + span.dataview.inline-field-value,
+span.dataview.inline-field-key:is([data-dv-key=priority_lowest]) + span.dataview.inline-field-value{
+	display: none;
+}
+
+
 
 /******* Due ********/
 
