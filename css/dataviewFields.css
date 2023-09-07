@@ -19,8 +19,8 @@ span.dataview.inline-field-standalone-value {
 	color: var(--gray);
 }
 
-span.dataview.inline-field-value .internal-link,
-span.dataview.inline-field-standalone-value .internal-link {
+span.dataview.inline-field-value.inherit-color .internal-link,
+span.dataview.inline-field-standalone-value.inherit-color .internal-link {
     color: inherit !important;
 }
 
@@ -67,3 +67,6 @@ span.dataview.inline-field:has(> span.dataview.inline-field-key:is([data-dv-key=
 span.dataview.inline-field-key:is([data-dv-key=quick]) + span.dataview.inline-field-value{
 	display: none;
 }
+
+
+
