@@ -58,6 +58,11 @@ span.dataview.inline-field-key:is([data-dv-key=due]) + span.dataview.inline-fiel
 	content: '🎯 ';
 }
 
+span.dataview.inline-field-standalone-value.default:is([data-dv-key=due]) {
+	background: var(--dark-grey);
+	color: var(--grey);
+}
+
 span.dataview.inline-field-standalone-value:is([data-dv-key=due]) {
 	background: var(--light-grey);
 	color: var(--dark-grey);

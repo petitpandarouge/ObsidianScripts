@@ -28,22 +28,31 @@ function dateToShortString(date) {
 	return date.toFormat("dd-MM-yyyy");
 }
 
-function formatDueDate(task) {
+function formatDueDate(task, visual, isDefaultDueDate) {
 	if (task.due) {
+		let displayString = "🎯 " + dateToShortString(task.due);
+		let regexToReplace = dueDateRegex;
+		let isDefaultClassNames = "";
+		if (isDefaultDueDate) {
+			displayString = "⚙️|" + displayString;
+			regexToReplace = endOfFirstLineRegex;
+			isDefaultClassNames = "default";
+		}
+
 		if (task.due.ts == _dv.date('today').ts) {
-			return task.text.replace(dueDateRegex, 
-				renderData("🎯 " + dateToShortString(task.due), "due", "due-today"));
+			return visual.replace(regexToReplace, 
+				renderData(displayString, "due", "due-today"));
 		}
 		if (task.due < _dv.date('today')) {
-			return task.text.replace(dueDateRegex, 
-				renderData("🎯 " + dateToShortString(task.due), "due", "overdue"));
+			return visual.replace(regexToReplace, 
+				renderData(displayString, "due", "overdue"));
 		}
 		if (task.due > _dv.date('today')) {
-			return task.text.replace(dueDateRegex,
-				renderData("🎯 " + dateToShortString(task.due), "due"));
+			return visual.replace(regexToReplace,
+				renderData(displayString, "due", isDefaultClassNames));
 		}
 	}
-	return task.text;
+	return visual;
 }
 
 function formatLink(task, visual) {
@@ -52,10 +61,21 @@ function formatLink(task, visual) {
 }
 
 function format(task) {
-	let visual = formatDueDate(task);
+	let isDefaultDueDate = tryDefineDefaultDueDate(task);
+	let visual = task.text;
+	visual = formatDueDate(task, visual, isDefaultDueDate);
 	visual = formatLink(task, visual);
 	task.visual = visual;
 	return task;
+}
+
+function tryDefineDefaultDueDate(task) {
+	if (task.creation && !task.due) {
+		let twoMonths = _dv.duration("2 months")
+		task.due = task.creation.plus(twoMonths);
+		return true;
+	}
+	return false;
 }
 
 function sortDate(date1, date2) 
