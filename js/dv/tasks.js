@@ -8,15 +8,15 @@ const priorityNone = "None";
 const priorityLow = "Low";
 const priorityLowest = "Lowest";
 
-const creationDateRegex = /\[creation:: [^\]]+\]/g;
-const dueDateRegex = /\[due:: [^\]]+\]/g;
-const scheduledRegex = /\[scheduled:: [^\]]+\]/g;
-const quickRegex = /\[quick:: true\]/g;
-const priorityHighestRegex = /\[priority_highest:: true\]/g;
-const priorityHighRegex = /\[priority_high:: true\]/g;
-const priorityMediumRegex = /\[priority_medium:: true\]/g;
-const priorityLowRegex = /\[priority_low:: true\]/g;
-const priorityLowestRegex = /\[priority_Lowest:: true\]/g;
+const creationDateRegex = /\[creation:: [^\]]+\]/;
+const dueDateRegex = /\[due:: [^\]]+\]/;
+const scheduledRegex = /\[scheduled:: [^\]]+\]/;
+const quickRegex = /\[quick:: true\]/;
+const priorityHighestRegex = /\[priority_highest:: true\]/;
+const priorityHighRegex = /\[priority_high:: true\]/;
+const priorityMediumRegex = /\[priority_medium:: true\]/;
+const priorityLowRegex = /\[priority_low:: true\]/;
+const priorityLowestRegex = /\[priority_Lowest:: true\]/;
 const endOfFirstLineRegex = /$/m;
 
 function renderData(displayString, fieldKey, classNames, tooltip) {
