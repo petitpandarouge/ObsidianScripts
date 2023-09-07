@@ -91,28 +91,6 @@ function formatLink(task, visual) {
 		renderData(_dv.fileLink(task.path), "link"));
 }
 
-function preFormat(task) {
-	definePriority(task);
-	return task;
-}
-
-function format(task) {
-	if (containsErrors(task)) {
-		return task;
-	}
-
-	let isDefaultDueDate = tryDefineDefaultDueDate(task);
-	computeUrgency(task);
-
-	let visual = task.text;
-	visual = formatDueDate(task, visual, isDefaultDueDate);
-	visual = formatScheduledDate(task, visual);
-	visual = formatLink(task, visual);
-	task.visual = visual;
-	
-	return task;
-}
-
 function tryDefineDefaultDueDate(task) {
 	if (!task.due) {
 		let twoMonths = _dv.duration("2 months")
@@ -140,93 +118,96 @@ function definePriority(task) {
 
 function computeUrgency(task) {
 	let score = 0;
+	let explaination = "";
 	let today = _dv.date('today');
 
 	if (today > task.due.plus(_dv.duration("7 days"))) {
-		// due more than 7 days ago
+		explaination += "due more than 7 days ago&#10;";
 		score += 12.0;
 	} else if (today.ts === task.due.plus(_dv.duration("7 days")).ts) {
-		// due 7 days ago
+		explaination += "due 7 days ago&#10;";
 		score += 12.0;
 	} else if (today.ts === task.due.plus(_dv.duration("6 days")).ts) {
-		// due 6 days ago
+		explaination += "due 6 days ago&#10;";
 		score += 11.54286;
 	} else if (today.ts === task.due.plus(_dv.duration("5 days")).ts) {
-		// due 5 days ago
+		explaination += "due 5 days ago&#10;";
 		score += 11.08571;
 	} else if (today.ts === task.due.plus(_dv.duration("4 days")).ts) {
-		// due 4 days ago
+		explaination += "due 4 days ago&#10;";
 		score += 10.62857;
 	} else if (today.ts === task.due.plus(_dv.duration("3 days")).ts) {
-		// due 3 days ago
+		explaination += "due 3 days ago&#10;";
 		score += 10.17143;
 	} else if (today.ts === task.due.plus(_dv.duration("2 days")).ts) {
-		// due 2 days ago
+		explaination += "due 2 days ago&#10;";
 		score += 9.71429;
 	} else if (today.ts === task.due.plus(_dv.duration("1 days")).ts) {
-		// due 1 days ago
+		explaination += "due 1 days ago&#10;";
 		score += 9.25714;
 	} else if (today.ts === task.due.ts) {
-		// due today
+		explaination += "due today&#10;";
 		score += 8.80000;
 	} else if (today.ts === task.due.minus(_dv.duration("1 days")).ts) {
-		// 1 day until due
+		explaination += "1 day until due&#10;";
 		score += 8.34286;
 	} else if (today.ts === task.due.minus(_dv.duration("2 days")).ts) {
-		// 2 days until due
+		explaination += "2 days until due&#10;";
 		score += 7.88571;
 	} else if (today.ts === task.due.minus(_dv.duration("3 days")).ts) {
-		// 3 days until due
+		explaination += "3 days until due&#10;";
 		score += 7.42857;
 	} else if (today.ts === task.due.minus(_dv.duration("4 days")).ts) {
-		// 4 days until due
+		explaination += "4 days until due&#10;";
 		score += 6.97143;
 	} else if (today.ts === task.due.minus(_dv.duration("5 days")).ts) {
-		// 5 days until due
+		explaination += "5 days until due&#10;";
 		score += 6.51429;
 	} else if (today.ts === task.due.minus(_dv.duration("6 days")).ts) {
-		// 6 days until due
+		explaination += "6 days until due&#10;";
 		score += 6.05714;
 	} else if (today.ts === task.due.minus(_dv.duration("7 days")).ts) {
-		// 7 days until due
+		explaination += "7 days until due&#10;";
 		score += 5.60000;
 	} else if (today.ts === task.due.minus(_dv.duration("8 days")).ts) {
-		// 8 days until due
+		explaination += "8 days until due&#10;";
 		score += 5.14286;
 	} else if (today.ts === task.due.minus(_dv.duration("9 days")).ts) {
-		// 9 days until due
+		explaination += "9 days until due&#10;";
 		score += 4.68571;
 	} else if (today.ts === task.due.minus(_dv.duration("10 days")).ts) {
-		// 10 days until due
+		explaination += "10 days until due&#10;";
 		score += 4.22857;
 	} else if (today.ts === task.due.minus(_dv.duration("11 days")).ts) {
-		// 11 days until due
+		explaination += "11 days until due&#10;";
 		score += 3.77143;
 	} else if (today.ts === task.due.minus(_dv.duration("12 days")).ts) {
-		// 12 days until due
+		explaination += "12 days until due&#10;";
 		score += 3.31429;
 	} else if (today.ts === task.due.minus(_dv.duration("13 days")).ts) {
-		// 13 days until due
+		explaination += "13 days until due&#10;";
 		score += 2.85714;
 	} else if (today.ts === task.due.minus(_dv.duration("14 days")).ts) {
-		// 14 days until due
+		explaination += "14 days until due&#10;";
 		score += 2.4;
 	} else if (today < task.due.minus(_dv.duration("14 days"))) {
-		// More than 14 days until due
+		explaination += "More than 14 days until due&#10;";
 		score += 2.4;
 	}
 
 	if (!task.scheduled) {
-		// not scheduled
+		explaination += "Not scheduled&#10;";
 		score += 0.0;
 	} else if (today >= task.scheduled) {
-		// Today or earlier
+		explaination += "Scheduled today or earlier&#10;";
 		score += 5.0;
 	} else if (today <= task.scheduled.minus(_dv.duration("1 days"))) {
-		// Tomorrow or later
+		explaination += "Scheduled tomorrow or later&#10;";
 		score += -3.0;
 	} 
 
+	explaination += `Priority is '${task.priority}'&#10;`;
+	console.log(task.priority);
 	if (task.priority === priorityHighest) {
 		score += 9.0;
 	} else if (task.priority === priorityHigh) {
@@ -242,7 +223,13 @@ function computeUrgency(task) {
 	}
 
 	task.urgency = score;
-	console.log(task.text + " ********* " + task.urgency);
+	task.urgencyExplaination = explaination;
+}
+
+function formatUrgency(task, visual) {
+	let tooltip = `score : ${task.urgency}&#10;${task.urgencyExplaination}`; 
+	return visual.replace(endOfFirstLineRegex, 
+		renderData("🚨", "urgency", null, tooltip));
 }
 
 function containsErrors(task) {
@@ -250,6 +237,29 @@ function containsErrors(task) {
 		return true;
 	}
 	return false;
+}
+
+function preFormat(task) {
+	definePriority(task);
+	return task;
+}
+
+function format(task) {
+	if (containsErrors(task)) {
+		return task;
+	}
+
+	let isDefaultDueDate = tryDefineDefaultDueDate(task);
+	computeUrgency(task);
+
+	let visual = task.text;
+	visual = formatDueDate(task, visual, isDefaultDueDate);
+	visual = formatScheduledDate(task, visual);
+	visual = formatUrgency(task, visual);
+	visual = formatLink(task, visual);
+	task.visual = visual;
+	
+	return task;
 }
 
 function sortDate(date1, date2) 
