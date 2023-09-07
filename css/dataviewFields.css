@@ -4,8 +4,10 @@
 	--light-grey: rgba(202, 211, 224, 0.7);
 	--dark-blue: rgba(17, 24, 92, 0.7);
 	--light-blue: rgba(101, 163, 252, 0.7);
-	--red: rgba(211, 60, 43, 0.7);
-	--green: rgba(0, 132, 98, 0.7);
+	--light-red: rgba(252, 173, 165, 0.7);
+	--dark-red: rgba(122, 31, 20, 0.7);
+	--light-green: rgba(115, 243, 211, 0.7);
+	--dark-green: rgba(13, 77, 61, 0.7);
 	--field-border-radius: 5px;
 	--field-padding: 3px;
 }
@@ -62,13 +64,13 @@ span.dataview.inline-field-standalone-value:is([data-dv-key=due]) {
 }
 
 span.dataview.inline-field-standalone-value.overdue:is([data-dv-key=due]) {
-	background: var(--red);
-	color: var(--text-muted);
+	background: var(--light-red);
+	color: var(--dark-red);
 }
 
 span.dataview.inline-field-standalone-value.due-today:is([data-dv-key=due]) {
-	background: var(--green);
-	color: var(--text-muted);
+	background: var(--light-green);
+	color: var(--dark-green);
 }
 
 /******* Person ********/
