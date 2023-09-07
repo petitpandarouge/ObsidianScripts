@@ -59,6 +59,25 @@ function formatDueDate(task, visual, isDefaultDueDate) {
 	return visual;
 }
 
+function formatScheduledDate(task, visual) {
+	if (task.scheduled) {
+		let displayString = "📅 " + dateToShortString(task.scheduled);
+		if (task.scheduled.ts == _dv.date('today').ts) {
+			return visual.replace(scheduledRegex, 
+				renderData(displayString, "scheduled", "today"));
+		}
+		if (task.scheduled < _dv.date('today')) {
+			return visual.replace(scheduledRegex, 
+				renderData(displayString, "scheduled", "missed"));
+		}
+		if (task.scheduled > _dv.date('today')) {
+			return visual.replace(scheduledRegex,
+				renderData(displayString, "scheduled"));
+		}
+	}
+	return visual;
+}
+
 function formatLink(task, visual) {
 	return visual.replace(endOfFirstLineRegex, 
 		renderData(_dv.fileLink(task.path), "link"));
@@ -68,6 +87,7 @@ function format(task) {
 	let isDefaultDueDate = tryDefineDefaultDueDate(task);
 	let visual = task.text;
 	visual = formatDueDate(task, visual, isDefaultDueDate);
+	visual = formatScheduledDate(task, visual);
 	visual = formatLink(task, visual);
 	task.visual = visual;
 	return task;

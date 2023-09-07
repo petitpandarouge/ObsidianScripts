@@ -112,3 +112,18 @@ span.dataview.inline-field-standalone-value:is([data-dv-key=link]) {
 span.dataview.inline-field-key:is([data-dv-key=scheduled]) + span.dataview.inline-field-value::before {
 	content: '📅 ';
 }
+
+span.dataview.inline-field-standalone-value:is([data-dv-key=scheduled]) {
+	background: var(--light-grey);
+	color: var(--dark-grey);
+}
+
+span.dataview.inline-field-standalone-value.missed:is([data-dv-key=scheduled]) {
+	background: var(--light-red);
+	color: var(--dark-red);
+}
+
+span.dataview.inline-field-standalone-value.today:is([data-dv-key=scheduled]) {
+	background: var(--light-green);
+	color: var(--dark-green);
+}
