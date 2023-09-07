@@ -19,7 +19,7 @@ const darkBlue = "rgba(17, 24, 92, 0.7)";
 const normal = "var(--text-muted)";
 
 function renderData(backgroundColor, textColor, displayString) {
-	let span = `<span class="custom-task-field" style="border-radius:5px; `;
+	let span = `<span class="dataview inline-field-standalone-value" style="border-radius:5px; `;
 	span += `font-size:8pt; padding:2px 3px; margin: 0px 3px; `;
 	if (backgroundColor !== null) {
 		span += `background-color:${backgroundColor}; `;
