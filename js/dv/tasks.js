@@ -17,7 +17,9 @@ const priorityHighestRegex = /\[priority_highest:: true\]/;
 const priorityHighRegex = /\[priority_high:: true\]/;
 const priorityMediumRegex = /\[priority_medium:: true\]/;
 const priorityLowRegex = /\[priority_low:: true\]/;
-const priorityLowestRegex = /\[priority_Lowest:: true\]/;
+const priorityLowestRegex = /\[priority_lowest:: true\]/;
+const detailsRegex = /\(details:: [^\)]+\)/;
+const personRegex = /\[person:: [^\]]+\]/;
 const endOfFirstLineRegex = /$/m;
 
 function renderData(displayString, fieldKey, classNames, tooltip) {
@@ -43,6 +45,10 @@ function dateToShortString(date) {
 
 function formatDueDate(task, visual) {
 	if (task.due) {
+		if (_options && _options.visibleFields && !_options.visibleFields.includes("due")) {
+			return visual.replace(dueDateRegex, "");
+		}
+
 		let displayString = "🎯 " + dateToShortString(task.due);
 		let regexToReplace = dueDateRegex;
 		let isDefaultClassNames = "";
@@ -70,6 +76,10 @@ function formatDueDate(task, visual) {
 
 function formatScheduledDate(task, visual) {
 	if (task.scheduled) {
+		if (_options && _options.visibleFields && !_options.visibleFields.includes("scheduled")) {
+			return visual.replace(scheduledRegex, "");
+		}
+
 		let displayString = "📅 " + dateToShortString(task.scheduled);
 		if (task.scheduled.ts == _dv.date('today').ts) {
 			return visual.replace(scheduledRegex, 
@@ -87,9 +97,51 @@ function formatScheduledDate(task, visual) {
 	return visual;
 }
 
+function formatCreationDate(visual) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes("creation")) {
+		return visual.replace(creationDateRegex, "");
+	}
+	return visual;
+}
+
+function formatDetails(visual) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes("details")) {
+		return visual.replace(detailsRegex, "");
+	}
+	return visual;
+}
+
+function formatQuick(visual) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes("quick")) {
+		return visual.replace(quickRegex, "");
+	}
+	return visual;
+}
+
+function formatPerson(visual) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes("person")) {
+		return visual.replace(personRegex, "");
+	}
+	return visual;
+}
+
 function formatLink(task, visual) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes("link")) {
+		return visual;
+	}
 	return visual.replace(endOfFirstLineRegex, 
 		renderData(_dv.fileLink(task.path), "link"));
+}
+
+function formatPriority(visual) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes("priority")) {
+		visual = visual.replace(priorityHighestRegex, "");
+		visual = visual.replace(priorityHighRegex, "");
+		visual = visual.replace(priorityMediumRegex, "");
+		visual = visual.replace(priorityLowRegex, "");
+		visual = visual.replace(priorityLowestRegex, "");
+	}
+	return visual;
 }
 
 function tryDefineDefaultDueDate(task) {
@@ -235,6 +287,9 @@ function computeUrgency(task) {
 }
 
 function formatUrgency(task, visual) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes("urgency")) {
+		return visual;
+	}
 	let tooltip = `score : ${task.urgency}&#10;${task.urgencyExplaination}`; 
 	return visual.replace(endOfFirstLineRegex, 
 		renderData("🚨", "urgency", null, tooltip));
@@ -256,6 +311,9 @@ function listErrors(task) {
 }
 
 function formatError(task) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes("error")) {
+		return;
+	}
 	task.visual = task.text.replace(endOfFirstLineRegex, 
 		renderData("🐞", "error", null, task.errorExplaination));
 }
@@ -276,6 +334,11 @@ function format(task) {
 	computeUrgency(task);
 
 	let visual = task.text;
+	visual = formatCreationDate(visual);
+	visual = formatDetails(visual);
+	visual = formatQuick(visual);
+	visual = formatPriority(visual);
+	visual = formatPerson(visual);
 	visual = formatDueDate(task, visual);
 	visual = formatScheduledDate(task, visual);
 	visual = formatUrgency(task, visual);
