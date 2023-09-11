@@ -136,7 +136,10 @@ function hideField(visual, fieldName) {
 function formatDueDate(task, visual) {
 	if (task.due) {
 		if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.due.name)) {
-			return hideField(visual, _configuration.fields.due.name)
+			return hideField(visual, _configuration.fields.due.name);
+		}
+		if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.due.name)) {
+			return hideField(visual, _configuration.fields.due.name);
 		}
 
 		let displayString = "🎯 " + dateToShortString(task.due);
@@ -175,7 +178,10 @@ function formatDueDate(task, visual) {
 function formatScheduledDate(task, visual) {
 	if (task.scheduled) {
 		if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.scheduled.name)) {
-			return hideField(visual, _configuration.fields.scheduled.name)
+			return hideField(visual, _configuration.fields.scheduled.name);
+		}
+		if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.scheduled.name)) {
+			return hideField(visual, _configuration.fields.scheduled.name);
 		}
 
 		let displayString = "📅 " + dateToShortString(task.scheduled);
@@ -205,11 +211,17 @@ function formatCreationDate(visual) {
 	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.creation.name)) {
 		return hideField(visual, _configuration.fields.creation.name);
 	}
+	if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.creation.name)) {
+		return hideField(visual, _configuration.fields.creation.name);
+	}
 	return visual;
 }
 
 function formatDetails(visual) {
 	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.details.name)) {
+		return hideField(visual, _configuration.fields.details.name);
+	}
+	if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.details.name)) {
 		return hideField(visual, _configuration.fields.details.name);
 	}
 	return visual;
@@ -219,6 +231,9 @@ function formatQuick(visual) {
 	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.quick.name)) {
 		return hideField(visual, _configuration.fields.quick.name);
 	}
+	if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.quick.name)) {
+		return hideField(visual, _configuration.fields.quick.name);
+	}
 	return visual;
 }
 
@@ -226,11 +241,17 @@ function formatPerson(visual) {
 	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.person.name)) {
 		return hideField(visual, _configuration.fields.person.name);
 	}
+	if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.person.name)) {
+		return hideField(visual, _configuration.fields.person.name);
+	}
 	return visual;
 }
 
 function formatLink(task, visual) {
 	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.link.name)) {
+		return visual;
+	}
+	if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.link.name)) {
 		return visual;
 	}
 	return visual.replace(_configuration.fields.link.regex, 
@@ -241,11 +262,17 @@ function formatPriority(visual) {
 	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.priority.name)) {
 		return hideField(visual, _configuration.fields.priority.name);
 	}
+	if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.priority.name)) {
+		return hideField(visual, _configuration.fields.priority.name);
+	}
 	return visual;
 }
 
 function formatUrgency(task, visual) {
 	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.urgency.name)) {
+		return visual;
+	}
+	if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.urgency.name)) {
 		return visual;
 	}
 	let tooltip = `score : ${task.urgency}&#10;${task.urgencyExplaination}`; 
@@ -269,6 +296,9 @@ function listErrors(task) {
 
 function formatError(task, visual) {
 	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.error.name)) {
+		return visual;
+	}
+	if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.error.name)) {
 		return visual;
 	}
 	return visual.replace(_configuration.fields.error.regex, 
