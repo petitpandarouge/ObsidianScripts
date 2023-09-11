@@ -9,6 +9,7 @@ const priorityNone = "None";
 const priorityLow = "Low";
 const priorityLowest = "Lowest";
 
+const allFieldsRegex = /\[[^:|\]]+:: [^\]]+\]/g;
 const creationDateRegex = /\[creation:: [^\]]+\]/;
 const dueDateRegex = /\[due:: [^\]]+\]/;
 const scheduledRegex = /\[scheduled:: [^\]]+\]/;
@@ -310,11 +311,15 @@ function listErrors(task) {
 	return false;
 }
 
-function formatError(task) {
+function hideAllFields(visual) {
+	return visual.replace(allFieldsRegex, ""); 
+}
+
+function formatError(task, visual) {
 	if (_options && _options.visibleFields && !_options.visibleFields.includes("error")) {
 		return;
 	}
-	task.visual = task.text.replace(endOfFirstLineRegex, 
+	return visual.replace(endOfFirstLineRegex, 
 		renderData("🐞", "error", null, task.errorExplaination));
 }
 
@@ -326,7 +331,12 @@ function preFormat(task) {
 
 function format(task) {
 	if (task.containsErrors) {
-		formatError(task);
+		
+		let visual = task.text;
+		visual = hideAllFields(visual);
+		visual = formatError(task, visual);
+		task.visual = visual;
+
 		return task;
 	}
 
