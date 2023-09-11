@@ -1,27 +1,112 @@
 
 let _dv;
 let _options;
+let _configuration;
 
-const priorityHighest = "Highest";
-const priorityHigh = "High";
-const priorityMedium = "Medium";
-const priorityNone = "None";
-const priorityLow = "Low";
-const priorityLowest = "Lowest";
-
-const allFieldsRegex = /\[[^:|\]]+:: [^\]]+\]/g;
-const creationDateRegex = /\[creation:: [^\]]+\]/;
-const dueDateRegex = /\[due:: [^\]]+\]/;
-const scheduledRegex = /\[scheduled:: [^\]]+\]/;
-const quickRegex = /\[quick:: true\]/;
-const priorityHighestRegex = /\[priority_highest:: true\]/;
-const priorityHighRegex = /\[priority_high:: true\]/;
-const priorityMediumRegex = /\[priority_medium:: true\]/;
-const priorityLowRegex = /\[priority_low:: true\]/;
-const priorityLowestRegex = /\[priority_lowest:: true\]/;
-const detailsRegex = /\(details:: [^\)]+\)/;
-const personRegex = /\[person:: [^\]]+\]/;
-const endOfFirstLineRegex = /$/m;
+function getConfiguration() {
+	return {
+		fields: {
+			creation: {
+				name: "creation",
+				regex: /\[creation:: [^\]]+\]/
+			},
+			due: {
+				name: "due",
+				regex: /\[due:: [^\]]+\]/,
+				values: {
+					default: {
+						className: "default",
+						delaiFromCreation: _dv.duration("2 months")
+					}
+				},
+				soon: {
+					className: "due-soon",
+					tooltip: "Due dans moins d'une semaine!",
+					delai: _dv.duration("1 week")
+				},
+				over: {
+					className: "overdue"
+				},
+				inAWhile: {
+					tooltip: "Due dans plus d'une semaine."
+				}
+			},
+			scheduled: {
+				name: "scheduled",
+				regex: /\[scheduled:: [^\]]+\]/,
+				today: {
+					className: "today"
+				},
+				missed: {
+					className: "missed"
+				}
+			},
+			quick: {
+				name: "quick",
+				regex: /\[quick:: true\]/
+			},
+			details: {
+				name: "details",
+				regex: /\(details:: [^\)]+\)/
+			},
+			person: {
+				name: "person",
+				regex: /\[person:: [^\]]+\]/
+			},
+			priority: {
+				name: "priority",
+				regex: /\[priority_[^:|\]]+:: true\]/,
+				values: {
+					highest: {
+						value: "Highest",
+						regex: /\[priority_highest:: true\]/
+					},
+					high: {
+						value: "High",
+						regex: /\[priority_high:: true\]/
+					},
+					medium: {
+						value: "Medium",
+						regex: /\[priority_medium:: true\]/
+					},
+					low: {
+						value: "Low",
+						regex: /\[priority_low:: true\]/
+					},
+					lowest: {
+						value: "Lowest",
+						regex: /\[priority_lowest:: true\]/
+					},
+					none: {
+						value: "None"
+					}
+				}
+			},
+			link: {
+				name: "link",
+				regex: /$/m
+			},
+			urgency: {
+				name: "urgency",
+				regex: /$/m
+			},
+			error: {
+				name: "error",
+				regex: /$/m
+			},
+			all: {
+				name: "all",
+				regex: /\[[^:|\]]+:: [^\]]+\]/g
+			}
+		},
+		endOfFirstLine: {
+			regex: /$/m
+		},
+		string: {
+			empty: ""
+		}
+	};	
+}
 
 function renderData(displayString, fieldKey, classNames, tooltip) {
 	let span = `<span class="dataview inline-field">`;
@@ -44,32 +129,44 @@ function dateToShortString(date) {
 	return date.toFormat("dd-MM-yyyy");
 }
 
+function hideField(visual, fieldName) {
+	return visual.replace(_configuration.fields[fieldName].regex, _configuration.string.empty); 
+}
+
 function formatDueDate(task, visual) {
 	if (task.due) {
-		if (_options && _options.visibleFields && !_options.visibleFields.includes("due")) {
-			return visual.replace(dueDateRegex, "");
+		if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.due.name)) {
+			return hideField(visual, _configuration.fields.due.name)
 		}
 
 		let displayString = "🎯 " + dateToShortString(task.due);
-		let regexToReplace = dueDateRegex;
-		let isDefaultClassNames = "";
+		let regexToReplace = _configuration.fields.due.regex;
+		let isDefaultClassNames = _configuration.string.empty;
 		if (task.dueIsDefault) {
 			displayString = "⚙️|" + displayString;
-			regexToReplace = endOfFirstLineRegex;
-			isDefaultClassNames = "default";
+			regexToReplace = _configuration.endOfFirstLine.regex;
+			isDefaultClassNames = _configuration.fields.due.values.default.className;
 		}
 
-		let oneWeek = _dv.duration("1 week");
-		let dueDateMinusOneWeek = task.due.minus(oneWeek);
-		if (task.due < _dv.date('today')) {
+		let today = _dv.date('today');
+		let dueDateMinusSoonDelai = task.due.minus(_configuration.fields.due.soon.delai);
+		if (task.due < today) {
 			return visual.replace(regexToReplace, 
-				renderData(displayString, "due", "overdue"));
-		} else if (task.due >= _dv.date('today') && _dv.date('today') >= dueDateMinusOneWeek) {
+				renderData(displayString, 
+					_configuration.fields.due.name, 
+					_configuration.fields.due.over.className));
+		} else if (task.due >= today && today >= dueDateMinusSoonDelai) {
 			return visual.replace(regexToReplace, 
-				renderData(displayString, "due", "due-soon", "Due dans moins d'une semaine!"));
-		} else if (dueDateMinusOneWeek > _dv.date('today')) {
+				renderData(displayString, 
+					_configuration.fields.due.name, 
+					_configuration.fields.due.soon.className, 
+					_configuration.fields.due.soon.tooltip));
+		} else if (dueDateMinusSoonDelai > today) {
 			return visual.replace(regexToReplace,
-				renderData(displayString, "due", isDefaultClassNames, "Due dans plus d'une semaine."));
+				renderData(displayString, 
+					_configuration.fields.due.name, 
+					isDefaultClassNames, 
+					_configuration.fields.due.inAWhile.tooltip));
 		}
 	}
 	return visual;
@@ -77,78 +174,110 @@ function formatDueDate(task, visual) {
 
 function formatScheduledDate(task, visual) {
 	if (task.scheduled) {
-		if (_options && _options.visibleFields && !_options.visibleFields.includes("scheduled")) {
-			return visual.replace(scheduledRegex, "");
+		if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.scheduled.name)) {
+			return hideField(visual, _configuration.fields.scheduled.name)
 		}
 
 		let displayString = "📅 " + dateToShortString(task.scheduled);
-		if (task.scheduled.ts == _dv.date('today').ts) {
-			return visual.replace(scheduledRegex, 
-				renderData(displayString, "scheduled", "today"));
+		let today = _dv.date('today');
+		if (task.scheduled.ts == today.ts) {
+			return visual.replace(_configuration.fields.scheduled.regex, 
+				renderData(displayString, 
+					_configuration.fields.scheduled.name,
+					_configuration.fields.scheduled.today.className));
 		}
-		if (task.scheduled < _dv.date('today')) {
-			return visual.replace(scheduledRegex, 
-				renderData(displayString, "scheduled", "missed"));
+		if (task.scheduled < today) {
+			return visual.replace(_configuration.fields.scheduled.regex,  
+				renderData(displayString, 
+					_configuration.fields.scheduled.name, 
+					_configuration.fields.scheduled.missed.className));
 		}
-		if (task.scheduled > _dv.date('today')) {
-			return visual.replace(scheduledRegex,
-				renderData(displayString, "scheduled"));
+		if (task.scheduled > today) {
+			return visual.replace(_configuration.fields.scheduled.regex, 
+				renderData(displayString, 
+					_configuration.fields.scheduled.name));
 		}
 	}
 	return visual;
 }
 
 function formatCreationDate(visual) {
-	if (_options && _options.visibleFields && !_options.visibleFields.includes("creation")) {
-		return visual.replace(creationDateRegex, "");
+	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.creation.name)) {
+		return hideField(visual, _configuration.fields.creation.name);
 	}
 	return visual;
 }
 
 function formatDetails(visual) {
-	if (_options && _options.visibleFields && !_options.visibleFields.includes("details")) {
-		return visual.replace(detailsRegex, "");
+	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.details.name)) {
+		return hideField(visual, _configuration.fields.details.name);
 	}
 	return visual;
 }
 
 function formatQuick(visual) {
-	if (_options && _options.visibleFields && !_options.visibleFields.includes("quick")) {
-		return visual.replace(quickRegex, "");
+	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.quick.name)) {
+		return hideField(visual, _configuration.fields.quick.name);
 	}
 	return visual;
 }
 
 function formatPerson(visual) {
-	if (_options && _options.visibleFields && !_options.visibleFields.includes("person")) {
-		return visual.replace(personRegex, "");
+	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.person.name)) {
+		return hideField(visual, _configuration.fields.person.name);
 	}
 	return visual;
 }
 
 function formatLink(task, visual) {
-	if (_options && _options.visibleFields && !_options.visibleFields.includes("link")) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.link.name)) {
 		return visual;
 	}
-	return visual.replace(endOfFirstLineRegex, 
-		renderData(_dv.fileLink(task.path), "link"));
+	return visual.replace(_configuration.fields.link.regex, 
+		renderData(_dv.fileLink(task.path), _configuration.fields.link.name));
 }
 
 function formatPriority(visual) {
-	if (_options && _options.visibleFields && !_options.visibleFields.includes("priority")) {
-		visual = visual.replace(priorityHighestRegex, "");
-		visual = visual.replace(priorityHighRegex, "");
-		visual = visual.replace(priorityMediumRegex, "");
-		visual = visual.replace(priorityLowRegex, "");
-		visual = visual.replace(priorityLowestRegex, "");
+	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.priority.name)) {
+		return hideField(visual, _configuration.fields.priority.name);
 	}
 	return visual;
 }
 
+function formatUrgency(task, visual) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.urgency.name)) {
+		return visual;
+	}
+	let tooltip = `score : ${task.urgency}&#10;${task.urgencyExplaination}`; 
+	return visual.replace(_configuration.fields.urgency.regex, 
+		renderData("🚨", _configuration.fields.urgency.name, null, tooltip));
+}
+
+function listErrors(task) {
+	let explaination = null;
+	if (!task.creation) {
+		explaination = "No creation date defined &#10;"
+	}
+	if (explaination) {
+		task.containsErrors = true;
+		task.errorExplaination = explaination;
+		return true;
+	}
+	task.containsErrors = false;
+	return false;
+}
+
+function formatError(task, visual) {
+	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.error.name)) {
+		return visual;
+	}
+	return visual.replace(_configuration.fields.error.regex, 
+		renderData("🐞", _configuration.fields.error.name, null, task.errorExplaination));
+}
+
 function tryDefineDefaultDueDate(task) {
 	if (!task.due) {
-		let twoMonths = _dv.duration("2 months")
-		task.due = task.creation.plus(twoMonths);
+		task.due = task.creation.plus(_configuration.fields.due.values.default.delaiFromCreation);
 		task.dueIsDefault = true;
 	} else {
 		task.dueIsDefault = false;
@@ -156,18 +285,18 @@ function tryDefineDefaultDueDate(task) {
 }
 
 function definePriority(task) {
-	if (priorityHighestRegex.test(task.text)) {
-		task.priority = priorityHighest;
-	} else if (priorityHighRegex.test(task.text)) {
-		task.priority = priorityHigh;
-	} else if (priorityMediumRegex.test(task.text)) {
-		task.priority = priorityMedium;
-	} else if (priorityLowRegex.test(task.text)) {
-		task.priority = priorityLow;
-	} else if (priorityLowestRegex.test(task.text)) {
-		task.priority = priorityLowest;
+	if (_configuration.fields.priority.values.highest.regex.test(task.text)) {
+		task.priority = _configuration.fields.priority.values.highest.value;
+	} else if (_configuration.fields.priority.values.high.regex.test(task.text)) {
+		task.priority = _configuration.fields.priority.values.high.value;
+	} else if (_configuration.fields.priority.values.medium.regex.test(task.text)) {
+		task.priority = _configuration.fields.priority.values.medium.value;
+	} else if (_configuration.fields.priority.values.low.regex.test(task.text)) {
+		task.priority = _configuration.fields.priority.values.low.value;
+	} else if (_configuration.fields.priority.values.lowest.regex.test(task.text)) {
+		task.priority = _configuration.fields.priority.values.lowest.value;
 	} else {
-		task.priority = priorityNone;
+		task.priority = _configuration.fields.priority.values.none.value;
 	}
 }
 
@@ -267,17 +396,17 @@ function computeUrgency(task) {
 	} 
 
 	let priorityScore = 0.0;
-	if (task.priority === priorityHighest) {
+	if (task.priority === _configuration.fields.priority.values.highest.value) {
 		priorityScore = 9.0;
-	} else if (task.priority === priorityHigh) {
+	} else if (task.priority === _configuration.fields.priority.values.high.value) {
 		priorityScore = 6.0;
-	} else if (task.priority === priorityMedium) {
+	} else if (task.priority === _configuration.fields.priority.values.medium.value) {
 		priorityScore = 3.9;
-	} else if (task.priority === priorityNone) {
+	} else if (task.priority === _configuration.fields.priority.values.none.value) {
 		priorityScore = 1.95;
-	} else if (task.priority === priorityLow) {
+	} else if (task.priority === _configuration.fields.priority.values.low.value) {
 		priorityScore = 0.0;
-	} else if (task.priority === priorityLowest) {
+	} else if (task.priority === _configuration.fields.priority.values.lowest.value) {
 		priorityScore = -1.8;
 	}
 	score += priorityScore;
@@ -285,42 +414,6 @@ function computeUrgency(task) {
 
 	task.urgency = score;
 	task.urgencyExplaination = explaination;
-}
-
-function formatUrgency(task, visual) {
-	if (_options && _options.visibleFields && !_options.visibleFields.includes("urgency")) {
-		return visual;
-	}
-	let tooltip = `score : ${task.urgency}&#10;${task.urgencyExplaination}`; 
-	return visual.replace(endOfFirstLineRegex, 
-		renderData("🚨", "urgency", null, tooltip));
-}
-
-function listErrors(task) {
-	let explaination = null;
-	if (!task.creation) {
-		explaination = "No creation date defined &#10;"
-	}
-	if (explaination) {
-		debugger;
-		task.containsErrors = true;
-		task.errorExplaination = explaination;
-		return true;
-	}
-	task.containsErrors = false;
-	return false;
-}
-
-function hideAllFields(visual) {
-	return visual.replace(allFieldsRegex, ""); 
-}
-
-function formatError(task, visual) {
-	if (_options && _options.visibleFields && !_options.visibleFields.includes("error")) {
-		return;
-	}
-	return visual.replace(endOfFirstLineRegex, 
-		renderData("🐞", "error", null, task.errorExplaination));
 }
 
 function preFormat(task) {
@@ -333,7 +426,7 @@ function format(task) {
 	if (task.containsErrors) {
 		
 		let visual = task.text;
-		visual = hideAllFields(visual);
+		visual = hideField(visual, _configuration.fields.all.name);
 		visual = formatError(task, visual);
 		task.visual = visual;
 
@@ -381,7 +474,7 @@ function getBy(filter) {
 		.map(preFormat)
 		.filter(filter)
 		.map(format);
-	if (_options && _options.sortBy === "due") {
+	if (_options && _options.sortBy === _configuration.fields.due.name) {
 		return tasks.sort((task) => task.due, "asc", sortDate);
 	}
 	return tasks.sort((task) => task.urgency, "desc");
@@ -400,6 +493,7 @@ module.exports = {
 	init: function (dv, options) {
 		_dv = dv;
 		_options = options;
+		_configuration = getConfiguration();
 	},
 	renderTasks: renderTasks,
 	renderActiveTasks: function (projectFilePath) {
@@ -415,14 +509,9 @@ module.exports = {
 			return !task.fullyCompleted && task.status == status;
 		})
 	},
-	renderHighestPriorityTasks: function () {
+	renderTasksByPriority: function (priority) {
 		renderTasks(function (task) {
-			return !task.fullyCompleted && task.priority == priorityHighest;
-		})
-	},
-	renderHighPriorityTasks: function () {
-		renderTasks(function (task) {
-			return !task.fullyCompleted && task.priority == priorityHigh;
+			return !task.fullyCompleted && task.priority == priority;
 		})
 	},
 	renderQuickTasks: function () {

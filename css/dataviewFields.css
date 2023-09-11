@@ -98,8 +98,6 @@ span.dataview.inline-field-key:is([data-dv-key=priority_lowest]) + span.dataview
 	display: none;
 }
 
-
-
 /******* Due ********/
 
 span.dataview.inline-field-key:is([data-dv-key=due]) + span.dataview.inline-field-value::before {
