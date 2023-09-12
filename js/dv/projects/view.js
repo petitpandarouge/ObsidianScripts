@@ -1,4 +1,5 @@
-﻿let projects = dv.pages('!"TEMPLATES" and #projet');
+﻿let projects = dv.pages('!"TEMPLATES" and #projet')
+	.map(getMetadata);
 let order    = input.order || 'asc';
 
 // SORT
@@ -35,6 +36,8 @@ for (let i = 0; i < projects.length; i++) {
 
     // TITLE
     let title = project.title || project.file.name;
+	// Removing the date.
+	title = title.replace(/(([\d|\ |\-]+) )/, "");
     html += `<h1 class="project-card-title"><a href="${project.file.name}" data-href="${project.file.name}" class="internal-link">${title}</a></h1>`;
 
     // SUBTITLE
@@ -76,11 +79,13 @@ for (let i = 0; i < projects.length; i++) {
     }}
 
 	// LAST MODIFICATION
-	let dateTime = project.file.mtime.toFormat("dd-MM-yyyy");
-	html += `<div class="project-card-date">
-		<span class="project-card-date-prefix">Dernière modification</span>
-		<span class="project-card-date-text">${dateTime}</span>
-	</div>`;
+	let lastModifiedDate = project.file.mtime.toFormat("dd-MM-yyyy");
+	html += renderData(`📝 ${lastModifiedDate}`, "last-modified");
+
+	// ERRORS
+	if (project.containsErrors) {
+		html += renderData("🐞", "error", null, project.errorExplaination);
+	}
 
     // LINKS
     html += `<div class="project-card-meta">`;
@@ -103,3 +108,53 @@ for (let i = 0; i < projects.length; i++) {
 html += `</section>`;
 
 return html;
+
+// UTILS
+
+function getMetadata(project) {
+	listErrors(project);
+	return project;
+}
+
+function listErrors(project) {
+	let explaination = "";
+	if (!project.file.frontmatter.tags) {
+		explaination += "No tags defined &#10;"
+	}
+    if (!project.file.frontmatter.tags.includes("projet")) {
+        explaination += "No tags 'projet' defined &#10;"
+    }
+    if (!project.file.frontmatter.casquette) {
+		explaination += "No casquette defined &#10;"
+	}
+    if (!project.file.frontmatter.parents) {
+		explaination += "No parents defined &#10;"
+	}
+    if (!project.file.frontmatter.suivi) {
+		explaination += "No suivi defined &#10;"
+	}
+	if (explaination) {
+		project.containsErrors = true;
+		project.errorExplaination = explaination;
+		return;
+	}
+	project.containsErrors = false;
+	return;
+}
+
+function renderData(displayString, fieldKey, classNames, tooltip) {
+	let span = `<span class="dataview inline-field">`;
+	span += `<span class="dataview inline-field-standalone-value inherit-color `;
+	if (classNames) {
+		span += `${classNames}`;
+	}
+	span += `" `;
+	if (fieldKey) {
+		span += `data-dv-key="${fieldKey}" `;
+	}
+	if (tooltip) {
+		span += `title="${tooltip}" `;
+	}
+	span += `>${displayString}</span></span>`;
+	return span;
+}
