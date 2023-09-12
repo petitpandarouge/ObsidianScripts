@@ -1,4 +1,12 @@
-﻿
+﻿let {filter} = input;
+
+const rootNode = dv.el("div", "coucou");
+
+// INIT
+renderProjects();
+
+// FUNCTIONS
+
 function listErrors(project) {
 	let explaination = "";
 	if (!project.frontmatter.tags) {
@@ -36,9 +44,8 @@ function format(project) {
     return project;
 }
 
-
 function getBy(filter) {
-	let pages = _dv.pages('!"TEMPLATES" and #projet');
+	let pages = dv.pages('!"TEMPLATES" and #projet');
 	let projects = pages.file
         .map(preFormat);
     if (filter) {
@@ -48,18 +55,15 @@ function getBy(filter) {
 	return projects.sort((project) => project.name, "desc");
 }
 
-function renderProjects(filter) {
-	let projects = getBy(filter);
+function renderProjects() {
+	let projects = getBy(input.filter);
 	if (projects.length) {
-		_dv.list(projects.link);
+		dv.list(projects.link);
 	} else {
-		_dv.paragraph("🎉 Nothing to do ! 🎉");
+		dv.paragraph("🎉 Nothing to do ! 🎉");
 	}
 }
 
-module.exports = {
-	init: function (dv) {
-		_dv = dv;
-	},
-    renderProjects: renderProjects
-};
+function listProjects() {
+
+}
