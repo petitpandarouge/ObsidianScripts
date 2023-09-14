@@ -5,8 +5,11 @@ let order    = input.order || 'asc';
 // SORT
 projects = projects.sort( project => {
     
-	let lastModifiedDate = project.file.mtime.toFormat("yyyy-MM-dd");
-    return `${lastModifiedDate}`;
+	if (project.modified) {
+		let lastModifiedDate = project.modified.toFormat("yyyy-MM-dd");
+		return `${lastModifiedDate}`;
+	}
+	return "9999-99-99";
     
 }, order);
 
@@ -79,8 +82,13 @@ for (let i = 0; i < projects.length; i++) {
     }}
 
 	// LAST MODIFICATION
-	let lastModifiedDate = project.file.mtime.toFormat("dd-MM-yyyy");
-	html += renderData(`📝 ${lastModifiedDate}`, "last-modified");
+	if (project.modified) {
+		let lastModifiedDate = project.modified.toFormat("dd-MM-yyyy");
+		html += renderData(`📝 ${lastModifiedDate}`, "last-modified");
+	} else {
+		let lastModifiedDate = project.file.mtime.toFormat("dd-MM-yyyy");
+		html += renderData(`⚙️|📝 ${lastModifiedDate}`, "last-modified");
+	}
 
 	// ERRORS
 	if (project.containsErrors) {
@@ -132,6 +140,9 @@ function listErrors(project) {
 	}
     if (!project.file.frontmatter.suivi) {
 		explaination += "No suivi defined &#10;"
+	}
+	if (!project.file.frontmatter.modified) {
+		explaination += "No modified defined &#10;"
 	}
 	if (explaination) {
 		project.containsErrors = true;
