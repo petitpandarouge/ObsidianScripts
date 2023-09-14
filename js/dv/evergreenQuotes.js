@@ -1,6 +1,20 @@
 
 const quoteRegex = /\[!quote\] ([^\~]+)\~/m;
 
+if (!input || !input.type) {
+	dv.paragraph("Please select the type of quote you want to display.");
+	return;
+}
+
+if (input.type === "all") {
+	await displayLinkedQuotes();
+} else if (input.type === "random") {
+	await displayRandomLinkedQuote();
+}
+
+
+// UTILS
+
 function getQuote(content) {
 	// L'index 0 retourne le match avec [!quote]
 	// L'index 1 retourne le match de la première parenthèse
@@ -14,7 +28,7 @@ function formatQuote(quote, page) {
 	return `[[${page.file.name}|${quote}]]`;
 }
 
-async function getLinkedQuotes(dv) {
+async function getLinkedQuotes() {
 	let citationPages = dv.pages('"06 GARDEN" AND #type/citation');
 	let quotes = [];
 	for (let page of citationPages) {
@@ -26,13 +40,18 @@ async function getLinkedQuotes(dv) {
 	return quotes;
 }
 
-async function getRandomLinkedQuote(dv) {
-	let quotes = await getLinkedQuotes(dv);
+async function displayLinkedQuotes() {
+	let quotes = await getLinkedQuotes();
+	dv.list(quotes, false);
+}
+
+async function getRandomLinkedQuote() {
+	let quotes = await getLinkedQuotes();
 	return quotes[Math.floor(Math.random() * quotes.length)];
 }
 
-module.exports = {
-	getAll: getLinkedQuotes,
-	getRandom: getRandomLinkedQuote
-};
+async function displayRandomLinkedQuote() {
+	let quote = await getRandomLinkedQuote();
+	dv.paragraph(quote);
+}
 	
