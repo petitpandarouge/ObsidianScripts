@@ -4,7 +4,6 @@
 	let activeFile = app.workspace.getActiveFile();
 	if (activeFile) {
 		let i = 1;
-		debugger
 		while (params.variables[`${baseVarName}${i}`] !== undefined) { i++; }
 		params.variables[`${baseVarName}${i}`] = activeFile.path;
 	}
