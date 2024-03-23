@@ -19,14 +19,9 @@ module.exports.onload = async (plugin) => {
 			let created_note;
 			let isCreated;
 			do {
-				let date = new Date();
-				date.setMinutes(date.getMinutes() + version);
-				let newFileBaseName = date
-					.toISOString()
-					.replace(/-/g, '')
-					.replace(/T/g, '')
-					.replace(/:[0-9]+\.[0-9]+Z/g, '') // remove the seconds and the miliseconds.
-					.replace(/:/g, '');
+				let date = moment();
+				date.add(version, 'minutes');
+				let newFileBaseName = date.format('YYYYmmDDHHmm');
 				let newFilePath = newFileBasePath + newFileBaseName + ".md";
 				try {
 					created_note = await plugin.app.vault.create(newFilePath, '');
