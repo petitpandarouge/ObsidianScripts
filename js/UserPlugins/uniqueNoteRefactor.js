@@ -31,7 +31,7 @@ module.exports.onload = async (plugin) => {
 					.replace(/:/g, '');
 				let newActiveFilePath = activeFileFolderPath + fileUniqueTag + " - " + activeFile.basename + ".md";
 				try {
-					await plugin.app..fileManager.renameFile(activeFile, newActiveFilePath);
+					await plugin.app.fileManager.renameFile(activeFile, newActiveFilePath);
 					isRenamed = true
 				} catch {
 					version += 1;
