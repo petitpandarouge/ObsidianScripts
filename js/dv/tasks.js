@@ -499,7 +499,7 @@ function sortDate(date1, date2)
 }
 
 function getBy(filter) {
-	let pages = _dv.pages('!"07 TEMPLATES"');
+	let pages = _dv.pages('!"TEMPLATES"');
 	let tasks = pages.file.tasks
 		.map(preFormat)
 		.filter(filter)
@@ -526,12 +526,16 @@ module.exports = {
 		_configuration = getConfiguration();
 	},
 	renderTasks: renderTasks,
-	renderActiveTasks: function (projectFilePath) {
+	renderActiveTasks: function ({projectFilePath, folderToExclude} = {}) {
 		renderTasks(function (task) {
+			let result = !task.fullyCompleted;
 			if (projectFilePath) {
-				return !task.fullyCompleted && task.path == projectFilePath;
+				result &&= task.path == projectFilePath;
 			}
-			return !task.fullyCompleted;
+			if (folderToExclude) {
+				result &&= !task.path.includes(folderToExclude);
+			}
+			return result;
 		})
 	},
 	renderTasksByStatus: function (status) {
