@@ -6,6 +6,17 @@ module.exports.onload = async (plugin) => {
 		id: 'new-unique-note-in-current-folder',
 		name: 'Create new unique note in current folder',
 		callback: async () => {
+
+			let isInSideBar = function(leaf, side) {
+				return leaf.parent.containerEl.hasClass(`mod-top-${side}-space`);
+			}
+			let isInCenterPanel = function(leaf) {
+				return !isInSideBar(leaf, "right") && !isInSideBar(leaf, "left");
+			}
+			let hasTabActive = function(leaf) {
+				return leaf.tabHeaderEl.hasClass('is-active');
+			}
+
             let newFileBasePath = "";
             let activeFile = plugin.app.workspace.getActiveFile();
             if (activeFile) {
@@ -16,7 +27,7 @@ module.exports.onload = async (plugin) => {
             }
 
 			let version = 0;
-			let created_note;
+			let createdNote;
 			let isCreated;
 			do {
 				let date = moment();
@@ -24,26 +35,27 @@ module.exports.onload = async (plugin) => {
 				let newFileBaseName = date.format('YYYYmmDDHHmm');
 				let newFilePath = newFileBasePath + newFileBaseName + ".md";
 				try {
-					created_note = await plugin.app.vault.create(newFilePath, '');
+					createdNote = await plugin.app.vault.create(newFilePath, '');
 					isCreated = true
 				} catch {
 					version += 1;
 					isCreated = false;
 				}
 			} while (isCreated === false);
-			
-			const active_leaf = plugin.app.workspace.activeLeaf;
-			if (!active_leaf) {
+
+			let leaf = app.workspace.getLeavesOfType("markdown").find(leaf => 
+				isInCenterPanel(leaf) && 
+				hasTabActive(leaf)
+				);
+			if (!leaf) {
 				return;
 			}
-			await active_leaf.openFile(created_note, {
+			app.workspace.setActiveLeaf(leaf);
+			await leaf.openFile(createdNote, {
 				state: { mode: "source" },
-			});
-			plugin.app.workspace.trigger("create",created_note)
-			const view = app.workspace.getActiveViewOfType(MarkdownView);
-			if (view) {
-				view.editor.focus()
-			}
+				});
+			plugin.app.workspace.trigger("create", createdNote);
+			leaf.view.editor.focus();
 		}
 	});
 }
