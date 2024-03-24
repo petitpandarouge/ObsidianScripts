@@ -17,12 +17,9 @@ module.exports.onload = async (plugin) => {
 			let hasTabActive = function(leaf) {
 				return leaf.tabHeaderEl.hasClass('is-active');
 			}
-			let getNewFileBasePathFrom = function(leaf) {
+			let getFolderPathFrom = function(leaf) {
 				const activeFileFolder = plugin.app.fileManager.getNewFileParent(leaf.view.file.path);
-				if (activeFileFolder) {
-					return activeFileFolder.path + "/";
-				}
-				return "/";
+				return activeFileFolder.path + "/";
 			}
 			let createUniqueNote = async function(newFileBasePath) {
 				let version = 0;
@@ -78,7 +75,7 @@ module.exports.onload = async (plugin) => {
 				return;
 			}
 
-            const newFileBasePath = getNewFileBasePathFrom(leaf);
+            const newFileBasePath = getFolderPathFrom(leaf);
 			const createdNote = await createUniqueNote(newFileBasePath);
 			app.workspace.setActiveLeaf(leaf);
 			let options = new OpenFileOptions();
