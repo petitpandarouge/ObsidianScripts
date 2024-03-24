@@ -43,33 +43,29 @@ module.exports.onload = async (plugin) => {
 				} while (isCreated === false);
 				return createdNote;
 			}
-			let inSourceMode = function(createFileOption) {
+
+			let OpenFileOptions = function() {}
+			OpenFileOptions.prototype.inSourceMode = function() {
 				debugger
-				if (!createFileOption.state) {
-					createFileOption = {
-						...createFileOption,
-						state: {}
-					};
+				if (!this.state) {
+					this.state = {};
 				}
-				createFileOption.state = {
-					...createFileOption.state,
+				this.state = {
+					...this.state,
 					mode: "source"
 				};
-				return createFileOption;
+				return this;
 			}
-			let withFocusAtTheEndOfTitle = function(createFileOption) {
+			OpenFileOptions.prototype.withFocusAtTheEndOfTitle = function() {
 				debugger
-				if (!createFileOption.state) {
-					createFileOption = {
-						...createFileOption,
-						eState: {}
-					};
+				if (!this.state) {
+					this.eState = {};
 				}
-				createFileOption.eState = {
-					...createFileOption.eState,
+				this.eState = {
+					...this.eState,
 					rename: 'end'
 				};
-				return createFileOption;
+				return this;
 			}
 
 			// Implementation.
@@ -85,10 +81,12 @@ module.exports.onload = async (plugin) => {
             const newFileBasePath = getNewFileBasePathFrom(leaf);
 			const createdNote = await createUniqueNote(newFileBasePath);
 			app.workspace.setActiveLeaf(leaf);
+			let options = new OpenFileOptions();
 			await leaf.openFile(createdNote, 
-				withFocusAtTheEndOfTitle(
-				inSourceMode({})
-				));
+				options
+					.inSourceMode()
+					.withFocusAtTheEndOfTitle()
+				);
 			plugin.app.workspace.trigger("create", createdNote);
 		}
 	});
