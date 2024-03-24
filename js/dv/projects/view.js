@@ -1,12 +1,13 @@
 ﻿// INPUTS
-let {order, sortBy} = input;
+let {order, sortBy, folderToExclude} = input;
 // Default values
 order = order || 'asc';
 sortBy = sortBy || 'lastModifiedDate';
+folderToExclude = folderToExclude || '';
 
 // PROJECTS
 let projects = dv.pages('!"TEMPLATES" and #projet')
-	.where(p => !isArchived(p))
+	.where(p => !isArchived(p) && !mustBeExcluded(p))
 	.map(getMetadata);
 
 // SORT
@@ -386,4 +387,8 @@ function definePriority(project) {
 
 function isArchived(project) {
 	return project['note-type'] === "#archive";
+}
+
+function mustBeExcluded(project) {
+	return project.file.path.includes(folderToExclude);
 }
