@@ -17,6 +17,60 @@ module.exports.onload = async (plugin) => {
 			let hasTabActive = function(leaf) {
 				return leaf.tabHeaderEl.hasClass('is-active');
 			}
+			let getNewFileBasePathFrom = function(leaf) {
+				const activeFileFolder = plugin.app.fileManager.getNewFileParent(leaf.view.file.path);
+				if (activeFileFolder) {
+					return activeFileFolder.path + "/";
+				}
+				return "/";
+			}
+			let createUniqueNote = async function(newFileBasePath) {
+				let version = 0;
+				let createdNote;
+				let isCreated;
+				do {
+					let date = moment();
+					date.add(version, 'minutes');
+					let newFileBaseName = date.format('YYYYMMDDHHmm');
+					let newFilePath = newFileBasePath + newFileBaseName + ".md";
+					try {
+						createdNote = await plugin.app.vault.create(newFilePath, '');
+						isCreated = true
+					} catch {
+						version += 1;
+						isCreated = false;
+					}
+				} while (isCreated === false);
+				return createdNote;
+			}
+			let inSourceMode = function(createFileOption) {
+				debugger
+				if (!createFileOption.state) {
+					createFileOption = {
+						...createFileOption,
+						state: {}
+					};
+				}
+				createFileOption.state = {
+					...createFileOption.state,
+					mode: "source"
+				};
+				return createFileOption;
+			}
+			let withFocusAtTheEndOfTitle = function(createFileOption) {
+				debugger
+				if (!createFileOption.state) {
+					createFileOption = {
+						...createFileOption,
+						eState: {}
+					};
+				}
+				createFileOption.eState = {
+					...createFileOption.eState,
+					rename: 'end'
+				};
+				return createFileOption;
+			}
 
 			// Implementation.
 
@@ -28,34 +82,13 @@ module.exports.onload = async (plugin) => {
 				return;
 			}
 
-            let newFileBasePath = "/";
-			const activeFileFolder = plugin.app.fileManager.getNewFileParent(leaf.view.file.path);
-			if (activeFileFolder) {
-				newFileBasePath = activeFileFolder.path + "/";
-			}
-
-			let version = 0;
-			let createdNote;
-			let isCreated;
-			do {
-				let date = moment();
-				date.add(version, 'minutes');
-				let newFileBaseName = date.format('YYYYmmDDHHmm');
-				let newFilePath = newFileBasePath + newFileBaseName + ".md";
-				try {
-					createdNote = await plugin.app.vault.create(newFilePath, '');
-					isCreated = true
-				} catch {
-					version += 1;
-					isCreated = false;
-				}
-			} while (isCreated === false);
-
+            const newFileBasePath = getNewFileBasePathFrom(leaf);
+			const createdNote = await createUniqueNote(newFileBasePath);
 			app.workspace.setActiveLeaf(leaf);
-			await leaf.openFile(createdNote, {
-				state: { mode: "source" },
-				eState: { rename: 'end' } 
-				});
+			await leaf.openFile(createdNote, 
+				withFocusAtTheEndOfTitle(
+				inSourceMode({})
+				));
 			plugin.app.workspace.trigger("create", createdNote);
 		}
 	});
