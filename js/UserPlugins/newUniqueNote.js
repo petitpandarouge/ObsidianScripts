@@ -72,19 +72,21 @@ module.exports.onload = async (plugin) => {
 				hasTabActive(leaf)
 				);
 			if (!leaf) {
+				new Notice("No leaf found in the center panel.", 3000);
 				return;
 			}
 
             const newFileBasePath = getFolderPathFrom(leaf);
 			const createdNote = await createUniqueNote(newFileBasePath);
 			app.workspace.setActiveLeaf(leaf);
-			let options = new OpenFileOptions();
 			await leaf.openFile(createdNote, 
-				options
+				(new OpenFileOptions())
 					.inSourceMode()
 					.withFocusAtTheEndOfTitle()
 				);
 			plugin.app.workspace.trigger("create", createdNote);
+
+			new Notice(`The note ${createdNote.path} has been successfully created.`, 3000);
 		}
 	});
 }
