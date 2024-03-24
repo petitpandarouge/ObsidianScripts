@@ -41,7 +41,7 @@ for (let i = 0; i < projects.length; i++) {
 			// TITLE
 			let title = project.title || project.file.name;
 			// Removing the date.
-			title = title.replace(/(([\d|\ |\-]+) )/, "");
+			title = title.replace(/(([\d|\ ]+[\-]) )/, "");
 			html += `<h1 class="project-card-title"><a href="${project.file.name}" data-href="${project.file.name}" class="internal-link">${title}</a></h1>`;
 
 			// SUBTITLE
