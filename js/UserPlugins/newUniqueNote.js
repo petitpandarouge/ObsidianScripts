@@ -4,7 +4,7 @@ module.exports.onload = async (plugin) => {
 	const MarkdownView = plugin.passedModules.obsidian.MarkdownView
 	plugin.addCommand({
 		id: 'new-unique-note-in-current-folder',
-		name: 'Create new unique note in current folder',
+		name: 'Create new unique note in folder of the center panel active note',
 		callback: async () => {
 
 			let isInSideBar = function(leaf, side) {
@@ -17,14 +17,19 @@ module.exports.onload = async (plugin) => {
 				return leaf.tabHeaderEl.hasClass('is-active');
 			}
 
-            let newFileBasePath = "";
-            let activeFile = plugin.app.workspace.getActiveFile();
-            if (activeFile) {
-                let activeFileFolder = plugin.app.fileManager.getNewFileParent(activeFile.path);
-                if (activeFileFolder) {
-                    newFileBasePath = activeFileFolder.path + "/";
-                }
-            }
+			const leaf = app.workspace.getLeavesOfType("markdown").find(leaf => 
+				isInCenterPanel(leaf) && 
+				hasTabActive(leaf)
+				);
+			if (!leaf) {
+				return;
+			}
+
+            let newFileBasePath = "/";
+			const activeFileFolder = plugin.app.fileManager.getNewFileParent(leaf.view.file.path);
+			if (activeFileFolder) {
+				newFileBasePath = activeFileFolder.path + "/";
+			}
 
 			let version = 0;
 			let createdNote;
@@ -43,13 +48,7 @@ module.exports.onload = async (plugin) => {
 				}
 			} while (isCreated === false);
 
-			let leaf = app.workspace.getLeavesOfType("markdown").find(leaf => 
-				isInCenterPanel(leaf) && 
-				hasTabActive(leaf)
-				);
-			if (!leaf) {
-				return;
-			}
+			
 			app.workspace.setActiveLeaf(leaf);
 			await leaf.openFile(createdNote, {
 				state: { mode: "source" },
