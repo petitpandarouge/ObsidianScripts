@@ -6,6 +6,7 @@ sortBy = sortBy || 'lastModifiedDate';
 
 // PROJECTS
 let projects = dv.pages('!"TEMPLATES" and #projet')
+	.where(p => !isArchived(p))
 	.map(getMetadata);
 
 // SORT
@@ -381,4 +382,8 @@ function computeUrgency(task) {
 function definePriority(project) {
 	let configuration = getConfiguration();
 	project.priority = configuration.fields.priority.values.none.value;
+}
+
+function isArchived(project) {
+	return project['note-type'] === "#archive";
 }
