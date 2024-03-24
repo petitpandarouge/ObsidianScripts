@@ -43,7 +43,6 @@ module.exports.onload = async (plugin) => {
 
 			let OpenFileOptions = function() {}
 			OpenFileOptions.prototype.inSourceMode = function() {
-				debugger
 				if (!this.state) {
 					this.state = {};
 				}
@@ -54,7 +53,6 @@ module.exports.onload = async (plugin) => {
 				return this;
 			}
 			OpenFileOptions.prototype.withFocusAtTheEndOfTitle = function() {
-				debugger
 				if (!this.state) {
 					this.eState = {};
 				}
