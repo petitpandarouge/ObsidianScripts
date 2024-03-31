@@ -5,13 +5,13 @@ let {hotkeys} = input;
 let displayedArray = [];
 for (let i = 0; i < hotkeys.length; i++) {
     const hotkey = hotkeys[i];
-    const hotkeyButton = dv.el('button', hotkey.hotkey);
+    const hotkeyButton = dv.el('button', hotkeyToString(hotkey.hotkey));
     hotkeyButton.onclick = () => {
-        new Notice(hotkey.hotkey, 3000);
+        openHotkeySettingByHotkey(hotkey.hotkey);
     };
     const actionButton = dv.el('button', hotkey.label);
     actionButton.onclick = () => {
-        new Notice(hotkey.id, 3000);
+        openHotkeySettingByCommandId(hotkey.id);
     };
     displayedArray.push([hotkeyButton, actionButton])
 }
@@ -22,10 +22,20 @@ dv.table(
 );
 
 // UTILS
-function openHotkeySettingByCommandid(commandId) {
-
+function openHotkeySettingByCommandId(commandId) {
+    app.setting.open();
+    const tab = app.setting.openTabById('hotkeys');
+    tab.setQuery(commandId);
 }
 
 function openHotkeySettingByHotkey(hotkey) {
+    app.setting.open();
+    const tab = app.setting.openTabById('hotkeys');
+    tab.setHotkeyFilter(hotkey);
+}
 
+function hotkeyToString(hotkey) {
+    let string = hotkey.modifiers.join(" + ");
+    string += ` + ${hotkey.key}`;
+    return string;
 }
