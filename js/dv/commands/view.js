@@ -1,23 +1,23 @@
 // INPUTS
-let {hotkeys} = input;
+let {commands} = input;
 
 // RENDER
 let displayedArray = [];
-for (let i = 0; i < hotkeys.length; i++) {
-    const hotkey = hotkeys[i];
-    const hotkeyButton = dv.el('button', hotkeyToString(hotkey.hotkey));
+for (let i = 0; i < commands.length; i++) {
+    const command = commands[i];
+    const hotkeyButton = dv.el('button', hotkeyToString(command.hotkey));
     hotkeyButton.onclick = () => {
-        openHotkeySettingByHotkey(hotkey.hotkey);
+        openHotkeySettingByHotkey(command.hotkey);
     };
-    const actionButton = dv.el('button', hotkey.label);
+    const actionButton = dv.el('button', command.label);
     actionButton.onclick = () => {
-        openHotkeySettingByCommandId(hotkey.id);
+        openHotkeySettingByCommandId(command.id);
     };
     displayedArray.push([hotkeyButton, actionButton])
 }
 
 dv.table(
-	["Raccourcis", "Actions"], 
+	["Raccourcis", "Commandes"], 
 	displayedArray
 );
 
