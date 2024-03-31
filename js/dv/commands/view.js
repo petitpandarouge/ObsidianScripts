@@ -13,11 +13,15 @@ for (let i = 0; i < commands.length; i++) {
     actionButton.onclick = () => {
         openHotkeySettingByCommandId(command.id);
     };
-    displayedArray.push([hotkeyButton, actionButton])
+    let doc = "";
+    if (command.doc) {
+        doc = dv.fileLink(command.doc, false, '📄');
+    }
+    displayedArray.push([hotkeyButton, actionButton, doc])
 }
 
 dv.table(
-	["Raccourcis", "Commandes"], 
+	["Raccourcis", "Commandes", "Docs"], 
 	displayedArray
 );
 
