@@ -207,13 +207,20 @@ function formatScheduledDate(task, visual) {
 	return visual;
 }
 
-function formatCreationDate(visual) {
+function formatCreationDate(task, visual) {
 	if (_options && _options.visibleFields && !_options.visibleFields.includes(_configuration.fields.creation.name)) {
 		return hideField(visual, _configuration.fields.creation.name);
 	}
 	if (_options && _options.hiddenFields && _options.hiddenFields.includes(_configuration.fields.creation.name)) {
 		return hideField(visual, _configuration.fields.creation.name);
 	}
+
+	if (task.creationIsDefault) {
+		let displayString = "⚙️|🌱 " + dateToShortString(task.creation);
+		return visual.replace(_configuration.endOfFirstLine.regex, 
+			renderData(displayString, _configuration.fields.creation.name));
+	}
+
 	return visual;
 }
 
@@ -303,6 +310,16 @@ function formatError(task, visual) {
 	}
 	return visual.replace(_configuration.fields.error.regex, 
 		renderData("🐞", _configuration.fields.error.name, null, task.errorExplaination));
+}
+
+function tryDefineDefaultCreationDate(task) {
+	if (!task.creation) {
+		let file = _dv.app.vault.getAbstractFileByPath(task.path);
+		task.creation = _dv.date((new moment(file.stat.ctime)).format("yyyy-MM-DD"));
+		task.creationIsDefault = true;
+	} else {
+		task.creationIsDefault = false;
+	}
 }
 
 function tryDefineDefaultDueDate(task) {
@@ -447,6 +464,7 @@ function computeUrgency(task) {
 }
 
 function preFormat(task) {
+	tryDefineDefaultCreationDate(task);
 	definePriority(task);
 	listErrors(task);
 	return task;
@@ -467,7 +485,7 @@ function format(task) {
 	computeUrgency(task);
 
 	let visual = task.text;
-	visual = formatCreationDate(visual);
+	visual = formatCreationDate(task, visual);
 	visual = formatDetails(visual);
 	visual = formatQuick(visual);
 	visual = formatPriority(visual);
