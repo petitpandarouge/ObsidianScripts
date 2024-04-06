@@ -14,7 +14,6 @@ for (let i = 0; i < commands.length; i++) {
     const hotkeyAsString = hotkeyToString(command.hotkey)
     const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
     hotkeyButton.onclick = () => openHotkeySettingByHotkey(command.hotkey);
-    debugger
     if (!commandsConfig.hotkeys[hotkeyAsString] ||
         commandsConfig.hotkeys[hotkeyAsString].length > 1) {
         hotkeyButton.addClass("error")
