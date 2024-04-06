@@ -5,7 +5,7 @@ let {commands} = input;
 let commandsConfig = getConfiguration();
 
 // RENDER
-let applyHotkeysButton = dv.el('button', 'Apply hotkeys');
+let applyHotkeysButton = dv.el('button', 'Apply hotkeys', {cls: "whide"});
 applyHotkeysButton.onclick = applyHotkeys;
 
 let displayedArray = [];
