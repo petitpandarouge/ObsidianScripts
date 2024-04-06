@@ -11,8 +11,9 @@ applyHotkeysButton.onclick = applyHotkeys;
 let displayedArray = [];
 for (let i = 0; i < commands.length; i++) {
     const command = commands[i];
-    const hotkeyButton = dv.el('button', hotkeyToString(command.hotkey));
+    const hotkeyButton = dv.el('button', hotkeyToString(command.hotkey), {cls: "clickable-icon"});
     hotkeyButton.onclick = () => openHotkeySettingByHotkey(command.hotkey);
+    debugger
     let commandLabel = "INVALID ID"
     if (commandsConfig.commands[command.id]) {
         commandLabel = commandsConfig.commands[command.id].name;
