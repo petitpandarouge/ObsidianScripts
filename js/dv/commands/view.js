@@ -43,7 +43,11 @@ class CustomCommand {
 
     buildHotkeyButton() {
         const hotkeyAsString = this.hotkey.toString();
-        const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
+        let buttonLabel = hotkeyAsString;
+        if (obsidianSettings.customCommandHotkeyIsDefault(this)) {
+            buttonLabel += " ✔️";
+        }
+        const hotkeyButton = dv.el('button', buttonLabel, {cls: "clickable-icon"});
         hotkeyButton.onclick = () => obsidianSettings.openHotkeySettingByHotkey(this.hotkey);
         if (obsidianSettings.hotkeyNotBoundToCommand(hotkeyAsString) ||
             obsidianSettings.hotkeyBoundToMoreThanOneCommand(hotkeyAsString)) {
