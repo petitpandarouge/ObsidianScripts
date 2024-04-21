@@ -156,8 +156,7 @@ class ObsidianSettings {
     }
 
     applyHotkeys(customCommands) {
-        for (let i = 0; i < customCommands.length; i++) {
-            const customCommand = customCommands[i]
+        for (let customCommand of customCommands) {
             if (this.commandExists(customCommand.id)) {
                 this.applyHotkey(customCommand);
                 this.#notifyHotkeyApplied(customCommand);
@@ -191,8 +190,8 @@ function displayApplyHotkeysButton() {
 
 function displayCommandsArray() {
     let displayedArray = [];
-    for (let i = 0; i < customCommands.length; i++) {
-        const customCommand = customCommands[i];
+    for (let customCommand of customCommands) {
+        debugger
         const hotkeyButton = customCommand.buildHotkeyButton();
         const label = customCommand.buildLabel();
         displayedArray.push([hotkeyButton, label])
@@ -210,8 +209,7 @@ function trydisplayFilteredObsidianCommands() {
         
         let displayedArray = [];
         const obsidianCommands = Object.values(obsidianSettings.commandsByid);
-        for (let i = 0; i < obsidianCommands.length; i++) {
-            const command = obsidianCommands[i];
+        for (let command of obsidianCommands) {
             if (command.name.toLowerCase().includes(filterByName.toLowerCase())) {
                 displayedArray.push([command.name, command.id])
             }
