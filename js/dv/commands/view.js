@@ -18,18 +18,9 @@ function displayCommandsArray() {
     let displayedArray = [];
     for (let i = 0; i < commands.length; i++) {
         const command = commands[i];
-        const hotkeyButton = buildHotkeyButton(command);
-
-        let commandLabel = "INVALID ID"
-        if (commandsConfig.commands[command.id]) {
-            commandLabel = commandsConfig.commands[command.id].name;
-            if (command.doc) {
-                commandLabel = dv.fileLink(command.doc, false, commandsConfig.commands[command.id].name);
-            }
-        } else {
-            new Notice(`Unable to find a command for the "${command.id}" id.`, 5000)
-        }
-        displayedArray.push([hotkeyButton, commandLabel])
+        const hotkeyButton = buildCommandHotkeyButton(command);
+        const label = buildCommandLabel(command);
+        displayedArray.push([hotkeyButton, label])
     }
     
     dv.table(
@@ -38,7 +29,7 @@ function displayCommandsArray() {
     );
 }
 
-function buildHotkeyButton(command) {
+function buildCommandHotkeyButton(command) {
     const hotkeyAsString = hotkeyToString(command.hotkey)
     const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
     hotkeyButton.onclick = () => openHotkeySettingByHotkey(command.hotkey);
@@ -47,6 +38,19 @@ function buildHotkeyButton(command) {
         hotkeyButton.addClass("error");
     }
     return hotkeyButton;
+}
+
+function buildCommandLabel(command) {
+    let commandLabel = "INVALID ID"
+    if (commandsConfig.commands[command.id]) {
+        commandLabel = commandsConfig.commands[command.id].name;
+        if (command.doc) {
+            commandLabel = dv.fileLink(command.doc, false, commandsConfig.commands[command.id].name);
+        }
+    } else {
+        new Notice(`Unable to find a command for the "${command.id}" id.`, 5000)
+    }
+    return commandLabel;
 }
 
 function openHotkeySettingByHotkey(hotkey) {
