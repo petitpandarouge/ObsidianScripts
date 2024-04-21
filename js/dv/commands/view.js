@@ -8,7 +8,7 @@ class Hotkey {
 
     toString() {
         let modifiersAsString = this.modifiers
-            .sort(ctrlAlwaysFirst)
+            .sort(Sort.ctrlAlwaysFirst)
             .join(" + ")
             .replace('Mod', 'Ctrl')
         let keyAsString = this.key.length == 1 ?
@@ -150,6 +150,12 @@ class ObsidianSettings {
     }
 }
 
+class Sort {
+    static ctrlAlwaysFirst(a, b) {
+        return (a === 'Mod' || a === 'Ctrl') ? -1 : 1;
+    }
+}
+
 function displayApplyHotkeysButton() {
     let applyHotkeysButton = dv.el('button', 'Appliquer les raccourcis', {cls: "whide"});
     applyHotkeysButton.onclick = () => obsidianSettings.applyHotkeys(customCommands);
@@ -212,10 +218,6 @@ function buildCommandLabel(customCommand) {
         new Notice(`Unable to find a command for the "${customCommand.id}" id.`, 5000)
     }
     return commandLabel;
-}
-
-function ctrlAlwaysFirst(a, b) {
-    return (a === 'Mod' || a === 'Ctrl') ? -1 : 1;
 }
 
 //#endregion
