@@ -1,5 +1,13 @@
 //#region UTILS
 
+class ObsidianCommand {
+    constructor(appCommand) {
+        this.id = appCommand.id;
+        this.name = appCommand.name;
+        this.hotkeys = [];
+    }
+}
+
 class ObsidianSettings {
     constructor() {
         this.commands = {};
@@ -10,11 +18,7 @@ class ObsidianSettings {
     #fill() {
         Object.values(app.commands.commands)
             .forEach(cmd => {
-                this.commands[cmd.id] = { 
-                    id: cmd.id,
-                    name: cmd.name,
-                    hotkeys: []
-                };
+                this.#registerAppCommand(cmd);
                 
                 let defaultKeys = app.hotkeyManager.getDefaultHotkeys(cmd.id);
                 if (defaultKeys && defaultKeys.length > 0) {
@@ -37,6 +41,10 @@ class ObsidianSettings {
                     }  
                 }    
             })
+    }
+
+    #registerAppCommand(appCommand) {
+        this.commands[appCommand.id] = new ObsidianCommand(appCommand);
     }
 
     #notifyHotkeyApplied(command) {
