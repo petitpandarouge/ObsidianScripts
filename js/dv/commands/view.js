@@ -35,35 +35,40 @@ class ObsidianCommand {
 
 class ObsidianSettings {
     constructor() {
-        this.commands = {}; // TODO commandsById
-        this.hotkeys = {}; // TODO hotkeysByString
+        this.commandsByid = {}; 
+        this.hotkeysByStringToCommands = {}; 
         this.#fill();
     }
 
     #fill() {
         Object.values(app.commands.commands)
-            .forEach(cmd => {
-                this.#registerAppCommand(cmd);
-
-                if (this.commands[cmd.id].hotkeys.length > 0)  {
-                    for (let hotkey of this.commands[cmd.id].hotkeys) {
-                        const keyCombo = hotkeyToString(hotkey)
-                        if (!(keyCombo in this.hotkeys)) {
-                            this.hotkeys[keyCombo]  = []
-                        }
-
-                        this.hotkeys[keyCombo].push(cmd.name)
-                    }  
-                }
+            .forEach(appCommand => {
+                const obsidianCommand = this.#registerAppCommand(appCommand);
+                this.#mapAppHotkeysToAppCommands(obsidianCommand);
             })
     }
 
     #registerAppCommand(appCommand) {
-        this.commands[appCommand.id] = new ObsidianCommand(appCommand);
+        const command = new ObsidianCommand(appCommand);
+        this.commandsByid[appCommand.id] = command;
+        return command;
+    }
+
+    #mapAppHotkeysToAppCommands(obsidianCommand) {
+        if (this.commandsByid[obsidianCommand.id].hotkeys.length > 0)  {
+            for (let hotkey of this.commandsByid[obsidianCommand.id].hotkeys) {
+                const keyCombo = hotkeyToString(hotkey)
+                if (!(keyCombo in this.hotkeysByStringToCommands)) {
+                    this.hotkeysByStringToCommands[keyCombo]  = []
+                }
+
+                this.hotkeysByStringToCommands[keyCombo].push(obsidianCommand.name)
+            }  
+        }
     }
 
     #notifyHotkeyApplied(command) {
-        let commandName = this.commands[command.id].name
+        let commandName = this.commandsByid[command.id].name
         let hotkey = hotkeyToString(command.hotkey)
         new Notice(`The "${hotkey}" hotkey has been set to the command "${commandName}" successfully.`, 5000)
     }
@@ -75,15 +80,15 @@ class ObsidianSettings {
     }
 
     hotkeyNotBoundToCommand(hotkeyAsString) {
-        return !this.hotkeys[hotkeyAsString];
+        return !this.hotkeysByStringToCommands[hotkeyAsString];
     }
 
     hotkeyBoundToMoreThanOneCommand(hotkeyAsString) {
-        return this.hotkeys[hotkeyAsString].length > 1;
+        return this.hotkeysByStringToCommands[hotkeyAsString].length > 1;
     }
 
     commandExists(commandId) {
-        return obsidianSettings.commands[commandId];
+        return obsidianSettings.commandsByid[commandId];
     }
 
     applyHotkeys(commands) {
@@ -134,7 +139,7 @@ function displayObsidianCommands() {
         dv.header(1, `Commandes Obsidian pour le nom "\\*${filterByName}\\*"`);
         
         let displayedArray = [];
-        const obsidianCommands = Object.values(obsidianSettings.commands);
+        const obsidianCommands = Object.values(obsidianSettings.commandsByid);
         for (let i = 0; i < obsidianCommands.length; i++) {
             const command = obsidianCommands[i];
             if (command.name.toLowerCase().includes(filterByName.toLowerCase())) {
@@ -163,9 +168,9 @@ function buildCommandHotkeyButton(command) {
 function buildCommandLabel(command) {
     let commandLabel = "INVALID ID"
     if (obsidianSettings.commandExists(command.id)) {
-        commandLabel = obsidianSettings.commands[command.id].name;
+        commandLabel = obsidianSettings.commandsByid[command.id].name;
         if (command.doc) {
-            commandLabel = dv.fileLink(command.doc, false, obsidianSettings.commands[command.id].name);
+            commandLabel = dv.fileLink(command.doc, false, obsidianSettings.commandsByid[command.id].name);
         }
     } else {
         new Notice(`Unable to find a command for the "${command.id}" id.`, 5000)
