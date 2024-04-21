@@ -4,10 +4,10 @@ class ObsidianConfiguration {
     constructor() {
         this.commands = {};
         this.hotkeys = {};
-        this.fill();
+        this.#fill();
     }
 
-    fill() {
+    #fill() {
         Object.values(app.commands.commands)
             .forEach(cmd => {
                 this.commands[cmd.id] = { 
@@ -38,6 +38,14 @@ class ObsidianConfiguration {
                 }    
             })
     }
+
+    hotkeyNotBoundToCommand(hotkeyAsString) {
+        return !this.hotkeys[hotkeyAsString];
+    }
+
+    hotkeyBoundToMoreThanOneCommand(hotkeyAsString) {
+        return this.hotkeys[hotkeyAsString].length > 1;
+    }
 }
 
 function displayApplyHotkeysButton() {
@@ -64,8 +72,8 @@ function buildCommandHotkeyButton(command) {
     const hotkeyAsString = hotkeyToString(command.hotkey);
     const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
     hotkeyButton.onclick = () => openHotkeySettingByHotkey(command.hotkey);
-    if (hotkeyNotBoundToCommandInObsidian(hotkeyAsString) ||
-        hotkeyBoundToMoraThanOneCommandInObsidian(hotkeyAsString)) {
+    if (obsidianConfig.hotkeyNotBoundToCommand(hotkeyAsString) ||
+        obsidianConfig.hotkeyBoundToMoreThanOneCommand(hotkeyAsString)) {
         hotkeyButton.addClass("error");
     }
     return hotkeyButton;
@@ -82,14 +90,6 @@ function buildCommandLabel(command) {
         new Notice(`Unable to find a command for the "${command.id}" id.`, 5000)
     }
     return commandLabel;
-}
-
-function hotkeyNotBoundToCommandInObsidian(hotkeyAsString) {
-    return !obsidianConfig.hotkeys[hotkeyAsString];
-}
-
-function hotkeyBoundToMoraThanOneCommandInObsidian(hotkeyAsString) {
-    return obsidianConfig.hotkeys[hotkeyAsString].length > 1;
 }
 
 function openHotkeySettingByHotkey(hotkey) {
