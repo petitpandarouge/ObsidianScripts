@@ -1,5 +1,6 @@
 module.exports = async () => {
     const activeFile = app.workspace.getActiveFile();
     const {update} = app.plugins.plugins["metaedit"].api;	
-    await update("aliases", activeFile.basename, activeFile.path);
+    const titleWithoutPrefix = activeFile.basename.replace(/(([\d|\ ]+[\-]) )/, "");
+    await update("aliases", titleWithoutPrefix, activeFile.path);
 }
