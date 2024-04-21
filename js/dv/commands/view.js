@@ -202,7 +202,7 @@ function displayCommandsArray() {
     );
 }
 
-function trydisplayFilteredObsidianCommands() {
+function tryDisplayFilteredObsidianCommands() {
     if (filterByName) {
         dv.header(1, `Commandes Obsidian pour le nom "\\*${filterByName}\\*"`);
         
@@ -233,4 +233,4 @@ const obsidianSettings = new ObsidianSettings();
 // RENDER
 displayApplyHotkeysButton();
 displayCommandsArray();
-trydisplayFilteredObsidianCommands();
+tryDisplayFilteredObsidianCommands();
