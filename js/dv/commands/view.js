@@ -192,7 +192,7 @@ class ObsidianSettings {
     }
 
     customCommandHotkeyIsDefault(customCommand) {
-        return this.commandsByid[customCommand.id].hotkeyIsDefault(customCommand.hotkey);
+        return this.commandsByid[customCommand.id]?.hotkeyIsDefault(customCommand.hotkey);
     }
 }
 
