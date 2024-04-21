@@ -2,7 +2,7 @@
 const {commands} = input;
 
 // CONFIGURATION
-const commandsConfig = getObsidianConfiguration();
+const obsidianConfig = getObsidianConfiguration();
 
 // RENDER
 displayApplyHotkeysButton();
@@ -30,11 +30,11 @@ function displayCommandsArray() {
 }
 
 function buildCommandHotkeyButton(command) {
-    const hotkeyAsString = hotkeyToString(command.hotkey)
+    const hotkeyAsString = hotkeyToString(command.hotkey);
     const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
     hotkeyButton.onclick = () => openHotkeySettingByHotkey(command.hotkey);
-    if (!commandsConfig.hotkeys[hotkeyAsString] ||
-        commandsConfig.hotkeys[hotkeyAsString].length > 1) {
+    if (hotkeyNotBoundToCommandInObsidian(hotkeyAsString) ||
+        hotkeyBoundToMoraThanOneCommandInObsidian(hotkeyAsString)) {
         hotkeyButton.addClass("error");
     }
     return hotkeyButton;
@@ -42,15 +42,23 @@ function buildCommandHotkeyButton(command) {
 
 function buildCommandLabel(command) {
     let commandLabel = "INVALID ID"
-    if (commandsConfig.commands[command.id]) {
-        commandLabel = commandsConfig.commands[command.id].name;
+    if (obsidianConfig.commands[command.id]) {
+        commandLabel = obsidianConfig.commands[command.id].name;
         if (command.doc) {
-            commandLabel = dv.fileLink(command.doc, false, commandsConfig.commands[command.id].name);
+            commandLabel = dv.fileLink(command.doc, false, obsidianConfig.commands[command.id].name);
         }
     } else {
         new Notice(`Unable to find a command for the "${command.id}" id.`, 5000)
     }
     return commandLabel;
+}
+
+function hotkeyNotBoundToCommandInObsidian(hotkeyAsString) {
+    return !obsidianConfig.hotkeys[hotkeyAsString];
+}
+
+function hotkeyBoundToMoraThanOneCommandInObsidian(hotkeyAsString) {
+    return obsidianConfig.hotkeys[hotkeyAsString].length > 1;
 }
 
 function openHotkeySettingByHotkey(hotkey) {
@@ -125,11 +133,11 @@ function getObsidianConfiguration() {
 function applyHotkeys() {
     for (let i = 0; i < commands.length; i++) {
         const command = commands[i]
-        if (commandsConfig.commands[command.id]) {
+        if (obsidianConfig.commands[command.id]) {
             let hotkeys = []
             hotkeys.push(command.hotkey)
             app.hotkeyManager.setHotkeys(command.id, hotkeys)
-            let commandName = commandsConfig.commands[command.id].name
+            let commandName = obsidianConfig.commands[command.id].name
             let hotkey = hotkeyToString(command.hotkey)
             new Notice(`The "${hotkey}" hotkey has been set to the command "${commandName}" successfully.`, 5000)
         } 
