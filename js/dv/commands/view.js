@@ -2,41 +2,53 @@
 let {commands} = input;
 
 // CONFIGURATION
-let commandsConfig = getConfiguration();
+let commandsConfig = getObsidianConfiguration();
 
 // RENDER
-let applyHotkeysButton = dv.el('button', 'Apply hotkeys', {cls: "whide"});
-applyHotkeysButton.onclick = applyHotkeys;
+displayApplyHotkeysButton();
+displayCommandsArray();
 
-let displayedArray = [];
-for (let i = 0; i < commands.length; i++) {
-    const command = commands[i];
+// UTILS
+function displayApplyHotkeysButton() {
+    let applyHotkeysButton = dv.el('button', 'Apply hotkeys', {cls: "whide"});
+    applyHotkeysButton.onclick = applyHotkeys;
+}
+
+function displayCommandsArray() {
+    let displayedArray = [];
+    for (let i = 0; i < commands.length; i++) {
+        const command = commands[i];
+        const hotkeyButton = buildHotkeyButton(command);
+
+        let commandLabel = "INVALID ID"
+        if (commandsConfig.commands[command.id]) {
+            commandLabel = commandsConfig.commands[command.id].name;
+            if (command.doc) {
+                commandLabel = dv.fileLink(command.doc, false, commandsConfig.commands[command.id].name);
+            }
+        } else {
+            new Notice(`Unable to find a command for the "${command.id}" id.`, 5000)
+        }
+        displayedArray.push([hotkeyButton, commandLabel])
+    }
+    
+    dv.table(
+        ["Raccourcis", "Commandes"], 
+        displayedArray
+    );
+}
+
+function buildHotkeyButton(command) {
     const hotkeyAsString = hotkeyToString(command.hotkey)
     const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
     hotkeyButton.onclick = () => openHotkeySettingByHotkey(command.hotkey);
     if (!commandsConfig.hotkeys[hotkeyAsString] ||
         commandsConfig.hotkeys[hotkeyAsString].length > 1) {
-        hotkeyButton.addClass("error")
+        hotkeyButton.addClass("error");
     }
-    let commandLabel = "INVALID ID"
-    if (commandsConfig.commands[command.id]) {
-        commandLabel = commandsConfig.commands[command.id].name;
-        if (command.doc) {
-            commandLabel = dv.fileLink(command.doc, false, commandsConfig.commands[command.id].name);
-        }
-    } else {
-        new Notice(`Unable to find a command for the "${command.id}" id.`, 5000)
-    }
-    displayedArray.push([hotkeyButton, commandLabel])
+    return hotkeyButton;
 }
 
-dv.table(
-	["Raccourcis", "Commandes"], 
-	displayedArray
-);
-
-
-// UTILS
 function openHotkeySettingByHotkey(hotkey) {
     app.setting.open();
     const tab = app.setting.openTabById('hotkeys');
@@ -68,7 +80,7 @@ function ctrlAlwaysFirst(a, b) {
     return (a === 'Mod' || a === 'Ctrl') ? -1 : 1;
 }
 
-function getConfiguration() {
+function getObsidianConfiguration() {
     let config = {
         commands: {},
         hotkeys: {}
