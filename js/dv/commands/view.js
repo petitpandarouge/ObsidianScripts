@@ -5,6 +5,27 @@ class Hotkey {
         this.modifiers = hotkey.modifiers;
         this.key = hotkey.key;
     }
+
+    toString() {
+        let modifiersAsString = this.modifiers
+            .sort(ctrlAlwaysFirst)
+            .join(" + ")
+            .replace('Mod', 'Ctrl')
+        let keyAsString = this.key.length == 1 ?
+            this.key.toUpperCase() :
+            this.key
+                .replace('ArrowRight', '→')
+                .replace('ArrowLeft', '←')
+                .replace('ArrowUp', '↑')
+                .replace('ArrowDown', '↓')
+                .replace('PageUp', '↟')
+                .replace('PageDown', '↡')
+        if (modifiersAsString.length === 0) {
+            return keyAsString;
+        } else {
+            return `${modifiersAsString} + ${keyAsString}`;
+        }
+    }
 }
 
 class CustomCommand {
@@ -27,13 +48,13 @@ class ObsidianCommand {
 
         let defaultHotkeys = app.hotkeyManager.getDefaultHotkeys(this.id);
         if (this.#atLeastOneHotkeyExists(defaultHotkeys)) {
-            hotkeys = defaultHotkeys;
+            hotkeys = defaultHotkeys.map((hotkey) => new Hotkey(hotkey));
         }
 
         let customHotkeys = app.hotkeyManager.getHotkeys(this.id);
         if (this.#atLeastOneHotkeyExists(customHotkeys) ||
             this.#defaultHotkeysErased(customHotkeys)) {
-            hotkeys = customHotkeys;
+            hotkeys = customHotkeys.map((hotkey) => new Hotkey(hotkey));
         }
 
         return hotkeys;
@@ -72,7 +93,7 @@ class ObsidianSettings {
     #mapAppHotkeysToAppCommands(obsidianCommand) {
         if (this.commandsByid[obsidianCommand.id].hotkeys.length > 0)  {
             for (let hotkey of this.commandsByid[obsidianCommand.id].hotkeys) {
-                const keyCombo = hotkeyToString(hotkey)
+                const keyCombo = hotkey.toString()
                 if (!(keyCombo in this.hotkeysByStringToCommands)) {
                     this.hotkeysByStringToCommands[keyCombo]  = []
                 }
@@ -84,7 +105,7 @@ class ObsidianSettings {
 
     #notifyHotkeyApplied(customCommand) {
         let commandName = this.commandsByid[customCommand.id].name
-        let hotkey = hotkeyToString(customCommand.hotkey)
+        let hotkey = customCommand.hotkey.toString()
         new Notice(`The "${hotkey}" hotkey has been set to the command "${commandName}" successfully.`, 5000)
     }
 
@@ -170,7 +191,7 @@ function displayObsidianCommands() {
 }
 
 function buildCommandHotkeyButton(customCommand) {
-    const hotkeyAsString = hotkeyToString(customCommand.hotkey);
+    const hotkeyAsString = customCommand.hotkey.toString();
     const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
     hotkeyButton.onclick = () => obsidianSettings.openHotkeySettingByHotkey(customCommand.hotkey);
     if (obsidianSettings.hotkeyNotBoundToCommand(hotkeyAsString) ||
@@ -191,27 +212,6 @@ function buildCommandLabel(customCommand) {
         new Notice(`Unable to find a command for the "${customCommand.id}" id.`, 5000)
     }
     return commandLabel;
-}
-
-function hotkeyToString(hotkey) {
-    let modifiersAsString = hotkey.modifiers
-        .sort(ctrlAlwaysFirst)
-        .join(" + ")
-        .replace('Mod', 'Ctrl')
-    let keyAsString = hotkey.key.length == 1 ?
-        hotkey.key.toUpperCase() :
-        hotkey.key
-            .replace('ArrowRight', '→')
-            .replace('ArrowLeft', '←')
-            .replace('ArrowUp', '↑')
-            .replace('ArrowDown', '↓')
-            .replace('PageUp', '↟')
-            .replace('PageDown', '↡')
-    if (modifiersAsString.length === 0) {
-        return keyAsString;
-    } else {
-        return `${modifiersAsString} + ${keyAsString}`;
-    }
 }
 
 function ctrlAlwaysFirst(a, b) {
