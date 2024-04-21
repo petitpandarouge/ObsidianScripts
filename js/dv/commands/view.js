@@ -37,6 +37,7 @@ class CustomCommand {
         this.id = command.id;
         this.hotkey = new Hotkey(command.hotkey);
         this.doc = command.doc;
+        this.name = obsidianSettings.commandsByid[this.id]?.name ?? "";
     }
 
     buildHotkeyButton() {
@@ -181,6 +182,16 @@ class Sort {
     static ctrlAlwaysFirst(a, b) {
         return (a === Hotkey.modModifier || a === Hotkey.ctrlModifier) ? -1 : 1;
     }
+
+    static byAscName(a, b) {
+        if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+    }
 }
 
 function displayApplyHotkeysButton() {
@@ -223,12 +234,14 @@ function tryDisplayFilteredObsidianCommands() {
 
 //#endregion
 
-// INPUTS
-let {commands: customCommands, filterByName} = input;
-customCommands = customCommands.map((command) => new CustomCommand(command));
-
 // CONFIGURATION
 const obsidianSettings = new ObsidianSettings();
+
+// INPUTS
+let {commands: customCommands, filterByName} = input;
+customCommands = customCommands
+    .map((command) => new CustomCommand(command))
+    .sort(Sort.byAscName);
 
 // RENDER
 displayApplyHotkeysButton();
