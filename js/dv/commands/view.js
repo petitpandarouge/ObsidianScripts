@@ -1,9 +1,10 @@
 //#region UTILS
 
 class Hotkey {
-    constructor(hotkey) {
+    constructor(hotkey, isDefault) {
         this.modifiers = hotkey.modifiers;
         this.key = hotkey.key;
+        this.isDefault = isDefault;
     }
 
     static #diplayStringSeparator = "+";
@@ -77,13 +78,13 @@ class ObsidianCommand {
 
         let defaultHotkeys = app.hotkeyManager.getDefaultHotkeys(this.id);
         if (this.#atLeastOneHotkeyExists(defaultHotkeys)) {
-            hotkeys = defaultHotkeys.map((hotkey) => new Hotkey(hotkey));
+            hotkeys = defaultHotkeys.map((hotkey) => new Hotkey(hotkey, true));
         }
 
         let customHotkeys = app.hotkeyManager.getHotkeys(this.id);
         if (this.#atLeastOneHotkeyExists(customHotkeys) ||
             this.#defaultHotkeysErased(customHotkeys)) {
-            hotkeys = customHotkeys.map((hotkey) => new Hotkey(hotkey));
+            hotkeys = customHotkeys.map((hotkey) => new Hotkey(hotkey, false));
         }
 
         return hotkeys;
@@ -95,6 +96,12 @@ class ObsidianCommand {
 
     #defaultHotkeysErased(hotkeys) {
         return hotkeys && hotkeys.length === 0;
+    }
+
+    hotkeyIsDefault(hotkey) {
+        const foundHotkey = this.hotkeys
+            .find((key) => key.toString() === hotkey.toString());
+        return foundHotkey?.isDefault ?? false;
     }
 }
 
@@ -158,7 +165,8 @@ class ObsidianSettings {
 
     applyHotkeys(customCommands) {
         for (let customCommand of customCommands) {
-            if (this.commandExists(customCommand.id)) {
+            if (this.commandExists(customCommand.id) &&
+                !this.customCommandHotkeyIsDefault(customCommand)) {
                 this.applyHotkey(customCommand);
                 this.#notifyHotkeyApplied(customCommand);
             } 
@@ -175,6 +183,10 @@ class ObsidianSettings {
         app.setting.open();
         const tab = app.setting.openTabById('hotkeys');
         tab.setHotkeyFilter(hotkey);
+    }
+
+    customCommandHotkeyIsDefault(customCommand) {
+        return this.commandsByid[customCommand.id].hotkeyIsDefault(customCommand.hotkey);
     }
 }
 
