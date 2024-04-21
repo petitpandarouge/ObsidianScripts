@@ -167,15 +167,17 @@ class ObsidianSettings {
         return obsidianSettings.commandsByid[commandId];
     }
 
-    applyHotkeys(customCommands) {
-        for (let customCommand of customCommands) {
-            if (this.commandExists(customCommand.id) &&
-                !this.customCommandHotkeyIsDefault(customCommand)) {
-                this.applyHotkey(customCommand);
-                this.#notifyHotkeyApplied(customCommand);
-            } 
+    async applyHotkeys(customCommands) {
+        if (await confirmAsync("Appliquer ?", "Etes-vous sûr de vouloir appliquer la configuration ?")) {
+            for (let customCommand of customCommands) {
+                if (this.commandExists(customCommand.id) &&
+                    !this.customCommandHotkeyIsDefault(customCommand)) {
+                    this.applyHotkey(customCommand);
+                    this.#notifyHotkeyApplied(customCommand);
+                } 
+            }
+            this.save();
         }
-        this.save();
     }
 
     save() {
@@ -246,6 +248,11 @@ function tryDisplayFilteredObsidianCommands() {
             displayedArray
         );
     }
+}
+
+async function confirmAsync(header, message) {
+    const quickAddApi = app.plugins.getPlugin("quickadd").api;
+    return await quickAddApi.yesNoPrompt(header, message);
 }
 
 //#endregion
