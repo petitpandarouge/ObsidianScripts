@@ -1,8 +1,8 @@
 // INPUTS
-let {commands} = input;
+const {commands} = input;
 
 // CONFIGURATION
-let commandsConfig = getObsidianConfiguration();
+const commandsConfig = getObsidianConfiguration();
 
 // RENDER
 displayApplyHotkeysButton();
