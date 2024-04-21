@@ -46,10 +46,14 @@ class ObsidianConfiguration {
     hotkeyBoundToMoreThanOneCommand(hotkeyAsString) {
         return this.hotkeys[hotkeyAsString].length > 1;
     }
+
+    commandExists(commandId) {
+        return obsidianConfig.commands[commandId];
+    }
 }
 
 function displayApplyHotkeysButton() {
-    let applyHotkeysButton = dv.el('button', 'Apply hotkeys', {cls: "whide"});
+    let applyHotkeysButton = dv.el('button', 'Appliquer les raccourcis', {cls: "whide"});
     applyHotkeysButton.onclick = applyHotkeys;
 }
 
@@ -69,10 +73,10 @@ function displayCommandsArray() {
 }
 
 function displayObsidianCommands() {
-    dv.header(1, "Commandes Obsidian");
-    let displayedArray = [];
-
     if (filterByName) {
+        dv.header(1, `Commandes Obsidian pour le nom "\\*${filterByName}\\*"`);
+        
+        let displayedArray = [];
         const obsidianCommands = Object.values(obsidianConfig.commands);
         for (let i = 0; i < obsidianCommands.length; i++) {
             const command = obsidianCommands[i];
@@ -80,12 +84,16 @@ function displayObsidianCommands() {
                 displayedArray.push([command.name, command.id])
             }
         }
+
+        dv.table(
+            ["Nom", "Ids"], 
+            displayedArray
+        );
     }
+}
+
+function searchObsidianCommands() {
     
-    dv.table(
-        ["Nom", "Ids"], 
-        displayedArray
-    );
 }
 
 function buildCommandHotkeyButton(command) {
@@ -101,7 +109,7 @@ function buildCommandHotkeyButton(command) {
 
 function buildCommandLabel(command) {
     let commandLabel = "INVALID ID"
-    if (obsidianConfig.commands[command.id]) {
+    if (obsidianConfig.commandExists(command.id)) {
         commandLabel = obsidianConfig.commands[command.id].name;
         if (command.doc) {
             commandLabel = dv.fileLink(command.doc, false, obsidianConfig.commands[command.id].name);
@@ -146,7 +154,7 @@ function ctrlAlwaysFirst(a, b) {
 function applyHotkeys() {
     for (let i = 0; i < commands.length; i++) {
         const command = commands[i]
-        if (obsidianConfig.commands[command.id]) {
+        if (obsidianConfig.commandExists(command.id)) {
             let hotkeys = []
             hotkeys.push(command.hotkey)
             app.hotkeyManager.setHotkeys(command.id, hotkeys)
@@ -158,6 +166,7 @@ function applyHotkeys() {
     app.hotkeyManager.bake()
     app.hotkeyManager.save()
 }
+
 
 //#endregion
 
