@@ -49,7 +49,7 @@ class CustomCommand {
         }
         const hotkeyButton = dv.el('button', buttonLabel, {cls: "clickable-icon"});
         hotkeyButton.onclick = () => obsidianSettings.openHotkeySettingByHotkey(this.hotkey);
-        if (obsidianSettings.hotkeyNotBoundToCommand(hotkeyAsString) ||
+        if (obsidianSettings.hotkeyNotBoundToCommand(this) ||
             obsidianSettings.hotkeyBoundToMoreThanOneCommand(hotkeyAsString)) {
             hotkeyButton.addClass("error");
         }
@@ -112,7 +112,7 @@ class ObsidianCommand {
 class ObsidianSettings {
     constructor() {
         this.commandsByid = {}; 
-        this.hotkeysByStringToCommands = {}; 
+        this.hotkeysByStringToCommandNames = {}; 
         this.#fill();
     }
 
@@ -134,18 +134,18 @@ class ObsidianSettings {
         if (this.commandsByid[obsidianCommand.id].hotkeys.length > 0)  {
             for (let hotkey of this.commandsByid[obsidianCommand.id].hotkeys) {
                 const keyCombo = hotkey.toString()
-                if (!(keyCombo in this.hotkeysByStringToCommands)) {
-                    this.hotkeysByStringToCommands[keyCombo]  = []
+                if (!(keyCombo in this.hotkeysByStringToCommandNames)) {
+                    this.hotkeysByStringToCommandNames[keyCombo]  = []
                 }
 
-                this.hotkeysByStringToCommands[keyCombo].push(obsidianCommand.name)
+                this.hotkeysByStringToCommandNames[keyCombo].push(obsidianCommand.name)
             }  
         }
     }
 
     #notifyHotkeyApplied(customCommand) {
-        let commandName = this.commandsByid[customCommand.id].name
-        let hotkey = customCommand.hotkey.toString()
+        const commandName = this.commandsByid[customCommand.id].name
+        const hotkey = customCommand.hotkey.toString()
         new Notice(`The "${hotkey}" hotkey has been set to the command "${commandName}" successfully.`, 5000)
     }
 
@@ -155,12 +155,14 @@ class ObsidianSettings {
         app.hotkeyManager.setHotkeys(customCommand.id, hotkeys)
     }
 
-    hotkeyNotBoundToCommand(hotkeyAsString) {
-        return !this.hotkeysByStringToCommands[hotkeyAsString];
+    hotkeyNotBoundToCommand(customCommand) {
+        const hotkeyAsString = customCommand.hotkey.toString();
+        return !this.hotkeysByStringToCommandNames[hotkeyAsString]
+            ?.find((commandName) => commandName === customCommand.name);
     }
 
     hotkeyBoundToMoreThanOneCommand(hotkeyAsString) {
-        return this.hotkeysByStringToCommands[hotkeyAsString].length > 1;
+        return this.hotkeysByStringToCommandNames[hotkeyAsString].length > 1;
     }
 
     commandExists(commandId) {
