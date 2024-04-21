@@ -155,18 +155,25 @@ function applyHotkeys() {
     for (let i = 0; i < commands.length; i++) {
         const command = commands[i]
         if (obsidianConfig.commandExists(command.id)) {
-            let hotkeys = []
-            hotkeys.push(command.hotkey)
-            app.hotkeyManager.setHotkeys(command.id, hotkeys)
-            let commandName = obsidianConfig.commands[command.id].name
-            let hotkey = hotkeyToString(command.hotkey)
-            new Notice(`The "${hotkey}" hotkey has been set to the command "${commandName}" successfully.`, 5000)
+            applyHotkey(command);
+            notifyHotkeyApplied(command);
         } 
     }
     app.hotkeyManager.bake()
     app.hotkeyManager.save()
 }
 
+function applyHotkey(command) {
+    let hotkeys = []
+    hotkeys.push(command.hotkey)
+    app.hotkeyManager.setHotkeys(command.id, hotkeys)
+}
+
+function notifyHotkeyApplied(command) {
+    let commandName = obsidianConfig.commands[command.id].name
+    let hotkey = hotkeyToString(command.hotkey)
+    new Notice(`The "${hotkey}" hotkey has been set to the command "${commandName}" successfully.`, 5000)
+}
 
 //#endregion
 
