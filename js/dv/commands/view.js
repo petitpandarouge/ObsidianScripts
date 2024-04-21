@@ -1,14 +1,45 @@
-// INPUTS
-const {commands} = input;
+//#region UTILS
 
-// CONFIGURATION
-const obsidianConfig = getObsidianConfiguration();
+class ObsidianConfiguration {
+    constructor() {
+        this.commands = {};
+        this.hotkeys = {};
+        this.fill();
+    }
 
-// RENDER
-displayApplyHotkeysButton();
-displayCommandsArray();
+    fill() {
+        Object.values(app.commands.commands)
+            .forEach(cmd => {
+                this.commands[cmd.id] = { 
+                    id: cmd.id,
+                    name: cmd.name,
+                    hotkeys: []
+                };
+                
+                let defaultKeys = app.hotkeyManager.getDefaultHotkeys(cmd.id);
+                if (defaultKeys && defaultKeys.length > 0) {
+                    this.commands[cmd.id].hotkeys = defaultKeys;
+                }
+            
+                let customKeys = app.hotkeyManager.getHotkeys(cmd.id);
+                if ( customKeys && customKeys.length >= 0 ) {
+                    this.commands[cmd.id].hotkeys = customKeys;
+                }
 
-// UTILS
+                if (this.commands[cmd.id].hotkeys.length > 0)  {
+                    for (let hotkey of this.commands[cmd.id].hotkeys) {
+                        const keyCombo = hotkeyToString(hotkey)
+                        if (!(keyCombo in this.hotkeys)) {
+                            this.hotkeys[keyCombo]  = []
+                        }
+
+                        this.hotkeys[keyCombo].push(cmd.name)
+                    }  
+                }    
+            })
+    }
+}
+
 function displayApplyHotkeysButton() {
     let applyHotkeysButton = dv.el('button', 'Apply hotkeys', {cls: "whide"});
     applyHotkeysButton.onclick = applyHotkeys;
@@ -92,44 +123,6 @@ function ctrlAlwaysFirst(a, b) {
     return (a === 'Mod' || a === 'Ctrl') ? -1 : 1;
 }
 
-function getObsidianConfiguration() {
-    let config = {
-        commands: {},
-        hotkeys: {}
-    }
-    Object.values(app.commands.commands)
-        .forEach(cmd => {
-            config.commands[cmd.id] = { 
-                id: cmd.id,
-                name: cmd.name,
-                hotkeys: []
-            };
-            
-            let defaultKeys = app.hotkeyManager.getDefaultHotkeys(cmd.id);
-            if (defaultKeys && defaultKeys.length > 0) {
-                config.commands[cmd.id].hotkeys = defaultKeys;
-            }
-        
-            let customKeys = app.hotkeyManager.getHotkeys(cmd.id);
-            if ( customKeys && customKeys.length >= 0 ) {
-                config.commands[cmd.id].hotkeys = customKeys;
-            }
-
-            if (config.commands[cmd.id].hotkeys.length > 0)  {
-                for (let hotkey of config.commands[cmd.id].hotkeys) {
-                    const keyCombo = hotkeyToString(hotkey)
-                    if (!(keyCombo in config.hotkeys)) {
-                        config.hotkeys[keyCombo]  = []
-                    }
-
-                    config.hotkeys[keyCombo].push(cmd.name)
-                }  
-            }    
-        })
-
-    return config;
-}
-
 function applyHotkeys() {
     for (let i = 0; i < commands.length; i++) {
         const command = commands[i]
@@ -145,3 +138,16 @@ function applyHotkeys() {
     app.hotkeyManager.bake()
     app.hotkeyManager.save()
 }
+
+//#endregion
+
+// INPUTS
+const {commands} = input;
+
+// CONFIGURATION
+const obsidianConfig = new ObsidianConfiguration();
+
+// RENDER
+displayApplyHotkeysButton();
+displayCommandsArray();
+
