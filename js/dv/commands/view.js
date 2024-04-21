@@ -50,11 +50,23 @@ class ObsidianConfiguration {
     commandExists(commandId) {
         return obsidianConfig.commands[commandId];
     }
+
+    applyHotkeys(commands) {
+        for (let i = 0; i < commands.length; i++) {
+            const command = commands[i]
+            if (obsidianConfig.commandExists(command.id)) {
+                applyHotkey(command);
+                notifyHotkeyApplied(command);
+            } 
+        }
+        app.hotkeyManager.bake()
+        app.hotkeyManager.save()
+    }
 }
 
 function displayApplyHotkeysButton() {
     let applyHotkeysButton = dv.el('button', 'Appliquer les raccourcis', {cls: "whide"});
-    applyHotkeysButton.onclick = applyHotkeys;
+    applyHotkeysButton.onclick = () => obsidianConfig.applyHotkeys(commands);
 }
 
 function displayCommandsArray() {
@@ -149,18 +161,6 @@ function hotkeyToString(hotkey) {
 
 function ctrlAlwaysFirst(a, b) {
     return (a === 'Mod' || a === 'Ctrl') ? -1 : 1;
-}
-
-function applyHotkeys() {
-    for (let i = 0; i < commands.length; i++) {
-        const command = commands[i]
-        if (obsidianConfig.commandExists(command.id)) {
-            applyHotkey(command);
-            notifyHotkeyApplied(command);
-        } 
-    }
-    app.hotkeyManager.bake()
-    app.hotkeyManager.save()
 }
 
 function applyHotkey(command) {
