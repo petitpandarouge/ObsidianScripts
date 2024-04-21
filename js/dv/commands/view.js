@@ -38,6 +38,30 @@ class CustomCommand {
         this.hotkey = new Hotkey(command.hotkey);
         this.doc = command.doc;
     }
+
+    buildHotkeyButton() {
+        const hotkeyAsString = this.hotkey.toString();
+        const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
+        hotkeyButton.onclick = () => obsidianSettings.openHotkeySettingByHotkey(this.hotkey);
+        if (obsidianSettings.hotkeyNotBoundToCommand(hotkeyAsString) ||
+            obsidianSettings.hotkeyBoundToMoreThanOneCommand(hotkeyAsString)) {
+            hotkeyButton.addClass("error");
+        }
+        return hotkeyButton;
+    }
+
+    buildLabel() {
+        let commandLabel = "INVALID ID"
+        if (obsidianSettings.commandExists(this.id)) {
+            commandLabel = obsidianSettings.commandsByid[this.id].name;
+            if (this.doc) {
+                commandLabel = dv.fileLink(this.doc, false, obsidianSettings.commandsByid[this.id].name);
+            }
+        } else {
+            new Notice(`Unable to find a command for the "${this.id}" id.`, 5000)
+        }
+        return commandLabel;
+    }
 }
 
 class ObsidianCommand {
@@ -169,8 +193,8 @@ function displayCommandsArray() {
     let displayedArray = [];
     for (let i = 0; i < customCommands.length; i++) {
         const customCommand = customCommands[i];
-        const hotkeyButton = buildCommandHotkeyButton(customCommand);
-        const label = buildCommandLabel(customCommand);
+        const hotkeyButton = customCommand.buildHotkeyButton();
+        const label = customCommand.buildLabel();
         displayedArray.push([hotkeyButton, label])
     }
     
@@ -198,30 +222,6 @@ function displayObsidianCommands() {
             displayedArray
         );
     }
-}
-
-function buildCommandHotkeyButton(customCommand) {
-    const hotkeyAsString = customCommand.hotkey.toString();
-    const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
-    hotkeyButton.onclick = () => obsidianSettings.openHotkeySettingByHotkey(customCommand.hotkey);
-    if (obsidianSettings.hotkeyNotBoundToCommand(hotkeyAsString) ||
-        obsidianSettings.hotkeyBoundToMoreThanOneCommand(hotkeyAsString)) {
-        hotkeyButton.addClass("error");
-    }
-    return hotkeyButton;
-}
-
-function buildCommandLabel(customCommand) {
-    let commandLabel = "INVALID ID"
-    if (obsidianSettings.commandExists(customCommand.id)) {
-        commandLabel = obsidianSettings.commandsByid[customCommand.id].name;
-        if (customCommand.doc) {
-            commandLabel = dv.fileLink(customCommand.doc, false, obsidianSettings.commandsByid[customCommand.id].name);
-        }
-    } else {
-        new Notice(`Unable to find a command for the "${customCommand.id}" id.`, 5000)
-    }
-    return commandLabel;
 }
 
 //#endregion
