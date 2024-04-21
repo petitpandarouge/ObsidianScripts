@@ -4,14 +4,39 @@ class ObsidianCommand {
     constructor(appCommand) {
         this.id = appCommand.id;
         this.name = appCommand.name;
-        this.hotkeys = [];
+        this.hotkeys = this.#getHotkeys();
+    }
+
+    #getHotkeys() {
+        let hotkeys = [];
+
+        let defaultHotkeys = app.hotkeyManager.getDefaultHotkeys(this.id);
+        if (this.#atLeastOneHotkeyExists(defaultHotkeys)) {
+            hotkeys = defaultHotkeys;
+        }
+
+        let customHotkeys = app.hotkeyManager.getHotkeys(this.id);
+        if (this.#atLeastOneHotkeyExists(customHotkeys) ||
+            this.#defaultHotkeysErased(customHotkeys)) {
+            hotkeys = customHotkeys;
+        }
+
+        return hotkeys;
+    }
+
+    #atLeastOneHotkeyExists(hotkeys) {
+        return hotkeys && hotkeys.length > 0;
+    }
+
+    #defaultHotkeysErased(hotkeys) {
+        return hotkeys && hotkeys.length === 0;
     }
 }
 
 class ObsidianSettings {
     constructor() {
-        this.commands = {};
-        this.hotkeys = {};
+        this.commands = {}; // TODO commandsById
+        this.hotkeys = {}; // TODO hotkeysByString
         this.#fill();
     }
 
@@ -19,16 +44,6 @@ class ObsidianSettings {
         Object.values(app.commands.commands)
             .forEach(cmd => {
                 this.#registerAppCommand(cmd);
-                
-                let defaultKeys = app.hotkeyManager.getDefaultHotkeys(cmd.id);
-                if (defaultKeys && defaultKeys.length > 0) {
-                    this.commands[cmd.id].hotkeys = defaultKeys;
-                }
-            
-                let customKeys = app.hotkeyManager.getHotkeys(cmd.id);
-                if ( customKeys && customKeys.length >= 0 ) {
-                    this.commands[cmd.id].hotkeys = customKeys;
-                }
 
                 if (this.commands[cmd.id].hotkeys.length > 0)  {
                     for (let hotkey of this.commands[cmd.id].hotkeys) {
@@ -39,7 +54,7 @@ class ObsidianSettings {
 
                         this.hotkeys[keyCombo].push(cmd.name)
                     }  
-                }    
+                }
             })
     }
 
