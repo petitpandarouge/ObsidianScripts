@@ -191,7 +191,6 @@ function displayApplyHotkeysButton() {
 function displayCommandsArray() {
     let displayedArray = [];
     for (let customCommand of customCommands) {
-        debugger
         const hotkeyButton = customCommand.buildHotkeyButton();
         const label = customCommand.buildLabel();
         displayedArray.push([hotkeyButton, label])
