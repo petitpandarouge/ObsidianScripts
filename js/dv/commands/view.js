@@ -1,5 +1,20 @@
 //#region UTILS
 
+class Hotkey {
+    constructor(hotkey) {
+        this.modifiers = hotkey.modifiers;
+        this.key = hotkey.key;
+    }
+}
+
+class CustomCommand {
+    constructor(command) {
+        this.id = command.id;
+        this.hotkey = new Hotkey(command.hotkey);
+        this.doc = command.doc;
+    }
+}
+
 class ObsidianCommand {
     constructor(appCommand) {
         this.id = appCommand.id;
@@ -206,7 +221,8 @@ function ctrlAlwaysFirst(a, b) {
 //#endregion
 
 // INPUTS
-const {commands: customCommands, filterByName} = input;
+const {commands, filterByName} = input;
+const customCommands = commands.map((command) => new CustomCommand(command));
 
 // CONFIGURATION
 const obsidianSettings = new ObsidianSettings();
