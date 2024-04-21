@@ -1,6 +1,6 @@
 //#region UTILS
 
-class ObsidianConfiguration {
+class ObsidianSettings {
     constructor() {
         this.commands = {};
         this.hotkeys = {};
@@ -39,6 +39,18 @@ class ObsidianConfiguration {
             })
     }
 
+    #notifyHotkeyApplied(command) {
+        let commandName = this.commands[command.id].name
+        let hotkey = hotkeyToString(command.hotkey)
+        new Notice(`The "${hotkey}" hotkey has been set to the command "${commandName}" successfully.`, 5000)
+    }
+
+    applyHotkey(command) {
+        let hotkeys = []
+        hotkeys.push(command.hotkey)
+        app.hotkeyManager.setHotkeys(command.id, hotkeys)
+    }
+
     hotkeyNotBoundToCommand(hotkeyAsString) {
         return !this.hotkeys[hotkeyAsString];
     }
@@ -48,17 +60,21 @@ class ObsidianConfiguration {
     }
 
     commandExists(commandId) {
-        return obsidianConfig.commands[commandId];
+        return obsidianSettings.commands[commandId];
     }
 
     applyHotkeys(commands) {
         for (let i = 0; i < commands.length; i++) {
             const command = commands[i]
-            if (obsidianConfig.commandExists(command.id)) {
-                applyHotkey(command);
-                notifyHotkeyApplied(command);
+            if (this.commandExists(command.id)) {
+                this.applyHotkey(command);
+                this.#notifyHotkeyApplied(command);
             } 
         }
+        this.save();
+    }
+
+    save() {
         app.hotkeyManager.bake()
         app.hotkeyManager.save()
     }
@@ -66,7 +82,7 @@ class ObsidianConfiguration {
 
 function displayApplyHotkeysButton() {
     let applyHotkeysButton = dv.el('button', 'Appliquer les raccourcis', {cls: "whide"});
-    applyHotkeysButton.onclick = () => obsidianConfig.applyHotkeys(commands);
+    applyHotkeysButton.onclick = () => obsidianSettings.applyHotkeys(commands);
 }
 
 function displayCommandsArray() {
@@ -89,7 +105,7 @@ function displayObsidianCommands() {
         dv.header(1, `Commandes Obsidian pour le nom "\\*${filterByName}\\*"`);
         
         let displayedArray = [];
-        const obsidianCommands = Object.values(obsidianConfig.commands);
+        const obsidianCommands = Object.values(obsidianSettings.commands);
         for (let i = 0; i < obsidianCommands.length; i++) {
             const command = obsidianCommands[i];
             if (command.name.toLowerCase().includes(filterByName.toLowerCase())) {
@@ -104,16 +120,12 @@ function displayObsidianCommands() {
     }
 }
 
-function searchObsidianCommands() {
-    
-}
-
 function buildCommandHotkeyButton(command) {
     const hotkeyAsString = hotkeyToString(command.hotkey);
     const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
     hotkeyButton.onclick = () => openHotkeySettingByHotkey(command.hotkey);
-    if (obsidianConfig.hotkeyNotBoundToCommand(hotkeyAsString) ||
-        obsidianConfig.hotkeyBoundToMoreThanOneCommand(hotkeyAsString)) {
+    if (obsidianSettings.hotkeyNotBoundToCommand(hotkeyAsString) ||
+        obsidianSettings.hotkeyBoundToMoreThanOneCommand(hotkeyAsString)) {
         hotkeyButton.addClass("error");
     }
     return hotkeyButton;
@@ -121,10 +133,10 @@ function buildCommandHotkeyButton(command) {
 
 function buildCommandLabel(command) {
     let commandLabel = "INVALID ID"
-    if (obsidianConfig.commandExists(command.id)) {
-        commandLabel = obsidianConfig.commands[command.id].name;
+    if (obsidianSettings.commandExists(command.id)) {
+        commandLabel = obsidianSettings.commands[command.id].name;
         if (command.doc) {
-            commandLabel = dv.fileLink(command.doc, false, obsidianConfig.commands[command.id].name);
+            commandLabel = dv.fileLink(command.doc, false, obsidianSettings.commands[command.id].name);
         }
     } else {
         new Notice(`Unable to find a command for the "${command.id}" id.`, 5000)
@@ -163,25 +175,13 @@ function ctrlAlwaysFirst(a, b) {
     return (a === 'Mod' || a === 'Ctrl') ? -1 : 1;
 }
 
-function applyHotkey(command) {
-    let hotkeys = []
-    hotkeys.push(command.hotkey)
-    app.hotkeyManager.setHotkeys(command.id, hotkeys)
-}
-
-function notifyHotkeyApplied(command) {
-    let commandName = obsidianConfig.commands[command.id].name
-    let hotkey = hotkeyToString(command.hotkey)
-    new Notice(`The "${hotkey}" hotkey has been set to the command "${commandName}" successfully.`, 5000)
-}
-
 //#endregion
 
 // INPUTS
 const {commands, filterByName} = input;
 
 // CONFIGURATION
-const obsidianConfig = new ObsidianConfiguration();
+const obsidianSettings = new ObsidianSettings();
 
 // RENDER
 displayApplyHotkeysButton();
