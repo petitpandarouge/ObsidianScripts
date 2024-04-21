@@ -68,6 +68,26 @@ function displayCommandsArray() {
     );
 }
 
+function displayObsidianCommands() {
+    dv.header(1, "Commandes Obsidian");
+    let displayedArray = [];
+
+    if (filterByName) {
+        const obsidianCommands = Object.values(obsidianConfig.commands);
+        for (let i = 0; i < obsidianCommands.length; i++) {
+            const command = obsidianCommands[i];
+            if (command.name.toLowerCase().includes(filterByName.toLowerCase())) {
+                displayedArray.push([command.name, command.id])
+            }
+        }
+    }
+    
+    dv.table(
+        ["Nom", "Ids"], 
+        displayedArray
+    );
+}
+
 function buildCommandHotkeyButton(command) {
     const hotkeyAsString = hotkeyToString(command.hotkey);
     const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
@@ -142,7 +162,7 @@ function applyHotkeys() {
 //#endregion
 
 // INPUTS
-const {commands} = input;
+const {commands, filterByName} = input;
 
 // CONFIGURATION
 const obsidianConfig = new ObsidianConfiguration();
@@ -150,4 +170,4 @@ const obsidianConfig = new ObsidianConfiguration();
 // RENDER
 displayApplyHotkeysButton();
 displayCommandsArray();
-
+displayObsidianCommands();
