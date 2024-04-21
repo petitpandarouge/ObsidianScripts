@@ -204,7 +204,7 @@ function displayCommandsArray() {
     );
 }
 
-function displayObsidianCommands() {
+function trydisplayFilteredObsidianCommands() {
     if (filterByName) {
         dv.header(1, `Commandes Obsidian pour le nom "\\*${filterByName}\\*"`);
         
@@ -227,8 +227,8 @@ function displayObsidianCommands() {
 //#endregion
 
 // INPUTS
-const {commands, filterByName} = input;
-const customCommands = commands.map((command) => new CustomCommand(command));
+let {commands: customCommands, filterByName} = input;
+customCommands = customCommands.map((command) => new CustomCommand(command));
 
 // CONFIGURATION
 const obsidianSettings = new ObsidianSettings();
@@ -236,4 +236,4 @@ const obsidianSettings = new ObsidianSettings();
 // RENDER
 displayApplyHotkeysButton();
 displayCommandsArray();
-displayObsidianCommands();
+trydisplayFilteredObsidianCommands();
