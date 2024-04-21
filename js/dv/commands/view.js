@@ -67,16 +67,16 @@ class ObsidianSettings {
         }
     }
 
-    #notifyHotkeyApplied(command) {
-        let commandName = this.commandsByid[command.id].name
-        let hotkey = hotkeyToString(command.hotkey)
+    #notifyHotkeyApplied(customCommand) {
+        let commandName = this.commandsByid[customCommand.id].name
+        let hotkey = hotkeyToString(customCommand.hotkey)
         new Notice(`The "${hotkey}" hotkey has been set to the command "${commandName}" successfully.`, 5000)
     }
 
-    applyHotkey(command) {
+    applyHotkey(customCommand) {
         let hotkeys = []
-        hotkeys.push(command.hotkey)
-        app.hotkeyManager.setHotkeys(command.id, hotkeys)
+        hotkeys.push(customCommand.hotkey)
+        app.hotkeyManager.setHotkeys(customCommand.id, hotkeys)
     }
 
     hotkeyNotBoundToCommand(hotkeyAsString) {
@@ -91,12 +91,12 @@ class ObsidianSettings {
         return obsidianSettings.commandsByid[commandId];
     }
 
-    applyHotkeys(commands) {
-        for (let i = 0; i < commands.length; i++) {
-            const command = commands[i]
-            if (this.commandExists(command.id)) {
-                this.applyHotkey(command);
-                this.#notifyHotkeyApplied(command);
+    applyHotkeys(customCommands) {
+        for (let i = 0; i < customCommands.length; i++) {
+            const customCommand = customCommands[i]
+            if (this.commandExists(customCommand.id)) {
+                this.applyHotkey(customCommand);
+                this.#notifyHotkeyApplied(customCommand);
             } 
         }
         this.save();
@@ -116,15 +116,15 @@ class ObsidianSettings {
 
 function displayApplyHotkeysButton() {
     let applyHotkeysButton = dv.el('button', 'Appliquer les raccourcis', {cls: "whide"});
-    applyHotkeysButton.onclick = () => obsidianSettings.applyHotkeys(commands);
+    applyHotkeysButton.onclick = () => obsidianSettings.applyHotkeys(customCommands);
 }
 
 function displayCommandsArray() {
     let displayedArray = [];
-    for (let i = 0; i < commands.length; i++) {
-        const command = commands[i];
-        const hotkeyButton = buildCommandHotkeyButton(command);
-        const label = buildCommandLabel(command);
+    for (let i = 0; i < customCommands.length; i++) {
+        const customCommand = customCommands[i];
+        const hotkeyButton = buildCommandHotkeyButton(customCommand);
+        const label = buildCommandLabel(customCommand);
         displayedArray.push([hotkeyButton, label])
     }
     
@@ -154,10 +154,10 @@ function displayObsidianCommands() {
     }
 }
 
-function buildCommandHotkeyButton(command) {
-    const hotkeyAsString = hotkeyToString(command.hotkey);
+function buildCommandHotkeyButton(customCommand) {
+    const hotkeyAsString = hotkeyToString(customCommand.hotkey);
     const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
-    hotkeyButton.onclick = () => obsidianSettings.openHotkeySettingByHotkey(command.hotkey);
+    hotkeyButton.onclick = () => obsidianSettings.openHotkeySettingByHotkey(customCommand.hotkey);
     if (obsidianSettings.hotkeyNotBoundToCommand(hotkeyAsString) ||
         obsidianSettings.hotkeyBoundToMoreThanOneCommand(hotkeyAsString)) {
         hotkeyButton.addClass("error");
@@ -165,15 +165,15 @@ function buildCommandHotkeyButton(command) {
     return hotkeyButton;
 }
 
-function buildCommandLabel(command) {
+function buildCommandLabel(customCommand) {
     let commandLabel = "INVALID ID"
-    if (obsidianSettings.commandExists(command.id)) {
-        commandLabel = obsidianSettings.commandsByid[command.id].name;
-        if (command.doc) {
-            commandLabel = dv.fileLink(command.doc, false, obsidianSettings.commandsByid[command.id].name);
+    if (obsidianSettings.commandExists(customCommand.id)) {
+        commandLabel = obsidianSettings.commandsByid[customCommand.id].name;
+        if (customCommand.doc) {
+            commandLabel = dv.fileLink(customCommand.doc, false, obsidianSettings.commandsByid[customCommand.id].name);
         }
     } else {
-        new Notice(`Unable to find a command for the "${command.id}" id.`, 5000)
+        new Notice(`Unable to find a command for the "${customCommand.id}" id.`, 5000)
     }
     return commandLabel;
 }
@@ -206,7 +206,7 @@ function ctrlAlwaysFirst(a, b) {
 //#endregion
 
 // INPUTS
-const {commands, filterByName} = input;
+const {commands: customCommands, filterByName} = input;
 
 // CONFIGURATION
 const obsidianSettings = new ObsidianSettings();
