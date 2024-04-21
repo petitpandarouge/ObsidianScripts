@@ -6,11 +6,15 @@ class Hotkey {
         this.key = hotkey.key;
     }
 
+    static #diplayStringSeparator = "+";
+    static modModifier = "Mod";
+    static ctrlModifier = "Ctrl";
+
     toString() {
         let modifiersAsString = this.modifiers
             .sort(Sort.ctrlAlwaysFirst)
-            .join(" + ")
-            .replace('Mod', 'Ctrl')
+            .join(` ${Hotkey.#diplayStringSeparator} `)
+            .replace(Hotkey.modModifier, Hotkey.ctrlModifier)
         let keyAsString = this.key.length == 1 ?
             this.key.toUpperCase() :
             this.key
@@ -23,7 +27,7 @@ class Hotkey {
         if (modifiersAsString.length === 0) {
             return keyAsString;
         } else {
-            return `${modifiersAsString} + ${keyAsString}`;
+            return `${modifiersAsString} ${Hotkey.#diplayStringSeparator} ${keyAsString}`;
         }
     }
 }
@@ -152,7 +156,7 @@ class ObsidianSettings {
 
 class Sort {
     static ctrlAlwaysFirst(a, b) {
-        return (a === 'Mod' || a === 'Ctrl') ? -1 : 1;
+        return (a === Hotkey.modModifier || a === Hotkey.ctrlModifier) ? -1 : 1;
     }
 }
 
