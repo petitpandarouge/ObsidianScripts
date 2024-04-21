@@ -78,6 +78,12 @@ class ObsidianSettings {
         app.hotkeyManager.bake()
         app.hotkeyManager.save()
     }
+
+    openHotkeySettingByHotkey(hotkey) {
+        app.setting.open();
+        const tab = app.setting.openTabById('hotkeys');
+        tab.setHotkeyFilter(hotkey);
+    }
 }
 
 function displayApplyHotkeysButton() {
@@ -123,7 +129,7 @@ function displayObsidianCommands() {
 function buildCommandHotkeyButton(command) {
     const hotkeyAsString = hotkeyToString(command.hotkey);
     const hotkeyButton = dv.el('button', hotkeyAsString, {cls: "clickable-icon"});
-    hotkeyButton.onclick = () => openHotkeySettingByHotkey(command.hotkey);
+    hotkeyButton.onclick = () => obsidianSettings.openHotkeySettingByHotkey(command.hotkey);
     if (obsidianSettings.hotkeyNotBoundToCommand(hotkeyAsString) ||
         obsidianSettings.hotkeyBoundToMoreThanOneCommand(hotkeyAsString)) {
         hotkeyButton.addClass("error");
@@ -142,12 +148,6 @@ function buildCommandLabel(command) {
         new Notice(`Unable to find a command for the "${command.id}" id.`, 5000)
     }
     return commandLabel;
-}
-
-function openHotkeySettingByHotkey(hotkey) {
-    app.setting.open();
-    const tab = app.setting.openTabById('hotkeys');
-    tab.setHotkeyFilter(hotkey);
 }
 
 function hotkeyToString(hotkey) {
