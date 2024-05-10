@@ -4,7 +4,13 @@
   "compilerOptions": {
     "outDir": "./dist",
     "sourceMap": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      "@obsidian/*": [
+        "src/*"
+      ]
+    }
   },
   "include": [ 
     "src",

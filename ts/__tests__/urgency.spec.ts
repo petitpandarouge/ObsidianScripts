@@ -1,4 +1,4 @@
-import { Urgency } from "../src/urgency";
+import { Urgency } from "@obsidian/urgency";
 
 describe("Urgency", () => {
     it("should work", () => {
