@@ -1,4 +1,4 @@
-namespace Obsidian {
+module Obsidian {
     export interface ITodoConfiguration {
 
     }

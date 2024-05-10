@@ -1,3 +1,5 @@
-namespace Obsidian {
-    
+module Obsidian {
+    export interface ITodoable extends IUrgencyable {
+
+    }
 }
