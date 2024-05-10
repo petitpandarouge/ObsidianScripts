@@ -1,4 +1,4 @@
-namespace Obsidian {
+module Obsidian {
 	export class Urgency {
         #dv: IDataview;
         #conf: ITodoConfiguration;
