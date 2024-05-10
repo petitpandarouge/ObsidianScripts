@@ -1,5 +1,3 @@
-module Obsidian {
-    export interface ITodoConfiguration {
+export interface ITodoConfiguration {
 
-    }
 }

@@ -1,5 +1,3 @@
-module Obsidian {
-    export interface IDataview {
+export interface IDataview {
 
-    }
 }
