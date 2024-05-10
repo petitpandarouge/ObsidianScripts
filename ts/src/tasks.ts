@@ -1,5 +1,5 @@
 
-import { Urgency } from "@obsidian/urgency";
+import { Urgency } from "../src/urgency";
 
 let urgency = new Urgency();
 urgency.getScore();
