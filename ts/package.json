@@ -1,0 +1,30 @@
+{
+  "name": "obsidian_scripts",
+  "version": "0.1.0",
+  "description": "All the plugin scripts I use in my Obsidian vaults.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petitpandarouge/ObsidianScripts.git"
+  },
+  "keywords": [
+    "obsidian",
+    "dataview",
+    "quickadd",
+    "userplugins"
+  ],
+  "author": "Damien Porté",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/petitpandarouge/ObsidianScripts/issues"
+  },
+  "homepage": "https://github.com/petitpandarouge/ObsidianScripts#readme",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
