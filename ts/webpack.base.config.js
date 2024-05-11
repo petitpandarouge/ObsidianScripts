@@ -22,6 +22,7 @@ module.exports = (bundleName, bundlePath) => {
     output: {
       filename: `${bundleName}.js`,
       path: path.resolve(__dirname, `bundles/${bundlePath}`),
+      libraryTarget: "commonjs2",
     },
   }
 }
