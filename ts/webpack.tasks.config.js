@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: './src/tasks.ts',
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
