@@ -1,8 +1,9 @@
 const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { mergician } = require('mergician');
 
-module.exports = (bundleName, bundlePath) => {
-  return  {
+module.exports = (bundleName, bundlePath, extraConfig = {}) => {
+  let base = {
     mode: 'development',
     entry: `${path.resolve(__dirname, 'src')}/${bundleName}.ts`,
     devtool: 'inline-source-map',
@@ -21,8 +22,8 @@ module.exports = (bundleName, bundlePath) => {
     },
     output: {
       filename: `${bundleName}.js`,
-      path: path.resolve(__dirname, `bundles/${bundlePath}`),
-      libraryTarget: "commonjs2",
+      path: path.resolve(__dirname, `bundles/${bundlePath}`)
     },
-  }
+  };
+  return mergician({})(base, extraConfig);
 }

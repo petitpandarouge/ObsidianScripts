@@ -1,3 +1,7 @@
 const make = require('./webpack.base.config');
 
-module.exports = make('commands', 'dv/commands');
+module.exports = make('commands', 'dv/commands', {
+  output: {
+    libraryTarget: "commonjs2",
+  }
+});
