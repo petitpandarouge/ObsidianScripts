@@ -167,3 +167,7 @@ __pycache__
 
 # === Rules for C++ development ===
 compile_commands.json
+
+# === Rules for this project ===
+/dist
+/bundles
