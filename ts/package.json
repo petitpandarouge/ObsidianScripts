@@ -8,6 +8,7 @@
     "build": "npm run clean && npx tsc --project tsconfig.build.json",
     "bundle:tasks": "npx webpack --config webpack.tasks.config.js",
     "bundle:commands": "npx webpack --config webpack.commands.config.js",
+    "bundle:dv": "npx webpack --config webpack.testView.config.js",
     "test": "npm run build && jest"
   },
   "repository": {
