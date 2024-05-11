@@ -1,1 +1,6 @@
-(()=>{"use strict";var e={451:(e,r)=>{Object.defineProperty(r,"__esModule",{value:!0}),r.Urgency=void 0,r.Urgency=class{compute(){}getScore(){return 12}getExplaination(){return""}}}},r={};(new(function t(n){var o=r[n];if(void 0!==o)return o.exports;var c=r[n]={exports:{}};return e[n](c,c.exports,t),c.exports}(451).Urgency)).getScore()})();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const urgency_1 = require("../src/urgency");
+let urgency = new urgency_1.Urgency();
+urgency.getScore();
+//# sourceMappingURL=tasks.js.map

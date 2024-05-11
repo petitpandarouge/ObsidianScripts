@@ -16,6 +16,6 @@ module.exports = {
   },
   output: {
     filename: 'tasks.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'bundles/dv'),
   },
 };
