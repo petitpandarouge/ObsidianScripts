@@ -1,25 +1,3 @@
-const path = require('path');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const make = require('./webpack.base.config');
 
-module.exports = {
-  mode: 'development',
-  entry: path.resolve(__dirname, 'src') + '/tasks.ts',
-  devtool: 'inline-source-map',
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-    plugins: [new TsconfigPathsPlugin({})]
-  },
-  output: {
-    filename: 'tasks.js',
-    path: path.resolve(__dirname, 'bundles/dv'),
-  },
-};
+module.exports = make('tasks', 'dv');
