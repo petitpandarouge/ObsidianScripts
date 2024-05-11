@@ -4,9 +4,10 @@
   "description": "All the plugin scripts I use in my Obsidian vaults.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build && jest",
-    "build": "npx tsc --project tsconfig.build.json",
-    "bundle:tasks": "npx webpack --config webpack.tasks.config.js"
+    "clean": "rm -rf dist",
+    "build": "npm run clean && npx tsc --project tsconfig.build.json",
+    "bundle:tasks": "npx webpack --config webpack.tasks.config.js",
+    "test": "npm run build && jest"
   },
   "repository": {
     "type": "git",
