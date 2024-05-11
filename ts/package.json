@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run build && jest",
     "build": "npx tsc --project tsconfig.build.json",
-    "build:tasks": "npx webpack --config webpack.tasks.config.js"
+    "bundle:tasks": "npx webpack --config webpack.tasks.config.js"
   },
   "repository": {
     "type": "git",
