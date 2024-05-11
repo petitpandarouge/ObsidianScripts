@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  mode: 'development',
   entry: './src/tasks.ts',
   devtool: 'inline-source-map',
   module: {
