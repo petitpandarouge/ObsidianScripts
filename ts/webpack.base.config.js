@@ -2,10 +2,10 @@ const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const { mergician } = require('mergician');
 
-module.exports = (bundleName, bundlePath, extraConfig = {}) => {
+module.exports = (entryName, bundleName, bundlePath, extraConfig = {}) => {
   let base = {
     mode: 'development',
-    entry: `${path.resolve(__dirname, 'src')}/${bundleName}.ts`,
+    entry: `${path.resolve(__dirname, 'src')}/${entryName}.ts`,
     devtool: 'inline-source-map',
     module: {
       rules: [

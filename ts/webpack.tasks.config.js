@@ -1,3 +1,3 @@
 const make = require('./webpack.base.config');
 
-module.exports = make('tasks', 'dv');
+module.exports = make('tasks', 'tasks', 'dv');
