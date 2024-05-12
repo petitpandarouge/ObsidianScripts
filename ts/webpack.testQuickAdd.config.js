@@ -1,7 +1,3 @@
-const make = require('./webpack.base.config');
+const make = require('./webpack.base.quickadd.config');
 
-module.exports = make('testQuickAdd', 'testQuickAdd', 'QuickAdd', {
-  output: {
-    libraryTarget: "commonjs2",
-  }
-});
+module.exports = make('testQuickAdd');
