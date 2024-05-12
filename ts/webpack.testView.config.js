@@ -1,6 +1,6 @@
 const make = require('./webpack.base.config');
 
-module.exports = make('testView', 'dv/test', {
+module.exports = make('testView', 'testView', 'dv/test', {
   output: {
     library: "view",
     libraryTarget: "var"
