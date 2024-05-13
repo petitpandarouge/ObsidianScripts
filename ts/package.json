@@ -13,7 +13,8 @@
     "bundle:dv": "npx webpack --config webpack.testView.config.js && node dv.view.init.js",
     "bundle": "npm run bundle:tasks && npm run bundle:quickadd && npm run bundle:dv",
     "test": "npm run build && jest",
-    "ci": "npm run test && npm run bundle"
+    "ci": "npm run test && npm run bundle",
+    "deploy:test": "ncp ./bundles c:/Temp/obsidian"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
     "mergician": "^2.0.2",
+    "ncp": "^2.0.0",
     "rimraf": "^5.0.7",
     "ts-jest": "^29.1.2",
     "ts-loader": "^9.5.1",
