@@ -1,8 +1,4 @@
 ﻿import { PluginLoader } from '@obsidian/user-plugins/pluginLoader';
-import { Plugin } from '@obsidian/user-plugins/plugin';
+import { NewProjectCommand } from '@obsidian/user-plugins/newProjectCommand';
 
-// export const loader: PluginLoader = {
-//     onload: async (plugin: Plugin) => {
-//         plugin.addCommand("command");
-//     }
-// };
+export const loader = new PluginLoader(new NewProjectCommand());
