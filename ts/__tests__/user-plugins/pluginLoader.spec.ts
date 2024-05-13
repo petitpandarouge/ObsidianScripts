@@ -1,5 +1,4 @@
-﻿import { Command } from '@obsidian/user-plugins/command';
-import { PluginLoader } from '@obsidian/user-plugins/pluginLoader';
+﻿import { PluginLoader } from '@obsidian/user-plugins/pluginLoader';
 import Chance from 'chance';
 
 const chance = new Chance();
