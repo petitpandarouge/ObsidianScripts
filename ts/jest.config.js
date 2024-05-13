@@ -5,5 +5,6 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   collectCoverage: true,
-  moduleNameMapper: makeModuleNameMapper(tsconfig)
+  moduleNameMapper: makeModuleNameMapper(tsconfig),
+  testRegex: '(/__tests__/.*spec)\\.tsx?$',
 };
