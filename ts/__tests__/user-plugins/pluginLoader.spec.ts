@@ -1,11 +1,8 @@
 ﻿import { PluginLoader } from '@obsidian/user-plugins/pluginLoader';
+import { mockPlugin } from './mockPlugin';
 import Chance from 'chance';
 
 const chance = new Chance();
-
-const mockPlugin = {
-    addCommand: jest.fn(),
-};
 
 const command = {
     id: chance.string(),
