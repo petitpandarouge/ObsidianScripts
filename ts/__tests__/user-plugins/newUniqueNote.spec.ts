@@ -6,10 +6,30 @@ describe('newUniqueNote', () => {
         // Arrange
         const mockPlugin = {
             addCommand: jest.fn(),
+            app: {
+                vault: {
+                    create: jest.fn(),
+                },
+            },
         };
         // Act        
         await newUniqueNote.onload(mockPlugin);
         // Assert
         expect(mockPlugin.addCommand).toHaveBeenCalledWith(expect.any(NewUniqueNoteCommand));
+    });
+    it('should call at least once plugin.app.vault.create', async () => {
+        // Arrange
+        const mockPlugin = {
+            addCommand: jest.fn(),
+            app: {
+                vault: {
+                    create: jest.fn(),
+                },
+            },
+        };
+        // Act        
+        await newUniqueNote.onload(mockPlugin);
+        // Assert
+        expect(mockPlugin.app.vault.create).toHaveBeenCalled();
     });   
 });

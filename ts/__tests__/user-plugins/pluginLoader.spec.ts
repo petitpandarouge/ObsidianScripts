@@ -8,6 +8,11 @@ describe('PluginLoader', () => {
         // Arrange
         const mockPlugin = {
             addCommand: jest.fn(),
+            app: {
+                vault: {
+                    create: jest.fn(),
+                },
+            },
         };
         const command = {
             id: chance.string(),
