@@ -6,6 +6,11 @@ describe('newProject', () => {
         // Arrange
         const mockPlugin = {
             addCommand: jest.fn(),
+            app: {
+                vault: {
+                    create: jest.fn(),
+                },
+            },
         };
         // Act
         await newProject.onload(mockPlugin);
