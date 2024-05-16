@@ -1,6 +1,10 @@
-﻿import { Command } from "@obsidian/user-plugins/command";
+﻿import { AbstractCommand } from "@obsidian/user-plugins/abstractCommand";
+import { Plugin } from '@obsidian/user-plugins/plugin';
 
-export class NewProjectCommand implements Command {
+export class NewProjectCommand extends AbstractCommand {
+    constructor(plugin: Plugin) {
+        super(plugin);
+    }
     id: string = "new-project-from-empty-note";
     name: string = "Create new project structure from empty note";
     callback(): Promise<void> {
