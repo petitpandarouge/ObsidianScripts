@@ -1,5 +1,5 @@
 ﻿import { AbstractCommand } from "@obsidian/user-plugins/abstractCommand";
-import { PluginLoader } from '@obsidian/user-plugins/pluginLoader';
+import { AbstractPluginLoader } from '@obsidian/user-plugins/abstractPluginLoader';
 import { Plugin } from '@obsidian/user-plugins/plugin';
 import Chance from 'chance';
 
@@ -24,7 +24,12 @@ describe('PluginLoader', () => {
             name = chance.string();
             callback = jest.fn();
         }
-        const loader = new PluginLoader(CustomCommand);
+        class CustomPluginLoader extends AbstractPluginLoader {
+            buildCommand(plugin: Plugin): AbstractCommand {
+                return new CustomCommand(plugin);
+            }
+        }
+        const loader = new CustomPluginLoader();
         // Act
         await loader.onload(mockPlugin);
         // Assert
