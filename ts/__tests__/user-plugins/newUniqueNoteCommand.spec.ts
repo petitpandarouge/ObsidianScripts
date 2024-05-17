@@ -1,4 +1,6 @@
 ﻿import { NewUniqueNoteCommand } from '@obsidian/user-plugins/newUniqueNoteCommand';
+import Chance from 'chance';
+import moment from 'moment';
 
 describe('newUniqueNoteCommand', () => {
     it('should call at least once plugin.app.vault.create', async () => {
@@ -30,7 +32,9 @@ describe('newUniqueNoteCommand', () => {
                 },
             },
         };
-        const uniqueName = '202101011200';
+        const chance = new Chance();
+        const date = chance.date();
+        const uniqueName = moment(date).format('YYYYMMDDHHmm');
         const mockUniqueNameGenerator = {
             generate: jest.fn(() => uniqueName),
         };
