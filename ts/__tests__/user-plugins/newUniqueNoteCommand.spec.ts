@@ -31,10 +31,10 @@ describe('newUniqueNoteCommand', () => {
             },
         };
         const uniqueName = '202101011200';
-        const uniqueNameGenerator = {
+        const mockUniqueNameGenerator = {
             generate: jest.fn(() => uniqueName),
         };
-        const newUniqueNoteCommand = new NewUniqueNoteCommand(mockPlugin, uniqueNameGenerator);
+        const newUniqueNoteCommand = new NewUniqueNoteCommand(mockPlugin, mockUniqueNameGenerator);
         // Act        
         await newUniqueNoteCommand.callback();
         // Assert
