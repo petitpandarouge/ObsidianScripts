@@ -6,8 +6,8 @@ export class NewUniqueNoteCommand extends AbstractCommand {
     constructor(plugin: Plugin, private uniqueNameGenerator: UniqueNameGenerator) {
         super(plugin);
     }
-    id: string = 'new-unique-note-in-current-folder';
-    name: string = 'Create new unique note in folder of the center panel active note';
+    id: string = 'new-unique-note-in-current-folder-2';
+    name: string = 'Create new unique note in folder of the center panel active note 2';
     callback(): Promise<void> {
         const uniqueName = this.uniqueNameGenerator.generate();
         this.plugin.app.vault.create(uniqueName,"");

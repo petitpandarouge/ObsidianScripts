@@ -6,9 +6,15 @@ import { UniqueNameGenerator } from '@obsidian/uniqueNameGenerator';
 
 class PluginLoader extends AbstractPluginLoader {
     buildCommand(plugin: Plugin): AbstractCommand {
+        debugger;
         const uniqueNameGenerator = new UniqueNameGenerator();
         return new NewUniqueNoteCommand(plugin, uniqueNameGenerator);
     }
 }
 
-export const loader = new PluginLoader();
+const onload = (plugin: Plugin): Promise<void> => {
+    const loader = new PluginLoader();
+    return loader.load(plugin);
+}
+
+export { onload };

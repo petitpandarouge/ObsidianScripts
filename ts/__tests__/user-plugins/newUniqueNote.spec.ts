@@ -1,4 +1,4 @@
-﻿import { loader as newUniqueNote } from '@obsidian/user-plugins/newUniqueNote';
+﻿import { onload } from '@obsidian/user-plugins/newUniqueNote';
 import { NewUniqueNoteCommand } from '@obsidian/user-plugins/newUniqueNoteCommand';
 
 describe('newUniqueNote', () => {
@@ -13,7 +13,7 @@ describe('newUniqueNote', () => {
             },
         };
         // Act        
-        await newUniqueNote.onload(mockPlugin);
+        await onload(mockPlugin);
         // Assert
         expect(mockPlugin.addCommand).toHaveBeenCalledWith(expect.any(NewUniqueNoteCommand));
     }); 

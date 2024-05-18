@@ -1,4 +1,4 @@
-﻿import { loader as newProject } from '@obsidian/user-plugins/newProject';
+﻿import { onload } from '@obsidian/user-plugins/newProject';
 import { NewProjectCommand } from '@obsidian/user-plugins/newProjectCommand';
 
 describe('newProject', () => {
@@ -13,7 +13,7 @@ describe('newProject', () => {
             },
         };
         // Act
-        await newProject.onload(mockPlugin);
+        await onload(mockPlugin);
         // Assert
         expect(mockPlugin.addCommand).toHaveBeenCalledWith(expect.any(NewProjectCommand));
     });   

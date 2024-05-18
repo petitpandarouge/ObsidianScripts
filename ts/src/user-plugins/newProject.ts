@@ -8,4 +8,10 @@ class PluginLoader extends AbstractPluginLoader {
         return new NewProjectCommand(plugin);
     }
 }
-export const loader = new PluginLoader();
+
+const onload = (plugin: Plugin): Promise<void> => {
+    const loader = new PluginLoader();
+    return loader.load(plugin);
+}
+
+export { onload };
