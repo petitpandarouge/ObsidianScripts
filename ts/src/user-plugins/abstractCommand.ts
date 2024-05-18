@@ -2,10 +2,7 @@
 import { Command } from '@obsidian/user-plugins/command';
 
 export abstract class AbstractCommand implements Command {
-    protected plugin: Plugin;
-    constructor(plugin: Plugin) {
-        this.plugin = plugin;
-    }
+    constructor(protected plugin: Plugin) { }
     abstract id: string;
     abstract name: string;
     abstract callback(): Promise<void>;
