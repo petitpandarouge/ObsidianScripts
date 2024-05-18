@@ -31,7 +31,7 @@ describe('PluginLoader', () => {
         }
         const loader = new CustomPluginLoader();
         // Act
-        await loader.onload(mockPlugin);
+        await loader.load(mockPlugin);
         // Assert
         expect(mockPlugin.addCommand).toHaveBeenCalledWith(expect.any(CustomCommand));
     });   
