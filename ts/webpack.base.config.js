@@ -5,8 +5,8 @@ const { mergician } = require('mergician');
 module.exports = (entryName, bundleName, bundlePath, extraConfig = {}) => {
   let base = {
     mode: 'development',
+    devtool: 'eval-source-map',
     entry: `${path.resolve(__dirname, 'src')}/${entryName}.ts`,
-    devtool: 'inline-source-map',
     module: {
       rules: [
         {
