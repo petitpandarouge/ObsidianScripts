@@ -30,6 +30,16 @@ describe('CommandLoader', () => {
         expect(mockCommandBuilder).toHaveBeenCalledTimes(buildersCount);
         expect(mockCommandBuilder).toHaveBeenCalledWith(mockPlugin);
     });
+    it('should not add command in the plugin if empty builders array is provided', async () => {
+        // Arrange
+        const mockPlugin = new MockPlugin();
+        const builders: CommandBuilder[] = [ ];
+        const loader = new CommandLoader(mockPlugin);
+        // Act
+        await loader.load(builders);
+        // Assert
+        expect(mockPlugin.addCommand).toHaveBeenCalledTimes(0);
+    }); 
     // it('should add commands in the UserPlugins plugin', async () => {
     //     // Arrange
     //     const mockPlugin = new MockPlugin();
