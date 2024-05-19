@@ -65,4 +65,3 @@ describe('ErrorNoticer', () => {
 // }
 
 // TODO : Timeout
-// TODO : Rethrow
