@@ -1,13 +1,4 @@
-﻿// jest.mock('./mocks/mockPlugin', () => {
-//     return jest.fn().mockImplementation(() => {
-//         return new class extends MockPlugin{
-//             // Mock methods and properties here
-//             addCommand = jest.fn((command) => command.id = 'mocked');
-//           };
-//     });
-//   });
-
-import Chance from 'chance';
+﻿import Chance from 'chance';
 import { CommandBuilder } from "@obsidian/user-plugins/commandBuilder";
 import { CommandLoader } from '@obsidian/user-plugins/commandLoader';
 import { MockPlugin } from './mocks/mockPlugin';
