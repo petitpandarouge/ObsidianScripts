@@ -4,7 +4,6 @@ import { CommandBuilder } from "@obsidian/user-plugins/commandBuilder";
 export class CommandLoader {
     constructor(private plugin: Plugin) { }
     async load(builders: CommandBuilder[]): Promise<void> {
-        // await Promise.all(builders.map(builder => this.plugin.addCommand(builder(this.plugin))));
-        await Promise.all(builders.map(builder => builder(this.plugin)));
+        await Promise.all(builders.map(builder => this.plugin.addCommand(builder(this.plugin))));
     }
 }
