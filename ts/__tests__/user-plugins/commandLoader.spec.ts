@@ -1,8 +1,15 @@
-﻿import { MockCommand } from '@obsidian/tests/user-plugins/mocks/mockCommand';
+﻿jest.mock('@obsidian/notice', () => {
+    return {
+      Notice: jest.fn(),
+    };
+  });
+  
+import { MockCommand } from '@obsidian/tests/user-plugins/mocks/mockCommand';
 import { MockPlugin } from '@obsidian/tests/user-plugins/mocks/mockPlugin';
 import { AbstractCommand } from '@obsidian/user-plugins/abstractCommand';
 import { CommandBuilder } from "@obsidian/user-plugins/commandBuilder";
 import { CommandLoader } from '@obsidian/user-plugins/commandLoader';
+import { Notice } from '@obsidian/notice';
 import Chance from 'chance';
 
 describe('CommandLoader', () => {
@@ -58,7 +65,7 @@ describe('CommandLoader', () => {
         expect(mockPlugin.addCommand).toHaveBeenCalledTimes(buildersCount);
         expect(mockPlugin.addCommand).toHaveBeenCalledWith(expect.any(AbstractCommand));
     });  
-    it('should throw if at least two commands have the same id', async () => {
+    it('should throw adn notice if at least two commands have the same id', async () => {
         // Arrange
         const mockPlugin = new MockPlugin();
         const chance = new Chance();
@@ -69,11 +76,16 @@ describe('CommandLoader', () => {
             return command;
         });
         const builders = [ mockCommandBuilder, mockCommandBuilder ];
+        const mockNotice = jest.fn();
+        (Notice as jest.Mock) = mockNotice;
         const loader = new CommandLoader(mockPlugin);
+        const errorMessage = `UserPlugins : Command with id ${commandId} already exists.`;
         // Act
         const action = async () => await loader.load(builders);
         // Assert
-        await expect(action).rejects.toThrow(`UserPlugins : Command with id ${commandId} already exists.`);
+        await expect(action).rejects.toThrow(errorMessage);
+        expect(mockNotice).toHaveBeenCalledTimes(1);
+        expect(mockNotice).toHaveBeenCalledWith(errorMessage, expect.any(Number));
     });
     // TODO - Notification if a command is added with the same id as an existing one (Notice)
 });
