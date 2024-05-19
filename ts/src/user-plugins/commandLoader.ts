@@ -21,3 +21,5 @@ export class CommandLoader {
         await Promise.resolve();
     }
 }
+
+// TODO - Prefixed error message.
