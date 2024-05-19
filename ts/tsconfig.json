@@ -8,6 +8,9 @@
     "removeComments" : true,
     "baseUrl": ".",
     "paths": {
+      "@obsidian/tests/*": [
+        "__tests__/*"
+      ],
       "@obsidian/*": [
         "src/*"
       ]
