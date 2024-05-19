@@ -8,7 +8,7 @@ export class MockCommand extends AbstractCommand {
     constructor(plugin: Plugin) {
         super(plugin);
     }
-    id = chance.string();
+    id = chance.guid();
     name = chance.string();
     callback = jest.fn();
 }
