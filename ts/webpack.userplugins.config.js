@@ -8,8 +8,6 @@ function withUserPluginsConfiguration() {
   };
 }
 
-module.exports = (scriptName) => {
-  return make(`user-plugins/${scriptName}`, `${scriptName}-V2`, 'UserPlugins', 
-    withUserPluginsConfiguration() 
+module.exports = make(`user-plugins/main`, `main`, 'UserPlugins', 
+  withUserPluginsConfiguration()
   );
-}
