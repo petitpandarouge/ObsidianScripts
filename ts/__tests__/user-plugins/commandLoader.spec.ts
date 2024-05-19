@@ -16,6 +16,20 @@ describe('CommandLoader', () => {
         expect(mockCommandBuilder).toHaveBeenCalledTimes(1);
         expect(mockCommandBuilder).toHaveBeenCalledWith(mockPlugin);
     });  
+    it('should build as many commands as provided builders', async () => {
+        // Arrange
+        const mockPlugin = new MockPlugin();
+        const chance = new Chance();
+        const buildersCount = chance.integer({ min: 0, max: 10 });
+        const mockCommandBuilder: CommandBuilder = jest.fn();
+        const builders = Array.from({ length: buildersCount }, () => mockCommandBuilder);
+        const loader = new CommandLoader(mockPlugin);
+        // Act
+        await loader.load(builders);
+        // Assert
+        expect(mockCommandBuilder).toHaveBeenCalledTimes(buildersCount);
+        expect(mockCommandBuilder).toHaveBeenCalledWith(mockPlugin);
+    });
     // it('should add commands in the UserPlugins plugin', async () => {
     //     // Arrange
     //     const mockPlugin = new MockPlugin();
