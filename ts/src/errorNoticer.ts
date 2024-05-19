@@ -1,5 +1,5 @@
 ﻿import { Action } from "@obsidian/action";
-import { Notice } from "@obsidian/notice";
+import { NoticeWrapper } from "@obsidian/noticeWrapper";
 
 export class ErrorNoticer {
     constructor(private noticeTime: number = 5000) { }
@@ -8,7 +8,7 @@ export class ErrorNoticer {
             await action();
         } catch (error: unknown) {
             if (error instanceof Error) {
-                new Notice(error.message, this.noticeTime);
+                new NoticeWrapper(error.message, this.noticeTime);
             }
             throw error;
         }
