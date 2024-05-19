@@ -1,8 +1,6 @@
 ﻿jest.mock('@obsidian/notice', () => {
     return {
-      Notice: jest.fn().mockImplementation((message: string, timeoutInMs: number) => {
-        return { message, timeoutInMs };
-      }),
+      Notice: jest.fn(),
     };
   });
 
@@ -17,12 +15,25 @@ describe('ErrorNotifier', () => {
         const errorMessage = chance.string();
         const errorNoticer = new ErrorNoticer();
         const action = jest.fn(() => { throw new Error(errorMessage) });
+        const mockNotice = jest.fn();
+        (Notice as jest.Mock) = mockNotice;
         // Act
         await errorNoticer.wrap(action);
         // Assert
-        expect(Notice).toHaveBeenCalledTimes(1);
-        expect(Notice).toHaveBeenCalledWith(errorMessage, expect.any(Number));
+        expect(mockNotice).toHaveBeenCalledTimes(1);
+        expect(mockNotice).toHaveBeenCalledWith(errorMessage, expect.any(Number));
     });   
+    it('should not notice Obsidian if no exception is thrown by the inner execution', async () => {
+        // Arrange
+        const errorNoticer = new ErrorNoticer();
+        const action = jest.fn();
+        const mockNotice = jest.fn();
+        (Notice as jest.Mock) = mockNotice;
+        // Act
+        await errorNoticer.wrap(action);
+        // Assert
+        expect(mockNotice).toHaveBeenCalledTimes(0);
+    });
 });
 
 // TODO : Timeout
