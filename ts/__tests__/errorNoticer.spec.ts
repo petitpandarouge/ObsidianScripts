@@ -1,11 +1,11 @@
-﻿jest.mock('@obsidian/notice', () => {
+﻿jest.mock('@obsidian/noticeWrapper', () => {
     return {
-      Notice: jest.fn(),
+      NoticeWrapper: jest.fn(),
     };
   });
 
 import { ErrorNoticer } from '@obsidian/errorNoticer';
-import { Notice } from '@obsidian/notice';
+import { NoticeWrapper } from '@obsidian/noticeWrapper';
 import Chance from 'chance';
 
 describe('ErrorNoticer', () => {
@@ -16,7 +16,7 @@ describe('ErrorNoticer', () => {
         const errorNoticer = new ErrorNoticer();
         const wrappedAction = jest.fn(() => { throw new Error(errorMessage) });
         const mockNotice = jest.fn();
-        (Notice as jest.Mock) = mockNotice;
+        (NoticeWrapper as jest.Mock) = mockNotice;
         // Act
         const action = async () => await errorNoticer.wrap(wrappedAction);
         // Assert
@@ -32,7 +32,7 @@ describe('ErrorNoticer', () => {
         const errorNoticer = new ErrorNoticer(noticeTime);
         const wrappedAction = jest.fn(() => { throw new Error(errorMessage) });
         const mockNotice = jest.fn();
-        (Notice as jest.Mock) = mockNotice;
+        (NoticeWrapper as jest.Mock) = mockNotice;
         // Act
         const action = async () => await errorNoticer.wrap(wrappedAction);
         // Assert
@@ -45,7 +45,7 @@ describe('ErrorNoticer', () => {
         const errorNoticer = new ErrorNoticer();
         const wrappedAction = jest.fn();
         const mockNotice = jest.fn();
-        (Notice as jest.Mock) = mockNotice;
+        (NoticeWrapper as jest.Mock) = mockNotice;
         // Act
         await errorNoticer.wrap(wrappedAction);
         // Assert

@@ -1,6 +1,6 @@
-﻿jest.mock('@obsidian/notice', () => {
+﻿jest.mock('@obsidian/noticeWrapper', () => {
     return {
-      Notice: jest.fn(),
+      NoticeWrapper: jest.fn(),
     };
   });
   
@@ -9,7 +9,7 @@ import { MockPlugin } from '@obsidian/tests/user-plugins/mocks/mockPlugin';
 import { AbstractCommand } from '@obsidian/user-plugins/abstractCommand';
 import { CommandBuilder } from "@obsidian/user-plugins/commandBuilder";
 import { CommandLoader } from '@obsidian/user-plugins/commandLoader';
-import { Notice } from '@obsidian/notice';
+import { NoticeWrapper } from '@obsidian/noticeWrapper';
 import Chance from 'chance';
 
 describe('CommandLoader', () => {
@@ -77,7 +77,7 @@ describe('CommandLoader', () => {
         });
         const builders = [ mockCommandBuilder, mockCommandBuilder ];
         const mockNotice = jest.fn();
-        (Notice as jest.Mock) = mockNotice;
+        (NoticeWrapper as jest.Mock) = mockNotice;
         const loader = new CommandLoader(mockPlugin);
         const errorMessage = `UserPlugins : Command with id ${commandId} already exists.`;
         // Act
