@@ -73,7 +73,7 @@ describe('CommandLoader', () => {
         // Act
         const action = async () => await loader.load(builders);
         // Assert
-        await expect(action).rejects.toThrow(`Duplicate id: ${commandId}`);
+        await expect(action).rejects.toThrow(`UserPlugins : Command with id ${commandId} already exists.`);
     });
     // TODO - Notification if a command is added with the same id as an existing one (Notice)
 });

@@ -8,7 +8,7 @@ export class CommandLoader {
         const unicityValidator = new IdValidator<string>();
         for (const builder of builders) {
             const command = builder(this.plugin);
-            unicityValidator.validate(command);
+            unicityValidator.validate(command, (id) => `UserPlugins : Command with id ${id} already exists.`);
             this.plugin.addCommand(command);
         }
         return Promise.resolve();
