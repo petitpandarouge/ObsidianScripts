@@ -9,7 +9,7 @@ describe('CommandLoader', () => {
     it('should build command', async () => {
         // Arrange
         const mockPlugin = new MockPlugin();
-        const mockCommandBuilder: CommandBuilder = jest.fn();
+        const mockCommandBuilder: CommandBuilder = jest.fn().mockImplementation(() => new MockCommand(mockPlugin));
         const builders = [ mockCommandBuilder ];
         const loader = new CommandLoader(mockPlugin);
         // Act
@@ -23,7 +23,7 @@ describe('CommandLoader', () => {
         const mockPlugin = new MockPlugin();
         const chance = new Chance();
         const buildersCount = chance.integer({ min: 0, max: 0 });
-        const mockCommandBuilder: CommandBuilder = jest.fn();
+        const mockCommandBuilder: CommandBuilder = jest.fn().mockImplementation(() => new MockCommand(mockPlugin));
         const builders = Array.from({ length: buildersCount }, () => mockCommandBuilder);
         const loader = new CommandLoader(mockPlugin);
         // Act
@@ -57,5 +57,22 @@ describe('CommandLoader', () => {
         // Assert
         expect(mockPlugin.addCommand).toHaveBeenCalledTimes(buildersCount);
         expect(mockPlugin.addCommand).toHaveBeenCalledWith(expect.any(AbstractCommand));
-    });   
+    });  
+    it('should throw if at least two commands have the same id', async () => {
+        // Arrange
+        const mockPlugin = new MockPlugin();
+        const chance = new Chance();
+        const commandId = chance.string();
+        const mockCommandBuilder: CommandBuilder = jest.fn().mockImplementation(() => {
+            const command = new MockCommand(mockPlugin);
+            command.id = commandId;
+            return command;
+        });
+        const builders = [ mockCommandBuilder, mockCommandBuilder ];
+        const loader = new CommandLoader(mockPlugin);
+        // Act
+        const action = async () => await loader.load(builders);
+        // Assert
+        await expect(action).rejects.toThrow(`Duplicate command id: ${commandId}`);
+    });
 });
