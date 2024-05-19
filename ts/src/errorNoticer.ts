@@ -9,6 +9,7 @@ export class ErrorNoticer {
             if (error instanceof Error) {
                 new Notice(error.message, 5000);
             }
+            throw error;
         }
     }
 }
