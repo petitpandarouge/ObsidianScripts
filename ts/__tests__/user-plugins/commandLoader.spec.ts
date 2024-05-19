@@ -73,6 +73,7 @@ describe('CommandLoader', () => {
         // Act
         const action = async () => await loader.load(builders);
         // Assert
-        await expect(action).rejects.toThrow(`Duplicate command id: ${commandId}`);
+        await expect(action).rejects.toThrow(`Duplicate id: ${commandId}`);
     });
+    // TODO - Notification if a command is added with the same id as an existing one (Notice)
 });

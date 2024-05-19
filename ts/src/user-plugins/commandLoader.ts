@@ -1,17 +1,14 @@
 ﻿import { Plugin } from "@obsidian/user-plugins/plugin";
 import { CommandBuilder } from "@obsidian/user-plugins/commandBuilder";
+import { IdValidator } from "@obsidian/idValidator";
 
-// TODO - Implement an id verifier
 export class CommandLoader {
     constructor(private plugin: Plugin) { }
     load(builders: CommandBuilder[]): Promise<void> {
-        const ids = new Set();
+        const unicityValidator = new IdValidator<string>();
         for (const builder of builders) {
             const command = builder(this.plugin);
-            if (ids.has(command.id)) {
-                throw new Error(`Duplicate command id: ${command.id}`);
-            }
-            ids.add(command.id);
+            unicityValidator.validate(command);
             this.plugin.addCommand(command);
         }
         return Promise.resolve();
