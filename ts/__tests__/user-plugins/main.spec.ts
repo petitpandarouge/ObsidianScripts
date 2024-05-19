@@ -30,9 +30,12 @@ describe('main', () => {
         expect(mockCommandLoader).toHaveBeenCalledWith(mockPlugin);
         expect(loadSpy).toHaveBeenCalledTimes(1);
         expect(loadSpy).toHaveBeenCalledWith(expect.any(Array));
-        // Call the functions passed to load and check if they return the correct types.
-        const [newProjectCommandFactory, newUniqueNoteCommandFactory] = loadSpy!.mock.calls[0][0];
-        expect(newProjectCommandFactory(mockPlugin)).toBeInstanceOf(NewProjectCommand);
-        expect(newUniqueNoteCommandFactory(mockPlugin)).toBeInstanceOf(NewUniqueNoteCommand);
+        // Call the builders passed to load and check if they return the correct types.
+        const [
+            newProjectCommandBuilder, 
+            newUniqueNoteCommandBuilder
+        ] = loadSpy!.mock.calls[0][0];
+        expect(newProjectCommandBuilder(mockPlugin)).toBeInstanceOf(NewProjectCommand);
+        expect(newUniqueNoteCommandBuilder(mockPlugin)).toBeInstanceOf(NewUniqueNoteCommand);
     });   
 });
