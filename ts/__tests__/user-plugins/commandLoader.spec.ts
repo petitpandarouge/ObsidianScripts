@@ -87,5 +87,4 @@ describe('CommandLoader', () => {
         expect(mockNotice).toHaveBeenCalledTimes(1);
         expect(mockNotice).toHaveBeenCalledWith(errorMessage, expect.any(Number));
     });
-    // TODO - Notification if a command is added with the same id as an existing one (Notice)
 });
