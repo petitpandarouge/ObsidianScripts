@@ -37,3 +37,35 @@ TODO : Add a screen shot.
 - `src`: Contains mainly the Obsidian api objects plus some additional common utility classes.
 - `src/user-plugins`: Contains the User Plugins specific sources.
 - ... to be continued...
+
+### User Plugins
+
+- The entry point is represented by the `main.ts` file that must contains an `onload` function. 
+- The `CommandLoader` is the main class responsible for loading the commands into the `Plugin`.
+
+``` typescript
+export async function onload(plugin: Plugin): Promise<void> {
+    const commandLoader = new CommandLoader(plugin);
+    await commandLoader.load([
+        (plugin) => new HelloWorldCommand(plugin),
+        ...
+    ]);
+}
+```
+
+- A command must implement an `AbstractCommand`.
+- The command logique is in the `callback` function.
+
+``` typescript
+export class HelloWorldCommand extends AbstractCommand {
+    constructor(plugin: Plugin) {
+        super(plugin);
+    }
+    id: string = "hello-world";
+    name: string = "Hello World";
+    callback(): Promise<void> {
+        new NoticeWrapper("Hello World !", 5000)
+        return Promise.resolve();
+    }
+}
+```
