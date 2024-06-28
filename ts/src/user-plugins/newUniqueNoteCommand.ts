@@ -12,23 +12,15 @@ export class NewUniqueNoteCommand extends AbstractCommand {
         const dateFormat = "YYYYMMDDHHmm";
         const now = this.dateService.now();
         let uniqueName = now.format(dateFormat);
-        try {
-            this.plugin.app.vault.create(uniqueName,"");
-        } catch (error) {
+        let created = false;
+        do {
             try {
-                uniqueName = (parseInt(uniqueName)+1).toString();
                 this.plugin.app.vault.create(uniqueName,"");
+                created = true;
             } catch (error) {
-                try {
-                    uniqueName = (parseInt(uniqueName)+1).toString();
-                    this.plugin.app.vault.create(uniqueName,"");
-                } catch (error) {
-                    uniqueName = (parseInt(uniqueName)+1).toString();
-                    this.plugin.app.vault.create(uniqueName,"");
-                }
-                
+                uniqueName = (parseInt(uniqueName)+1).toString();
             }
-        }
+        } while (!created);
         return Promise.resolve();
     }
 }
