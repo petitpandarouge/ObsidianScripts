@@ -65,7 +65,7 @@ describe('CommandLoader', () => {
         expect(mockPlugin.addCommand).toHaveBeenCalledTimes(buildersCount);
         expect(mockPlugin.addCommand).toHaveBeenCalledWith(expect.any(AbstractCommand));
     });  
-    it('should throw adn notice if at least two commands have the same id', async () => {
+    it('should throw and notice if at least two commands have the same id', async () => {
         // Arrange
         const mockPlugin = new MockPlugin();
         const chance = new Chance();
