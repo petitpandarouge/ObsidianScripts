@@ -9,11 +9,25 @@ export class NewUniqueNoteCommand extends AbstractCommand {
     id: string = 'new-unique-note-in-current-folder-V2';
     name: string = 'V2 - Create new unique note in folder of the center panel active note';
     callback(): Promise<void> {
-        const uniqueName = this.dateService.now().format('YYYYMMDDHHmm');
+        const dateFormat = "YYYYMMDDHHmm";
+        const now = this.dateService.now();
+        let uniqueName = now.format(dateFormat);
         try {
             this.plugin.app.vault.create(uniqueName,"");
         } catch (error) {
-            this.plugin.app.vault.create((parseInt(uniqueName)+1).toString(),"");
+            try {
+                uniqueName = (parseInt(uniqueName)+1).toString();
+                this.plugin.app.vault.create(uniqueName,"");
+            } catch (error) {
+                try {
+                    uniqueName = (parseInt(uniqueName)+1).toString();
+                    this.plugin.app.vault.create(uniqueName,"");
+                } catch (error) {
+                    uniqueName = (parseInt(uniqueName)+1).toString();
+                    this.plugin.app.vault.create(uniqueName,"");
+                }
+                
+            }
         }
         return Promise.resolve();
     }
