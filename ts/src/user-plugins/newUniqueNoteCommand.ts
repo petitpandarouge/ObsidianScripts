@@ -10,7 +10,11 @@ export class NewUniqueNoteCommand extends AbstractCommand {
     name: string = 'V2 - Create new unique note in folder of the center panel active note';
     callback(): Promise<void> {
         const uniqueName = this.dateService.now().format('YYYYMMDDHHmm');
-        this.plugin.app.vault.create(uniqueName,"");
+        try {
+            this.plugin.app.vault.create(uniqueName,"");
+        } catch (error) {
+            this.plugin.app.vault.create((parseInt(uniqueName)+1).toString(),"");
+        }
         return Promise.resolve();
     }
 }
