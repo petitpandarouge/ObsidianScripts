@@ -1,4 +1,4 @@
-﻿import { UniqueNameGenerator } from "@obsidian/uniqueNameGenerator";
+﻿import { DateService } from "@obsidian/infrastructure/dateService";
 import { CommandLoader } from "@obsidian/user-plugins/commandLoader";
 import { NewProjectCommand } from "@obsidian/user-plugins/newProjectCommand";
 import { NewUniqueNoteCommand } from "@obsidian/user-plugins/newUniqueNoteCommand";
@@ -9,8 +9,8 @@ export async function onload(plugin: Plugin): Promise<void> {
     await commandLoader.load([
         (plugin) => new NewProjectCommand(plugin),
         (plugin) => {
-            const uniqueNameGenerator = new UniqueNameGenerator();
-            return new NewUniqueNoteCommand(plugin, uniqueNameGenerator);
+            const dateService = new DateService();
+            return new NewUniqueNoteCommand(plugin, dateService);
         }
     ]);
 }
