@@ -39,9 +39,11 @@ describe('NewUniqueNoteCommand', () => {
         const chance = new Chance();
         const mockedNowResult = chance
             .integer({ min: 100000000000, max: 900000000000 });
+        const existingFilesCount = chance
+            .integer({ min: 1, max: 3 });
         const mockPlugin = new MockPlugin();
         mockPlugin.app.vault.create = jest.fn().mockImplementation((fileName: string) => {
-            if (fileName === mockedNowResult.toString()) {
+            if (fileName !== (mockedNowResult + existingFilesCount).toString()) {
                 throw new Error('File already exists');
             }
         });
@@ -56,7 +58,8 @@ describe('NewUniqueNoteCommand', () => {
         // Act
         await newUniqueNoteCommand.callback();
         // Assert
-        expect(mockPlugin.app.vault.create).toHaveBeenCalledWith(mockedNowResult.toString(), "");
-        expect(mockPlugin.app.vault.create).toHaveBeenCalledWith((mockedNowResult + 1).toString(), "");
+        for (let i = 0; i < existingFilesCount; i++) {
+            expect(mockPlugin.app.vault.create).toHaveBeenCalledWith((mockedNowResult + i).toString(), "");
+        }
     });
 });
