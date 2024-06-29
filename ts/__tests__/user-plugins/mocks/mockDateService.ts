@@ -1,7 +1,7 @@
-﻿export class MockDateService {
+﻿import { MockDate } from "./mockDate";
+
+export class MockDateService {
     now = jest.fn().mockImplementation(() => {
-        return {
-            format: jest.fn()
-        };
+        return new MockDate();
     });
 }
