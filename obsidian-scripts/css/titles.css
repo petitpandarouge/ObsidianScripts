@@ -1,0 +1,29 @@
+.theme-dark .HyperMD-header-1,
+.theme-dark h1 {
+    color: white;
+    border-bottom: 1px solid #444;
+}
+
+.theme-dark .HyperMD-header-2,
+.theme-dark h2 {
+    color: white;
+    border-bottom: 1px solid #444;
+}
+
+.theme-dark .HyperMD-header-3,
+.theme-dark h3 {
+    color: white;
+    border-bottom: 1px solid #444;
+}
+
+.theme-dark .HyperMD-header-4,
+.theme-dark h4 {
+    color: white;
+    border-bottom: 1px solid #444;
+}
+
+.theme-dark .HyperMD-header-5,
+.theme-dark h5 {
+    color: #2d7bea;
+    border-bottom: 1px solid #444;
+}
