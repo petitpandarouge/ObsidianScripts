@@ -1,10 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "js"
+			"path": "ts"
 		},
 		{
-			"path": "css"
+			"path": "obsidian"
 		}
 	],
 	"settings": {
