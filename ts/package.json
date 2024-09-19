@@ -15,7 +15,8 @@
     "bundle": "npm run bundle:tasks && npm run bundle:quickadd && npm run bundle:dv",
     "test": "npm run build && jest",
     "ci": "npm run test && npm run bundle",
-    "deploy:test": "ncp ./bundles c:/Temp/obsidian"
+    "deploy:test": "ncp ./bundles c:/Temp/obsidian",
+    "bundle:userplugins:helloworld": "npx webpack --config webpack.userplugins.helloworld.config.js"
   },
   "repository": {
     "type": "git",
