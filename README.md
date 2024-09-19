@@ -6,8 +6,8 @@ This project is a TypeScript framework that allows building extension scripts fo
 - [Quick Add](https://quickadd.obsidian.guide/docs/)
 
 The benefits of this framework are
-- having a fully tested code, to easely maintain it,
-- having a fully typed code, to easely read it.
+- having a fully tested code, to easely **maintain** it,
+- having a fully typed code, to easely **read** it.
 
 ## Building and bundling
 
