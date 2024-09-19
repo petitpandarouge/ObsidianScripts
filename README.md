@@ -24,7 +24,7 @@ The benefits of this framework are
 `git clone` this repo and execute the following commands:
 
 ``` sh
-cd ts
+cd obsinflate
 npm install
 npm run build
 npm run bundle
