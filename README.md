@@ -38,9 +38,25 @@ The command is currently in build state but I plan to build a command that deplo
 
 ## Debugging
 
+### Unit tests
+
+To be written (VS Code and javascript debug console).
+
+### Integration tests
+
 All the scripts are webpacked with the source mapping option activated. It means that you'll be able to debug your code into Obsidian viewing the TypeScript version :sunglasses:
 
-TODO : Add a screen shot.
+Vaults per plugin have been configured in the `vaults` directory, and a `test:integration:<plugin-name>` command has been created to automatically launch the vault allowing you to integrate your scripts. The `How to debug.md` file of each vault will guide you threw the process.
+
+To see more about how this works, you can run the following commands to test it with the `UserPlugins` plugin `Hello World`.
+
+``` sh
+cd obsinflate
+npm install
+npm run build
+npm run bundle:helloworld
+npm run test:integration:userplugins
+```
 
 ## Implementing
 

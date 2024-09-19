@@ -13,8 +13,9 @@
     "bundle:quickadd": "npx webpack --config webpack.testQuickAdd.config.js",
     "bundle:userplugins": "npx webpack --config webpack.userplugins.config.js",
     "bundle": "npm run bundle:tasks && npm run bundle:quickadd && npm run bundle:dv && npm run bundle:userplugins",
-    "test": "npm run build && jest",
-    "ci": "npm run test && npm run bundle",
+    "test:unit": "npm run build && jest",
+    "test:integration:userplugins": "rimraf ./vaults/user-plugins/scripts && ncp ./bundles/UserPlugins ./vaults/user-plugins/scripts && start obsidian:///C:/Workspace/Perso/ObsidianScripts/obsinflate/vaults/user-plugins",
+    "ci": "npm run test:unit && npm run bundle",
     "deploy:test": "ncp ./bundles c:/Temp/obsidian",
     "bundle:userplugins:helloworld": "npx webpack --config webpack.userplugins.helloworld.config.js",
     "bundle:helloworld": "npm run clean && npm run bundle:userplugins:helloworld"
