@@ -1,3 +1,11 @@
+# ObsidianScripts 📜
+
+This is the name I use to identify the very first scripts I have written to inflate Obsidian.
+They are written in JS, and can opened using the `ObsidianScripts.code-workspace` file.
+
+It's a good version to work with, but I'm now afraid of modifying them and break something as they are not protected by tests.
+This is where `Obsinflate` comes into the game.
+
 # Obsinflate 🎈
 
 TypeScript framework that allows building extension scripts for the following Obsidian plugins : 
@@ -39,6 +47,8 @@ TODO : Add a screen shot.
 - ... to be continued...
 
 ### User Plugins
+
+#### Hello world
 
 - The entry point is represented by the `main.ts` file that must contains an `onload` function. 
 - The `CommandLoader` is the main class responsible for loading the commands into the `Plugin`.
