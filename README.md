@@ -6,6 +6,8 @@ They are written in JS, and can opened using the `ObsidianScripts.code-workspace
 It's a good version to work with, but I'm now afraid of modifying them and break something as they are not protected by tests.
 This is where `Obsinflate` comes into the game.
 
+I keep them here as I slowly but surely move them into the `Obsinflate` framework.
+
 # Obsinflate 🎈
 
 TypeScript framework that allows building extension scripts for the following Obsidian plugins : 
