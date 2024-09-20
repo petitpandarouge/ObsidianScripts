@@ -20,7 +20,7 @@
 
 ![[Pasted image 20240919161141.png]]
 
-- Hit `Enter` to execute it. You'll see the code being hit :
+- Hit `Enter` to execute it. You'll see the code being hit.
 
 ![[Pasted image 20240919161309.png]]
 
