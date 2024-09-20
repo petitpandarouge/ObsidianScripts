@@ -48,6 +48,8 @@ All the scripts are webpacked with the source mapping option activated. It means
 
 Vaults per plugin have been configured in the `vaults` directory, and a `test:integration:<plugin-name>` command has been created to automatically launch the vault allowing you to integrate your scripts. The `How to debug.md` file of each vault will guide you threw the process.
 
+> Note : The vaults must be opened explicitly using the Obsidian UI once for the command to work. 
+
 To see more about how this works, you can run the following commands to test it with the `UserPlugins` plugin `Hello World`.
 
 ``` sh
