@@ -1,7 +1,7 @@
 # ObsidianScripts 📜
 
 This is the name I use to identify the very first scripts I have written to inflate Obsidian.
-They are written in JS, and can opened using the `ObsidianScripts.code-workspace` file.
+They are written in JS, and can be opened using the `ObsidianScripts.code-workspace` file.
 
 It's a good version to work with, but I'm now afraid of modifying them and break something as they are not protected by tests.
 This is where `Obsinflate` comes into the game.
@@ -63,12 +63,11 @@ npm run test:integration:userplugins
 ## Implementing
 
 - `src`: Contains mainly the Obsidian api objects plus some additional common utility classes.
-- `src/user-plugins`: Contains the User Plugins specific sources.
-- ... to be continued...
+- `src/user-plugins`: Contains the User Plugins plugin specific sources.
+- `src/quick-add`: Contains the QuickAdd plugin specific sources.
+- `src/dataview`: Contains the Dataview plugin specific sources.
 
 ### User Plugins
-
-#### Hello world
 
 - The entry point is represented by the `main.ts` file that must contains an `onload` function. 
 - The `CommandLoader` is the main class responsible for loading the commands into the `Plugin`.
@@ -98,4 +97,56 @@ export class HelloWorldCommand extends AbstractCommand {
         return Promise.resolve();
     }
 }
+```
+
+### QuickAdd
+
+- One file contains one script that can be implemented using two ways.
+
+#### Script type
+
+- Using the `Script` type, a script must be implemented as follow.
+
+``` typescript
+const helloWorld: Script = async () => {
+    new NoticeWrapper("Hello World !", 5000)
+    return Promise.resolve();
+}
+```
+
+- The script must be exported using the `module.exports` directive.
+
+``` typescript
+module.exports = helloWorld;
+```
+
+#### SettingizedScript interface
+
+- This interface `SettingizedScript` must be implemented to implement a script having UI settings.
+
+``` typescript
+class HelloWorld implements SettingizedScript {
+    entry(_params: Parameters, settings: {[key: string]: string | boolean}): Promise<void> {
+        new NoticeWrapper(`Hello ${settings["Name"]} !`, 5000)
+        return Promise.resolve();
+    }
+    settings = {
+        name: "Hello World",
+        author: "me",
+        options: {
+            Name: {
+                type: "text" as TextFieldType,
+                description: "The name to say hello",
+                defaultValue: "World",
+                placeholder: "World"
+            }
+        }
+    }
+}
+```
+
+- The script is exported by exporting an instance of the created class.
+
+``` typescript
+module.exports = new HelloWorld();
 ```
