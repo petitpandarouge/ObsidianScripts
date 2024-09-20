@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./bundles",
-    "clear": "npm run clean && rimraf ./node_modules && rimraf ./package-lock.json",
+    "clear": "npm run clean && rimraf ./package-lock.json && rimraf ./node_modules",
     "build": "npm run clean && npx tsc --project tsconfig.build.json",
     "rebuild": "npm run clear && npm install && npm run build",
     "bundle:tasks": "npx webpack --config webpack.tasks.config.js",
@@ -14,11 +14,13 @@
     "bundle:userplugins": "npx webpack --config webpack.userplugins.config.js",
     "bundle": "rimraf ./bundles && npm run bundle:tasks && npm run bundle:quickadd && npm run bundle:dv && npm run bundle:userplugins",
     "test:unit": "npm run build && jest",
+    "test:integration:quickadd": "rimraf ./vaults/quick-add/scripts && ncp ./bundles/QuickAdd ./vaults/quick-add/scripts && start obsidian://open?vault=quick-add",
     "test:integration:userplugins": "rimraf ./vaults/user-plugins/scripts && ncp ./bundles/UserPlugins ./vaults/user-plugins/scripts && start obsidian://open?vault=user-plugins",
     "ci": "npm run test:unit && npm run bundle",
     "deploy:test": "ncp ./bundles c:/Temp/obsidian",
+    "bundle:quickadd:helloworld": "npx webpack --config webpack.quickadd.helloworld.config.js",
     "bundle:userplugins:helloworld": "npx webpack --config webpack.userplugins.helloworld.config.js",
-    "bundle:helloworld": "rimraf ./bundles && npm run bundle:userplugins:helloworld"
+    "bundle:helloworld": "rimraf ./bundles && npm run bundle:quickadd:helloworld && npm run bundle:userplugins:helloworld"
   },
   "repository": {
     "type": "git",

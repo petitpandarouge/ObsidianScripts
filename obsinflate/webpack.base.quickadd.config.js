@@ -9,7 +9,13 @@ function withQuickAddConfiguration() {
 }
 
 module.exports = (scriptName) => {
-  return make(scriptName, scriptName, 'QuickAdd', 
+  let entryName = `quick-add/${scriptName}`;
+  let bundleName = scriptName;
+  if (scriptName === 'HelloWorld') {
+    entryName = `quick-add/hello-world/main`;
+    bundleName = 'HelloWorld';
+  }
+  return make(entryName, bundleName, 'QuickAdd', 
     withQuickAddConfiguration() 
   );
 }
