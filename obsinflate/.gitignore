@@ -171,3 +171,4 @@ compile_commands.json
 # === Rules for this project ===
 /dist
 /bundles
+/vaults/*/scripts
