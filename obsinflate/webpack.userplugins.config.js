@@ -1,13 +1,3 @@
-const make = require('./webpack.base.config');
+const make = require('./webpack.base.userplugins.config');
 
-function withUserPluginsConfiguration() {
-  return {
-    output: {
-      libraryTarget: "commonjs2",
-    }
-  };
-}
-
-module.exports = make(`user-plugins/main`, `main`, 'UserPlugins', 
-  withUserPluginsConfiguration()
-  );
+module.exports = make(`main`);
