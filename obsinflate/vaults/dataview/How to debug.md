@@ -3,3 +3,8 @@
 
 
 ![[Pasted image 20240921200328.png]]
+
+
+``` dataviewjs
+dv.view("scripts/helloworld", {name : "me"});
+```
