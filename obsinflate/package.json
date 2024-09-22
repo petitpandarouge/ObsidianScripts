@@ -15,11 +15,13 @@
     "test:unit": "npm run build && jest",
     "test:integration:quickadd": "rimraf ./vaults/quick-add/scripts && ncp ./bundles/QuickAdd ./vaults/quick-add/scripts && start obsidian://open?vault=quick-add",
     "test:integration:userplugins": "rimraf ./vaults/user-plugins/scripts && ncp ./bundles/UserPlugins ./vaults/user-plugins/scripts && start obsidian://open?vault=user-plugins",
+    "test:integration:dv": "rimraf ./vaults/dataview/scripts && ncp ./bundles/dv ./vaults/dataview/scripts && start obsidian://open?vault=dataview",
     "ci": "npm run test:unit && npm run bundle",
     "deploy:test": "ncp ./bundles c:/Temp/obsidian",
     "bundle:quickadd:helloworld": "npx webpack --config webpack.quickadd.helloworld.config.js",
     "bundle:userplugins:helloworld": "npx webpack --config webpack.userplugins.helloworld.config.js",
-    "bundle:helloworld": "rimraf ./bundles && npm run bundle:quickadd:helloworld && npm run bundle:userplugins:helloworld"
+    "bundle:dv:helloworld": "npx webpack --config webpack.dv.view.helloworld.config.js && node dv.view.init.js HelloWorld",
+    "bundle:helloworld": "rimraf ./bundles && npm run bundle:quickadd:helloworld && npm run bundle:userplugins:helloworld && npm run bundle:dv:helloworld"
   },
   "repository": {
     "type": "git",
