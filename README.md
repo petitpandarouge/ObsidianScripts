@@ -101,7 +101,7 @@ export class HelloWorldCommand extends AbstractCommand {
 
 ### QuickAdd
 
-- One file contains one script that can be implemented using two ways.
+One ts file must contain only one script that can be implemented using two ways.
 
 #### Script type
 
@@ -149,4 +149,55 @@ class HelloWorld implements SettingizedScript {
 
 ``` typescript
 module.exports = new HelloWorld();
+```
+
+### Dataview
+
+#### View
+
+Implementing a view relies on implementing the `ViewBuilder`.
+
+##### View without input
+
+- View without parameter implements `ViewBuilder<never>`.
+
+``` javascript
+export class HelloWorld implements ViewBuilder<never> {
+    build(dv: Api) {
+        dv.header(1, "Hello World");
+        dv.table(
+            ["Name", "Ids"], 
+            [
+                ["Me", 0]
+            ]
+        );
+    }
+}
+```
+
+##### View with input
+
+- Inputs can be explicitely defined using a class.
+
+``` javascript
+class Input {
+    name!: string;
+} 
+```
+
+- Implementing `ViewBuilder<Input>` makes the inputs available to the view.
+
+``` javascript
+export class HelloWorld implements ViewBuilder<Input> {
+    build(dv: Api, input: Input) {
+        const header = input.name ? `Hello ${input.name}` : "Hello World";
+        dv.header(1, header);
+        dv.table(
+            ["Name", "Ids"], 
+            [
+                ["Me", 0]
+            ]
+        );
+    }
+}
 ```
