@@ -1,6 +1,6 @@
 {
   "name": "obsinflate",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "TypeScript framework that allows building extension scripts for Obsidian plugins.",
   "main": "index.js",
   "scripts": {
