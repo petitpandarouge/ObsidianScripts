@@ -42,7 +42,7 @@
 
 ![[Pasted image 20240920222247.png]]
 
-- Run again you macro. You'll see the code being hit.
+- Run again your macro. You'll see the code being hit.
 
 ![[Pasted image 20240920222408.png]]
 
