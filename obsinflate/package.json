@@ -2,13 +2,12 @@
   "name": "obsinflate",
   "version": "0.3.0",
   "description": "TypeScript framework that allows building extension scripts for Obsidian plugins.",
-  "main": "index.js",
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./bundles",
     "clear": "npm run clean && rimraf ./package-lock.json && rimraf ./node_modules",
     "build": "npm run clean && npx tsc --project tsconfig.build.json",
     "rebuild": "npm run clear && npm install && npm run build",
-    "bundle:dv": "npx webpack --config webpack.testView.config.js && node dv.view.init.js",
+    "bundle:dv": "",
     "bundle:quickadd": "",
     "bundle:userplugins": "npx webpack --config webpack.userplugins.config.js",
     "bundle": "rimraf ./bundles && npm run bundle:quickadd && npm run bundle:dv && npm run bundle:userplugins",
@@ -20,7 +19,7 @@
     "deploy:test": "ncp ./bundles c:/Temp/obsidian",
     "bundle:quickadd:helloworld": "npx webpack --config webpack.quickadd.helloworld.config.js",
     "bundle:userplugins:helloworld": "npx webpack --config webpack.userplugins.helloworld.config.js",
-    "bundle:dv:helloworld": "npx webpack --config webpack.dv.view.helloworld.config.js && node dv.view.init.js HelloWorld",
+    "bundle:dv:helloworld": "npx webpack --config webpack.dv.view.helloworld.config.js && node dv.view.build.js HelloWorld",
     "bundle:helloworld": "rimraf ./bundles && npm run bundle:quickadd:helloworld && npm run bundle:userplugins:helloworld && npm run bundle:dv:helloworld"
   },
   "repository": {
