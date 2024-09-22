@@ -1,9 +1,9 @@
 const make = require('./webpack.base.config');
 
-function withDvViewConfiguration() {
+function withDvViewConfiguration(viewName) {
   return {
     output: {
-      library: "View",
+      library: `obsinflate_dv_view_${viewName.toLowerCase()}`,
       libraryTarget: "var"
     }
   };
@@ -15,6 +15,6 @@ module.exports = (viewName) => {
     entryName = `dataview/hello-world/main`;
   }
   return make(entryName, 'view', `dv/${viewName.toLowerCase()}`, 
-    withDvViewConfiguration() 
+    withDvViewConfiguration(viewName) 
   );
 }
