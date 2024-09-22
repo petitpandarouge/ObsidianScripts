@@ -2,6 +2,10 @@
 import { Date } from "@obsidian/quick-add/modules/date";
 import { Ai } from "@obsidian/quick-add/modules/ai";
 
+/**
+ * v1.11.1
+ * https://quickadd.obsidian.guide/docs/QuickAddAPI
+ */
 export interface Api {
     inputPrompt: (header: string, placeholder?: string, value?: string) => Promise<string>;
     wideInputPrompt: (header: string, placeholder?: string, value?: string) => Promise<string>;
