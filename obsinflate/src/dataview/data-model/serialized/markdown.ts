@@ -1,5 +1,5 @@
 ﻿import { Link, Literal } from "@obsinflate/dataview/data-model/value";
-import { Pos } from "@obsinflate/pos";
+import { Pos } from "obsidian";
 
 export type SListItem = SListEntry | STask;
 
