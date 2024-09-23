@@ -1,4 +1,4 @@
-﻿export type CheckboxType = "checkbox";
+﻿export type CheckboxType = 'checkbox';
 
 export interface Checkbox {
     type: CheckboxType;

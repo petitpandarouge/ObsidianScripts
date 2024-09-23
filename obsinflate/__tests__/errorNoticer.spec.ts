@@ -1,8 +1,8 @@
 ﻿jest.mock('@obsinflate/noticeWrapper', () => {
     return {
-      NoticeWrapper: jest.fn(),
+        NoticeWrapper: jest.fn()
     };
-  });
+});
 
 import { ErrorNoticer } from '@obsinflate/errorNoticer';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -15,7 +15,9 @@ describe('ErrorNoticer', () => {
         const chance = new Chance();
         const errorMessage = chance.string();
         const errorNoticer = new ErrorNoticer();
-        const wrappedAction = jest.fn(() => { throw new Error(errorMessage) });
+        const wrappedAction = jest.fn(() => {
+            throw new Error(errorMessage);
+        });
         const mockNotice = jest.fn();
         (NoticeWrapper as jest.Mock) = mockNotice;
         // Act
@@ -23,15 +25,20 @@ describe('ErrorNoticer', () => {
         // Assert
         await expect(action).rejects.toThrow(errorMessage);
         expect(mockNotice).toHaveBeenCalledTimes(1);
-        expect(mockNotice).toHaveBeenCalledWith(errorMessage, expect.any(Number));
-    });   
+        expect(mockNotice).toHaveBeenCalledWith(
+            errorMessage,
+            expect.any(Number)
+        );
+    });
     it('should notice Obsidian for the time given to the ErrorNoticer if Error is thrown by the inner execution', async () => {
         // Arrange
         const chance = new Chance();
         const errorMessage = chance.string();
         const noticeTime = chance.integer({ min: 0, max: 1000 });
         const errorNoticer = new ErrorNoticer(noticeTime);
-        const wrappedAction = jest.fn(() => { throw new Error(errorMessage) });
+        const wrappedAction = jest.fn(() => {
+            throw new Error(errorMessage);
+        });
         const mockNotice = jest.fn();
         (NoticeWrapper as jest.Mock) = mockNotice;
         // Act
@@ -69,7 +76,6 @@ describe('ErrorNoticer', () => {
     //     expect(mockNotice).toHaveBeenCalledWith(errorMessage, expect.any(Number));
     // });
 });
-
 
 // class UnknownError {
 //     constructor(public message: string) {}

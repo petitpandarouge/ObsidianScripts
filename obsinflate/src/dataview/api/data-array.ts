@@ -1,9 +1,11 @@
 ﻿/* eslint-disable @typescript-eslint/no-explicit-any */
 export type ArrayFunc<T, O> = (elem: T, index: number, arr: T[]) => O;
 export type ArrayComparator<T> = (a: T, b: T) => number;
-export type LowestKey<T> = T extends { key: any; rows: any } ? LowestKey<T["rows"][0]> : T;
+export type LowestKey<T> = T extends { key: any; rows: any }
+    ? LowestKey<T['rows'][0]>
+    : T;
 export type Ingrouped<U, T> = T extends { key: any; rows: any }
-    ? { key: T["key"]; rows: Ingrouped<U, T["rows"][0]> }
+    ? { key: T['key']; rows: Ingrouped<U, T['rows'][0]> }
     : { key: U; rows: T[] };
 
 export interface DataArray<T> {
@@ -44,30 +46,47 @@ export interface DataArray<T> {
      * Return a sorted array sorted by the given key; an optional comparator can be provided, which will
      * be used to compare the keys in leiu of the default dataview comparator.
      */
-    sort<U>(key: ArrayFunc<T, U>, direction?: "asc" | "desc", comparator?: ArrayComparator<U>): DataArray<T>;
+    sort<U>(
+        key: ArrayFunc<T, U>,
+        direction?: 'asc' | 'desc',
+        comparator?: ArrayComparator<U>
+    ): DataArray<T>;
 
     /**
      * Mutably modify the current array with an in place sort; this is less flexible than a regular sort in exchange
      * for being a little more performant. Only use this is performance is a serious consideration.
      */
-    sortInPlace<U>(key: (v: T) => U, direction?: "asc" | "desc", comparator?: ArrayComparator<U>): DataArray<T>;
+    sortInPlace<U>(
+        key: (v: T) => U,
+        direction?: 'asc' | 'desc',
+        comparator?: ArrayComparator<U>
+    ): DataArray<T>;
 
     /**
      * Return an array where elements are grouped by the given key; the resulting array will have objects of the form
      * { key: <key value>, rows: DataArray }.
      */
-    groupBy<U>(key: ArrayFunc<T, U>, comparator?: ArrayComparator<U>): DataArray<{ key: U; rows: DataArray<T> }>;
+    groupBy<U>(
+        key: ArrayFunc<T, U>,
+        comparator?: ArrayComparator<U>
+    ): DataArray<{ key: U; rows: DataArray<T> }>;
 
     /**
      * If the array is not grouped, groups it as `groupBy` does; otherwise, groups the elements inside each current
      * group. This allows for top-down recursive grouping which may be easier than bottom-up grouping.
      */
-    groupIn<U>(key: ArrayFunc<LowestKey<T>, U>, comparator?: ArrayComparator<U>): DataArray<Ingrouped<U, T>>;
+    groupIn<U>(
+        key: ArrayFunc<LowestKey<T>, U>,
+        comparator?: ArrayComparator<U>
+    ): DataArray<Ingrouped<U, T>>;
 
     /**
      * Return distinct entries. If a key is provided, then rows with distinct keys are returned.
      */
-    distinct<U>(key?: ArrayFunc<T, U>, comparator?: ArrayComparator<U>): DataArray<T>;
+    distinct<U>(
+        key?: ArrayFunc<T, U>,
+        comparator?: ArrayComparator<U>
+    ): DataArray<T>;
 
     /** Return true if the predicate is true for all values. */
     every(f: ArrayFunc<T, boolean>): boolean;

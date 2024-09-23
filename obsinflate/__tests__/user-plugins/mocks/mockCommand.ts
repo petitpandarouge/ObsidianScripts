@@ -1,6 +1,6 @@
-﻿import { AbstractCommand } from "@obsinflate/user-plugins/abstractCommand";
-import { Plugin } from "@obsinflate/user-plugins/plugin";
-import Chance from "chance";
+﻿import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
+import { Plugin } from '@obsinflate/user-plugins/plugin';
+import Chance from 'chance';
 
 const chance = new Chance();
 

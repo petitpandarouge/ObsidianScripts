@@ -1,10 +1,10 @@
 ﻿jest.mock('@obsinflate/user-plugins/commandLoader', () => {
     return {
-        CommandLoader: jest.fn(),
+        CommandLoader: jest.fn()
     };
-  });
+});
 
-import { Plugin} from '@obsinflate/user-plugins/plugin';
+import { Plugin } from '@obsinflate/user-plugins/plugin';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 import { onload } from '@obsinflate/user-plugins/main';
@@ -33,11 +33,13 @@ describe('main', () => {
         expect(loadSpy).toHaveBeenCalledTimes(1);
         expect(loadSpy).toHaveBeenCalledWith(expect.any(Array));
         // Call the builders passed to load and check if they return the correct types.
-        const [
-            newProjectCommandBuilder, 
-            newUniqueNoteCommandBuilder
-        ] = loadSpy!.mock.calls[0][0];
-        expect(newProjectCommandBuilder(mockPlugin)).toBeInstanceOf(NewProjectCommand);
-        expect(newUniqueNoteCommandBuilder(mockPlugin)).toBeInstanceOf(NewUniqueNoteCommand);
-    });   
+        const [newProjectCommandBuilder, newUniqueNoteCommandBuilder] =
+            loadSpy!.mock.calls[0][0];
+        expect(newProjectCommandBuilder(mockPlugin)).toBeInstanceOf(
+            NewProjectCommand
+        );
+        expect(newUniqueNoteCommandBuilder(mockPlugin)).toBeInstanceOf(
+            NewUniqueNoteCommand
+        );
+    });
 });

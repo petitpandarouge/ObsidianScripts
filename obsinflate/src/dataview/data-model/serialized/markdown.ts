@@ -1,6 +1,6 @@
 ﻿/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link, Literal } from "@obsinflate/dataview/data-model/value";
-import { Pos } from "obsidian";
+import { Link, Literal } from '@obsinflate/dataview/data-model/value';
+import { Pos } from 'obsidian';
 
 export type SListItem = SListEntry | STask;
 

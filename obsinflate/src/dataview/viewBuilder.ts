@@ -1,4 +1,4 @@
-﻿import { Api } from "@obsinflate/dataview/api";
+﻿import { Api } from '@obsinflate/dataview/api';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface ViewBuilder<TInput extends { [key: string]: any } | never> {

@@ -1,4 +1,4 @@
-﻿export type DropdownType = "dropdown";
+﻿export type DropdownType = 'dropdown';
 
 export interface Dropdown {
     type: DropdownType;

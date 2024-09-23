@@ -1,5 +1,5 @@
 ﻿/* eslint-disable @typescript-eslint/no-explicit-any */
-import { DateTime, Duration } from "luxon";
+import { DateTime, Duration } from 'luxon';
 
 export type DataObject = { [key: string]: Literal };
 
@@ -20,7 +20,7 @@ export type GroupElement<T> = { key: Literal; rows: Grouping<T> };
 export type Grouping<T> = T[] | GroupElement<T>[];
 
 export interface Link {
-    /** The file path this link points to. */   
+    /** The file path this link points to. */
     path: string;
     /** The display name associated with the link. */
     display?: string;
@@ -29,7 +29,7 @@ export interface Link {
     /** Is this link an embedded link (!)? */
     embed: boolean;
     /** The type of this link, which determines what 'subpath' refers to, if anything. */
-    type: "file" | "header" | "block";
+    type: 'file' | 'header' | 'block';
 
     /** Checks for link equality (i.e., that the links are pointing to the same exact location). */
     equals(other: Link): boolean;

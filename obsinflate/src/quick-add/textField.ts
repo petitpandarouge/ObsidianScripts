@@ -1,4 +1,4 @@
-﻿export type TextFieldType = "text";
+﻿export type TextFieldType = 'text';
 
 export interface TextField {
     type: TextFieldType;
