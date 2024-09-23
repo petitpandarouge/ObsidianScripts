@@ -4,16 +4,17 @@
     };
   });
 
-import { MockPlugin } from '@obsidian/tests/user-plugins/mocks/mockPlugin';
 import { CommandLoader } from '@obsidian/user-plugins/commandLoader';
 import { onload } from '@obsidian/user-plugins/main';
 import { NewProjectCommand } from '@obsidian/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsidian/user-plugins/newUniqueNoteCommand';
+import { Plugin} from '@obsinflate/user-plugins/plugin';
+import { mockDeep } from 'jest-mock-extended';
 
 describe('main', () => {
     it('should load the commands into the plugin using the CommandLoader', async () => {
         // Arrange
-        const mockPlugin = new MockPlugin();
+        const mockPlugin = mockDeep<Plugin>();
         let loadSpy;
         const mockCommandLoader = jest.fn().mockImplementation(() => {
             let commandLoader = {

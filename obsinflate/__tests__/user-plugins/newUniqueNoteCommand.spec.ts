@@ -1,13 +1,14 @@
-﻿import { MockPlugin } from '@obsidian/tests/user-plugins/mocks/mockPlugin';
 import { MockDateService } from '@obsidian/tests/user-plugins/mocks/mockDateService';
 import { NewUniqueNoteCommand } from '@obsidian/user-plugins/newUniqueNoteCommand';
+﻿import { Plugin} from '@obsinflate/user-plugins/plugin';
 import Chance from 'chance';
 import { MockDate } from './mocks/mockDate';
+import { mock, mockDeep } from 'jest-mock-extended';
 
 describe('NewUniqueNoteCommand', () => {
     it('should call at least once plugin.app.vault.create', async () => {
         // Arrange
-        const mockPlugin = new MockPlugin();
+        const mockPlugin = mockDeep<Plugin>();
         const mockDateService = new MockDateService();
         const newUniqueNoteCommand = new NewUniqueNoteCommand(mockPlugin, mockDateService);
         // Act        
@@ -17,7 +18,7 @@ describe('NewUniqueNoteCommand', () => {
     });
     it('should create a "YYYYMMDDHHmm" file', async () => {
         // Arrange
-        const mockPlugin = new MockPlugin();
+        const mockPlugin = mockDeep<Plugin>();
         const chance = new Chance();
         const mockedNowResult = chance
             .integer({ min: 100000000000, max: 900000000000 })
@@ -44,11 +45,17 @@ describe('NewUniqueNoteCommand', () => {
         const existingFilesCount = chance
             .integer({ min: 1, max: 30 });
         const createdFileName = (mockedNowResult + existingFilesCount).toString();
-        const mockPlugin = new MockPlugin();
-        mockPlugin.app.vault.create = jest.fn().mockImplementation((fileName: string) => {
-            if (fileName !== createdFileName) {
-                throw new Error('File already exists');
-            }
+        let mockPlugin = mockDeep<Plugin>({
+            app: {
+                vault: {
+                    create: jest.fn().mockImplementation((path: string) => {
+                        if (path !== createdFileName) {
+                            throw new Error('File already exists');
+                        }
+                        return Promise.resolve<TFile>(mock<TFile>());
+                    }),
+                },
+            },
         });
         const mockDateService = {
             now: jest.fn().mockImplementation(() => {
@@ -58,7 +65,7 @@ describe('NewUniqueNoteCommand', () => {
                     }),
                     add: jest.fn().mockImplementation((amount: number, unit: string) => {
                         if (unit === "minutes") {
-                            mockedDateResult++;
+                            mockedDateResult += amount;
                         }
                     })
                 };
