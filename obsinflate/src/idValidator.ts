@@ -1,4 +1,4 @@
-﻿import { Identifiable } from "@obsidian/identifiable";
+﻿import { Identifiable } from "@obsinflate/identifiable";
 
 export class IdValidator<TId> {
     private ids = new Set<TId>();

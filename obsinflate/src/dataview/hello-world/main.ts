@@ -1,5 +1,5 @@
-import { Api } from "@obsidian/dataview/api";
-import { ViewBuilder } from "@obsidian/dataview/viewBuilder";
+import { Api } from "@obsinflate/dataview/api";
+import { ViewBuilder } from "@obsinflate/dataview/viewBuilder";
 
 class Input {
     name!: string;

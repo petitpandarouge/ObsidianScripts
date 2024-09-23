@@ -1,7 +1,7 @@
-﻿import { Checkbox } from "@obsidian/quick-add/checkbox";
-import { Dropdown } from "@obsidian/quick-add/dropdown";
-import { Format } from "@obsidian/quick-add/format";
-import { TextField } from "@obsidian/quick-add/textField";
+﻿import { Checkbox } from "@obsinflate/quick-add/checkbox";
+import { Dropdown } from "@obsinflate/quick-add/dropdown";
+import { Format } from "@obsinflate/quick-add/format";
+import { TextField } from "@obsinflate/quick-add/textField";
 
 export type Settings = {[key: string]: string | boolean};
 

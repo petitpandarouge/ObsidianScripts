@@ -1,6 +1,6 @@
-﻿import { AbstractCommand } from "@obsidian/user-plugins/abstractCommand";
-import { Plugin } from '@obsidian/user-plugins/plugin';
-import { NoticeWrapper } from '@obsidian/noticeWrapper';
+﻿import { AbstractCommand } from "@obsinflate/user-plugins/abstractCommand";
+import { Plugin } from '@obsinflate/user-plugins/plugin';
+import { NoticeWrapper } from '@obsinflate/noticeWrapper';
 
 export class HelloWorldCommand extends AbstractCommand {
     constructor(plugin: Plugin) {

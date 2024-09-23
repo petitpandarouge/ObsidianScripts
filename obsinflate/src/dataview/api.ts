@@ -1,6 +1,6 @@
-﻿import { DataObject, Grouping, Literal, Link } from "@obsidian/dataview/data-model/value";
-import { DataArray } from "@obsidian/dataview/api/data-array";
-import { SListItem } from "@obsidian/dataview/data-model/serialized/markdown";
+﻿import { DataObject, Grouping, Literal, Link } from "@obsinflate/dataview/data-model/value";
+import { DataArray } from "@obsinflate/dataview/api/data-array";
+import { SListItem } from "@obsinflate/dataview/data-model/serialized/markdown";
 import * as Luxon from "luxon";
 import { DateTime, Duration } from "luxon";
 

@@ -1,4 +1,4 @@
-﻿import { Date } from '@obsidian/infrastructure/date';
+﻿import { Date } from '@obsinflate/infrastructure/date';
 
 declare const moment: any;
 

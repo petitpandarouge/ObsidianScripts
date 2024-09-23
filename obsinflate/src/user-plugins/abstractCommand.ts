@@ -1,6 +1,6 @@
-﻿import { Plugin } from '@obsidian/user-plugins/plugin';
-import { Command } from '@obsidian/user-plugins/command';
-import { Identifiable } from "@obsidian/identifiable";
+﻿import { Plugin } from '@obsinflate/user-plugins/plugin';
+import { Command } from '@obsinflate/user-plugins/command';
+import { Identifiable } from "@obsinflate/identifiable";
 
 export abstract class AbstractCommand implements Command, Identifiable<string> {
     constructor(protected plugin: Plugin) { }

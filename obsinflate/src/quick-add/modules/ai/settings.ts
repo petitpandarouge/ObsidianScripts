@@ -1,4 +1,4 @@
-﻿import { ModelOptions } from "@obsidian/quick-add/modules/ai/modelOptions";
+﻿import { ModelOptions } from "@obsinflate/quick-add/modules/ai/modelOptions";
 
 export interface Settings {
     variableName: string, 

@@ -1,6 +1,6 @@
-import { MockDateService } from '@obsidian/tests/user-plugins/mocks/mockDateService';
-import { NewUniqueNoteCommand } from '@obsidian/user-plugins/newUniqueNoteCommand';
 ﻿import { Plugin} from '@obsinflate/user-plugins/plugin';
+import { MockDateService } from '@obsinflate/tests/user-plugins/mocks/mockDateService';
+import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
 import Chance from 'chance';
 import { MockDate } from './mocks/mockDate';
 import { mock, mockDeep } from 'jest-mock-extended';

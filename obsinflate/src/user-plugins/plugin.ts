@@ -1,5 +1,5 @@
-﻿import { App } from '@obsidian/app';
-import { Command } from '@obsidian/user-plugins/command';
+﻿import { App } from 'obsidian';
+import { Command } from '@obsinflate/user-plugins/command';
 
 /**
  * v1.3.0

@@ -1,5 +1,5 @@
-﻿import { AbstractCommand } from "@obsidian/user-plugins/abstractCommand";
-import { Plugin } from '@obsidian/user-plugins/plugin';
+﻿import { AbstractCommand } from "@obsinflate/user-plugins/abstractCommand";
+import { Plugin } from '@obsinflate/user-plugins/plugin';
 
 export class NewProjectCommand extends AbstractCommand {
     constructor(plugin: Plugin) {

@@ -1,5 +1,5 @@
-﻿import { Settings } from "@obsidian/quick-add/modules/ai/settings";
-import { Model } from "@obsidian/quick-add/modules/ai/model";
+﻿import { Settings } from "@obsinflate/quick-add/modules/ai/settings";
+import { Model } from "@obsinflate/quick-add/modules/ai/model";
 
 export interface Ai {
     prompt: (prompt: string, model: Model, settings?: Partial<Settings>) => Promise<{[key: string]: string}>;

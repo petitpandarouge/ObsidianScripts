@@ -1,14 +1,14 @@
-﻿jest.mock('@obsidian/user-plugins/commandLoader', () => {
+﻿jest.mock('@obsinflate/user-plugins/commandLoader', () => {
     return {
         CommandLoader: jest.fn(),
     };
   });
 
-import { CommandLoader } from '@obsidian/user-plugins/commandLoader';
-import { onload } from '@obsidian/user-plugins/main';
-import { NewProjectCommand } from '@obsidian/user-plugins/newProjectCommand';
-import { NewUniqueNoteCommand } from '@obsidian/user-plugins/newUniqueNoteCommand';
 import { Plugin} from '@obsinflate/user-plugins/plugin';
+import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
+import { onload } from '@obsinflate/user-plugins/main';
+import { NewProjectCommand } from '@obsinflate/user-plugins/newProjectCommand';
+import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
 import { mockDeep } from 'jest-mock-extended';
 
 describe('main', () => {

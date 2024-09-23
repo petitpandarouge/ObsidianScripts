@@ -1,5 +1,5 @@
-﻿import { Action } from "@obsidian/action";
-import { NoticeWrapper } from "@obsidian/noticeWrapper";
+﻿import { Action } from "@obsinflate/action";
+import { NoticeWrapper } from "@obsinflate/noticeWrapper";
 
 export class ErrorNoticer {
     constructor(private noticeTime: number = 5000) { }

@@ -1,6 +1,6 @@
-﻿import { Utility } from "@obsidian/quick-add/modules/utility";
-import { Date } from "@obsidian/quick-add/modules/date";
-import { Ai } from "@obsidian/quick-add/modules/ai";
+﻿import { Utility } from "@obsinflate/quick-add/modules/utility";
+import { Date } from "@obsinflate/quick-add/modules/date";
+import { Ai } from "@obsinflate/quick-add/modules/ai";
 
 /**
  * v1.11.1

@@ -1,11 +1,11 @@
-﻿jest.mock('@obsidian/noticeWrapper', () => {
+﻿jest.mock('@obsinflate/noticeWrapper', () => {
     return {
       NoticeWrapper: jest.fn(),
     };
   });
 
-import { ErrorNoticer } from '@obsidian/errorNoticer';
-import { NoticeWrapper } from '@obsidian/noticeWrapper';
+import { ErrorNoticer } from '@obsinflate/errorNoticer';
+import { NoticeWrapper } from '@obsinflate/noticeWrapper';
 import Chance from 'chance';
 
 describe('ErrorNoticer', () => {

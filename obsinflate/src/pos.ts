@@ -1,4 +1,4 @@
-﻿import { Loc } from "@obsidian/loc";
+﻿import { Loc } from "@obsinflate/loc";
 
 export interface Pos {
     /**

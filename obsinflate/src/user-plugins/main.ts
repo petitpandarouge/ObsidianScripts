@@ -1,8 +1,8 @@
-﻿import { DateService } from "@obsidian/infrastructure/dateService";
-import { CommandLoader } from "@obsidian/user-plugins/commandLoader";
-import { NewProjectCommand } from "@obsidian/user-plugins/newProjectCommand";
-import { NewUniqueNoteCommand } from "@obsidian/user-plugins/newUniqueNoteCommand";
-import { Plugin } from "@obsidian/user-plugins/plugin";
+﻿import { DateService } from "@obsinflate/infrastructure/dateService";
+import { CommandLoader } from "@obsinflate/user-plugins/commandLoader";
+import { NewProjectCommand } from "@obsinflate/user-plugins/newProjectCommand";
+import { NewUniqueNoteCommand } from "@obsinflate/user-plugins/newUniqueNoteCommand";
+import { Plugin } from "@obsinflate/user-plugins/plugin";
 
 export async function onload(plugin: Plugin): Promise<void> {
     const commandLoader = new CommandLoader(plugin);

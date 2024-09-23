@@ -1,15 +1,15 @@
-﻿jest.mock('@obsidian/noticeWrapper', () => {
+﻿jest.mock('@obsinflate/noticeWrapper', () => {
     return {
       NoticeWrapper: jest.fn(),
     };
   });
   
-import { MockCommand } from '@obsidian/tests/user-plugins/mocks/mockCommand';
-import { AbstractCommand } from '@obsidian/user-plugins/abstractCommand';
-import { CommandBuilder } from "@obsidian/user-plugins/commandBuilder";
-import { CommandLoader } from '@obsidian/user-plugins/commandLoader';
-import { NoticeWrapper } from '@obsidian/noticeWrapper';
+import { MockCommand } from '@obsinflate/tests/user-plugins/mocks/mockCommand';
 import { Plugin} from '@obsinflate/user-plugins/plugin';
+import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
+import { CommandBuilder } from "@obsinflate/user-plugins/commandBuilder";
+import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
+import { NoticeWrapper } from '@obsinflate/noticeWrapper';
 import Chance from 'chance';
 import { mockDeep } from 'jest-mock-extended';
 
