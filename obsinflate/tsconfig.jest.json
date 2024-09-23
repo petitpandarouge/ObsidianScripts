@@ -13,6 +13,9 @@
       ],
       "@obsinflate/*": [
         "src/*"
+      ],
+      "^obsidian$": [
+        "__tests__/mocks/obsidian"
       ]
     }
   },

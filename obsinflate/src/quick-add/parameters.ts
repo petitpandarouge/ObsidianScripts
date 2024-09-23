@@ -1,4 +1,4 @@
-﻿import { App } from "@obsidian/app";
+﻿import { App } from 'obsidian';
 import { Api } from "@obsinflate/quick-add/api";
 
 export interface Parameters {

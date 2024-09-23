@@ -4,6 +4,7 @@ import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteComm
 import Chance from 'chance';
 import { MockDate } from './mocks/mockDate';
 import { mock, mockDeep } from 'jest-mock-extended';
+import { TFile } from 'obsidian';
 
 describe('NewUniqueNoteCommand', () => {
     it('should call at least once plugin.app.vault.create', async () => {

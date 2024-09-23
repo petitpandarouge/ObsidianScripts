@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.jest.json",
+
+    "compilerOptions": {
+        "rootDir": "."
+    },
+    "include": [ 
+        "src",
+        "__tests__/mocks"
+    ]
+}

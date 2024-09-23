@@ -1,4 +1,4 @@
-const tsconfig = require("./tsconfig.json");
+const tsconfig = require("./tsconfig.jest.json");
 const makeModuleNameMapper = require("tsconfig-paths-jest");
 
 module.exports = {
