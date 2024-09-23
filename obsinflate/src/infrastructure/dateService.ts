@@ -1,4 +1,5 @@
-﻿import { Date } from '@obsinflate/infrastructure/date';
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Date } from '@obsinflate/infrastructure/date';
 
 declare const moment: any;
 

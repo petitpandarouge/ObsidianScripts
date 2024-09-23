@@ -1,4 +1,5 @@
-﻿import { DateTime, Duration } from "luxon";
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+import { DateTime, Duration } from "luxon";
 
 export type DataObject = { [key: string]: Literal };
 
@@ -10,6 +11,7 @@ export type Literal =
     | Duration
     | Array<Literal>
     | DataObject
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     | Function
     | null
     | Link;

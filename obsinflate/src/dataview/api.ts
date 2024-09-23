@@ -1,4 +1,5 @@
-﻿import { DataObject, Grouping, Literal, Link } from "@obsinflate/dataview/data-model/value";
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+import { DataObject, Grouping, Literal, Link } from "@obsinflate/dataview/data-model/value";
 import { DataArray } from "@obsinflate/dataview/api/data-array";
 import { SListItem } from "@obsinflate/dataview/data-model/serialized/markdown";
 import * as Luxon from "luxon";

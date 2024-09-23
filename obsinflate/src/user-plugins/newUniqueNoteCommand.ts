@@ -15,10 +15,10 @@ export class NewUniqueNoteCommand extends AbstractCommand {
         let created = false;
         do {
             try {
-                let uniqueName = now.format(dateFormat);
-                await this.plugin.app.vault.create(uniqueName,"");
+                const uniqueName = now.format(dateFormat);
+                await this.plugin.app.vault.create(uniqueName, "");
                 created = true;
-            } catch (error) {
+            } catch {
                 now.add(1, minutes);
             }
         } while (!created);

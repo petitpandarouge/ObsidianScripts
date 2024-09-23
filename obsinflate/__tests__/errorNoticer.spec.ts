@@ -5,6 +5,7 @@
   });
 
 import { ErrorNoticer } from '@obsinflate/errorNoticer';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoticeWrapper } from '@obsinflate/noticeWrapper';
 import Chance from 'chance';
 

@@ -26,7 +26,7 @@ describe('NewUniqueNoteCommand', () => {
             .toString();
         const mockDateService = {
             now: jest.fn().mockImplementation(() => {
-                let mockDate = new MockDate();
+                const mockDate = new MockDate();
                 mockDate.format = jest.fn().mockReturnValue(mockedNowResult);
                 return mockDate;
             }),
@@ -40,13 +40,13 @@ describe('NewUniqueNoteCommand', () => {
     it('should create a "YYYYMMDDHHm(m+1)" file if the "YYYYMMDDHHmm" file already exists', async () => {
         // Arrange
         const chance = new Chance();
-        let mockedNowResult = chance
+        const mockedNowResult = chance
             .integer({ min: 100000000000, max: 900000000000 });
         let mockedDateResult = mockedNowResult;
         const existingFilesCount = chance
             .integer({ min: 1, max: 30 });
         const createdFileName = (mockedNowResult + existingFilesCount).toString();
-        let mockPlugin = mockDeep<Plugin>({
+        const mockPlugin = mockDeep<Plugin>({
             app: {
                 vault: {
                     create: jest.fn().mockImplementation((path: string) => {

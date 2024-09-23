@@ -1,4 +1,5 @@
-﻿export type ArrayFunc<T, O> = (elem: T, index: number, arr: T[]) => O;
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+export type ArrayFunc<T, O> = (elem: T, index: number, arr: T[]) => O;
 export type ArrayComparator<T> = (a: T, b: T) => number;
 export type LowestKey<T> = T extends { key: any; rows: any } ? LowestKey<T["rows"][0]> : T;
 export type Ingrouped<U, T> = T extends { key: any; rows: any }

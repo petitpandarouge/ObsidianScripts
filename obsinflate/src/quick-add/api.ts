@@ -1,4 +1,5 @@
-﻿import { Utility } from "@obsinflate/quick-add/modules/utility";
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Utility } from "@obsinflate/quick-add/modules/utility";
 import { Date } from "@obsinflate/quick-add/modules/date";
 import { Ai } from "@obsinflate/quick-add/modules/ai";
 

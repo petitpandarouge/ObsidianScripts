@@ -5,6 +5,7 @@
   });
 
 import { Plugin} from '@obsinflate/user-plugins/plugin';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 import { onload } from '@obsinflate/user-plugins/main';
 import { NewProjectCommand } from '@obsinflate/user-plugins/newProjectCommand';
@@ -17,7 +18,7 @@ describe('main', () => {
         const mockPlugin = mockDeep<Plugin>();
         let loadSpy;
         const mockCommandLoader = jest.fn().mockImplementation(() => {
-            let commandLoader = {
+            const commandLoader = {
                 load: jest.fn()
             };
             loadSpy = jest.spyOn(commandLoader, 'load');

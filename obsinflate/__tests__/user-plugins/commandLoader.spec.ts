@@ -9,6 +9,7 @@ import { Plugin} from '@obsinflate/user-plugins/plugin';
 import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
 import { CommandBuilder } from "@obsinflate/user-plugins/commandBuilder";
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoticeWrapper } from '@obsinflate/noticeWrapper';
 import Chance from 'chance';
 import { mockDeep } from 'jest-mock-extended';
