@@ -1,9 +1,9 @@
-﻿import { Identifiable } from '@obsinflate/identifiable';
+﻿import { IIdentifiable } from '@obsinflate/iIdentifiable';
 
 export class IdValidator<TId> {
     private ids = new Set<TId>();
     validate(
-        identifiable: Identifiable<TId>,
+        identifiable: IIdentifiable<TId>,
         errorMessage: (id: TId) => string
     ): void {
         if (this.ids.has(identifiable.id)) {

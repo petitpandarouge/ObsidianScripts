@@ -1,11 +1,11 @@
-﻿import { DateService } from '@obsinflate/infrastructure/dateService';
+﻿import { IDateTimeService } from '@obsinflate/infrastructure/dateTimeService';
 import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
 import { Plugin } from '@obsinflate/user-plugins/plugin';
 
 export class NewUniqueNoteCommand extends AbstractCommand {
     constructor(
         plugin: Plugin,
-        private dateService: DateService
+        private dateTimeService: IDateTimeService
     ) {
         super(plugin);
     }
@@ -14,7 +14,7 @@ export class NewUniqueNoteCommand extends AbstractCommand {
         'V2 - Create new unique note in folder of the center panel active note';
     async callback(): Promise<void> {
         const dateFormat = 'YYYYMMDDHHmm';
-        const now = this.dateService.now();
+        const now = this.dateTimeService.now();
         let created = false;
         do {
             try {

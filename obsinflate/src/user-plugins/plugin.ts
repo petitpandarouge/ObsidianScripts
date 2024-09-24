@@ -1,10 +1,10 @@
 ﻿import { App } from 'obsidian';
-import { Command } from '@obsinflate/user-plugins/command';
+import { ICommand } from '@obsinflate/user-plugins/iCommand';
 
 /**
  * v1.3.0
  */
 export interface Plugin {
-    addCommand: (command: Command) => void;
+    addCommand: (command: ICommand) => void;
     app: App;
 }

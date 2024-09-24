@@ -1,4 +1,4 @@
-﻿import { DateService } from '@obsinflate/infrastructure/dateService';
+﻿import { DateTimeService } from '@obsinflate/infrastructure/dateTimeService';
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 import { NewProjectCommand } from '@obsinflate/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
@@ -9,7 +9,7 @@ export async function onload(plugin: Plugin): Promise<void> {
     await commandLoader.load([
         (plugin) => new NewProjectCommand(plugin),
         (plugin) => {
-            const dateService = new DateService();
+            const dateService = new DateTimeService();
             return new NewUniqueNoteCommand(plugin, dateService);
         }
     ]);

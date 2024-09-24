@@ -1,8 +1,10 @@
 ﻿import { Plugin } from '@obsinflate/user-plugins/plugin';
-import { Command } from '@obsinflate/user-plugins/command';
-import { Identifiable } from '@obsinflate/identifiable';
+import { ICommand } from '@obsinflate/user-plugins/iCommand';
+import { IIdentifiable } from '@obsinflate/iIdentifiable';
 
-export abstract class AbstractCommand implements Command, Identifiable<string> {
+export abstract class AbstractCommand
+    implements ICommand, IIdentifiable<string>
+{
     constructor(protected plugin: Plugin) {}
     abstract id: string;
     abstract name: string;
