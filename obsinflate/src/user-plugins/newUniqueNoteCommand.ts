@@ -14,16 +14,15 @@ export class NewUniqueNoteCommand extends AbstractCommand {
         'V2 - Create new unique note in folder of the center panel active note';
     async callback(): Promise<void> {
         const dateFormat = 'YYYYMMDDHHmm';
-        const minutes = 'minutes';
         const now = this.dateService.now();
         let created = false;
         do {
             try {
-                const uniqueName = now.format(dateFormat);
+                const uniqueName = now.toFormat(dateFormat);
                 await this.plugin.app.vault.create(uniqueName, '');
                 created = true;
             } catch {
-                now.add(1, minutes);
+                now.plus({ minutes: 1 });
             }
         } while (!created);
     }

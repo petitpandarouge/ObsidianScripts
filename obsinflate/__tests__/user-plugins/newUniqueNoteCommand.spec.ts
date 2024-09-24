@@ -2,9 +2,10 @@
 import { MockDateService } from '@obsinflate/tests/user-plugins/mocks/mockDateService';
 import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
 import Chance from 'chance';
-import { MockDate } from './mocks/mockDate';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { TFile } from 'obsidian';
+import { DurationLike } from 'luxon';
+import { MockDate } from './mocks/mockDate';
 
 describe('NewUniqueNoteCommand', () => {
     it('should call at least once plugin.app.vault.create', async () => {
@@ -30,7 +31,7 @@ describe('NewUniqueNoteCommand', () => {
         const mockDateService = {
             now: jest.fn().mockImplementation(() => {
                 const mockDate = new MockDate();
-                mockDate.format = jest.fn().mockReturnValue(mockedNowResult);
+                mockDate.toFormat = jest.fn().mockReturnValue(mockedNowResult);
                 return mockDate;
             })
         };
@@ -73,15 +74,13 @@ describe('NewUniqueNoteCommand', () => {
         const mockDateService = {
             now: jest.fn().mockImplementation(() => {
                 return {
-                    format: jest.fn().mockImplementation(() => {
+                    toFormat: jest.fn().mockImplementation(() => {
                         return mockedDateResult.toString();
                     }),
-                    add: jest
+                    plus: jest
                         .fn()
-                        .mockImplementation((amount: number, unit: string) => {
-                            if (unit === 'minutes') {
-                                mockedDateResult += amount;
-                            }
+                        .mockImplementation((duration: DurationLike) => {
+                            mockedDateResult += (duration as { minutes: number }).minutes;
                         })
                 };
             })

@@ -1,10 +1,7 @@
-﻿/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Date } from '@obsinflate/infrastructure/date';
-
-declare const moment: any;
+﻿import { DateTime } from 'luxon';
 
 export class DateService {
-    now(): Date {
-        return moment();
+    now(): DateTime {
+        return DateTime.now();
     }
 }
