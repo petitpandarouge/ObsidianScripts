@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Check code formatting
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Setup node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 20.9.0
     - run: npm ci
@@ -23,9 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Build project
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20.9.0
       - run: npm ci
@@ -36,9 +36,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Test project
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20.9.0
       - run: npm ci
@@ -49,9 +49,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Test the project bundling
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20.9.0
       - run: npm ci
@@ -62,9 +62,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Test the hello world samples bundling
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20.9.0
       - run: npm ci
