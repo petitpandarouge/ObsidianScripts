@@ -6,15 +6,16 @@ import { mock, mockDeep } from 'jest-mock-extended';
 import { TFile } from 'obsidian';
 import { DurationLike } from 'luxon';
 import { MockDate } from './mocks/mockDate';
+import { IDateTimeService, DateTimeService } from '@obsinflate/infrastructure/dateTimeService';
 
 describe('NewUniqueNoteCommand', () => {
     it('should call at least once plugin.app.vault.create', async () => {
         // Arrange
         const mockPlugin = mockDeep<Plugin>();
-        const mockDateService = new MockDateService();
+        const dateService = new DateTimeService();
         const newUniqueNoteCommand = new NewUniqueNoteCommand(
             mockPlugin,
-            mockDateService
+            dateService
         );
         // Act
         await newUniqueNoteCommand.callback();
