@@ -1,21 +1,23 @@
 ﻿import { Plugin } from '@obsinflate/user-plugins/plugin';
-import { MockDateService } from '@obsinflate/tests/user-plugins/mocks/mockDateService';
 import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { TFile } from 'obsidian';
 import { DurationLike } from 'luxon';
-import { MockDate } from './mocks/mockDate';
-import { IDateTimeService, DateTimeService } from '@obsinflate/infrastructure/dateTimeService';
+import {
+    IDateTimeService,
+    DateTimeService,
+    IDateTime
+} from '@obsinflate/infrastructure/dateTimeService';
 
 describe('NewUniqueNoteCommand', () => {
     it('should call at least once plugin.app.vault.create', async () => {
         // Arrange
         const mockPlugin = mockDeep<Plugin>();
-        const dateService = new DateTimeService();
+        const dateTimeService = new DateTimeService();
         const newUniqueNoteCommand = new NewUniqueNoteCommand(
             mockPlugin,
-            dateService
+            dateTimeService
         );
         // Act
         await newUniqueNoteCommand.callback();
@@ -29,13 +31,13 @@ describe('NewUniqueNoteCommand', () => {
         const mockedNowResult = chance
             .integer({ min: 100000000000, max: 900000000000 })
             .toString();
-        const mockDateService = {
+        const mockDateService = mock<IDateTimeService>({
             now: jest.fn().mockImplementation(() => {
-                const mockDate = new MockDate();
-                mockDate.toFormat = jest.fn().mockReturnValue(mockedNowResult);
-                return mockDate;
+                return mock<IDateTime>({
+                    toFormat: jest.fn().mockReturnValue(mockedNowResult)
+                });
             })
-        };
+        });
         const newUniqueNoteCommand = new NewUniqueNoteCommand(
             mockPlugin,
             mockDateService
@@ -72,9 +74,9 @@ describe('NewUniqueNoteCommand', () => {
                 }
             }
         });
-        const mockDateService = {
+        const mockDateService = mock<IDateTimeService>({
             now: jest.fn().mockImplementation(() => {
-                return {
+                return mock<IDateTime>({
                     toFormat: jest.fn().mockImplementation(() => {
                         return mockedDateResult.toString();
                     }),
@@ -85,9 +87,9 @@ describe('NewUniqueNoteCommand', () => {
                                 duration as { minutes: number }
                             ).minutes;
                         })
-                };
+                });
             })
-        };
+        });
         const newUniqueNoteCommand = new NewUniqueNoteCommand(
             mockPlugin,
             mockDateService
@@ -95,7 +97,7 @@ describe('NewUniqueNoteCommand', () => {
         // Act
         await newUniqueNoteCommand.callback();
         // Assert
-        for (let i = 0; i < existingFilesCount; i++) {
+        for (let i = 0; i < existingFilesCount + 1; i++) {
             expect(mockPlugin.app.vault.create).toHaveBeenCalledWith(
                 (mockedNowResult + i).toString(),
                 ''
