@@ -3,7 +3,6 @@
 		{
 			"path": "obsinflate"
 		}
-	]
 	],
 	"settings": {
 		"emeraldwalk.runonsave": {
@@ -16,5 +15,6 @@
 			]
 		},
 		"files.autoSave": "afterDelay",
+		"typescript.preferences.importModuleSpecifier": "non-relative"
 	}
 }
