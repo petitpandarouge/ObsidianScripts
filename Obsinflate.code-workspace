@@ -4,4 +4,17 @@
 			"path": "obsinflate"
 		}
 	]
+	],
+	"settings": {
+		"emeraldwalk.runonsave": {
+			"commands": [
+				{
+					"match": ".*",
+					"isAsync": true,
+					"cmd": "npm run format"
+				},
+			]
+		},
+		"files.autoSave": "afterDelay",
+	}
 }
