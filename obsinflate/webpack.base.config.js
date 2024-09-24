@@ -18,11 +18,8 @@ module.exports = (entryName, bundleName, bundlePath, extraConfig = {}) => {
                             options: {
                                 search: /import\s*{([^}]+)}\s*from\s*'obsidian';/g,
                                 replace: (_match, p1) => {
-                                    const excludedImports = [
-                                        ' Command ',
-                                        ' Plugin '
-                                    ];
-                                    if (excludedImports.includes(p1)) {
+                                    const includedImports = [' Notice '];
+                                    if (!includedImports.includes(p1)) {
                                         return `import {${p1}} from 'obsidian';`;
                                     }
                                     console.log(
