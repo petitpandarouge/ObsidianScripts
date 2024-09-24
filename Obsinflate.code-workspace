@@ -14,7 +14,7 @@
 				},
 			]
 		},
-		"files.autoSave": "afterDelay",
+		"files.autoSave": "onFocusChange",
 		"typescript.preferences.importModuleSpecifier": "non-relative"
 	}
 }
