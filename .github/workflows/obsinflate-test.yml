@@ -15,7 +15,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 20.9.0
-    - run: npm install
+    - run: npm ci
       working-directory: obsinflate
     - run: npm run format:check
       working-directory: obsinflate
@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.9.0
-      - run: npm install
+      - run: npm ci
         working-directory: obsinflate
       - run: npm run build
         working-directory: obsinflate
@@ -41,7 +41,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.9.0
-      - run: npm install
+      - run: npm ci
         working-directory: obsinflate
       - run: npm run test:unit
         working-directory: obsinflate
@@ -54,7 +54,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.9.0
-      - run: npm install
+      - run: npm ci
         working-directory: obsinflate
       - run: npm run bundle
         working-directory: obsinflate
@@ -67,7 +67,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.9.0
-      - run: npm install
+      - run: npm ci
         working-directory: obsinflate
       - run: npm run bundle:helloworld
         working-directory: obsinflate
