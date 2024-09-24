@@ -23,6 +23,7 @@
 !.gitpod.yml
 !.mailmap
 !.nycrc
+!.obsidian
 !.prettierrc
 !.vscode
 !.yamllint.yaml
