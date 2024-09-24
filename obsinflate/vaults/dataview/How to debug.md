@@ -8,7 +8,7 @@
 
 >[!warning] The view must be executed at least once to be available in the `Developer Tools`.
 
-- Into a markdown file, write the dataview code block calling the view.
+- Into the `Views` markdown file, write the dataview code block calling the view.
 
 ```
 `` dataviewjs

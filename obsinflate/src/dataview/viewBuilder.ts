@@ -1,6 +1,6 @@
-﻿import { Api } from '@obsinflate/dataview/api';
+﻿import { DataviewApi } from 'obsidian-dataview';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface ViewBuilder<TInput extends { [key: string]: any } | never> {
-    build: (dv: Api, input: TInput) => string | void;
+    build: (dv: DataviewApi, input: TInput) => string | void;
 }

@@ -1,4 +1,4 @@
-import { Api } from '@obsinflate/dataview/api';
+import { DataviewApi } from 'obsidian-dataview';
 import { ViewBuilder } from '@obsinflate/dataview/viewBuilder';
 
 class Input {
@@ -6,7 +6,7 @@ class Input {
 }
 
 export class HelloWorld implements ViewBuilder<Input> {
-    build(dv: Api, input: Input) {
+    build(dv: DataviewApi, input: Input) {
         const header = input.name ? `Hello ${input.name}` : 'Hello World';
         dv.header(1, header);
         dv.table(['Name', 'Ids'], [['Me', 0]]);
