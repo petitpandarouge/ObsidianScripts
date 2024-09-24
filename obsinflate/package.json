@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./bundles",
     "clear": "npm run clean && rimraf ./package-lock.json && rimraf ./node_modules",
-    "build": "npm run clean && npx tsc --project tsconfig.build.json",
+    "build": "npm run clean && npm run format && npx tsc --project tsconfig.build.json",
     "rebuild": "npm run clear && npm install && npm run build",
     "eslint": "eslint ./src/ && eslint ./__tests__/",
     "format": "prettier --write ./src/ ./__tests__/ ./*.js ./*.json",
