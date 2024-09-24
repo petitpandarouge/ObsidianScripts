@@ -11,7 +11,20 @@ module.exports = (entryName, bundleName, bundlePath, extraConfig = {}) => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: 'ts-loader',
+          use: [
+            'ts-loader',
+            {
+              loader: 'string-replace-loader',
+              options: {
+                search: /import\s*{([^}]+)}\s*from\s*'obsidian';/g,
+                replace: (_match, p1) => {
+                  console.log(`Declaring Obsidian types "${p1}"`);
+                  const imports = p1.split(',').map(item => item.trim());
+                  return imports.map(imp => `declare const ${imp}: any;`).join('\n');
+                }
+              }
+            }
+          ],
           exclude: /node_modules/,
         },
       ],
@@ -23,7 +36,7 @@ module.exports = (entryName, bundleName, bundlePath, extraConfig = {}) => {
     output: {
       filename: `${bundleName}.js`,
       path: path.resolve(__dirname, `bundles/${bundlePath}`)
-    },
+    }
   };
   return mergician({})(base, extraConfig);
 }

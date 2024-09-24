@@ -1,12 +1,12 @@
-﻿jest.mock('@obsinflate/noticeWrapper', () => {
+﻿jest.mock('obsidian', () => {
     return {
-        NoticeWrapper: jest.fn()
+        Notice: jest.fn()
     };
 });
 
 import { ErrorNoticer } from '@obsinflate/errorNoticer';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { NoticeWrapper } from '@obsinflate/noticeWrapper';
+import { Notice } from 'obsidian';
 import Chance from 'chance';
 
 describe('ErrorNoticer', () => {
@@ -19,7 +19,7 @@ describe('ErrorNoticer', () => {
             throw new Error(errorMessage);
         });
         const mockNotice = jest.fn();
-        (NoticeWrapper as jest.Mock) = mockNotice;
+        (Notice as jest.Mock) = mockNotice;
         // Act
         const action = async () => await errorNoticer.wrap(wrappedAction);
         // Assert
@@ -40,7 +40,7 @@ describe('ErrorNoticer', () => {
             throw new Error(errorMessage);
         });
         const mockNotice = jest.fn();
-        (NoticeWrapper as jest.Mock) = mockNotice;
+        (Notice as jest.Mock) = mockNotice;
         // Act
         const action = async () => await errorNoticer.wrap(wrappedAction);
         // Assert
@@ -53,7 +53,7 @@ describe('ErrorNoticer', () => {
         const errorNoticer = new ErrorNoticer();
         const wrappedAction = jest.fn();
         const mockNotice = jest.fn();
-        (NoticeWrapper as jest.Mock) = mockNotice;
+        (Notice as jest.Mock) = mockNotice;
         // Act
         await errorNoticer.wrap(wrappedAction);
         // Assert

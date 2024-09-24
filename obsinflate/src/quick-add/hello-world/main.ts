@@ -1,8 +1,8 @@
-﻿import { NoticeWrapper } from '@obsinflate/noticeWrapper';
-import { Script } from '@obsinflate/quick-add/script';
+﻿import { Script } from '@obsinflate/quick-add/script';
+import { Notice } from 'obsidian';
 
 const helloWorld: Script = async () => {
-    new NoticeWrapper('Hello World !', 5000);
+    new Notice('Hello World !', 5000);
     return Promise.resolve();
 };
 

@@ -1,6 +1,6 @@
-﻿jest.mock('@obsinflate/noticeWrapper', () => {
+﻿jest.mock('obsidian', () => {
     return {
-        NoticeWrapper: jest.fn()
+        Notice: jest.fn()
     };
 });
 
@@ -10,7 +10,7 @@ import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
 import { CommandBuilder } from '@obsinflate/user-plugins/commandBuilder';
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { NoticeWrapper } from '@obsinflate/noticeWrapper';
+import { Notice } from 'obsidian';
 import Chance from 'chance';
 import { mockDeep } from 'jest-mock-extended';
 
@@ -95,7 +95,7 @@ describe('CommandLoader', () => {
             });
         const builders = [mockCommandBuilder, mockCommandBuilder];
         const mockNotice = jest.fn();
-        (NoticeWrapper as jest.Mock) = mockNotice;
+        (Notice as jest.Mock) = mockNotice;
         const loader = new CommandLoader(mockPlugin);
         const errorMessage = `UserPlugins : Command with id ${commandId} already exists.`;
         // Act

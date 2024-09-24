@@ -16,7 +16,7 @@
       ]
     }
   },
-  "include": [ 
+  "include": [
     "src",
     "__tests__"
   ]

@@ -14,3 +14,9 @@ export interface Vault {
 export interface TFile {
     path: string;
 }
+
+export class Notice {
+    constructor(_message: string | DocumentFragment, _duration?: number) {
+        // Do nothing.
+    }
+}
