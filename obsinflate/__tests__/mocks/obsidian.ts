@@ -16,6 +16,7 @@ export interface TFile {
 }
 
 export class Notice {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     constructor(_message: string | DocumentFragment, _duration?: number) {
         // Do nothing.
     }

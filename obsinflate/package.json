@@ -5,9 +5,9 @@
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./bundles",
     "clear": "npm run clean && rimraf ./package-lock.json && rimraf ./node_modules",
-    "build": "npm run clean && npm run format && npx tsc --project tsconfig.build.json",
+    "build": "npm run clean && npm run format && npm run lint && npx tsc --project tsconfig.build.json",
     "rebuild": "npm run clear && npm install && npm run build",
-    "eslint": "eslint ./src/ && eslint ./__tests__/",
+    "lint": "eslint ./src/ && eslint ./__tests__/",
     "format": "prettier --write ./src/ ./__tests__/ ./*.js ./*.json",
     "build:for:jest": "npm run clean && npx tsc --project tsconfig.build.for.jest.json",
     "test:unit": "npm run build:for:jest && jest",
