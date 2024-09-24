@@ -19,7 +19,7 @@ module.exports = (entryName, bundleName, bundlePath, extraConfig = {}) => {
                                 search: /import\s*{([^}]+)}\s*from\s*'obsidian';/g,
                                 replace: (_match, p1) => {
                                     console.log(
-                                        `Declaring Obsidian types "${p1}"`
+                                        `Declaring Obsidian types "${p1}" for "${entryName}" module.`
                                     );
                                     const imports = p1
                                         .split(',')
