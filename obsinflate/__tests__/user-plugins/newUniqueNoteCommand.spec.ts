@@ -80,7 +80,9 @@ describe('NewUniqueNoteCommand', () => {
                     plus: jest
                         .fn()
                         .mockImplementation((duration: DurationLike) => {
-                            mockedDateResult += (duration as { minutes: number }).minutes;
+                            mockedDateResult += (
+                                duration as { minutes: number }
+                            ).minutes;
                         })
                 };
             })
