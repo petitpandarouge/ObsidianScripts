@@ -5,19 +5,12 @@
     "outDir": "./dist",
     "sourceMap": true,
     "strictNullChecks": true,
-    "removeComments" : true,
+    "removeComments": true,
     "baseUrl": ".",
     "paths": {
-      "@obsinflate/tests/*": [
-        "__tests__/*"
-      ],
-      "@obsinflate/*": [
-        "src/*"
-      ]
+      "@obsinflate/tests/*": ["__tests__/*"],
+      "@obsinflate/*": ["src/*"]
     }
   },
-  "include": [
-    "src",
-    "__tests__"
-  ]
+  "include": ["src", "__tests__"]
 }

@@ -8,7 +8,7 @@
     "build": "npm run clean && npx tsc --project tsconfig.build.json",
     "rebuild": "npm run clear && npm install && npm run build",
     "eslint": "eslint ./src/ && eslint ./__tests__/",
-    "format": "prettier --write ./src/ ./__tests__/",
+    "format": "prettier --write ./src/ ./__tests__/ ./*.js ./*.json",
     "build:for:jest": "npm run clean && npx tsc --project tsconfig.build.for.jest.json",
     "test:unit": "npm run build:for:jest && jest",
     "test:integration:quickadd": "rimraf ./vaults/quick-add/scripts && ncp ./bundles/QuickAdd ./vaults/quick-add/scripts && start obsidian://open?vault=quick-add",
