@@ -1,6 +1,6 @@
 ﻿import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
-import { Plugin } from '@obsinflate/user-plugins/plugin';
 import { Notice } from 'obsidian';
+import { Plugin } from 'obsidian';
 
 export class HelloWorldCommand extends AbstractCommand {
     constructor(plugin: Plugin) {

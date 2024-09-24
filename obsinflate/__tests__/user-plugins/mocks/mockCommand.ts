@@ -1,5 +1,5 @@
 ﻿import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
-import { Plugin } from '@obsinflate/user-plugins/plugin';
+import { Plugin } from 'obsidian';
 import Chance from 'chance';
 
 const chance = new Chance();

@@ -1,8 +1,7 @@
-﻿import { Plugin } from '@obsinflate/user-plugins/plugin';
-import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
+﻿import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
-import { TFile } from 'obsidian';
+import { Plugin, TFile } from 'obsidian';
 import { IUniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
 
 describe('NewUniqueNoteCommand', () => {

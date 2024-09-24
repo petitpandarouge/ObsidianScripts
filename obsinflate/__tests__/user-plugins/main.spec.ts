@@ -4,7 +4,7 @@
     };
 });
 
-import { Plugin } from '@obsinflate/user-plugins/plugin';
+import { Plugin } from 'obsidian';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 import { onload } from '@obsinflate/user-plugins/main';

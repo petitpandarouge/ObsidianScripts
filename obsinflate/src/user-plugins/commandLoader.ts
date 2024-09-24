@@ -1,7 +1,7 @@
-﻿import { Plugin } from '@obsinflate/user-plugins/plugin';
-import { CommandBuilder } from '@obsinflate/user-plugins/commandBuilder';
+﻿import { CommandBuilder } from '@obsinflate/user-plugins/commandBuilder';
 import { IdValidator } from '@obsinflate/idValidator';
 import { ErrorNoticer } from '@obsinflate/errorNoticer';
+import { Plugin } from 'obsidian';
 
 export class CommandLoader {
     #errorNoticer: ErrorNoticer;

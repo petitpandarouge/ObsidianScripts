@@ -3,7 +3,7 @@ import { UniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 import { NewProjectCommand } from '@obsinflate/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
-import { Plugin } from '@obsinflate/user-plugins/plugin';
+import { Plugin } from 'obsidian';
 
 export async function onload(plugin: Plugin): Promise<void> {
     const commandLoader = new CommandLoader(plugin);
