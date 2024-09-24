@@ -23,8 +23,9 @@
 !.gitpod.yml
 !.mailmap
 !.nycrc
-!.yamllint.yaml
 !.prettierrc
+!.vscode
+!.yamllint.yaml
 
 # === Rules for root dir ===
 /core
