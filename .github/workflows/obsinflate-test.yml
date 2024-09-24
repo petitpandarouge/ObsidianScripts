@@ -15,9 +15,10 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 20
-    - run: cd obsinflate
     - run: npm install
+      working-directory: obsinflate
     - run: npm run format:check
+      working-directory: obsinflate
   build:
     runs-on: ubuntu-latest
     name: Build project
@@ -27,9 +28,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: cd obsinflate
       - run: npm install
+        working-directory: obsinflate
       - run: npm run build
+        working-directory: obsinflate
   test:
     runs-on: ubuntu-latest
     name: Test project
@@ -39,9 +41,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: cd obsinflate
       - run: npm install
+        working-directory: obsinflate
       - run: npm run test:unit
+        working-directory: obsinflate
   bundle:
     runs-on: ubuntu-latest
     name: Test the project bundling
@@ -51,9 +54,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: cd obsinflate
       - run: npm install
+        working-directory: obsinflate
       - run: npm run bundle
+        working-directory: obsinflate
   bundle-helloworld:
     runs-on: ubuntu-latest
     name: Test the hello world samples bundling
@@ -63,6 +67,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: cd obsinflate
       - run: npm install
+        working-directory: obsinflate
       - run: npm run bundle:helloworld
+        working-directory: obsinflate
