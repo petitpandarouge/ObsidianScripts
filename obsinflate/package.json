@@ -9,13 +9,12 @@
     "rebuild": "npm run clear && npm install && npm run build",
     "lint": "eslint ./src/ && eslint ./__tests__/",
     "format": "prettier --write ./src/ ./__tests__/ ./*.js ./*.json",
+    "format:check": "prettier --check ./src/ ./__tests__/ ./*.js ./*.json",
     "build:for:jest": "npm run clean && npx tsc --project tsconfig.build.for.jest.json",
     "test:unit": "npm run build:for:jest && jest",
     "test:integration:quickadd": "rimraf ./vaults/quick-add/scripts && ncp ./bundles/QuickAdd ./vaults/quick-add/scripts && start obsidian://open?vault=quick-add",
     "test:integration:userplugins": "rimraf ./vaults/user-plugins/scripts && ncp ./bundles/UserPlugins ./vaults/user-plugins/scripts && start obsidian://open?vault=user-plugins",
     "test:integration:dv": "rimraf ./vaults/dataview/scripts && ncp ./bundles/dv ./vaults/dataview/scripts && start obsidian://open?vault=dataview",
-    "ci": "npm run test:unit && npm run bundle",
-    "deploy:test": "ncp ./bundles c:/Temp/obsidian",
     "bundle:dv": "",
     "bundle:quickadd": "",
     "bundle:userplugins": "npx webpack --config webpack.userplugins.config.js",
@@ -23,7 +22,8 @@
     "bundle:quickadd:helloworld": "npx webpack --config webpack.quickadd.helloworld.config.js",
     "bundle:userplugins:helloworld": "npx webpack --config webpack.userplugins.helloworld.config.js",
     "bundle:dv:helloworld": "npx webpack --config webpack.dv.view.helloworld.config.js && node dv.view.build.js HelloWorld",
-    "bundle:helloworld": "rimraf ./bundles && npm run bundle:quickadd:helloworld && npm run bundle:userplugins:helloworld && npm run bundle:dv:helloworld"
+    "bundle:helloworld": "rimraf ./bundles && npm run bundle:quickadd:helloworld && npm run bundle:userplugins:helloworld && npm run bundle:dv:helloworld",
+    "deploy:test": "ncp ./bundles c:/Temp/obsidian"
   },
   "repository": {
     "type": "git",
