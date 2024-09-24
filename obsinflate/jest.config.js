@@ -7,5 +7,15 @@ module.exports = {
     collectCoverage: true,
     moduleNameMapper: makeModuleNameMapper(tsconfig),
     testRegex: '(/__tests__/.*spec)\\.tsx?$',
-    coveragePathIgnorePatterns: ['mocks', 'infrastructure']
+    coveragePathIgnorePatterns: ['mocks', 'infrastructure'],
+    reporters: [
+        'default',
+        [
+            './node_modules/jest-html-reporter',
+            {
+                pageTitle: 'Test Report',
+                outputPath: './reports/test-report.html'
+            }
+        ]
+    ]
 };
