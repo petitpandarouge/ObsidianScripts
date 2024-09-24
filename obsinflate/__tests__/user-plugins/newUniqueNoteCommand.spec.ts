@@ -3,21 +3,16 @@ import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteComm
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { TFile } from 'obsidian';
-import { DurationLike } from 'luxon';
-import {
-    IDateTimeService,
-    DateTimeService,
-    IDateTime
-} from '@obsinflate/infrastructure/dateTimeService';
+import { IUniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
 
 describe('NewUniqueNoteCommand', () => {
     it('should call at least once plugin.app.vault.create', async () => {
         // Arrange
         const mockPlugin = mockDeep<Plugin>();
-        const dateTimeService = new DateTimeService();
+        const mockGenerator = mock<IUniqueNameGenerator>();
         const newUniqueNoteCommand = new NewUniqueNoteCommand(
             mockPlugin,
-            dateTimeService
+            mockGenerator
         );
         // Act
         await newUniqueNoteCommand.callback();
@@ -28,40 +23,34 @@ describe('NewUniqueNoteCommand', () => {
         // Arrange
         const mockPlugin = mockDeep<Plugin>();
         const chance = new Chance();
-        const mockedNowResult = chance
+        const mockNowResult = chance
             .integer({ min: 100000000000, max: 900000000000 })
             .toString();
-        const mockDateService = mock<IDateTimeService>({
-            now: jest.fn().mockImplementation(() => {
-                return mock<IDateTime>({
-                    toFormat: jest.fn().mockReturnValue(mockedNowResult)
-                });
-            })
+        const mockGenerator = mock<IUniqueNameGenerator>({
+            generateFromNow: jest.fn().mockReturnValue(mockNowResult)
         });
         const newUniqueNoteCommand = new NewUniqueNoteCommand(
             mockPlugin,
-            mockDateService
+            mockGenerator
         );
         // Act
         await newUniqueNoteCommand.callback();
         // Assert
         expect(mockPlugin.app.vault.create).toHaveBeenCalledWith(
-            mockedNowResult,
+            mockNowResult,
             ''
         );
     });
     it('should create a "YYYYMMDDHHm(m+1)" file if the "YYYYMMDDHHmm" file already exists', async () => {
         // Arrange
         const chance = new Chance();
-        const mockedNowResult = chance.integer({
+        const mockNowResult = chance.integer({
             min: 100000000000,
             max: 900000000000
         });
-        let mockedDateResult = mockedNowResult;
+        let mockGeneratorResult = mockNowResult;
         const existingFilesCount = chance.integer({ min: 1, max: 30 });
-        const createdFileName = (
-            mockedNowResult + existingFilesCount
-        ).toString();
+        const createdFileName = (mockNowResult + existingFilesCount).toString();
         const mockPlugin = mockDeep<Plugin>({
             app: {
                 vault: {
@@ -74,32 +63,23 @@ describe('NewUniqueNoteCommand', () => {
                 }
             }
         });
-        const mockDateService = mock<IDateTimeService>({
-            now: jest.fn().mockImplementation(() => {
-                return mock<IDateTime>({
-                    toFormat: jest.fn().mockImplementation(() => {
-                        return mockedDateResult.toString();
-                    }),
-                    plus: jest
-                        .fn()
-                        .mockImplementation((duration: DurationLike) => {
-                            mockedDateResult += (
-                                duration as { minutes: number }
-                            ).minutes;
-                        })
-                });
+        const mockGenerator = mock<IUniqueNameGenerator>({
+            generateFromNow: jest.fn().mockImplementation(() => {
+                const result = mockGeneratorResult.toString();
+                mockGeneratorResult++;
+                return result;
             })
         });
         const newUniqueNoteCommand = new NewUniqueNoteCommand(
             mockPlugin,
-            mockDateService
+            mockGenerator
         );
         // Act
         await newUniqueNoteCommand.callback();
         // Assert
         for (let i = 0; i < existingFilesCount + 1; i++) {
             expect(mockPlugin.app.vault.create).toHaveBeenCalledWith(
-                (mockedNowResult + i).toString(),
+                (mockNowResult + i).toString(),
                 ''
             );
         }
