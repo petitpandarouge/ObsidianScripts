@@ -11,6 +11,7 @@ import { NewProjectCommand } from '@obsinflate/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
 import { mockDeep } from 'jest-mock-extended';
 import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
+import { ErrorNoticer } from '@obsinflate/errorNoticer';
 
 describe('main', () => {
     it('should load the commands into the plugin using the CommandLoader', async () => {
@@ -29,10 +30,13 @@ describe('main', () => {
         await onload(mockPlugin);
         // Assert
         expect(mockCommandLoader).toHaveBeenCalledTimes(1);
-        expect(mockCommandLoader).toHaveBeenCalledWith(mockPlugin);
+        expect(mockCommandLoader).toHaveBeenCalledWith(
+            mockPlugin,
+            expect.any(ErrorNoticer)
+        );
         expect(loadSpy).toHaveBeenCalledTimes(1);
         expect(loadSpy).toHaveBeenCalledWith(expect.any(Array));
-        // Call the builders passed to load and check if they return the correct types.
+        // Call the builders passed to "load" and check if they return the correct types.
         const [newProjectCommandBuilder, newUniqueNoteCommandBuilder] =
             loadSpy!.mock.calls[0][0];
         expect(newProjectCommandBuilder(mockPlugin)).toBeInstanceOf(

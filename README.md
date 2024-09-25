@@ -52,10 +52,14 @@ The source code is organized as follow:
 
 ``` typescript
 export async function onload(plugin: UserPlugins): Promise<void> {
-    const commandLoader = new CommandLoader(plugin);
+    const noticer = new Noticer();
+    const errorNoticer = new ErrorNoticer(noticer);
+    const commandLoader = new CommandLoader(plugin, errorNoticer);
     await commandLoader.load([
-        (plugin) => new HelloWorldCommand(plugin),
-        ...
+        (plugin) => {
+            const noticer = new Noticer();
+            return new HelloWorldCommand(plugin, noticer);
+        }
     ]);
 }
 ```

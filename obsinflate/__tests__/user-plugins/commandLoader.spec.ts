@@ -1,18 +1,12 @@
-﻿jest.mock('obsidian', () => {
-    return {
-        Notice: jest.fn()
-    };
-});
-
-import { MockCommand } from '@obsinflate/tests/user-plugins/mocks/mockCommand';
+﻿import { MockCommand } from '@obsinflate/tests/user-plugins/mocks/mockCommand';
 import { AbstractCommand } from '@obsinflate/abstractCommand';
 import { CommandBuilder } from '@obsinflate/user-plugins/commandBuilder';
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Notice } from 'obsidian';
 import Chance from 'chance';
-import { mockDeep } from 'jest-mock-extended';
+import { mock, mockDeep } from 'jest-mock-extended';
 import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
+import { ErrorNoticer } from '@obsinflate/errorNoticer';
+import { Noticer } from '@obsinflate/infrastructure/noticer';
 
 describe('CommandLoader', () => {
     it('should build command', async () => {
@@ -22,7 +16,9 @@ describe('CommandLoader', () => {
             .fn()
             .mockImplementation(() => new MockCommand(mockPlugin));
         const builders = [mockCommandBuilder];
-        const loader = new CommandLoader(mockPlugin);
+        const mockedNoticer = mock<Noticer>();
+        const errorNoticer = new ErrorNoticer(mockedNoticer);
+        const loader = new CommandLoader(mockPlugin, errorNoticer);
         // Act
         await loader.load(builders);
         // Assert
@@ -41,7 +37,9 @@ describe('CommandLoader', () => {
             { length: buildersCount },
             () => mockCommandBuilder
         );
-        const loader = new CommandLoader(mockPlugin);
+        const mockedNoticer = mock<Noticer>();
+        const errorNoticer = new ErrorNoticer(mockedNoticer);
+        const loader = new CommandLoader(mockPlugin, errorNoticer);
         // Act
         await loader.load(builders);
         // Assert
@@ -54,7 +52,9 @@ describe('CommandLoader', () => {
         // Arrange
         const mockPlugin = mockDeep<UserPlugins>();
         const builders: CommandBuilder[] = [];
-        const loader = new CommandLoader(mockPlugin);
+        const mockedNoticer = mock<Noticer>();
+        const errorNoticer = new ErrorNoticer(mockedNoticer);
+        const loader = new CommandLoader(mockPlugin, errorNoticer);
         // Act
         await loader.load(builders);
         // Assert
@@ -72,7 +72,9 @@ describe('CommandLoader', () => {
             { length: buildersCount },
             () => mockCommandBuilder
         );
-        const loader = new CommandLoader(mockPlugin);
+        const mockedNoticer = mock<Noticer>();
+        const errorNoticer = new ErrorNoticer(mockedNoticer);
+        const loader = new CommandLoader(mockPlugin, errorNoticer);
         // Act
         await loader.load(builders);
         // Assert
@@ -94,16 +96,16 @@ describe('CommandLoader', () => {
                 return command;
             });
         const builders = [mockCommandBuilder, mockCommandBuilder];
-        const mockNotice = jest.fn();
-        (Notice as jest.Mock) = mockNotice;
-        const loader = new CommandLoader(mockPlugin);
+        const mockedNoticer = mock<Noticer>();
+        const errorNoticer = new ErrorNoticer(mockedNoticer);
+        const loader = new CommandLoader(mockPlugin, errorNoticer);
         const errorMessage = `UserPlugins : Command with id ${commandId} already exists.`;
         // Act
         const action = async () => await loader.load(builders);
         // Assert
         await expect(action).rejects.toThrow(errorMessage);
-        expect(mockNotice).toHaveBeenCalledTimes(1);
-        expect(mockNotice).toHaveBeenCalledWith(
+        expect(mockedNoticer.notice).toHaveBeenCalledTimes(1);
+        expect(mockedNoticer.notice).toHaveBeenCalledWith(
             errorMessage,
             expect.any(Number)
         );
