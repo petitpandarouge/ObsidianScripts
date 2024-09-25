@@ -21,7 +21,7 @@ The benefits of this framework are
 - having a fully tested code, to easely **maintain** it,
 - having a fully typed code, to easely **read** it.
 
-The framework is implemented following the TDD method. The tests are then the [specs](https://html-preview.github.io/?url=https://github.com/petitpandarouge/ObsidianScripts/blob/main/obsinflate/reports/test-report.html) 🔥.
+The framework is implemented following the [TDD](https://en.wikipedia.org/wiki/Test-driven_development) method. The tests are then the [specs](https://html-preview.github.io/?url=https://github.com/petitpandarouge/ObsidianScripts/blob/main/obsinflate/reports/test-report.html) 🔥.
 
 ## Building and bundling
 
@@ -185,7 +185,7 @@ export class HelloWorld implements ViewBuilder<Input> {
 
 The `__tests__` directory contains all the framework unit tests and relative sources.
 
-To be written (VS Code and javascript debug console).
+🚧 To be written (VS Code and javascript debug console).
 
 ### Integration tests
 
