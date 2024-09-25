@@ -23,7 +23,7 @@ The benefits of this framework are
 
 The framework is implemented following the [TDD](https://en.wikipedia.org/wiki/Test-driven_development) method. The tests are then the [specs](https://html-preview.github.io/?url=https://github.com/petitpandarouge/ObsidianScripts/blob/main/obsinflate/reports/test-report.html) 🔥.
 
-## Building and bundling
+## Building and bundling 🧱
 
 `git clone` this repo and execute the following commands:
 
@@ -36,7 +36,7 @@ npm run bundle
 
 Resulting bundles are generated into the `bundles` directory.
 
-## Implementing
+## Implementing 🛠️
 
 The source code is organized as follow:
 - `src`: Contains Obsidian extensions classes and common utility classes.
@@ -45,7 +45,7 @@ The source code is organized as follow:
 - `src/dataview`: Contains the Dataview plugin specific sources.
 - `src/infrastructure`: Contains the code that does not need to be tested. Mainly wrapper services used to make the code testable using the dependency injection.
 
-### User Plugins
+### UserPlugins 🧩
 
 - The entry point is represented by the `main.ts` file that must contains an `onload` function. 
 - The `CommandLoader` is the main class responsible for loading the commands into the `Plugin`.
@@ -84,7 +84,7 @@ export class HelloWorldCommand extends AbstractCommand<UserPlugins> {
 }
 ```
 
-### QuickAdd
+### QuickAdd 🧩
 
 One ts file must contain only one script that can be implemented using two ways.
 
@@ -157,7 +157,7 @@ const noticer = new Noticer();
 module.exports = new HelloWorld(noticer);
 ```
 
-### Dataview
+### Dataview 🧩
 
 #### View
 
@@ -214,7 +214,7 @@ class HelloWorld implements View {
 }
 ```
 
-## Testing and debugging
+## Testing and debugging 🐞
 
 ### Unit tests
 
@@ -243,11 +243,11 @@ npm run bundle:helloworld
 npm run test:integration:userplugins
 ```
 
-## Deploying
+## Deploying 🚀
 
 🚧 The command is currently in build state but I plan to build a command that deploys the scripts into a vault directory.
 
-## Working with Obisidian API
+## Working with Obisidian API 🧠
 
 This chapter summaries all the considerations to take in account when working with the Obsidian API through this framework. This API is referenced into the framework under the `node_modules/obsidian` directory.
 
