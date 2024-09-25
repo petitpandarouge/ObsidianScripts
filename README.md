@@ -220,7 +220,10 @@ class HelloWorld implements View {
 
 The `__tests__` directory contains all the framework unit tests and relative sources.
 
-🚧 To be written (VS Code and javascript debug console).
+To debug threw `VS Code`
+- Open a `Javascript Debug Terminal`;
+- Add the wanted breakpoints into the code;
+- And run the unit tests with the `npm run test:unit` command.
 
 ### Integration tests
 
