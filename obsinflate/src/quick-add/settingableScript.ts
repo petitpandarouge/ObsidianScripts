@@ -4,7 +4,7 @@ import {
     Settings
 } from '@obsinflate/quick-add/settings/settings';
 
-export interface SettingizedScript {
+export interface SettingableScript {
     entry: (params: Parameters, settings: Settings) => Promise<void>;
     settings: SettingsDefinition;
 }

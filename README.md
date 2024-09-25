@@ -103,10 +103,10 @@ module.exports = helloWorld.entry;
 
 #### Script with settings
 
-- This interface `SettingizedScript` must be implemented to implement a script having UI settings.
+- This interface `SettingableScript` must be implemented to implement a script having UI settings.
 
 ``` typescript
-class HelloWorld implements SettingizedScript {
+class HelloWorld implements SettingableScript {
     entry(_params: Parameters, settings: {[key: string]: string | boolean}): Promise<void> {
         new Notice(`Hello ${settings["Name"]} !`, 5000)
         return Promise.resolve();
