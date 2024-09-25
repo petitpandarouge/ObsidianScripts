@@ -1,8 +1,8 @@
 ﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
-import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
+import { AbstractCommand } from '@obsinflate/abstractCommand';
 import { Notice } from 'obsidian';
 
-export class HelloWorldCommand extends AbstractCommand {
+export class HelloWorldCommand extends AbstractCommand<UserPlugins> {
     constructor(plugin: UserPlugins) {
         super(plugin);
     }

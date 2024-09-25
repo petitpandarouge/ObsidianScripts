@@ -5,7 +5,7 @@
 });
 
 import { MockCommand } from '@obsinflate/tests/user-plugins/mocks/mockCommand';
-import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
+import { AbstractCommand } from '@obsinflate/abstractCommand';
 import { CommandBuilder } from '@obsinflate/user-plugins/commandBuilder';
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

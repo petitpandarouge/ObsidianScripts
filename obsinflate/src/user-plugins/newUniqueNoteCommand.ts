@@ -1,8 +1,8 @@
 ﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
 import { IUniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
-import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
+import { AbstractCommand } from '@obsinflate/abstractCommand';
 
-export class NewUniqueNoteCommand extends AbstractCommand {
+export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
     constructor(
         plugin: UserPlugins,
         private nameGenerator: IUniqueNameGenerator

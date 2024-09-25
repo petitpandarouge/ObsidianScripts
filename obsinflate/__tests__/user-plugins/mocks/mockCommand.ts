@@ -1,10 +1,10 @@
-﻿import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
+﻿import { AbstractCommand } from '@obsinflate/abstractCommand';
 import Chance from 'chance';
 import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
 
 const chance = new Chance();
 
-export class MockCommand extends AbstractCommand {
+export class MockCommand extends AbstractCommand<UserPlugins> {
     constructor(plugin: UserPlugins) {
         super(plugin);
     }

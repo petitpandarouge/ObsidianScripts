@@ -1,7 +1,7 @@
 ﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
-import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
+import { AbstractCommand } from '@obsinflate/abstractCommand';
 
-export class NewProjectCommand extends AbstractCommand {
+export class NewProjectCommand extends AbstractCommand<UserPlugins> {
     constructor(plugin: UserPlugins) {
         super(plugin);
     }
