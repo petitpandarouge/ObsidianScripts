@@ -34,34 +34,6 @@ npm run bundle
 
 Resulting bundles are generated into the `bundles` directory.
 
-## Deploying
-
-The command is currently in build state but I plan to build a command that deploys the scripts into a vault directory.
-
-## Debugging
-
-### Unit tests
-
-To be written (VS Code and javascript debug console).
-
-### Integration tests
-
-All the scripts are webpacked with the source mapping option activated. It means that you'll be able to debug your code into Obsidian viewing the TypeScript version :sunglasses:
-
-Vaults per plugin have been configured in the `vaults` directory, and a `test:integration:<plugin-name>` command has been created to automatically launch the vault allowing you to integrate your scripts. The `How to debug.md` file of each vault will guide you threw the process.
-
-> Note : The vaults must be opened explicitly once using the Obsidian UI for the command to work. 
-
-To see more about how this works, you can run the following commands to test it with the `UserPlugins` plugin `Hello World`.
-
-``` sh
-cd obsinflate
-npm install
-npm run build
-npm run bundle:helloworld
-npm run test:integration:userplugins
-```
-
 ## Implementing
 
 - `src`: Contains mainly the Obsidian api objects plus some additional common utility classes.
@@ -203,3 +175,31 @@ export class HelloWorld implements ViewBuilder<Input> {
     }
 }
 ```
+
+## Testing and debugging
+
+### Unit tests
+
+To be written (VS Code and javascript debug console).
+
+### Integration tests
+
+All the scripts are webpacked with the source mapping option activated. It means that you'll be able to debug your code into Obsidian viewing the TypeScript version :sunglasses:
+
+Vaults per plugin have been configured in the `vaults` directory, and a `test:integration:<plugin-name>` command has been created to automatically launch the vault allowing you to integrate your scripts. The `How to debug.md` file of each vault will guide you threw the process.
+
+> Note : The vaults must be opened explicitly once using the Obsidian UI for the command to work. 
+
+To see more about how this works, you can run the following commands to test it with the `UserPlugins` plugin `Hello World`.
+
+``` sh
+cd obsinflate
+npm install
+npm run build
+npm run bundle:helloworld
+npm run test:integration:userplugins
+```
+
+## Deploying
+
+🚧 The command is currently in build state but I plan to build a command that deploys the scripts into a vault directory.
