@@ -4,18 +4,18 @@
     };
 });
 
-import { Plugin } from 'obsidian';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 import { onload } from '@obsinflate/user-plugins/main';
 import { NewProjectCommand } from '@obsinflate/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
 import { mockDeep } from 'jest-mock-extended';
+import { AbstractPlugin } from '@obsinflate/abstractPlugin';
 
 describe('main', () => {
     it('should load the commands into the plugin using the CommandLoader', async () => {
         // Arrange
-        const mockPlugin = mockDeep<Plugin>();
+        const mockPlugin = mockDeep<AbstractPlugin>();
         let loadSpy;
         const mockCommandLoader = jest.fn().mockImplementation(() => {
             const commandLoader = {

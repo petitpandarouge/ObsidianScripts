@@ -1,8 +1,8 @@
-﻿import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
+﻿import { AbstractPlugin } from '@obsinflate/abstractPlugin';
+import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 import { HelloWorldCommand } from '@obsinflate/user-plugins/hello-world/helloWorldCommand';
-import { Plugin } from 'obsidian';
 
-export async function onload(plugin: Plugin): Promise<void> {
+export async function onload(plugin: AbstractPlugin): Promise<void> {
     const commandLoader = new CommandLoader(plugin);
     await commandLoader.load([(plugin) => new HelloWorldCommand(plugin)]);
 }

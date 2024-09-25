@@ -1,11 +1,11 @@
 ﻿import { CommandBuilder } from '@obsinflate/user-plugins/commandBuilder';
 import { IdValidator } from '@obsinflate/idValidator';
 import { ErrorNoticer } from '@obsinflate/errorNoticer';
-import { Plugin } from 'obsidian';
+import { AbstractPlugin } from '@obsinflate/abstractPlugin';
 
 export class CommandLoader {
     #errorNoticer: ErrorNoticer;
-    constructor(private plugin: Plugin) {
+    constructor(private plugin: AbstractPlugin) {
         this.#errorNoticer = new ErrorNoticer();
     }
     async load(builders: CommandBuilder[]): Promise<void> {

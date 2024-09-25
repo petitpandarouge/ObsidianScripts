@@ -9,14 +9,15 @@ import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
 import { CommandBuilder } from '@obsinflate/user-plugins/commandBuilder';
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Notice, Plugin } from 'obsidian';
+import { Notice } from 'obsidian';
 import Chance from 'chance';
 import { mockDeep } from 'jest-mock-extended';
+import { AbstractPlugin } from '@obsinflate/abstractPlugin';
 
 describe('CommandLoader', () => {
     it('should build command', async () => {
         // Arrange
-        const mockPlugin = mockDeep<Plugin>();
+        const mockPlugin = mockDeep<AbstractPlugin>();
         const mockCommandBuilder: CommandBuilder = jest
             .fn()
             .mockImplementation(() => new MockCommand(mockPlugin));
@@ -30,7 +31,7 @@ describe('CommandLoader', () => {
     });
     it('should build as many commands as provided builders', async () => {
         // Arrange
-        const mockPlugin = mockDeep<Plugin>();
+        const mockPlugin = mockDeep<AbstractPlugin>();
         const chance = new Chance();
         const buildersCount = chance.integer({ min: 0, max: 0 });
         const mockCommandBuilder: CommandBuilder = jest
@@ -51,7 +52,7 @@ describe('CommandLoader', () => {
     });
     it('should not add command in the plugin if empty builders array is provided', async () => {
         // Arrange
-        const mockPlugin = mockDeep<Plugin>();
+        const mockPlugin = mockDeep<AbstractPlugin>();
         const builders: CommandBuilder[] = [];
         const loader = new CommandLoader(mockPlugin);
         // Act
@@ -61,7 +62,7 @@ describe('CommandLoader', () => {
     });
     it('should add as many commands in the UserPlugins plugin as provided builders', async () => {
         // Arrange
-        const mockPlugin = mockDeep<Plugin>();
+        const mockPlugin = mockDeep<AbstractPlugin>();
         const chance = new Chance();
         const buildersCount = chance.integer({ min: 1, max: 10 });
         const mockCommandBuilder: CommandBuilder = jest
@@ -82,7 +83,7 @@ describe('CommandLoader', () => {
     });
     it('should throw and notice if at least two commands have the same id', async () => {
         // Arrange
-        const mockPlugin = mockDeep<Plugin>();
+        const mockPlugin = mockDeep<AbstractPlugin>();
         const chance = new Chance();
         const commandId = chance.string();
         const mockCommandBuilder: CommandBuilder = jest

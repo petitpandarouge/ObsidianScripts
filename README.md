@@ -39,7 +39,7 @@ Resulting bundles are generated into the `bundles` directory.
 ## Implementing
 
 The source code is organized as follow:
-- `src`: Contains mainly some common utility classes.
+- `src`: Contains Obsidian extensions classes and common utility classes.
 - `src/user-plugins`: Contains the User Plugins plugin specific sources.
 - `src/quick-add`: Contains the QuickAdd plugin specific sources.
 - `src/dataview`: Contains the Dataview plugin specific sources.
@@ -51,7 +51,7 @@ The source code is organized as follow:
 - The `CommandLoader` is the main class responsible for loading the commands into the `Plugin`.
 
 ``` typescript
-export async function onload(plugin: Plugin): Promise<void> {
+export async function onload(plugin: AbstractPlugin): Promise<void> {
     const commandLoader = new CommandLoader(plugin);
     await commandLoader.load([
         (plugin) => new HelloWorldCommand(plugin),
@@ -65,7 +65,7 @@ export async function onload(plugin: Plugin): Promise<void> {
 
 ``` typescript
 export class HelloWorldCommand extends AbstractCommand {
-    constructor(plugin: Plugin) {
+    constructor(plugin: AbstractPlugin) {
         super(plugin);
     }
     id: string = "hello-world";
@@ -87,7 +87,7 @@ One ts file must contain only one script that can be implemented using two ways.
 
 ``` typescript
 const helloWorld: Script = async () => {
-    new NoticeWrapper("Hello World !", 5000)
+    new Notice("Hello World !", 5000)
     return Promise.resolve();
 }
 ```
@@ -105,7 +105,7 @@ module.exports = helloWorld;
 ``` typescript
 class HelloWorld implements SettingizedScript {
     entry(_params: Parameters, settings: {[key: string]: string | boolean}): Promise<void> {
-        new NoticeWrapper(`Hello ${settings["Name"]} !`, 5000)
+        new Notice(`Hello ${settings["Name"]} !`, 5000)
         return Promise.resolve();
     }
     settings = {
@@ -141,7 +141,7 @@ Implementing a view relies on implementing the `ViewBuilder`.
 
 ``` javascript
 export class HelloWorld implements ViewBuilder<never> {
-    build(dv: Api) {
+    build(dv: DataviewApi) {
         dv.header(1, "Hello World");
         dv.table(
             ["Name", "Ids"], 
@@ -167,7 +167,7 @@ class Input {
 
 ``` javascript
 export class HelloWorld implements ViewBuilder<Input> {
-    build(dv: Api, input: Input) {
+    build(dv: DataviewApi, input: Input) {
         const header = input.name ? `Hello ${input.name}` : "Hello World";
         dv.header(1, header);
         dv.table(

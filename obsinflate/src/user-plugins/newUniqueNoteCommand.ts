@@ -1,10 +1,10 @@
-﻿import { IUniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
+﻿import { AbstractPlugin } from '@obsinflate/abstractPlugin';
+import { IUniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
 import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
-import { Plugin } from 'obsidian';
 
 export class NewUniqueNoteCommand extends AbstractCommand {
     constructor(
-        plugin: Plugin,
+        plugin: AbstractPlugin,
         private nameGenerator: IUniqueNameGenerator
     ) {
         super(plugin);
