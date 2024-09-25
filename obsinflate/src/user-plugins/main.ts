@@ -1,5 +1,5 @@
 ﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
-import { DateTimeService } from '@obsinflate/infrastructure/dateTimeService';
+import { DateTimeProvider } from '@obsinflate/infrastructure/dateTimeProvider';
 import { UniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 import { NewProjectCommand } from '@obsinflate/user-plugins/newProjectCommand';
@@ -10,8 +10,8 @@ export async function onload(plugin: UserPlugins): Promise<void> {
     await commandLoader.load([
         (plugin) => new NewProjectCommand(plugin),
         (plugin) => {
-            const dateTimeService = new DateTimeService();
-            const generator = new UniqueNameGenerator(dateTimeService);
+            const dateTimeProvider = new DateTimeProvider();
+            const generator = new UniqueNameGenerator(dateTimeProvider);
             return new NewUniqueNoteCommand(plugin, generator);
         }
     ]);

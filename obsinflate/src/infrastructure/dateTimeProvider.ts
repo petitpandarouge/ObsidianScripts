@@ -5,11 +5,11 @@ export interface IDateTime {
     plus(duration: DurationLike): this;
 }
 
-export interface IDateTimeService {
+export interface IDateTimeProvider {
     now(): IDateTime;
 }
 
-export class DateTimeService implements IDateTimeService {
+export class DateTimeProvider implements IDateTimeProvider {
     now(): DateTime {
         return DateTime.now();
     }

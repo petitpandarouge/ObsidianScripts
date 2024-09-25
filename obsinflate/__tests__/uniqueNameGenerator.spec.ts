@@ -1,7 +1,7 @@
 ﻿import {
-    DateTimeService,
-    IDateTimeService
-} from '@obsinflate/infrastructure/dateTimeService';
+    DateTimeProvider,
+    IDateTimeProvider
+} from '@obsinflate/infrastructure/dateTimeProvider';
 import {
     UNIQUE_NAME_DATETIME_FORMAT,
     UniqueNameGenerator
@@ -13,8 +13,8 @@ import Chance from 'chance';
 describe('UniqueNameGenerator', () => {
     it('should generate a twelve numbers formated name', async () => {
         // Arrange
-        const dateTimeService = new DateTimeService();
-        const generator = new UniqueNameGenerator(dateTimeService);
+        const dateTimeProvider = new DateTimeProvider();
+        const generator = new UniqueNameGenerator(dateTimeProvider);
         // Act
         const name = generator.generateFromNow();
         // Assert
@@ -31,12 +31,12 @@ describe('UniqueNameGenerator', () => {
             minute: chance.integer({ min: 0, max: 59 })
         };
         const mockDateTimeResult = `${mockDateTimeObject.year.toString().padStart(4, '0')}${mockDateTimeObject.month.toString().padStart(2, '0')}${mockDateTimeObject.day.toString().padStart(2, '0')}${mockDateTimeObject.hour.toString().padStart(2, '0')}${mockDateTimeObject.minute.toString().padStart(2, '0')}`;
-        const mockDateService = mock<IDateTimeService>({
+        const mockDateTimeProvider = mock<IDateTimeProvider>({
             now: jest.fn().mockImplementation(() => {
                 return DateTime.fromObject(mockDateTimeObject);
             })
         });
-        const generator = new UniqueNameGenerator(mockDateService);
+        const generator = new UniqueNameGenerator(mockDateTimeProvider);
         // Act
         const name = generator.generateFromNow();
         // Assert
@@ -53,12 +53,12 @@ describe('UniqueNameGenerator', () => {
             minute: chance.integer({ min: 0, max: 59 })
         };
         const mockDateTime = DateTime.fromObject(mockDateTimeObject);
-        const mockDateService = mock<IDateTimeService>({
+        const mockDateTimeProvider = mock<IDateTimeProvider>({
             now: jest.fn().mockImplementation(() => {
                 return DateTime.fromObject(mockDateTimeObject);
             })
         });
-        const generator = new UniqueNameGenerator(mockDateService);
+        const generator = new UniqueNameGenerator(mockDateTimeProvider);
         const generateCount = chance.integer({ min: 1, max: 30 });
         // Act
         const names = Array.from({ length: generateCount }, () =>

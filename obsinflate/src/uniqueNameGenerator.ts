@@ -1,7 +1,7 @@
 ﻿import {
     IDateTime,
-    IDateTimeService
-} from '@obsinflate/infrastructure/dateTimeService';
+    IDateTimeProvider
+} from '@obsinflate/infrastructure/dateTimeProvider';
 export const UNIQUE_NAME_DATETIME_FORMAT = 'yyyyMMddHHmm';
 
 export interface IUniqueNameGenerator {
@@ -10,13 +10,13 @@ export interface IUniqueNameGenerator {
 
 export class UniqueNameGenerator implements IUniqueNameGenerator {
     #dateTimeToken?: IDateTime;
-    constructor(private dateTimeService: IDateTimeService) {}
+    constructor(private dateTimeProvider: IDateTimeProvider) {}
 
     generateFromNow(): string {
         if (this.#dateTimeToken) {
             this.#dateTimeToken = this.#dateTimeToken.plus({ minutes: 1 });
         } else {
-            this.#dateTimeToken = this.dateTimeService.now();
+            this.#dateTimeToken = this.dateTimeProvider.now();
         }
         return this.#dateTimeToken.toFormat(UNIQUE_NAME_DATETIME_FORMAT);
     }
