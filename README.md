@@ -23,6 +23,8 @@ The benefits of this framework are
 
 The framework is implemented following the [TDD](https://en.wikipedia.org/wiki/Test-driven_development) method. The tests are then the [specs](https://html-preview.github.io/?url=https://github.com/petitpandarouge/ObsidianScripts/blob/main/obsinflate/reports/test-report.html) 🔥.
 
+> 🔎 NOTE : In the whole documentation, I call `inflates` all the scripts implemented using this framework.
+
 ## Building and bundling 🧱
 
 `git clone` this repo and execute the following commands:
