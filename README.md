@@ -65,13 +65,16 @@ export async function onload(plugin: UserPlugins): Promise<void> {
 
 ``` typescript
 export class HelloWorldCommand extends AbstractCommand<UserPlugins> {
-    constructor(plugin: UserPlugins) {
+    constructor(
+        plugin: UserPlugins,
+        private noticer: INoticer
+    ) {
         super(plugin);
     }
-    id: string = "hello-world";
-    name: string = "Hello World";
+    id: string = 'hello-world';
+    name: string = 'Hello World';
     callback(): Promise<void> {
-        new NoticeWrapper("Hello World !", 5000)
+        this.noticer.notice('Hello World !', 5000);
         return Promise.resolve();
     }
 }
@@ -87,7 +90,7 @@ One ts file must contain only one script that can be implemented using two ways.
 
 ``` typescript
 class HelloWorld implements Script {
-    constructor(private noticer: Noticer) {}
+    constructor(private noticer: INoticer) {}
     entry() {
         this.noticer.notice('Hello World !', 5000);
         return Promise.resolve();
@@ -118,7 +121,7 @@ module.exports = entryPoint;
 ``` typescript
 class HelloWorld implements SettingableScript {
     noticer: Noticer;
-    constructor(noticer: Noticer) {
+    constructor(noticer: INoticer) {
         this.noticer = noticer;
     }
     entry(
@@ -162,7 +165,7 @@ Implementing a view relies on implementing two interfaces: `View` and `ViewBuild
 
 ``` javascript
 class HelloWorld implements View {
-    constructor(private noticer: Noticer) {}
+    constructor(private noticer: INoticer) {}
     render(dv: DataviewApi) {
         dv.header(1, "Hello World");
         dv.table(['Name', 'Ids'], [['Me', 0]]);

@@ -1,31 +1,24 @@
-﻿jest.mock('obsidian', () => {
-    return {
-        Notice: jest.fn()
-    };
-});
-
-import { ErrorNoticer } from '@obsinflate/errorNoticer';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Notice } from 'obsidian';
+﻿import { ErrorNoticer } from '@obsinflate/errorNoticer';
 import Chance from 'chance';
+import { INoticer } from '@obsinflate/infrastructure/noticer';
+import { mock } from 'jest-mock-extended';
 
 describe('ErrorNoticer', () => {
     it('should notice Obsidian and rethrow if Error is thrown by the inner execution', async () => {
         // Arrange
         const chance = new Chance();
         const errorMessage = chance.string();
-        const errorNoticer = new ErrorNoticer();
+        const mockNoticer = mock<INoticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
         const wrappedAction = jest.fn(() => {
             throw new Error(errorMessage);
         });
-        const mockNotice = jest.fn();
-        (Notice as jest.Mock) = mockNotice;
         // Act
         const action = async () => await errorNoticer.wrap(wrappedAction);
         // Assert
         await expect(action).rejects.toThrow(errorMessage);
-        expect(mockNotice).toHaveBeenCalledTimes(1);
-        expect(mockNotice).toHaveBeenCalledWith(
+        expect(mockNoticer.notice).toHaveBeenCalledTimes(1);
+        expect(mockNoticer.notice).toHaveBeenCalledWith(
             errorMessage,
             expect.any(Number)
         );
@@ -35,29 +28,30 @@ describe('ErrorNoticer', () => {
         const chance = new Chance();
         const errorMessage = chance.string();
         const noticeTime = chance.integer({ min: 0, max: 1000 });
-        const errorNoticer = new ErrorNoticer(noticeTime);
+        const mockNoticer = mock<INoticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer, noticeTime);
         const wrappedAction = jest.fn(() => {
             throw new Error(errorMessage);
         });
-        const mockNotice = jest.fn();
-        (Notice as jest.Mock) = mockNotice;
         // Act
         const action = async () => await errorNoticer.wrap(wrappedAction);
         // Assert
         await expect(action).rejects.toThrow(errorMessage);
-        expect(mockNotice).toHaveBeenCalledTimes(1);
-        expect(mockNotice).toHaveBeenCalledWith(errorMessage, noticeTime);
+        expect(mockNoticer.notice).toHaveBeenCalledTimes(1);
+        expect(mockNoticer.notice).toHaveBeenCalledWith(
+            errorMessage,
+            noticeTime
+        );
     });
     it('should not notice Obsidian if no exception is thrown by the inner execution', async () => {
         // Arrange
-        const errorNoticer = new ErrorNoticer();
+        const mockNoticer = mock<INoticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
         const wrappedAction = jest.fn();
-        const mockNotice = jest.fn();
-        (Notice as jest.Mock) = mockNotice;
         // Act
         await errorNoticer.wrap(wrappedAction);
         // Assert
-        expect(mockNotice).toHaveBeenCalledTimes(0);
+        expect(mockNoticer.notice).toHaveBeenCalledTimes(0);
     });
     // TODO - See this with Guy
     // it('should notice Obsidian if an unknown error is thrown by the inner execution', async () => {

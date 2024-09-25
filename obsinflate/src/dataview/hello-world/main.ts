@@ -1,14 +1,14 @@
 import { DataviewApi } from 'obsidian-dataview';
 import { ViewBuilder } from '@obsinflate/dataview/viewBuilder';
 import { View } from '@obsinflate/dataview/view';
-import { Noticer } from '@obsinflate/infrastructure/noticer';
+import { INoticer, Noticer } from '@obsinflate/infrastructure/noticer';
 
 interface Input {
     name: string;
 }
 
 class HelloWorld implements View {
-    constructor(private noticer: Noticer) {}
+    constructor(private noticer: INoticer) {}
     render(dv: DataviewApi, input: Input) {
         const header = input.name ? `Hello ${input.name}` : 'Hello World';
         dv.header(1, header);

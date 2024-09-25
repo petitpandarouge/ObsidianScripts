@@ -1,11 +1,11 @@
 ﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
 import { AbstractCommand } from '@obsinflate/abstractCommand';
-import { Noticer } from '@obsinflate/infrastructure/noticer';
+import { INoticer } from '@obsinflate/infrastructure/noticer';
 
 export class HelloWorldCommand extends AbstractCommand<UserPlugins> {
     constructor(
         plugin: UserPlugins,
-        private noticer: Noticer
+        private noticer: INoticer
     ) {
         super(plugin);
     }

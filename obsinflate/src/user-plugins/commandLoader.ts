@@ -2,11 +2,13 @@
 import { IdValidator } from '@obsinflate/idValidator';
 import { ErrorNoticer } from '@obsinflate/errorNoticer';
 import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
+import { Noticer } from '@obsinflate/infrastructure/noticer';
 
 export class CommandLoader {
     #errorNoticer: ErrorNoticer;
     constructor(private plugin: UserPlugins) {
-        this.#errorNoticer = new ErrorNoticer();
+        const noticer = new Noticer();
+        this.#errorNoticer = new ErrorNoticer(noticer);
     }
     async load(builders: CommandBuilder[]): Promise<void> {
         await this.#errorNoticer.wrap(

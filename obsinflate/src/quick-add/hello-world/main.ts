@@ -1,9 +1,9 @@
-﻿import { Noticer } from '@obsinflate/infrastructure/noticer';
+﻿import { INoticer, Noticer } from '@obsinflate/infrastructure/noticer';
 import { Script } from '@obsinflate/quick-add/script';
 import { ScriptEntryPoint } from '@obsinflate/quick-add/scriptEntryPoint';
 
 class HelloWorld implements Script {
-    constructor(private noticer: Noticer) {}
+    constructor(private noticer: INoticer) {}
     entry() {
         this.noticer.notice('Hello World !', 5000);
         return Promise.resolve();

@@ -1,14 +1,17 @@
 ﻿import { Action } from '@obsinflate/action';
-import { Notice } from 'obsidian';
+import { INoticer } from '@obsinflate/infrastructure/noticer';
 
 export class ErrorNoticer {
-    constructor(private noticeTimeoutInMs: number = 5000) {}
+    constructor(
+        private noticer: INoticer,
+        private noticeTimeoutInMs: number = 5000
+    ) {}
     async wrap(action: Action): Promise<void> {
         try {
             await action();
         } catch (error: unknown) {
             if (error instanceof Error) {
-                new Notice(error.message, this.noticeTimeoutInMs);
+                this.noticer.notice(error.message, this.noticeTimeoutInMs);
             }
             throw error;
         }
