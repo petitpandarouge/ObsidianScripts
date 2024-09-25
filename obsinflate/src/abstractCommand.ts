@@ -1,8 +1,8 @@
-﻿import { IIdentifiable } from '@obsinflate/iIdentifiable';
+﻿import { Identifiable } from '@obsinflate/identifiable';
 import { Command, Plugin } from 'obsidian';
 
 export abstract class AbstractCommand<TPlugin extends Plugin>
-    implements Command, IIdentifiable<string>
+    implements Command, Identifiable<string>
 {
     constructor(protected plugin: TPlugin) {}
     abstract id: string;
