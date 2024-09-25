@@ -253,8 +253,7 @@ This chapter summaries all the considerations to take in account when working wi
 
 ### Jest considerations
 
-- [None of this API part can be referenced into a jest test dependency](https://www.moritzjung.dev/obsidian-collection/plugin-dev/testing/challengeswhentestingplugins/).
-- To be able to still reference the Obsidian API in the main code, I've overloaded the "paths" variable in a tsconfig file specific to jest.
+[None of this API part can be referenced into a jest test dependency](https://www.moritzjung.dev/obsidian-collection/plugin-dev/testing/challengeswhentestingplugins/). To be able to still reference the Obsidian API in the main code, I've overloaded the "paths" variable in a tsconfig file specific to jest.
 
 ``` json
 // tsconfig.jest.json
@@ -270,12 +269,105 @@ This chapter summaries all the considerations to take in account when working wi
 }
 ```
 
-- This way
-  - In a build (`npx tsc --project tsconfig.build.json`), `import { ... } from 'obsidian'` will reference the real Obsidian API.
-  - In a build for test (`npx tsc --project tsconfig.build.for.jest.json`), `import { ... } from 'obsidian'` will reference the `__tests__/mocks/obsidian` module.
+This way
+- In a build (`npx tsc --project tsconfig.build.json`), `import { ... } from 'obsidian'` will reference the real Obsidian API.
+- In a build for test (`npx tsc --project tsconfig.build.for.jest.json`), `import { ... } from 'obsidian'` will reference the `__tests__/mocks/obsidian` module.
 
 > ⚠️ This means each time a `import { ... } from 'obsidian'` is writen, a mock interface must be written in `__tests__/mocks/obsidian`.
 
-- This hack allows 
-  - to implement the inflates being able to have the intellisense of the real Obsidian API;
-  - to have a code protected by tests.
+This hack allows 
+- to implement the inflates being able to have the intellisense of the real Obsidian API;
+- to have a code protected by tests.
+
+### Webpack considerations
+
+In a classic Obsidian plugin, the `externals` property is used to indicate `obsidian` is an external module that will be imported using commonjs style.
+
+``` javascript
+module.exports = {
+  ...
+  externals: {
+      obsidian: 'commonjs obsidian'
+    }
+  ...
+};
+```
+
+In the JS context in which the inflates will be executed, the `obsidian` module does not exist. At least the classes are available without any need of `require` call.
+
+To make the JS works at runtime, the `imports` from the `obsidian` module❗importing a class that instanciated in the code❗are overwriten by a declare at the bundling time. This is for instance the case for the `Notice` class.
+
+``` javascript
+// webpack.base.config.js
+module.exports = {
+  ...
+  module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: [
+            'ts-loader',
+            {
+              loader: 'string-replace-loader',
+              options: {
+                search: "import { Notice } from 'obsidian';",
+                replace: (match) => {
+                    return "declare const Notice: any;";
+                  }
+              }
+            }
+          ],
+          ...
+        },
+      ],
+    },
+  ...
+};
+```
+
+> ⚠️ Loaders execution order in the `use` property is from the BOTTOM to the TOP. This coast me several hours of struggle 🥲.
+
+### Module functions considerations
+
+I call module functions the functions that only reachable though the module.
+
+Module functions cannot be accessed in a JS script as import is not available. For instance, [this](https://docs.obsidian.md/Plugins/User+interface/Icons#Use+icons) is possible when implementing an Obsidian plugin, but in a JS context, the `setIcon` function won't be found.
+
+``` typescript
+import { Plugin } from 'obsidian';
+import { setIcon } from 'obsidian'; // => 💥 ERROR : This is not possible in a JS context
+...
+export class SampleCommand extends AbstractCommand {
+    constructor(plugin: Plugin) {
+        super(plugin);
+    }
+    id: string = 'sample';
+    name: string = 'sample';
+    callback(): Promise<void> {
+        const item = this.plugin.addStatusBarItem();
+        setIcon(item, 'info');    // => 💥 ERROR : setIcon not found
+        return Promise.resolve();
+    }
+}
+```
+
+For a module function to be accessed in a JS context, the whole module must have been loaded and reachable though an existing object property.
+
+Only the `UserPlugins` provides this possibility through the `passedModules.obsidian` property. Thanks to this, the whole `obsidian` module is accessible in a JS context at runtime.
+
+``` typescript
+import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
+...
+export class SampleCommand extends AbstractCommand {
+    constructor(plugin: UserPlugins) {
+        super(plugin);
+    }
+    id: string = 'sample';
+    name: string = 'sample';
+    callback(): Promise<void> {
+        const item = this.plugin.addStatusBarItem();
+        this.plugin.passedModules.obsidian.setIcon(item, 'info');  // Oh yeah, this works ! 🎉
+        return Promise.resolve();
+    }
+}
+```
