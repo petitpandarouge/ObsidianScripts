@@ -51,7 +51,7 @@ The source code is organized as follow:
 - The `CommandLoader` is the main class responsible for loading the commands into the `Plugin`.
 
 ``` typescript
-export async function onload(plugin: AbstractPlugin): Promise<void> {
+export async function onload(plugin: UserPlugins): Promise<void> {
     const commandLoader = new CommandLoader(plugin);
     await commandLoader.load([
         (plugin) => new HelloWorldCommand(plugin),
@@ -64,8 +64,8 @@ export async function onload(plugin: AbstractPlugin): Promise<void> {
 - The command logique is in the `callback` function.
 
 ``` typescript
-export class HelloWorldCommand extends AbstractCommand {
-    constructor(plugin: AbstractPlugin) {
+export class HelloWorldCommand extends AbstractCommand<UserPlugins> {
+    constructor(plugin: UserPlugins) {
         super(plugin);
     }
     id: string = "hello-world";
