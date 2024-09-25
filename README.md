@@ -21,6 +21,8 @@ The benefits of this framework are
 - having a fully tested code, to easely **maintain** it,
 - having a fully typed code, to easely **read** it.
 
+The framework is implemented following the TDD method. The tests are then the [specs](https://html-preview.github.io/?url=https://github.com/petitpandarouge/ObsidianScripts/blob/main/obsinflate/reports/test-report.html) 🔥.
+
 ## Building and bundling
 
 `git clone` this repo and execute the following commands:
@@ -36,6 +38,7 @@ Resulting bundles are generated into the `bundles` directory.
 
 ## Implementing
 
+The source code is organized as follow:
 - `src`: Contains mainly the Obsidian api objects plus some additional common utility classes.
 - `src/user-plugins`: Contains the User Plugins plugin specific sources.
 - `src/quick-add`: Contains the QuickAdd plugin specific sources.
@@ -179,6 +182,8 @@ export class HelloWorld implements ViewBuilder<Input> {
 ## Testing and debugging
 
 ### Unit tests
+
+The `__tests__` directory contains all the framework unit tests and relative sources.
 
 To be written (VS Code and javascript debug console).
 
