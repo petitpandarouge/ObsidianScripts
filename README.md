@@ -81,24 +81,27 @@ export class HelloWorldCommand extends AbstractCommand<UserPlugins> {
 
 One ts file must contain only one script that can be implemented using two ways.
 
-#### Script type
+#### Script without settings
 
-- Using the `Script` type, a script must be implemented as follow.
+- Using the `Script` interface, a script must be implemented as follow.
 
 ``` typescript
-const helloWorld: Script = async () => {
-    new Notice("Hello World !", 5000)
-    return Promise.resolve();
+class HelloWorld implements Script {
+    entry() {
+        new Notice('Hello World !', 5000);
+        return Promise.resolve();
+    }
 }
 ```
 
-- The script must be exported using the `module.exports` directive.
+- The `entry` script method must be exported using the `module.exports` directive.
 
 ``` typescript
-module.exports = helloWorld;
+const helloWorld = new HelloWorld();
+module.exports = helloWorld.entry;
 ```
 
-#### SettingizedScript interface
+#### Script with settings
 
 - This interface `SettingizedScript` must be implemented to implement a script having UI settings.
 

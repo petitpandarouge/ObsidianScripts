@@ -1,9 +1,12 @@
 ﻿import { Script } from '@obsinflate/quick-add/script';
 import { Notice } from 'obsidian';
 
-const helloWorld: Script = async () => {
-    new Notice('Hello World !', 5000);
-    return Promise.resolve();
-};
+class HelloWorld implements Script {
+    entry() {
+        new Notice('Hello World !', 5000);
+        return Promise.resolve();
+    }
+}
 
-module.exports = helloWorld;
+const helloWorld = new HelloWorld();
+module.exports = helloWorld.entry;
