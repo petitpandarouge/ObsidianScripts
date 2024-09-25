@@ -118,7 +118,7 @@ module.exports = entryPoint;
 
 - This interface `SettingableScript` must be implemented to implement a script having UI settings.
 
->❗NOTICE ❗
+> ⚠️
 > All the dependencies must be `public` and called without `this` in order to be reachable at runtime.
 > It's the case here with the `noticer` property. 
 
@@ -246,3 +246,36 @@ npm run test:integration:userplugins
 ## Deploying
 
 🚧 The command is currently in build state but I plan to build a command that deploys the scripts into a vault directory.
+
+## Working with Obisidian API
+
+This chapter summaries all the considerations to take in account when working with the Obsidian API through this framework. This API is referenced into the framework under the `node_modules/obsidian` directory.
+
+### Jest considerations
+
+- [None of this API part can be referenced into a jest test dependency](https://www.moritzjung.dev/obsidian-collection/plugin-dev/testing/challengeswhentestingplugins/).
+- To be able to still reference the Obsidian API in the main code, I've overloaded the "paths" variable in a tsconfig file specific to jest.
+
+``` json
+// tsconfig.jest.json
+{
+  "extends": "./tsconfig.json",
+
+  "compilerOptions": {
+    "paths": {
+      ...
+      "^obsidian$": ["__tests__/mocks/obsidian"] // This is the magic line 🪄
+    }
+  }
+}
+```
+
+- This way
+  - In a build (`npx tsc --project tsconfig.build.json`), `import { ... } from 'obsidian'` will reference the real Obsidian API.
+  - In a build for test (`npx tsc --project tsconfig.build.for.jest.json`), `import { ... } from 'obsidian'` will reference the `__tests__/mocks/obsidian` module.
+
+> ⚠️ This means each time a `import { ... } from 'obsidian'` is writen, a mock interface must be written in `__tests__/mocks/obsidian`.
+
+- This hack allows 
+  - to implement the inflates being able to have the intellisense of the real Obsidian API;
+  - to have a code protected by tests.
