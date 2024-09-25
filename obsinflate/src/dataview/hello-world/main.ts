@@ -3,8 +3,8 @@ import { ViewBuilder } from '@obsinflate/dataview/viewBuilder';
 import { View } from '@obsinflate/dataview/view';
 import { Noticer } from '@obsinflate/infrastructure/noticer';
 
-class Input {
-    name!: string;
+interface Input {
+    name: string;
 }
 
 class HelloWorld implements View {

@@ -154,49 +154,55 @@ module.exports = new HelloWorld(noticer);
 
 #### View
 
-Implementing a view relies on implementing the `ViewBuilder`.
+Implementing a view relies on implementing two interfaces: `View` and `ViewBuilder`.
 
 ##### View without input
 
-- View without parameter implements `ViewBuilder<never>`.
+- A view implements `View`.
 
 ``` javascript
-export class HelloWorld implements ViewBuilder<never> {
-    build(dv: DataviewApi) {
+class HelloWorld implements View {
+    constructor(private noticer: Noticer) {}
+    render(dv: DataviewApi) {
         dv.header(1, "Hello World");
-        dv.table(
-            ["Name", "Ids"], 
-            [
-                ["Me", 0]
-            ]
-        );
+        dv.table(['Name', 'Ids'], [['Me', 0]]);
+        this.noticer.notice('View built !', 5000);
+    }
+}
+```
+
+- And its builder `ViewBuilder`.
+  - The builder must be named `<viewName>Builder`;
+  - The builder is the only class exported.
+
+``` javascript
+export class HelloWorldBuilder implements ViewBuilder {
+    build() {
+        const noticer = new Noticer();
+        return new HelloWorld(noticer);
     }
 }
 ```
 
 ##### View with input
 
-- Inputs can be explicitely defined using a class.
+- Inputs can be explicitely defined using an interface.
 
 ``` javascript
-class Input {
-    name!: string;
+interface Input {
+    name: string;
 } 
 ```
 
-- Implementing `ViewBuilder<Input>` makes the inputs available to the view.
+- Same rules applies to the `View` and `ViewBuilder`.
+- The only difference here in the `input` given in parameter of the `render` method.
 
 ``` javascript
-export class HelloWorld implements ViewBuilder<Input> {
-    build(dv: DataviewApi, input: Input) {
-        const header = input.name ? `Hello ${input.name}` : "Hello World";
+class HelloWorld implements View {
+    render(dv: DataviewApi, input: Input) {
+        const header = input.name ? `Hello ${input.name}` : 'Hello World';
         dv.header(1, header);
-        dv.table(
-            ["Name", "Ids"], 
-            [
-                ["Me", 0]
-            ]
-        );
+        dv.table(['Name', 'Ids'], [['Me', 0]]);
     }
 }
 ```
