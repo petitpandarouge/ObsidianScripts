@@ -87,18 +87,24 @@ One ts file must contain only one script that can be implemented using two ways.
 
 ``` typescript
 class HelloWorld implements Script {
+    constructor(private noticer: Noticer) {}
     entry() {
-        new Notice('Hello World !', 5000);
+        this.noticer.notice('Hello World !', 5000);
         return Promise.resolve();
     }
 }
 ```
 
-- The `entry` script method must be exported using the `module.exports` directive.
+- The script can be initialized and exported using the `module.exports` directive.
 
 ``` typescript
-const helloWorld = new HelloWorld();
-module.exports = helloWorld.entry;
+const entryPoint: ScriptEntryPoint = async () => {
+    const noticer = new Noticer();
+    const helloWorld = new HelloWorld(noticer);
+    await helloWorld.entry();
+};
+
+module.exports = entryPoint;
 ```
 
 #### Script with settings
@@ -107,8 +113,9 @@ module.exports = helloWorld.entry;
 
 ``` typescript
 class HelloWorld implements SettingableScript {
+    constructor(private noticer: Noticer) {}
     entry(_params: Parameters, settings: {[key: string]: string | boolean}): Promise<void> {
-        new Notice(`Hello ${settings["Name"]} !`, 5000)
+        this.noticer.notice(`Hello ${settings["Name"]} !`, 5000)
         return Promise.resolve();
     }
     settings = {
@@ -129,7 +136,8 @@ class HelloWorld implements SettingableScript {
 - The script is exported by exporting an instance of the created class.
 
 ``` typescript
-module.exports = new HelloWorld();
+const noticer = new Noticer();
+module.exports = new HelloWorld(noticer);
 ```
 
 ### Dataview

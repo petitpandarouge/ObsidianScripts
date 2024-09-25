@@ -1,12 +1,19 @@
-﻿import { Script } from '@obsinflate/quick-add/script';
-import { Notice } from 'obsidian';
+﻿import { Noticer } from '@obsinflate/infrastructure/noticer';
+import { Script } from '@obsinflate/quick-add/script';
+import { ScriptEntryPoint } from '@obsinflate/quick-add/scriptEntryPoint';
 
 class HelloWorld implements Script {
+    constructor(private noticer: Noticer) {}
     entry() {
-        new Notice('Hello World !', 5000);
+        this.noticer.notice('Hello World !', 5000);
         return Promise.resolve();
     }
 }
 
-const helloWorld = new HelloWorld();
-module.exports = helloWorld.entry;
+const entryPoint: ScriptEntryPoint = async () => {
+    const noticer = new Noticer();
+    const helloWorld = new HelloWorld(noticer);
+    await helloWorld.entry();
+};
+
+module.exports = entryPoint;

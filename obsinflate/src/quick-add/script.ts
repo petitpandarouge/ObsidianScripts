@@ -1,5 +1,5 @@
-﻿import { Parameters } from '@obsinflate/quick-add/parameters';
+﻿import { ScriptEntryPoint } from '@obsinflate/quick-add/scriptEntryPoint';
 
 export interface Script {
-    entry: (params?: Parameters) => Promise<void>;
+    entry: ScriptEntryPoint;
 }
