@@ -4,6 +4,6 @@
   ],
   "scriptsFolder": "scripts",
   "enabledScripts": [
-    "scripts/main.js"
+    "scripts/HelloWorld.js"
   ]
 }
