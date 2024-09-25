@@ -111,25 +111,35 @@ module.exports = entryPoint;
 
 - This interface `SettingableScript` must be implemented to implement a script having UI settings.
 
+>❗NOTICE ❗
+> All the dependencies must be `public` and called without `this` in order to be reachable at runtime.
+> It's the case here with the `noticer` property. 
+
 ``` typescript
 class HelloWorld implements SettingableScript {
-    constructor(private noticer: Noticer) {}
-    entry(_params: Parameters, settings: {[key: string]: string | boolean}): Promise<void> {
-        this.noticer.notice(`Hello ${settings["Name"]} !`, 5000)
+    noticer: Noticer;
+    constructor(noticer: Noticer) {
+        this.noticer = noticer;
+    }
+    entry(
+        _params: Parameters,
+        settings: { [key: string]: string | boolean }
+    ): Promise<void> {
+        noticer.notice(`Hello ${settings['Name']} !`, 5000);
         return Promise.resolve();
     }
     settings = {
-        name: "Hello World",
-        author: "me",
+        name: 'Hello World',
+        author: 'me',
         options: {
             Name: {
-                type: "text" as TextFieldType,
-                description: "The name to say hello",
-                defaultValue: "World",
-                placeholder: "World"
+                type: 'text' as TextFieldType,
+                description: 'The name to say hello',
+                defaultValue: 'World',
+                placeholder: 'World'
             }
         }
-    }
+    };
 }
 ```
 
