@@ -5,7 +5,11 @@ class Modules {
     obsidian: typeof obsidian = obsidian;
 }
 
-export abstract class AbstractPlugin extends Plugin {
+/**
+ * v1.3.0
+ * https://github.com/mnowotnik/obsidian-user-plugins/tree/master
+ */
+export abstract class UserPlugins extends Plugin {
     constructor(app: App, manifest: PluginManifest) {
         super(app, manifest);
         this.passedModules = new Modules();

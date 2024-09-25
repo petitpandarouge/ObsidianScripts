@@ -1,11 +1,11 @@
-﻿import { AbstractPlugin } from '@obsinflate/abstractPlugin';
+﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
 import { DateTimeService } from '@obsinflate/infrastructure/dateTimeService';
 import { UniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
 import { NewProjectCommand } from '@obsinflate/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
 
-export async function onload(plugin: AbstractPlugin): Promise<void> {
+export async function onload(plugin: UserPlugins): Promise<void> {
     const commandLoader = new CommandLoader(plugin);
     await commandLoader.load([
         (plugin) => new NewProjectCommand(plugin),

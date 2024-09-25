@@ -1,9 +1,9 @@
-﻿import { AbstractPlugin } from '@obsinflate/abstractPlugin';
+﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
 import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
 import { Notice } from 'obsidian';
 
 export class HelloWorldCommand extends AbstractCommand {
-    constructor(plugin: AbstractPlugin) {
+    constructor(plugin: UserPlugins) {
         super(plugin);
     }
     id: string = 'hello-world';

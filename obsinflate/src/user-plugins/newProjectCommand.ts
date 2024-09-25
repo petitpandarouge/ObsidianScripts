@@ -1,8 +1,8 @@
-﻿import { AbstractPlugin } from '@obsinflate/abstractPlugin';
+﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
 import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
 
 export class NewProjectCommand extends AbstractCommand {
-    constructor(plugin: AbstractPlugin) {
+    constructor(plugin: UserPlugins) {
         super(plugin);
     }
     id: string = 'new-project-from-empty-note-V2';

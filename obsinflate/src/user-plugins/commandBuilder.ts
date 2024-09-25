@@ -1,4 +1,4 @@
-﻿import { AbstractPlugin } from '@obsinflate/abstractPlugin';
+﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
 import { AbstractCommand } from '@obsinflate/user-plugins/abstractCommand';
 
-export type CommandBuilder = (plugin: AbstractPlugin) => AbstractCommand;
+export type CommandBuilder = (plugin: UserPlugins) => AbstractCommand;

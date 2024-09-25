@@ -10,12 +10,12 @@ import { onload } from '@obsinflate/user-plugins/main';
 import { NewProjectCommand } from '@obsinflate/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
 import { mockDeep } from 'jest-mock-extended';
-import { AbstractPlugin } from '@obsinflate/abstractPlugin';
+import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
 
 describe('main', () => {
     it('should load the commands into the plugin using the CommandLoader', async () => {
         // Arrange
-        const mockPlugin = mockDeep<AbstractPlugin>();
+        const mockPlugin = mockDeep<UserPlugins>();
         let loadSpy;
         const mockCommandLoader = jest.fn().mockImplementation(() => {
             const commandLoader = {

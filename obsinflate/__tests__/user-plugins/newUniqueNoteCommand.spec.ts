@@ -3,12 +3,12 @@ import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { TFile } from 'obsidian';
 import { IUniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
-import { AbstractPlugin } from '@obsinflate/abstractPlugin';
+import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
 
 describe('NewUniqueNoteCommand', () => {
     it('should call at least once plugin.app.vault.create', async () => {
         // Arrange
-        const mockPlugin = mockDeep<AbstractPlugin>();
+        const mockPlugin = mockDeep<UserPlugins>();
         const mockGenerator = mock<IUniqueNameGenerator>();
         const newUniqueNoteCommand = new NewUniqueNoteCommand(
             mockPlugin,
@@ -21,7 +21,7 @@ describe('NewUniqueNoteCommand', () => {
     });
     it('should create a "YYYYMMDDHHmm" file', async () => {
         // Arrange
-        const mockPlugin = mockDeep<AbstractPlugin>();
+        const mockPlugin = mockDeep<UserPlugins>();
         const chance = new Chance();
         const mockNowResult = chance
             .integer({ min: 100000000000, max: 900000000000 })
@@ -51,7 +51,7 @@ describe('NewUniqueNoteCommand', () => {
         let mockGeneratorResult = mockNowResult;
         const existingFilesCount = chance.integer({ min: 1, max: 30 });
         const createdFileName = (mockNowResult + existingFilesCount).toString();
-        const mockPlugin = mockDeep<AbstractPlugin>({
+        const mockPlugin = mockDeep<UserPlugins>({
             app: {
                 vault: {
                     create: jest.fn().mockImplementation((path: string) => {
