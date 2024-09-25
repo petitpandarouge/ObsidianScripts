@@ -167,7 +167,7 @@ Implementing a view relies on implementing two interfaces: `View` and `ViewBuild
 
 - A view implements `View`.
 
-``` javascript
+``` typescript
 class HelloWorld implements View {
     constructor(private noticer: INoticer) {}
     render(dv: DataviewApi) {
@@ -182,7 +182,7 @@ class HelloWorld implements View {
   - The builder must be named `<viewName>Builder`;
   - The builder is the only class exported.
 
-``` javascript
+``` typescript
 export class HelloWorldBuilder implements ViewBuilder {
     build() {
         const noticer = new Noticer();
@@ -195,7 +195,7 @@ export class HelloWorldBuilder implements ViewBuilder {
 
 - Inputs can be explicitely defined using an interface.
 
-``` javascript
+``` typescript
 interface Input {
     name: string;
 } 
@@ -204,7 +204,7 @@ interface Input {
 - Same rules applies to the `View` and `ViewBuilder`.
 - The only difference here in the `input` given in parameter of the `render` method.
 
-``` javascript
+``` typescript
 class HelloWorld implements View {
     render(dv: DataviewApi, input: Input) {
         const header = input.name ? `Hello ${input.name}` : 'Hello World';
