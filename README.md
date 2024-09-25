@@ -39,10 +39,11 @@ Resulting bundles are generated into the `bundles` directory.
 ## Implementing
 
 The source code is organized as follow:
-- `src`: Contains mainly the Obsidian api objects plus some additional common utility classes.
+- `src`: Contains mainly some common utility classes.
 - `src/user-plugins`: Contains the User Plugins plugin specific sources.
 - `src/quick-add`: Contains the QuickAdd plugin specific sources.
 - `src/dataview`: Contains the Dataview plugin specific sources.
+- `src/infrastructure`: Contains the code that does not need to be tested. Mainly wrapper services used to make the code testable using the dependency injection.
 
 ### User Plugins
 
