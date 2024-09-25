@@ -21,14 +21,3 @@ export class Notice {
         // Do nothing.
     }
 }
-
-export interface Command {
-    id: string;
-    name: string;
-    callback: () => Promise<void>;
-}
-
-export interface Plugin {
-    addCommand: (command: Command) => Command;
-    app: App;
-}
