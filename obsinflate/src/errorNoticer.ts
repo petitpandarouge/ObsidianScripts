@@ -11,14 +11,16 @@ export class ErrorNoticer {
             await action();
         } catch (error: unknown) {
             if (error instanceof Error) {
-                this.noticer.notice(error.message, this.noticeTimeoutInMs);
+                this.#notice(error.message);
             } else {
-                this.noticer.notice(
-                    `An unknown error occured in ${action.name}. Open the Developer Tools to know more about it.`,
-                    this.noticeTimeoutInMs
+                this.#notice(
+                    `An unknown error occured in ${action.name}. Open the Developer Tools to know more about it.`
                 );
             }
             throw error;
         }
+    }
+    #notice(message: string) {
+        this.noticer.notice(message, this.noticeTimeoutInMs);
     }
 }

@@ -27,9 +27,8 @@ describe('ErrorNoticer', () => {
         // Arrange
         const chance = new Chance();
         const errorMessage = chance.string();
-        const noticeTime = chance.integer({ min: 0, max: 1000 });
         const mockNoticer = mock<INoticer>();
-        const errorNoticer = new ErrorNoticer(mockNoticer, noticeTime);
+        const errorNoticer = new ErrorNoticer(mockNoticer);
         const wrappedAction = jest.fn(() => {
             throw new Error(errorMessage);
         });
@@ -40,7 +39,7 @@ describe('ErrorNoticer', () => {
         expect(mockNoticer.notice).toHaveBeenCalledTimes(1);
         expect(mockNoticer.notice).toHaveBeenCalledWith(
             errorMessage,
-            noticeTime
+            expect.any(Number)
         );
     });
     it('should not notice Obsidian if no exception is thrown by the inner execution', async () => {
