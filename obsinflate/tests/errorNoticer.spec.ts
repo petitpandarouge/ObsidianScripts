@@ -99,5 +99,3 @@ describe('ErrorNoticer', () => {
         );
     });
 });
-
-// TODO : Timeout
