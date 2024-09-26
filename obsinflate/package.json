@@ -2,6 +2,13 @@
   "name": "obsinflate",
   "version": "0.7.0",
   "description": "TypeScript framework that allows building extension scripts for Obsidian plugins.",
+  "config": {
+    "obsidian": {
+      "vaults": {
+        "prod": "c:/Temp/Obsidian"
+      }
+    }
+  },
   "scripts": {
     "clean": "rimraf ./dist && rimraf ./bundles",
     "clear": "npm run clean && rimraf ./package-lock.json && rimraf ./node_modules",
@@ -23,7 +30,7 @@
     "bundle:userplugins:helloworld": "npx webpack --config webpack.userplugins.helloworld.config.js",
     "bundle:dv:helloworld": "npx webpack --config webpack.dv.view.helloworld.config.js && node dv.view.build.js HelloWorld",
     "bundle:helloworld": "rimraf ./bundles && npm run bundle:quickadd:helloworld && npm run bundle:userplugins:helloworld && npm run bundle:dv:helloworld",
-    "deploy:test": "ncp ./bundles c:/Temp/obsidian"
+    "deploy": "node ./deploy.js"
   },
   "repository": {
     "type": "git",
