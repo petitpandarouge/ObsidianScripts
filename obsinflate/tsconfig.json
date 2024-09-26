@@ -8,9 +8,9 @@
     "removeComments": true,
     "baseUrl": ".",
     "paths": {
-      "@obsinflate/tests/*": ["__tests__/*"],
+      "@obsinflate/tests/*": ["tests/*"],
       "@obsinflate/*": ["src/*"]
     }
   },
-  "include": ["src", "__tests__"]
+  "include": ["src", "tests"]
 }

@@ -6,7 +6,7 @@ module.exports = {
     testEnvironment: 'node',
     collectCoverage: true,
     moduleNameMapper: makeModuleNameMapper(tsconfig),
-    testRegex: '(/__tests__/.*spec)\\.tsx?$',
+    testRegex: '(/tests/.*spec)\\.tsx?$',
     coveragePathIgnorePatterns: ['mocks', 'infrastructure'],
     reporters: [
         'default',

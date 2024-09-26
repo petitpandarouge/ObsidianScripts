@@ -3,9 +3,9 @@
 
   "compilerOptions": {
     "paths": {
-      "@obsinflate/tests/*": ["__tests__/*"],
+      "@obsinflate/tests/*": ["tests/*"],
       "@obsinflate/*": ["src/*"],
-      "^obsidian$": ["__tests__/mocks/obsidian"]
+      "^obsidian$": ["tests/mocks/obsidian"]
     }
   }
 }
