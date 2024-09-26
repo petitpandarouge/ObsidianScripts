@@ -2,6 +2,10 @@
 
 on:
   push:
+    paths-ignore:
+      - '.vscode/**'
+      - 'obsidian-scripts/**'
+      - ObsidianScripts.code-workspace
     branches:
       - main
 
