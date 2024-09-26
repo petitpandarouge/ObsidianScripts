@@ -6,7 +6,7 @@ module.exports.onload = async (plugin) => {
 		name: 'Create new unique note in folder of the center panel active note',
 		callback: async () => {
 
-			// Functions.
+			// Functions.  
 
 			let isInSideBar = function(leaf, side) {
 				return leaf.parent.containerEl.hasClass(`mod-top-${side}-space`);
