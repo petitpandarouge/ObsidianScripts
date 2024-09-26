@@ -2,6 +2,7 @@
 import Chance from 'chance';
 import { INoticer } from '@obsinflate/infrastructure/noticer';
 import { mock } from 'jest-mock-extended';
+import { Duration } from 'luxon';
 
 describe('ErrorNoticer', () => {
     it('should notice Obsidian and rethrow if Error is thrown by the inner execution', async () => {
@@ -23,12 +24,13 @@ describe('ErrorNoticer', () => {
             expect.any(Number)
         );
     });
-    it('should notice Obsidian for the time given to the ErrorNoticer if Error is thrown by the inner execution', async () => {
+    it('should notice Obsidian for the given duration if Error is thrown by the inner execution', async () => {
         // Arrange
         const chance = new Chance();
         const errorMessage = chance.string();
         const mockNoticer = mock<INoticer>();
-        const errorNoticer = new ErrorNoticer(mockNoticer);
+        const duration = Duration.fromMillis(chance.integer());
+        const errorNoticer = new ErrorNoticer(mockNoticer, duration);
         const wrappedAction = jest.fn(() => {
             throw new Error(errorMessage);
         });
@@ -39,7 +41,7 @@ describe('ErrorNoticer', () => {
         expect(mockNoticer.notice).toHaveBeenCalledTimes(1);
         expect(mockNoticer.notice).toHaveBeenCalledWith(
             errorMessage,
-            expect.any(Number)
+            duration.milliseconds
         );
     });
     it('should not notice Obsidian if no exception is thrown by the inner execution', async () => {
@@ -52,11 +54,12 @@ describe('ErrorNoticer', () => {
         // Assert
         expect(mockNoticer.notice).toHaveBeenCalledTimes(0);
     });
-    it('should notice Obsidian if an error that is not an instance of Error is thrown by the inner execution', async () => {
+    it('should notice Obsidian for the given duration if an error that is not an instance of Error is thrown by the inner execution', async () => {
         // Arrange
         const chance = new Chance();
         const mockNoticer = mock<INoticer>();
-        const errorNoticer = new ErrorNoticer(mockNoticer);
+        const duration = Duration.fromMillis(chance.integer());
+        const errorNoticer = new ErrorNoticer(mockNoticer, duration);
         const unknownError = { whateverMessage: chance.string() };
         const wrappedAction = jest.fn(() => {
             throw unknownError;
@@ -70,7 +73,7 @@ describe('ErrorNoticer', () => {
         expect(mockNoticer.notice).toHaveBeenCalledTimes(1);
         expect(mockNoticer.notice).toHaveBeenCalledWith(
             errorMessage,
-            expect.any(Number)
+            duration.milliseconds
         );
     });
 });

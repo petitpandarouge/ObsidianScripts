@@ -1,10 +1,15 @@
 ﻿import { Action } from '@obsinflate/action';
 import { INoticer } from '@obsinflate/infrastructure/noticer';
+import { Duration } from 'luxon';
+
+const DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS = 5000;
 
 export class ErrorNoticer {
     constructor(
         private noticer: INoticer,
-        private noticeTimeoutInMs: number = 5000
+        private noticeTimeout: Duration = Duration.fromMillis(
+            DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS
+        )
     ) {}
     async wrap(action: Action): Promise<void> {
         try {
@@ -21,6 +26,6 @@ export class ErrorNoticer {
         }
     }
     #notice(message: string) {
-        this.noticer.notice(message, this.noticeTimeoutInMs);
+        this.noticer.notice(message, this.noticeTimeout.milliseconds);
     }
 }
