@@ -51,6 +51,7 @@
   "homepage": "https://github.com/petitpandarouge/ObsidianScripts#readme",
   "devDependencies": {
     "@eslint/js": "^9.11.0",
+    "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@tsconfig/recommended": "^1.0.6",
     "@types/chance": "^1.1.6",
