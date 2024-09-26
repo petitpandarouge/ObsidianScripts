@@ -1,8 +1,13 @@
-﻿import { ErrorNoticer } from '@obsinflate/errorNoticer';
+﻿import {
+    DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS,
+    ErrorNoticer
+} from '@obsinflate/errorNoticer';
 import Chance from 'chance';
 import { INoticer } from '@obsinflate/infrastructure/noticer';
 import { mock } from 'jest-mock-extended';
 import { Duration } from 'luxon';
+
+const NO_MESSAGE = '';
 
 describe('ErrorNoticer', () => {
     it('should notice Obsidian for the given duration and rethrow if Error is thrown by the inner execution', async () => {
@@ -55,6 +60,23 @@ describe('ErrorNoticer', () => {
         expect(mockNoticer.notice).toHaveBeenCalledWith(
             errorMessage,
             duration.milliseconds
+        );
+    });
+    it('should notice Obsidian for 5 seconds if no duration is provided when Error is thrown by the inner execution', async () => {
+        // Arrange
+        const mockNoticer = mock<INoticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
+        const wrappedAction = jest.fn(() => {
+            throw new Error();
+        });
+        // Act
+        const action = async () => await errorNoticer.wrap(wrappedAction);
+        // Assert
+        await expect(action).rejects.toThrow();
+        expect(mockNoticer.notice).toHaveBeenCalledTimes(1);
+        expect(mockNoticer.notice).toHaveBeenCalledWith(
+            NO_MESSAGE,
+            DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS
         );
     });
 });

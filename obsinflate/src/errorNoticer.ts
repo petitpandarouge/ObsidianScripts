@@ -2,7 +2,7 @@
 import { INoticer } from '@obsinflate/infrastructure/noticer';
 import { Duration } from 'luxon';
 
-const DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS = 5000;
+export const DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS = 5000;
 
 export class ErrorNoticer {
     constructor(
