@@ -12,6 +12,11 @@ export class ErrorNoticer {
         } catch (error: unknown) {
             if (error instanceof Error) {
                 this.noticer.notice(error.message, this.noticeTimeoutInMs);
+            } else {
+                this.noticer.notice(
+                    `An unknown error occured in ${action.name}. Open the Developer Tools to know more about it.`,
+                    this.noticeTimeoutInMs
+                );
             }
             throw error;
         }

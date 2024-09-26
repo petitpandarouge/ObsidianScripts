@@ -62,17 +62,17 @@ describe('ErrorNoticer', () => {
         const wrappedAction = jest.fn(() => {
             throw unknownError;
         });
-        //const errorMessage = `An unknown error occured in ${wrappedAction.name} occurred. Update the plugin to fix it.`;
+        const errorMessage = `An unknown error occured in ${wrappedAction.name}. Open the Developer Tools to know more about it.`;
         // Act
         const action = async () => await errorNoticer.wrap(wrappedAction);
         // Assert
         // toThrow() only works with Error instances.
         await expect(action).rejects.toEqual(unknownError);
-        // expect(mockNoticer.notice).toHaveBeenCalledTimes(1);
-        // expect(mockNoticer.notice).toHaveBeenCalledWith(
-        //     errorMessage,
-        //     expect.any(Number)
-        //);
+        expect(mockNoticer.notice).toHaveBeenCalledTimes(1);
+        expect(mockNoticer.notice).toHaveBeenCalledWith(
+            errorMessage,
+            expect.any(Number)
+        );
     });
 });
 
