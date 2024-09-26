@@ -44,7 +44,10 @@ module.exports = (entryName, bundleName, bundlePath, extraConfig = {}) => {
         },
         resolve: {
             extensions: ['.tsx', '.ts', '.js'],
-            plugins: [new TsconfigPathsPlugin({})]
+            plugins: [new TsconfigPathsPlugin({})],
+            fallback: {
+                path: require.resolve('path-browserify')
+            }
         },
         output: {
             filename: `${bundleName}.js`,

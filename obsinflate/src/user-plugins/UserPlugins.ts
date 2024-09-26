@@ -1,18 +1,17 @@
-﻿import { App, Plugin, PluginManifest } from 'obsidian';
+﻿import { Plugin } from 'obsidian';
 import * as obsidian from 'obsidian';
 
-class Modules {
-    obsidian: typeof obsidian = obsidian;
+// TODO : Must be in a separate file
+export type ObsidianModule = typeof obsidian;
+
+export interface Modules {
+    obsidian: ObsidianModule;
 }
 
 /**
  * v1.3.0
  * https://github.com/mnowotnik/obsidian-user-plugins/tree/master
  */
-export abstract class UserPlugins extends Plugin {
-    constructor(app: App, manifest: PluginManifest) {
-        super(app, manifest);
-        this.passedModules = new Modules();
-    }
+export interface UserPlugins extends Plugin {
     passedModules: Modules;
 }

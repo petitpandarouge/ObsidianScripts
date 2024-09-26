@@ -12,9 +12,12 @@ describe('CommandLoader', () => {
     it('should build command', async () => {
         // Arrange
         const mockPlugin = mockDeep<UserPlugins>();
+        const mockErrorNoticer = mock<ErrorNoticer>();
         const mockCommandBuilder: CommandBuilder = jest
             .fn()
-            .mockImplementation(() => new MockCommand(mockPlugin));
+            .mockImplementation(
+                () => new MockCommand(mockPlugin, mockErrorNoticer)
+            );
         const builders = [mockCommandBuilder];
         const mockedNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockedNoticer);
@@ -28,11 +31,14 @@ describe('CommandLoader', () => {
     it('should build as many commands as provided builders', async () => {
         // Arrange
         const mockPlugin = mockDeep<UserPlugins>();
+        const mockErrorNoticer = mock<ErrorNoticer>();
         const chance = new Chance();
         const buildersCount = chance.integer({ min: 0, max: 0 });
         const mockCommandBuilder: CommandBuilder = jest
             .fn()
-            .mockImplementation(() => new MockCommand(mockPlugin));
+            .mockImplementation(
+                () => new MockCommand(mockPlugin, mockErrorNoticer)
+            );
         const builders = Array.from(
             { length: buildersCount },
             () => mockCommandBuilder
@@ -63,11 +69,14 @@ describe('CommandLoader', () => {
     it('should add as many commands in the UserPlugins plugin as provided builders', async () => {
         // Arrange
         const mockPlugin = mockDeep<UserPlugins>();
+        const mockErrorNoticer = mock<ErrorNoticer>();
         const chance = new Chance();
         const buildersCount = chance.integer({ min: 1, max: 10 });
         const mockCommandBuilder: CommandBuilder = jest
             .fn()
-            .mockImplementation(() => new MockCommand(mockPlugin));
+            .mockImplementation(
+                () => new MockCommand(mockPlugin, mockErrorNoticer)
+            );
         const builders = Array.from(
             { length: buildersCount },
             () => mockCommandBuilder
@@ -86,12 +95,13 @@ describe('CommandLoader', () => {
     it('should throw and notice if at least two commands have the same id', async () => {
         // Arrange
         const mockPlugin = mockDeep<UserPlugins>();
+        const mockErrorNoticer = mock<ErrorNoticer>();
         const chance = new Chance();
         const commandId = chance.string();
         const mockCommandBuilder: CommandBuilder = jest
             .fn()
             .mockImplementation(() => {
-                const command = new MockCommand(mockPlugin);
+                const command = new MockCommand(mockPlugin, mockErrorNoticer);
                 command.id = commandId;
                 return command;
             });
@@ -107,7 +117,8 @@ describe('CommandLoader', () => {
         expect(mockedNoticer.notice).toHaveBeenCalledTimes(1);
         expect(mockedNoticer.notice).toHaveBeenCalledWith(
             errorMessage,
-            expect.any(Number)
+            expect.any(Number),
+            expect.any(String)
         );
     });
 });

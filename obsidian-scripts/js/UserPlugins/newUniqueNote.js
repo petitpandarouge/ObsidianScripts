@@ -76,6 +76,7 @@ module.exports.onload = async (plugin) => {
 
             const newFileBasePath = getFolderPathFrom(leaf);
 			const createdNote = await createUniqueNote(newFileBasePath);
+			// Uneeded, openFile also activate the leaf.
 			app.workspace.setActiveLeaf(leaf);
 			await leaf.openFile(createdNote, 
 				(new OpenFileOptions())

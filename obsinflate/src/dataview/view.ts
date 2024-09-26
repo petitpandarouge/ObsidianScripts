@@ -1,5 +1,4 @@
-﻿/* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataviewApi } from 'obsidian-dataview';
+﻿import { DataviewApi } from 'obsidian-dataview';
 
 export interface View {
     render(

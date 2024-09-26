@@ -11,7 +11,7 @@ export async function onload(plugin: UserPlugins): Promise<void> {
     await commandLoader.load([
         (plugin) => {
             const noticer = new Noticer();
-            return new HelloWorldCommand(plugin, noticer);
+            return new HelloWorldCommand(plugin, errorNoticer, noticer);
         }
     ]);
 }

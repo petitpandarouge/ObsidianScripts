@@ -7,6 +7,7 @@ export class IdValidator<TId> {
         errorMessage: (id: TId) => string
     ): void {
         if (this.ids.has(identifiable.id)) {
+            // TODO change it to a proper obsinflate error
             throw new Error(errorMessage(identifiable.id));
         }
         this.ids.add(identifiable.id);
