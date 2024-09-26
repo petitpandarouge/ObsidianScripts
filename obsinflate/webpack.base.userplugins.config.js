@@ -9,7 +9,7 @@ function withUserPluginsConfiguration() {
 }
 
 module.exports = (scriptName) => {
-    let entryName = `user-plugins/${scriptName}`;
+    let entryName = `inflates/user-plugins/${scriptName}`;
     let bundleName = scriptName;
     if (scriptName === 'HelloWorld') {
         entryName = `user-plugins/hello-world/main`;

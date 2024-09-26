@@ -6,9 +6,9 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
-import { onload } from '@obsinflate/user-plugins/main';
-import { NewProjectCommand } from '@obsinflate/user-plugins/newProjectCommand';
-import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
+import { onload } from '@obsinflate/inflates/user-plugins/main';
+import { NewProjectCommand } from '@obsinflate/inflates/user-plugins/newProjectCommand';
+import { NewUniqueNoteCommand } from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
 import { mockDeep } from 'jest-mock-extended';
 import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
 import { ErrorNoticer } from '@obsinflate/errorNoticer';

@@ -1,4 +1,4 @@
-﻿import { NewUniqueNoteCommand } from '@obsinflate/user-plugins/newUniqueNoteCommand';
+﻿import { NewUniqueNoteCommand } from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { TFile } from 'obsidian';

@@ -10,7 +10,7 @@ function withDvViewConfiguration(viewName) {
 }
 
 module.exports = (viewName) => {
-    let entryName = `dataview/${viewName.toLowerCase()}`;
+    let entryName = `inflates/dataview/${viewName.toLowerCase()}`;
     if (viewName === 'HelloWorld') {
         entryName = `dataview/hello-world/main`;
     }
