@@ -16,8 +16,6 @@ jobs:
           node-version: 20.9.0
       - run: npm ci
         working-directory: obsinflate
-      - run: npm run bundle
-        working-directory: obsinflate
       - env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run release
