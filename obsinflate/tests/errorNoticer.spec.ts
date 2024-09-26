@@ -79,6 +79,25 @@ describe('ErrorNoticer', () => {
             DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS
         );
     });
+    it('should notice Obsidian for 5 seconds if no duration is provided when an error that is not an instance of Error is thrown by the inner execution', async () => {
+        // Arrange
+        const mockNoticer = mock<INoticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
+        const unknownError = {};
+        const wrappedAction = jest.fn(() => {
+            throw unknownError;
+        });
+        const errorMessage = `An unknown error occured in ${wrappedAction.name}. Open the Developer Tools to know more about it.`;
+        // Act
+        const action = async () => await errorNoticer.wrap(wrappedAction);
+        // Assert
+        await expect(action).rejects.toEqual(unknownError);
+        expect(mockNoticer.notice).toHaveBeenCalledTimes(1);
+        expect(mockNoticer.notice).toHaveBeenCalledWith(
+            errorMessage,
+            DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS
+        );
+    });
 });
 
 // TODO : Timeout
