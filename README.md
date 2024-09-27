@@ -221,7 +221,7 @@ class HelloWorld implements View {
 
 ### Unit tests
 
-The `__tests__` directory contains all the framework unit tests and relative sources.
+The `tests` directory contains all the framework unit tests and relative sources.
 
 To debug threw `VS Code`
 - Open a `Javascript Debug Terminal`;
@@ -266,7 +266,7 @@ This chapter summaries all the considerations to take in account when working wi
   "compilerOptions": {
     "paths": {
       ...
-      "^obsidian$": ["__tests__/mocks/obsidian"] // This is the magic line 🪄
+      "^obsidian$": ["tests/mocks/obsidian"] // This is the magic line 🪄
     }
   }
 }
@@ -274,9 +274,9 @@ This chapter summaries all the considerations to take in account when working wi
 
 This way
 - In a build (`npx tsc --project tsconfig.build.json`), `import { ... } from 'obsidian'` will reference the real Obsidian API.
-- In a build for test (`npx tsc --project tsconfig.build.for.jest.json`), `import { ... } from 'obsidian'` will reference the `__tests__/mocks/obsidian` module.
+- In a build for test (`npx tsc --project tsconfig.build.for.jest.json`), `import { ... } from 'obsidian'` will reference the `tests/mocks/obsidian` module.
 
-> ⚠️ This means each time a `import { ... } from 'obsidian'` is writen, a mock interface must be written in `__tests__/mocks/obsidian`.
+> ⚠️ This means each time a `import { ... } from 'obsidian'` is writen, a mock interface must be written in `tests/mocks/obsidian`.
 
 This hack allows 
 - to implement the inflates being able to have the intellisense of the real Obsidian API;
@@ -379,4 +379,4 @@ export class SampleCommand extends AbstractCommand {
 
 ### Commit message format
 
-The commit message must follow the [Angular Commit Message Conventions](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#-commit-message-format) and versions are automatically generated following the [Semantic Versioning](https://semver.org/) rules.
+The commit message must follow the [AngularJS Commit Message Format](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit) and versions are automatically generated following the [Semantic Versioning](https://semver.org/) rules.
