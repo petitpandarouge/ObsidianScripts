@@ -11,6 +11,7 @@ I keep them here as I slowly but surely move them into the `Obsinflate` framewor
 # Obsinflate 🎈
 
 [![Test](https://github.com/petitpandarouge/ObsidianScripts/workflows/Build%20and%20test%20project/badge.svg)](https://github.com/petitpandarouge/ObsidianScripts/actions?query=workflow%3A%22Build+and+test+project%22) 
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 TypeScript framework that allows building extension scripts for the following Obsidian plugins : 
 - [Dataview](https://blacksmithgu.github.io/obsidian-dataview/)
@@ -373,3 +374,9 @@ export class SampleCommand extends AbstractCommand {
     }
 }
 ```
+
+## Contributing
+
+### Commit message format
+
+The commit message must follow the [Angular Commit Message Conventions](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#-commit-message-format) and versions are automatically generated following the [Semantic Versioning](https://semver.org/) rules.
