@@ -2,11 +2,11 @@ name: Build and test project
 
 on:
   push:
-    paths-ignore:
-      - '.vscode/**'
-      - 'obsidian-scripts/**'
-      - ObsidianScripts.code-workspace
-    branches: [ main ]
+    paths:
+      - '.github/**'
+      - 'obsinflate/**'
+      - Obsinflate.code-workspace
+    branches: [ '**' ]
   pull_request:
     branches: [ main ]
 
