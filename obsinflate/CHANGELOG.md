@@ -1,3 +1,10 @@
+# [0.12.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-0.11.1...obsinflate-0.12.0) (2024-10-04)
+
+
+### Features
+
+* **inflates:** implement the newuniquenotecommand userplugins command ([#28](https://github.com/petitpandarouge/ObsidianScripts/issues/28)) ([2c168ad](https://github.com/petitpandarouge/ObsidianScripts/commit/2c168ad9042a225d9ca323fd49ddfc6ce75df10a))
+
 ## [0.11.1](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-0.11.0...obsinflate-0.11.1) (2024-09-26)
 
 
