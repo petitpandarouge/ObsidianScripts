@@ -26,6 +26,24 @@ The framework is implemented following the [TDD](https://en.wikipedia.org/wiki/T
 
 > 🔎 NOTE : In the whole documentation, I call `inflates` all the scripts implemented using this framework.
 
+## Development Setup
+
+### Prerequisites
+
+- Install [Node.js](https://nodejs.org/fr) which includes [Node Package Manager](https://docs.npmjs.com/getting-started)
+
+### Setting Up an Inflate
+
+- `git clone` this repo;
+- Install Obsinflate:
+
+``` sh
+cd obsinflate
+npm install
+```
+
+- Create your first inflate in the `inflates/<plugin-name>` directory, and go coding !
+
 ## Building and bundling 🧱
 
 `git clone` this repo and execute the following commands:
@@ -46,7 +64,8 @@ The source code is organized as follow:
 - `src/user-plugins`: Contains the User Plugins plugin specific sources.
 - `src/quick-add`: Contains the QuickAdd plugin specific sources.
 - `src/dataview`: Contains the Dataview plugin specific sources.
-- `src/infrastructure`: Contains the code that does not need to be tested. Mainly wrapper services used to make the code testable using the dependency injection.
+- `src/infrastructure`: Contains the code that is not testable. Mainly Obsidian wrappers used to make the code testable using the dependency injection.
+- `src/inflates`: Contains the inflates.
 
 ### UserPlugins 🧩
 
@@ -248,7 +267,24 @@ npm run test:integration:userplugins
 
 ## Deploying 🚀
 
-🚧 The command is currently in build state but I plan to build a command that deploys the scripts into a vault directory.
+Define the path to your personal vault:
+``` json
+{
+  ...
+  "config": {
+    "obsidian": {
+      "vaults": {
+        "prod": "c:/path/to/the/.obsidian/parent/dir"
+      }
+    }
+  },
+  ...
+```
+
+Run the following command:
+``` sh
+npm run deploy
+```
 
 ## Working with Obisidian API 🧠
 
@@ -376,6 +412,17 @@ export class SampleCommand extends AbstractCommand {
 ```
 
 ## Contributing
+
+### Coding Rules
+
+To ensure consistency throughout the source code, keep these rules in mind as you are working:
+
+- All features or bug fixes must be tested by one or more specs (unit-tests).
+- I follow (as mush as I can) [Google's TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html), but wrap all code at 80 characters.
+
+In complement, I follow these rules :
+- File names are in `camelCase` (ref: https://basarat.gitbook.io/typescript/styleguide#filename).
+- Directory names are in `kebab-case`.
 
 ### Commit message format
 
