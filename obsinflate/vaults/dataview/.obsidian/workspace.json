@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "How to debug.md",
+                "file": "Views.md",
                 "mode": "source",
                 "source": false
               }
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "How to debug.md",
+                "file": "Views.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "How to debug.md",
+                "file": "Views.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "How to debug.md"
+                "file": "Views.md"
               }
             }
           }
@@ -160,8 +160,8 @@
   },
   "active": "c3692f7a8d966bb1",
   "lastOpenFiles": [
-    "Views.md",
     "How to debug.md",
+    "Views.md",
     "resources/Pasted image 20240922193307.png",
     "resources/Pasted image 20240922193214.png",
     "resources/Pasted image 20240922193136.png",

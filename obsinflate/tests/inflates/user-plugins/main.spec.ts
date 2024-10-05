@@ -1,17 +1,17 @@
-﻿jest.mock('@obsinflate/user-plugins/commandLoader', () => {
+﻿jest.mock('@obsinflate/core/commandLoader', () => {
     return {
         CommandLoader: jest.fn()
     };
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
+import { CommandLoader } from '@obsinflate/core/commandLoader';
 import { onload } from '@obsinflate/inflates/user-plugins/main';
 import { NewProjectCommand } from '@obsinflate/inflates/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
 import { mockDeep } from 'jest-mock-extended';
-import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
-import { ErrorNoticer } from '@obsinflate/errorNoticer';
+import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
+import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 
 describe('main', () => {
     it('should load the commands into the plugin using the CommandLoader', async () => {

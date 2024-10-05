@@ -1,13 +1,13 @@
-﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
-import { IUniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
-import { AbstractCommand } from '@obsinflate/abstractCommand';
-import { IAppExtension } from '@obsinflate/infrastructure/appExtension';
+﻿import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
+import { IUniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
+import { AbstractCommand } from '@obsinflate/core/abstractCommand';
+import { IAppExtension } from '@obsinflate/api/obsidian/appExtension';
 import path from 'path';
-import { ErrorNoticer } from '@obsinflate/errorNoticer';
+import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { MaxNoteCreationAttempsReachedError } from '@obsinflate/inflates/user-plugins/maxNoteCreationAttempsReachedError';
-import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/FileExtensions';
+import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import { TFile } from 'obsidian';
-import { OpenViewStateBuilder } from '@obsinflate/infrastructure/openViewStateBuilder';
+import { OpenViewStateBuilder } from '@obsinflate/api/obsidian/openViewStateBuilder';
 
 export const NO_DATA = '';
 export const MAX_NOTE_CREATION_ATTEMPS = 10;

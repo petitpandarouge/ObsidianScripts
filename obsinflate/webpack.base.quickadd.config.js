@@ -11,9 +11,13 @@ function withQuickAddConfiguration() {
 module.exports = (scriptName) => {
     let entryName = `inflates/quick-add/${scriptName}`;
     let bundleName = scriptName;
-    if (scriptName === 'HelloWorld') {
-        entryName = `quick-add/hello-world/main`;
-        bundleName = 'HelloWorld';
+    if (scriptName.toLowerCase() === 'helloworld') {
+        entryName = `hello-world/quick-add/main`;
     }
-    return make(entryName, bundleName, 'QuickAdd', withQuickAddConfiguration());
+    return make(
+        entryName,
+        bundleName,
+        'quick-add',
+        withQuickAddConfiguration()
+    );
 };

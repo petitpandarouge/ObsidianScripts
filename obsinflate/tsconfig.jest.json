@@ -5,7 +5,7 @@
     "paths": {
       "@obsinflate/tests/*": ["tests/*"],
       "@obsinflate/*": ["src/*"],
-      "^obsidian$": ["tests/mocks/obsidian"]
+      "^obsidian$": ["tests/doubles/obsidian"]
     }
   }
 }

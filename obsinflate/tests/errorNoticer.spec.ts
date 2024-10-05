@@ -1,16 +1,16 @@
 ﻿import {
     DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS,
     ErrorNoticer
-} from '@obsinflate/errorNoticer';
+} from '@obsinflate/core/errorNoticer';
 import Chance from 'chance';
-import { INoticer } from '@obsinflate/infrastructure/noticer';
+import { INoticer } from '@obsinflate/api/obsidian/noticer';
 import { mock } from 'jest-mock-extended';
 import { Duration } from 'luxon';
 import {
     BUSINESS_ERROR_COLOR,
     TECHNICAL_ERROR_COLOR
-} from '@obsinflate/infrastructure/color';
-import { TestBusinessError } from '@obsinflate/tests/mocks/TestBusinessError';
+} from '@obsinflate/api/obsidian/color';
+import { StubBusinessError } from '@obsinflate/tests/doubles/stubBusinessError';
 
 describe('ErrorNoticer', () => {
     it('should notice Obsidian for the given duration and rethrow if Error is thrown by the inner execution', async () => {
@@ -114,7 +114,7 @@ describe('ErrorNoticer', () => {
         const chance = new Chance();
         const errorMessage = chance.word();
         const wrappedAction = jest.fn(() => {
-            throw new TestBusinessError(errorMessage);
+            throw new StubBusinessError(errorMessage);
         });
         // Act
         await errorNoticer.wrap(wrappedAction);

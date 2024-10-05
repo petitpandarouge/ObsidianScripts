@@ -1,12 +1,12 @@
-﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
+﻿import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
 import { DateTimeProvider } from '@obsinflate/infrastructure/dateTimeProvider';
-import { UniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
-import { CommandLoader } from '@obsinflate/user-plugins/commandLoader';
+import { UniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
+import { CommandLoader } from '@obsinflate/core/commandLoader';
 import { NewProjectCommand } from '@obsinflate/inflates/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
-import { ErrorNoticer } from '@obsinflate/errorNoticer';
-import { Noticer } from '@obsinflate/infrastructure/noticer';
-import { AppExtension } from '@obsinflate/infrastructure/appExtension';
+import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
+import { AppExtension } from '@obsinflate/api/obsidian/appExtension';
 
 export async function onload(plugin: UserPlugins): Promise<void> {
     const noticer = new Noticer();

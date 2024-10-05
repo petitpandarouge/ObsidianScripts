@@ -6,17 +6,17 @@
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { TFile } from 'obsidian';
-import { IUniqueNameGenerator } from '@obsinflate/uniqueNameGenerator';
-import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
-import { IAppExtension } from '@obsinflate/infrastructure/appExtension';
+import { IUniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
+import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
+import { IAppExtension } from '@obsinflate/api/obsidian/appExtension';
 import path from 'path';
-import { NoActiveNoteFoundError } from '@obsinflate/infrastructure/noActiveNoteFoundError';
-import { PanelPosition } from '@obsinflate/infrastructure/panelPosition';
-import { ErrorNoticer } from '@obsinflate/errorNoticer';
-import { INoticer } from '@obsinflate/infrastructure/noticer';
-import { BUSINESS_ERROR_COLOR } from '@obsinflate/infrastructure/color';
-import { MarkdownViewLeafExtension } from '@obsinflate/infrastructure/markdownViewLeafExtension';
-import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/FileExtensions';
+import { NoActiveNoteFoundError } from '@obsinflate/api/obsidian/noActiveNoteFoundError';
+import { PanelPosition } from '@obsinflate/api/obsidian/panelPosition';
+import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
+import { INoticer } from '@obsinflate/api/obsidian/noticer';
+import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
+import { MarkdownViewLeafExtension } from '@obsinflate/api/obsidian/markdownViewLeafExtension';
+import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 
 const EMPTY_PATH = '';
 const EMPTY_NAME = '';

@@ -1,4 +1,4 @@
-﻿import { AbstractBusinessError } from '@obsinflate/abstractBusinessError';
+﻿import { AbstractBusinessError } from '@obsinflate/core/abstractBusinessError';
 
 export class MaxNoteCreationAttempsReachedError extends AbstractBusinessError {
     constructor(attemps: number) {

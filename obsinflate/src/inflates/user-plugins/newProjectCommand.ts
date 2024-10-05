@@ -1,6 +1,6 @@
-﻿import { UserPlugins } from '@obsinflate/user-plugins/UserPlugins';
-import { AbstractCommand } from '@obsinflate/abstractCommand';
-import { ErrorNoticer } from '@obsinflate/errorNoticer';
+﻿import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
+import { AbstractCommand } from '@obsinflate/core/abstractCommand';
+import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 
 export class NewProjectCommand extends AbstractCommand<UserPlugins> {
     constructor(plugin: UserPlugins, errorNoticer: ErrorNoticer) {

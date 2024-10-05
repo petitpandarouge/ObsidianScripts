@@ -60,12 +60,11 @@ Resulting bundles are generated into the `bundles` directory.
 ## Implementing 🛠️
 
 The source code is organized as follow:
-- `src`: Contains Obsidian extensions classes and common utility classes.
-- `src/user-plugins`: Contains the User Plugins plugin specific sources.
-- `src/quick-add`: Contains the QuickAdd plugin specific sources.
-- `src/dataview`: Contains the Dataview plugin specific sources.
-- `src/infrastructure`: Contains the code that is not testable. Mainly Obsidian wrappers used to make the code testable using the dependency injection.
-- `src/inflates`: Contains the inflates.
+- `api`: Interfaces and extensions wrapping the Obsidian and plugins API calls.
+- `core`: The obsinflate framework implementations.
+- `infrastructure`: Technical services mainly here to make the Obsinflate code testable using the dependency injection.
+- `hello-world`: Samples.
+- `inflates`: The inflates implementations.
 
 ### UserPlugins 🧩
 
@@ -302,7 +301,7 @@ This chapter summaries all the considerations to take in account when working wi
   "compilerOptions": {
     "paths": {
       ...
-      "^obsidian$": ["tests/mocks/obsidian"] // This is the magic line 🪄
+      "^obsidian$": ["tests/doubles/obsidian"] // This is the magic line 🪄
     }
   }
 }
@@ -310,9 +309,9 @@ This chapter summaries all the considerations to take in account when working wi
 
 This way
 - In a build (`npx tsc --project tsconfig.build.json`), `import { ... } from 'obsidian'` will reference the real Obsidian API.
-- In a build for test (`npx tsc --project tsconfig.build.for.jest.json`), `import { ... } from 'obsidian'` will reference the `tests/mocks/obsidian` module.
+- In a build for test (`npx tsc --project tsconfig.build.for.jest.json`), `import { ... } from 'obsidian'` will reference the `tests/doubles/obsidian` module.
 
-> ⚠️ This means each time a `import { ... } from 'obsidian'` is writen, a mock interface must be written in `tests/mocks/obsidian`.
+> ⚠️ This means each time a `import { ... } from 'obsidian'` is writen, a mock interface must be written in `tests/doubles/obsidian`.
 
 This hack allows 
 - to implement the inflates being able to have the intellisense of the real Obsidian API;

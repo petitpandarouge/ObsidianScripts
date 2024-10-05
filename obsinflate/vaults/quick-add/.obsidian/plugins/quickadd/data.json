@@ -14,13 +14,11 @@
       "id": "07dcfe40-0203-4e07-a2c9-a0fec1ba5a56",
       "commands": [
         {
-          "name": "HelloWorld",
+          "name": "helloWorld",
           "type": "UserScript",
-          "id": "8f3b4d38-df21-44b8-a952-ea6c50de3638",
-          "path": "scripts/HelloWorld.js",
-          "settings": {
-            "Name": "Damien"
-          }
+          "id": "c73bb7ba-e3b5-43e7-b8bd-2ce5b3c1bbd7",
+          "path": "scripts/helloWorld.js",
+          "settings": {}
         }
       ],
       "runOnStartup": false

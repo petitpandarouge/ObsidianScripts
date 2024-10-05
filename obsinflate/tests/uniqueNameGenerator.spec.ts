@@ -5,7 +5,7 @@
 import {
     UNIQUE_NAME_DATETIME_FORMAT,
     UniqueNameGenerator
-} from '@obsinflate/uniqueNameGenerator';
+} from '@obsinflate/core/uniqueNameGenerator';
 import { mock } from 'jest-mock-extended';
 import { DateTime } from 'luxon';
 import Chance from 'chance';
