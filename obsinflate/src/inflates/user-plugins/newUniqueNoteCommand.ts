@@ -44,8 +44,9 @@ export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
         let created = false;
         let attempts = 0;
         let createdFile: TFile | null = null;
+        const seed = this.nameGenerator.generateNewSeed();
         do {
-            const uniqueName = this.nameGenerator.generateFromNow();
+            const uniqueName = seed.next();
             const noteName = `${uniqueName}.${MARKDOWN_FILE_EXTENSION}`;
             const noteFullPath = path.join(folderPath, noteName);
             try {

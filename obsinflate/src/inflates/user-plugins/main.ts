@@ -16,7 +16,6 @@ export async function onload(plugin: UserPlugins): Promise<void> {
         (plugin) => new NewProjectCommand(plugin, errorNoticer),
         (plugin) => {
             const dateTimeProvider = new DateTimeProvider();
-            // TODO : The generator does not regenerate the seed at each call because it is created once at the obsidian launch.
             const generator = new UniqueNameGenerator(dateTimeProvider);
             const appExtension = AppExtension.extends(plugin.app);
             return new NewUniqueNoteCommand(
