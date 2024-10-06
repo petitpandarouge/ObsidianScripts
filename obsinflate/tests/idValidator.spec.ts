@@ -1,4 +1,5 @@
-﻿import { Identifiable } from '@obsinflate/core/identifiable';
+﻿import { DuplicatedIdError } from '@obsinflate/core/duplicatedIdError';
+import { Identifiable } from '@obsinflate/core/identifiable';
 import { IdValidator } from '@obsinflate/core/idValidator';
 import Chance from 'chance';
 
@@ -15,11 +16,7 @@ describe('IdValidator', () => {
         // Act
         const action = () => {
             for (const identifiable of mockIdentifiables) {
-                idValidator.validate(
-                    identifiable,
-                    (id) =>
-                        `UserPlugins : Command with id ${id} already exists.`
-                );
+                idValidator.validate(identifiable);
             }
         };
         // Assert
@@ -31,18 +28,9 @@ describe('IdValidator', () => {
         const idValidator = new IdValidator<string>();
         const identifiable = { id: chance.guid() };
         // Act
-        idValidator.validate(
-            identifiable,
-            (id) => `UserPlugins : Command with id ${id} already exists.`
-        );
-        const action = () =>
-            idValidator.validate(
-                identifiable,
-                (id) => `UserPlugins : Command with id ${id} already exists.`
-            );
+        idValidator.validate(identifiable);
+        const action = () => idValidator.validate(identifiable);
         // Assert
-        expect(action).toThrow(
-            `UserPlugins : Command with id ${identifiable.id} already exists.`
-        );
+        expect(action).toThrow(DuplicatedIdError);
     });
 });

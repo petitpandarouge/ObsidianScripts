@@ -7,6 +7,7 @@ import { mock } from 'jest-mock-extended';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { Plugin } from 'obsidian';
+import { DuplicatedIdError } from '@obsinflate/core/duplicatedIdError';
 
 describe('CommandLoader', () => {
     it('should build command', async () => {
@@ -109,11 +110,11 @@ describe('CommandLoader', () => {
         const mockedNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockedNoticer);
         const loader = new CommandLoader<Plugin>(mockPlugin, errorNoticer);
-        const errorMessage = `UserPlugins : Command with id ${commandId} already exists.`;
+        const errorMessage = `The ${commandId} identifier is already used.`;
         // Act
         const action = async () => await loader.load(builders);
         // Assert
-        await expect(action).rejects.toThrow(errorMessage);
+        await expect(action).rejects.toThrow(DuplicatedIdError);
         expect(mockedNoticer.notice).toHaveBeenCalledTimes(1);
         expect(mockedNoticer.notice).toHaveBeenCalledWith(
             errorMessage,
