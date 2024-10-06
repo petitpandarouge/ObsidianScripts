@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-1.0.0...obsinflate-1.1.0) (2024-10-06)
+
+
+### Bug Fixes
+
+* fix the unique name generation seed managment ([84707e9](https://github.com/petitpandarouge/ObsidianScripts/commit/84707e971c839828befeed777e13d846baf0e016))
+
+
+### Features
+
+* raise a DuplicatedIdError if id already used in IdValidator ([974e34e](https://github.com/petitpandarouge/ObsidianScripts/commit/974e34e20bc61bd4892a72bfd30aba0a655bf1ae))
+
 # [1.0.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-0.12.0...obsinflate-1.0.0) (2024-10-06)
 
 
