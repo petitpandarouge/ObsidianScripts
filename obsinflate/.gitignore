@@ -27,6 +27,7 @@
 !.prettierrc
 !.vscode
 !.yamllint.yaml
+!.nvmrc
 
 # === Rules for root dir ===
 /core
