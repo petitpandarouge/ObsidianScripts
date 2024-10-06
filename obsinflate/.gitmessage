@@ -1,0 +1,139 @@
+﻿<type>(<scope>): <summary> (#<issue number>)
+
+<Describe the motivation behind this change - explain WHY you are making this change. Wrap all lines
+at 100 characters.>
+
+Fixes #<issue number>
+
+# ────────────────────────────────────────── 100 chars ────────────────────────────────────────────┤
+
+# Example Commit Messages
+# =======================
+
+
+# ─── Example: Simple refactor ────────────────────────────────────────────────────────────────────┤
+# refactor(core): rename refreshDynamicEmbeddedViews to refreshEmbeddedViews
+#
+# Improve code readability. The original name no longer matches how the function is used.
+# ─────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+# ─── Example: Simple docs change ─────────────────────────────────────────────────────────────────┤
+# docs: add the development detup chapter in the readme.md guide (#36332)
+#
+# Fixes #36332
+# ─────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+# ─── Example: Simple chore change ────────────────────────────────────────────────────────────────┤
+# chore(ci): build and tests ci is executed on every branches
+#
+# Until now, the build and test CI was only executed on the master branch. This change ensures that
+# the CI is executed on every branch.
+# ─────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+# ─── Example: Breaking change ────────────────────────────────────────────────────────────────────┤
+# refactor: new src code organisation (#1234)
+#
+# The aim of this ticket is to add clarity into the code structure.
+# In the current organisation, it was hard to know where to store the implementations (src root dir,
+# infrastructure,...).
+#
+# The decision here is to make more explicit the API usage.
+# It's a specific infrastructure bloc that deserves more focus.
+#
+# Core part of the framework is as well important.
+# It has been made explicit by the directory addition.
+#
+# Hello World samples, like the Inflates, have been putted in a separated directory so that it does
+# not add noise anymore in the usefull code.
+#
+# This is the final result :
+# - api: Interfaces and extensions wrapping the Obsidian and plugins API calls.
+# - core: The obsinflate framework implementations.
+# - infrastructure: Technical services mainly here to make the Obsinflate code testable using the
+#   dependency injection.
+# - hello-world: Samples.
+# - inflates: The inflates implementations.
+#
+# BREAKING CHANGE: The whole file organisation has been changed. This means that the imports in your
+# code will need to be updated.
+#
+# Here is the new organisation:
+# - api: Interfaces and extensions wrapping the Obsidian and plugins API calls.
+# - core: The obsinflate framework implementations.
+# - infrastructure: Technical services mainly here to make the Obsinflate code testable using the
+#   dependency injection.
+# - hello-world: Samples.
+# - inflates: The inflates implementations.
+#
+#
+# Fixes #1234
+# ─────────────────────────────────────────────────────────────────────────────────────────────────┤
+
+
+# Obsinflate Commit Message Format
+# ================================
+#
+# Each commit message consists of a *header*, a *body*, and a *footer*.
+#
+# <header>
+# <BLANK LINE>
+# <body>
+# <BLANK LINE>
+# <footer>
+#
+# The header is mandatory.
+#
+# The body is mandatory for all commits except for those of scope "docs" and "style". When the body
+# is required it must be at least 20 characters long.
+#
+# The footer is optional.
+#
+# Any line of the commit message cannot be longer than 100 characters.
+#
+#
+# Commit Message Header
+# ---------------------
+#
+# <type>(<scope>): <summary> (#<issue number>)
+#   │       │          │           │
+#   │       │          │           └─⫸ Issue number. Only required if the commit closes an issue.
+#   │       │          │
+#   │       │          └─⫸ Summary in present tense. Not capitalized. No period at the end.
+#   │       │
+#   │       └─⫸ Commit Scope: api|core|infrastructure|<inflate-name>|ci|build
+#   │
+#   └─⫸ Commit Type: docs|feat|fix|refactor|style|test|chore
+#
+#
+# Commit Message Body
+# ---------------------
+#
+# Just as in the summary, use the imperative, present tense: "fix" not "fixed" nor "fixes".
+#
+# Explain the motivation for the change in the commit message body. This commit message should
+# explain WHY you are making the change. You can include a comparison of the previous behavior with
+# the new behavior in order to illustrate the impact of the change.
+#
+#
+# Commit Message Footer
+# ---------------------
+#
+# The footer can contain information about breaking changes and is also the place to reference
+# GitHub issues, Jira tickets, and other PRs that this commit closes or is related to.
+#
+# ```
+# BREAKING CHANGE: <breaking change summary>
+# <BLANK LINE>
+# <breaking change description + migration instructions>
+# <BLANK LINE>
+# <BLANK LINE>
+# Fixes #<issue number>
+# ```
+#
+# Breaking Change section should start with the phrase "BREAKING CHANGE: " followed by a summary of
+# the breaking change, a blank line, and a detailed description of the breaking change that also
+# includes migration instructions.
+#

@@ -28,6 +28,7 @@
 !.vscode
 !.yamllint.yaml
 !.nvmrc
+!.gitmessage
 
 # === Rules for root dir ===
 /core
