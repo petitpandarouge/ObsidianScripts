@@ -1,0 +1,7 @@
+cd obsinflate
+
+rewritten_commits=$(git rev-list --left-right --count HEAD@{1}..HEAD | awk '{print $2}')
+for commit in $rewritten_commits; do
+  commit_message=$(git log -1 --pretty=%B $commit)
+  echo "$commit_message" | npx --no-install commitlint
+done

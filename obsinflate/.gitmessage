@@ -1,4 +1,4 @@
-﻿<type>(<scope>): <summary> (#<issue number>)
+﻿<type>(<scope>): <subject> (#<issue number>)
 
 <Describe the motivation behind this change - explain WHY you are making this change. Wrap all lines
 at 100 characters.>
@@ -97,13 +97,13 @@ Fixes #<issue number>
 # Commit Message Header
 # ---------------------
 #
-# <type>(<scope>): <summary> (#<issue number>)
+# <type>(<scope>): <subject> (#<issue number>)
 #   │       │          │           │
 #   │       │          │           └─⫸ Issue number. Only required if the commit closes an issue.
 #   │       │          │
-#   │       │          └─⫸ Summary in present tense. Not capitalized. No period at the end.
+#   │       │          └─⫸ Subject in present tense. Not capitalized. No period at the end.
 #   │       │
-#   │       └─⫸ Commit Scope: api|core|infrastructure|<inflate-name>|ci|build
+#   │       └─⫸ Commit Scope: api|core|infrastructure|<inflate-name>|ci|build|release
 #   │
 #   └─⫸ Commit Type: docs|feat|fix|refactor|style|test|chore
 #

@@ -29,6 +29,7 @@
 !.yamllint.yaml
 !.nvmrc
 !.gitmessage
+!.husky
 
 # === Rules for root dir ===
 /core

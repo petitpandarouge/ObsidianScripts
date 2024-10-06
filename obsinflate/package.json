@@ -11,6 +11,8 @@
     }
   },
   "scripts": {
+    "prepare": "node ./prepare.mjs",
+    "release": "semantic-release",
     "clean": "rimraf ./dist && rimraf ./bundles",
     "clear": "npm run clean && rimraf ./package-lock.json && rimraf ./node_modules",
     "build": "npm run clean && npm run format && npm run lint && npx tsc --project tsconfig.build.json",
@@ -31,8 +33,7 @@
     "bundle:userplugins:helloworld": "npx webpack --config webpack.userplugins.helloworld.config.js",
     "bundle:dataview:helloworld": "npx webpack --config webpack.dataview.view.helloworld.config.js && node dataview.view.build.js HelloWorld",
     "bundle:helloworld": "rimraf ./bundles && npm run bundle:quickadd:helloworld && npm run bundle:userplugins:helloworld && npm run bundle:dataview:helloworld",
-    "deploy": "node ./deploy.js",
-    "release": "semantic-release"
+    "deploy": "node ./deploy.js"
   },
   "repository": {
     "type": "git",
@@ -51,6 +52,8 @@
   },
   "homepage": "https://github.com/petitpandarouge/ObsidianScripts#readme",
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "@eslint/js": "^9.11.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
@@ -61,6 +64,7 @@
     "@types/luxon": "^3.4.2",
     "chance": "^1.1.11",
     "eslint": "^9.11.0",
+    "husky": "^9.1.6",
     "jest": "^29.7.0",
     "jest-html-reporter": "^3.10.2",
     "jest-mock-extended": "^4.0.0-beta1",

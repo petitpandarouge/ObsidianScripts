@@ -18,6 +18,7 @@
 			]
 		},
 		"files.autoSave": "onFocusChange",
-		"typescript.preferences.importModuleSpecifier": "non-relative"
+		"typescript.preferences.importModuleSpecifier": "non-relative",
+		"files.encoding": "utf8"
 	}
 }
