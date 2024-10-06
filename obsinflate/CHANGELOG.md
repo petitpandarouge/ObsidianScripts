@@ -1,3 +1,31 @@
+# [1.0.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-0.12.0...obsinflate-1.0.0) (2024-10-06)
+
+
+### Code Refactoring
+
+* new src code organisation ([#37](https://github.com/petitpandarouge/ObsidianScripts/issues/37)) ([844a2e7](https://github.com/petitpandarouge/ObsidianScripts/commit/844a2e7bf68aee229dfa5660e81880d31de7aba1))
+
+
+### BREAKING CHANGES
+
+* The aim of this ticket is to add clarity into the code structure.
+In the current organisation, it was hard to know where to store the implementations (src root dir, infrastructure,...).
+
+The decision here is to make more explicit the API usage.
+It's a specific infrastructure bloc that deserves more focus.
+
+Core part of the framework is as well important.
+It has been made explicit by the directory addition.
+
+Hello World samples, like the Inflates, have been putted in a separated directory so that it does not add noise anymore in the usefull code.
+
+The is the final result :
+- api: Interfaces and extensions wrapping the Obsidian and plugins API calls.
+- core: The obsinflate framework implementations.
+- infrastructure: Technical services mainly here to make the Obsinflate code testable using the dependency injection.
+- hello-world: Samples.
+- inflates: The inflates implementations.
+
 # [0.12.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-0.11.1...obsinflate-0.12.0) (2024-10-04)
 
 
