@@ -1,4 +1,4 @@
-import { mockDeep } from 'jest-mock-extended';
+import { mock, mockDeep } from 'jest-mock-extended';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import {
     ANNOTATIONS_FILE_EXTENSION,
@@ -7,6 +7,10 @@ import {
 } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
 import Chance from 'chance';
 import { File, IFileSystem } from '@obsinflate/infrastructure/fileSystem';
+import { NoAnnotationsFileSelectedError } from '@obsinflate/inflates/quick-add/noAnnotationsFileSelectedError';
+import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
+import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
 
 describe('KoboHighlightsImporter', () => {
     it('should suggest the book highlights to import from the "Digital Editions/Annotations" directory ".annot" files', async () => {
@@ -23,8 +27,16 @@ describe('KoboHighlightsImporter', () => {
         const mockFileSystem = mockDeep<IFileSystem>({
             getFiles: jest.fn().mockReturnValue(files)
         });
-        const importer = new KoboHighlightsImporter(mockFileSystem);
-        const mockParams = mockDeep<Parameters>();
+        const mockNoticer = mock<Noticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
+        const importer = new KoboHighlightsImporter(
+            mockFileSystem,
+            errorNoticer
+        );
+        const mockParams = mockDeep<Parameters>({
+            // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
+            quickAddApi: { suggester: jest.fn().mockResolvedValue('') }
+        });
         // Act
         await importer.entry(mockParams);
         // Assert
@@ -36,9 +48,29 @@ describe('KoboHighlightsImporter', () => {
             files.map((f) => f.path)
         );
     });
-    it.todo(
-        'should raise an error if no file is selected from the suggestions'
-    );
+    it('should notice a NoAnnotationsFileSelectedError error if no file is selected from the suggestions', async () => {
+        // Arrange
+        const mockFileSystem = mockDeep<IFileSystem>({
+            getFiles: jest.fn().mockReturnValue([])
+        });
+        const mockNoticer = mock<Noticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
+        const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
+        const importer = new KoboHighlightsImporter(
+            mockFileSystem,
+            errorNoticer
+        );
+        const mockParams = mockDeep<Parameters>({
+            quickAddApi: { suggester: jest.fn().mockResolvedValue(undefined) }
+        });
+        // Act
+        await importer.entry(mockParams);
+        // Assert
+        expect(noticeSpy).toHaveBeenCalledWith(
+            'No annotations file selected. Aborting import.',
+            BUSINESS_ERROR_COLOR
+        );
+    });
     it.todo('should read the content of the selected ".annot" file');
     it.todo('should deserialize the fragment of an annotation');
     it.todo('should deserialize the content of an annotation');
