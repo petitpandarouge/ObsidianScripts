@@ -6,7 +6,7 @@ import {
     KoboHighlightsImporter
 } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
 import Chance from 'chance';
-import { File, IExplorer } from '@obsinflate/infrastructure/explorer';
+import { File, IFileSystem } from '@obsinflate/infrastructure/fileSystem';
 
 describe('KoboHighlightsImporter', () => {
     it('should suggest the book highlights to import from the "Digital Editions/Annotations" directory ".annot" files', async () => {
@@ -20,15 +20,15 @@ describe('KoboHighlightsImporter', () => {
                 path: `${chance.sentence()}${ANNOTATIONS_FILE_EXTENSION}`
             });
         }
-        const mockExplorer = mockDeep<IExplorer>({
+        const mockFileSystem = mockDeep<IFileSystem>({
             getFiles: jest.fn().mockReturnValue(files)
         });
-        const importer = new KoboHighlightsImporter(mockExplorer);
+        const importer = new KoboHighlightsImporter(mockFileSystem);
         const mockParams = mockDeep<Parameters>();
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockExplorer.getFiles).toHaveBeenCalledWith(
+        expect(mockFileSystem.getFiles).toHaveBeenCalledWith(
             ANNOTATIONS_FILES_DIR_PATH
         );
         expect(mockParams.quickAddApi.suggester).toHaveBeenCalledWith(
@@ -36,6 +36,9 @@ describe('KoboHighlightsImporter', () => {
             files.map((f) => f.path)
         );
     });
+    it.todo(
+        'should raise an error if no file is selected from the suggestions'
+    );
     it.todo('should read the content of the selected ".annot" file');
     it.todo('should deserialize the fragment of an annotation');
     it.todo('should deserialize the content of an annotation');

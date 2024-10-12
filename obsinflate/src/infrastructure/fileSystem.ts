@@ -6,11 +6,11 @@ export interface File {
     path: string;
 }
 
-export interface IExplorer {
+export interface IFileSystem {
     getFiles(directoryPath: string): Promise<File[]>;
 }
 
-export class Explorer implements IExplorer {
+export class FileSystem implements IFileSystem {
     async getFiles(directoryPath: string): Promise<File[]> {
         const fileNames = await fs.readdir(directoryPath);
 
