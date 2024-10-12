@@ -4,6 +4,7 @@ const { mergician } = require('mergician');
 
 module.exports = (entryName, bundleName, bundlePath, extraConfig = {}) => {
     let base = {
+        target: 'node',
         mode: 'development',
         devtool: 'eval-source-map',
         entry: `${path.resolve(__dirname, 'src')}/${entryName}.ts`,
@@ -44,10 +45,7 @@ module.exports = (entryName, bundleName, bundlePath, extraConfig = {}) => {
         },
         resolve: {
             extensions: ['.tsx', '.ts', '.js'],
-            plugins: [new TsconfigPathsPlugin({})],
-            fallback: {
-                path: require.resolve('path-browserify')
-            }
+            plugins: [new TsconfigPathsPlugin({})]
         },
         output: {
             filename: `${bundleName}.js`,
