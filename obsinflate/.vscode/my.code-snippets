@@ -28,5 +28,13 @@
             "});"
 		],
 		"description": "Create a new jest test suite"
+	},
+    "Jest it todo": {
+		"scope": "typescript",
+		"prefix": "it",
+		"body": [
+            "it.todo('$1');"
+		],
+		"description": "Create a new jest test suite todo"
 	}
 }
