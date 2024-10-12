@@ -26,7 +26,7 @@ describe('KoboHighlightsImporter', () => {
         const importer = new KoboHighlightsImporter(mockExplorer);
         const mockParams = mockDeep<Parameters>();
         // Act
-        importer.entry(mockParams);
+        await importer.entry(mockParams);
         // Assert
         expect(mockExplorer.getFiles).toHaveBeenCalledWith(
             ANNOTATIONS_FILES_DIR_PATH
