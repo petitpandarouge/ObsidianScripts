@@ -1,6 +1,10 @@
 import { mockDeep } from 'jest-mock-extended';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
-import { KoboHighlightsImporter } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
+import {
+    ANNOTATIONS_FILE_EXTENSION,
+    ANNOTATIONS_FILES_DIR_PATH,
+    KoboHighlightsImporter
+} from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
 import Chance from 'chance';
 import { File, IExplorer } from '@obsinflate/infrastructure/explorer';
 
@@ -12,8 +16,8 @@ describe('KoboHighlightsImporter', () => {
         const files: File[] = [];
         for (let i = 0; i < filesCount; i++) {
             files.push({
-                name: `${chance.sentence()}.annot`,
-                path: `${chance.sentence()}.annot`
+                name: `${chance.sentence()}${ANNOTATIONS_FILE_EXTENSION}`,
+                path: `${chance.sentence()}${ANNOTATIONS_FILE_EXTENSION}`
             });
         }
         const mockExplorer = mockDeep<IExplorer>({
@@ -24,6 +28,9 @@ describe('KoboHighlightsImporter', () => {
         // Act
         importer.entry(mockParams);
         // Assert
+        expect(mockExplorer.getFiles).toHaveBeenCalledWith(
+            ANNOTATIONS_FILES_DIR_PATH
+        );
         expect(mockParams.quickAddApi.suggester).toHaveBeenCalledWith(
             files.map((f) => f.name),
             files.map((f) => f.path)
