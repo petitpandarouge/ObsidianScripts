@@ -6,3 +6,9 @@ export interface File {
 export interface IExplorer {
     getFiles(directoryPath: string): File[];
 }
+
+export class Explorer implements IExplorer {
+    getFiles(): File[] {
+        return [];
+    }
+}

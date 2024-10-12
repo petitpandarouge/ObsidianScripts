@@ -3,11 +3,14 @@ import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import { IExplorer } from '@obsinflate/infrastructure/explorer';
 
 export class KoboHighlightsImporter implements Script {
-    constructor(private explorer: IExplorer) {}
-    entry(params: Parameters): Promise<void> {
-        const displayItems: string[] = [];
-        const actualItems: string[] = [];
-        params.quickAddApi.suggester(displayItems, actualItems);
-        return Promise.resolve();
+    explorer: IExplorer;
+    constructor(explorer: IExplorer) {
+        this.explorer = explorer;
+    }
+    async entry(params: Parameters): Promise<void> {
+        const files = this.explorer.getFiles('');
+        const displayItems: string[] = files.map((file) => file.name);
+        const actualItems: string[] = files.map((file) => file.path);
+        await params.quickAddApi.suggester(displayItems, actualItems);
     }
 }
