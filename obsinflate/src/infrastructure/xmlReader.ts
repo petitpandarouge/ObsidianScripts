@@ -23,7 +23,7 @@ export class XmlReader<TObject> implements IXmlReader<TObject> {
             throw new InvalidXmlError(result);
         }
         const parser = new XMLParser(options);
-        let jsonObj = parser.parse(xmlData);
+        const jsonObj = parser.parse(xmlData);
         return jsonObj as TObject;
     }
 }
