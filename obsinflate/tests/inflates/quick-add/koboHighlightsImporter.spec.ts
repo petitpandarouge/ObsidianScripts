@@ -70,10 +70,7 @@ describe('KoboHighlightsImporter', () => {
             BUSINESS_ERROR_COLOR
         );
     });
-    it.todo('should read the content of the selected ".annot" file');
-    it.todo('should deserialize the fragment of an annotation');
-    it.todo('should deserialize the content of an annotation');
-    it.todo('should deserialize all the annotations');
+    it.todo('should deserialize the content of the selected ".annot" file');
     it.todo('should format the annotations in markdown quotes');
     it.todo(
         'should create a markdown file having the name "YYYYMMDDHHmm - Book Title.md"'
