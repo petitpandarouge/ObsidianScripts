@@ -8,17 +8,23 @@ export class File {
         defaultEncoding: BufferEncoding = 'utf8'
     ) {
         this.path = absolutePath;
-        this.name = path.basename(absolutePath);
+        const parsedPath = path.parse(absolutePath);
+        this.nameWithExtension = parsedPath.base;
+        this.name = parsedPath.name;
+        this.extension = parsedPath.ext;
         const encoding = chardet.detectFileSync(absolutePath);
         if (encoding !== null) {
             this.encoding = encoding.toLowerCase() as BufferEncoding;
         } else {
             this.encoding = defaultEncoding;
         }
+        path.parse;
     }
     // TODO : implement true FilePath object and FileName object
     path: string;
+    nameWithExtension: string;
     name: string;
+    extension: string;
     encoding: BufferEncoding;
     read: () => Promise<string> = async () => {
         return await fs.readFile(this.path, this.encoding);
