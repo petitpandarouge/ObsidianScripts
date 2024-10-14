@@ -18,7 +18,6 @@ export class File {
         } else {
             this.encoding = defaultEncoding;
         }
-        path.parse;
     }
     // TODO : implement true FilePath object and FileName object
     path: string;
