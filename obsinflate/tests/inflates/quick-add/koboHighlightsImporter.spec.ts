@@ -18,10 +18,11 @@ describe('KoboHighlightsImporter', () => {
         const filesCount = chance.integer({ min: 1, max: 10 });
         const files: File[] = [];
         for (let i = 0; i < filesCount; i++) {
-            files.push({
-                name: `${chance.sentence()}${ANNOTATIONS_FILE_EXTENSION}`,
-                path: `${chance.sentence()}${ANNOTATIONS_FILE_EXTENSION}`
-            });
+            files.push(
+                mock<File>({
+                    path: `${chance.sentence()}${ANNOTATIONS_FILE_EXTENSION}`
+                })
+            );
         }
         const mockFileSystem = mockDeep<IFileSystem>({
             getFiles: jest.fn().mockReturnValue(files)

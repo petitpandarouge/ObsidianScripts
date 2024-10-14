@@ -1,4 +1,4 @@
-import { XmlReader } from '@obsinflate/infrastructure/xmlReader';
+import { XmlParser } from '@obsinflate/infrastructure/xmlParser';
 import { File } from '@obsinflate/infrastructure/fileSystem';
 
 export interface IAnnotationsReader {
@@ -7,8 +7,11 @@ export interface IAnnotationsReader {
 
 export class AnnotationsReader {
     async read(file: File): Promise<Annotations> {
-        const reader = new XmlReader<Annotations>();
-        return await reader.read(file, 'utf8', { removeNSPrefix: true });
+        const xmlData = await file.read();
+        const reader = new XmlParser<Annotations>();
+        return reader.parse(xmlData, {
+            removeNSPrefix: true
+        });
     }
 }
 export interface Annotations {
