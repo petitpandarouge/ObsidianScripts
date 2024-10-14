@@ -26,7 +26,6 @@ export class File {
             this.encoding = defaultEncoding;
         }
     }
-    // TODO : implement true FilePath object and FileName object
     path: string;
     nameWithExtension: string;
     name: string;
