@@ -1,9 +1,16 @@
-import { promises as fs } from 'fs';
+import * as fs from 'fs';
 import * as path from 'path';
 import * as chardet from 'chardet';
+import { FileDoesNotExistError } from '@obsinflate/infrastructure/fileDoesNotExistError';
 
 export class File {
-    constructor(
+    static mustExist = (absolutePath: string): File => {
+        if (!fs.existsSync(absolutePath)) {
+            throw new FileDoesNotExistError(absolutePath);
+        }
+        return new File(absolutePath);
+    };
+    private constructor(
         absolutePath: string,
         defaultEncoding: BufferEncoding = 'utf8'
     ) {
@@ -26,7 +33,7 @@ export class File {
     extension: string;
     encoding: BufferEncoding;
     read: () => Promise<string> = async () => {
-        return await fs.readFile(this.path, this.encoding);
+        return await fs.promises.readFile(this.path, this.encoding);
     };
 }
 
@@ -36,14 +43,14 @@ export interface IFileSystem {
 
 export class FileSystem implements IFileSystem {
     async getFiles(directoryPath: string): Promise<File[]> {
-        const fileNames = await fs.readdir(directoryPath);
+        const fileNames = await fs.promises.readdir(directoryPath);
 
         const files: File[] = [];
         for (const fileName of fileNames) {
             const filePath = path.join(directoryPath, fileName);
-            const stat = await fs.stat(filePath);
+            const stat = await fs.promises.stat(filePath);
             if (stat.isFile()) {
-                files.push(new File(filePath));
+                files.push(File.mustExist(filePath));
             }
         }
 
