@@ -4,10 +4,10 @@ import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/inflates/quick-add/koboH
 import { InvalidFileExtensionError } from '@obsinflate/infrastructure/invalidFileExtensionError';
 
 export interface IAnnotationsReader {
-    read(file: File): Promise<AnnotationSet>;
+    read(file: File): Promise<Annotations>;
 }
 
-export class AnnotationsReader {
+export class AnnotationsReader implements IAnnotationsReader {
     async read(file: File): Promise<Annotations> {
         if (file.extension !== ANNOTATIONS_FILE_EXTENSION) {
             throw new InvalidFileExtensionError(
