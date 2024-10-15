@@ -103,7 +103,7 @@ describe('KoboHighlightsImporter', () => {
         // Assert
         expect(mockAnnotationsReader.read).toHaveBeenCalledWith(mockFile);
     });
-    it.todo('should format the annotations in markdown quotes');
+    it.todo('should format the annotations in markdown quotes'); // create data with several annotations and check if the formatted data is correct
     it.todo(
         'should create a markdown file having the name "YYYYMMDDHHmm - Book Title.md"'
     );
