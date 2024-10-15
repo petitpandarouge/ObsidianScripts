@@ -1,10 +1,10 @@
 import Handlebars from 'handlebars';
 
-export interface IFormater {
+export interface IFormatter {
     format(data: any): string;
 }
 
-export class Formater implements IFormater {
+export class Formatter implements IFormatter {
     private compiledTemplate: Handlebars.TemplateDelegate;
 
     constructor(template: string) {

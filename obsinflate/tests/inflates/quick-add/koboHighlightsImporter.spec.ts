@@ -11,6 +11,7 @@ import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
 import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
+import { IFormatter } from '@obsinflate/infrastructure/formatter';
 
 describe('KoboHighlightsImporter', () => {
     it('should suggest the book highlights to import from the "Digital Editions/Annotations" directory ".annot" files', async () => {
@@ -30,11 +31,20 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockAnnotationsReader = mock<IAnnotationsReader>();
+        const mockAnnotationsReader = mock<IAnnotationsReader>({
+            read: jest.fn().mockResolvedValue({
+                annotationSet: {
+                    publication: { title: 'Book Title', creator: 'Author' },
+                    annotation: []
+                }
+            })
+        });
+        const mockMarkdownQuoteFormatter = mock<IFormatter>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
-            mockAnnotationsReader
+            mockAnnotationsReader,
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
@@ -59,11 +69,20 @@ describe('KoboHighlightsImporter', () => {
         const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
-        const mockAnnotationsReader = mock<IAnnotationsReader>();
+        const mockAnnotationsReader = mock<IAnnotationsReader>({
+            read: jest.fn().mockResolvedValue({
+                annotationSet: {
+                    publication: { title: 'Book Title', creator: 'Author' },
+                    annotation: []
+                }
+            })
+        });
+        const mockMarkdownQuoteFormatter = mock<IFormatter>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
-            mockAnnotationsReader
+            mockAnnotationsReader,
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: { suggester: jest.fn().mockResolvedValue(undefined) }
@@ -87,11 +106,20 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockAnnotationsReader = mock<IAnnotationsReader>();
+        const mockAnnotationsReader = mock<IAnnotationsReader>({
+            read: jest.fn().mockResolvedValue({
+                annotationSet: {
+                    publication: { title: 'Book Title', creator: 'Author' },
+                    annotation: []
+                }
+            })
+        });
+        const mockMarkdownQuoteFormatter = mock<IFormatter>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
-            mockAnnotationsReader
+            mockAnnotationsReader,
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: {
@@ -103,7 +131,57 @@ describe('KoboHighlightsImporter', () => {
         // Assert
         expect(mockAnnotationsReader.read).toHaveBeenCalledWith(mockFile);
     });
-    it.todo('should format the annotations in markdown quotes'); // create data with several annotations and check if the formatted data is correct
+    it('should format the annotations target fragment text in markdown quotes', async () => {
+        // Arrange
+        const chance = new Chance();
+        const mockFileSystem = mockDeep<IFileSystem>({
+            getFiles: jest.fn().mockReturnValue([])
+        });
+        const mockNoticer = mock<Noticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
+        // TODO : make it dynamic
+        const firstAnnotation = {
+            target: {
+                fragment: { text: `${chance.sentence()}` }
+            },
+            content: { text: `${chance.sentence()}` }
+        };
+        const secondAnnotation = {
+            target: {
+                fragment: { text: `${chance.sentence()}` }
+            },
+            content: { text: `${chance.sentence()}` }
+        };
+        const mockAnnotationsReader = mock<IAnnotationsReader>({
+            read: jest.fn().mockResolvedValue({
+                annotationSet: {
+                    publication: { title: 'Book Title', creator: 'Author' },
+                    annotation: [firstAnnotation, secondAnnotation]
+                }
+            })
+        });
+        const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const importer = new KoboHighlightsImporter(
+            mockFileSystem,
+            errorNoticer,
+            mockAnnotationsReader,
+            mockMarkdownQuoteFormatter
+        );
+        const mockParams = mockDeep<Parameters>({
+            // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
+            quickAddApi: { suggester: jest.fn().mockResolvedValue('') }
+        });
+        // Act
+        await importer.entry(mockParams);
+        // Assert
+        expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledTimes(2);
+        expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledWith(
+            firstAnnotation
+        );
+        expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledWith(
+            secondAnnotation
+        );
+    }); // create data with several annotations and check if the formatted data is correct
     it.todo(
         'should create a markdown file having the name "YYYYMMDDHHmm - Book Title.md"'
     );
