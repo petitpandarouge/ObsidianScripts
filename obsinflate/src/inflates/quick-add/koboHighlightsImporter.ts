@@ -1,6 +1,6 @@
 import { Script } from '@obsinflate/api/quick-add/script';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
-import { IFileSystem } from '@obsinflate/infrastructure/fileSystem';
+import { IFileSystem, File } from '@obsinflate/infrastructure/fileSystem';
 import { NoAnnotationsFileSelectedError } from '@obsinflate/inflates/quick-add/noAnnotationsFileSelectedError';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
@@ -19,10 +19,15 @@ export class KoboHighlightsImporter implements Script {
         await this.errorNoticer.wrap(async () => await this.innerEntry(params));
     }
 
-    async innerEntry(params: Parameters): Promise<void> {
+    private async innerEntry(params: Parameters): Promise<void> {
         const files = await this.fileSystem.getFiles(
             ANNOTATIONS_FILES_DIR_PATH
         );
+        const selectedFile = await this.suggest(params, files);
+        await this.annotationsReader.read(selectedFile);
+    }
+
+    private async suggest(params: Parameters, files: File[]): Promise<File> {
         const displayItems: string[] = files.map((file) => file.name);
         const actualItems: string[] = files.map((file) => file.path);
         const selectedFilePath = await params.quickAddApi.suggester(
@@ -32,9 +37,6 @@ export class KoboHighlightsImporter implements Script {
         if (selectedFilePath === undefined) {
             throw new NoAnnotationsFileSelectedError();
         }
-        const selectedFile = files.find(
-            (file) => file.path === selectedFilePath
-        )!;
-        await this.annotationsReader.read(selectedFile);
+        return files.find((file) => file.path === selectedFilePath)!;
     }
 }
