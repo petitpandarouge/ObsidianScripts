@@ -14,7 +14,7 @@ export class KoboHighlightsImporter implements Script {
         private fileSystem: IFileSystem,
         private errorNoticer: ErrorNoticer,
         private annotationsReader: IAnnotationsReader,
-        private markdownQuoteFormatter: IFormatter
+        private annotationsFormatter: IFormatter
     ) {}
 
     async entry(params: Parameters): Promise<void> {
@@ -27,9 +27,7 @@ export class KoboHighlightsImporter implements Script {
         );
         const selectedFile = await this.suggest(params, files);
         const annotations = await this.annotationsReader.read(selectedFile);
-        for (const annotation of annotations.annotationSet.annotation) {
-            this.markdownQuoteFormatter.format(annotation);
-        }
+        this.annotationsFormatter.format(annotations);
     }
 
     private async suggest(params: Parameters, files: File[]): Promise<File> {

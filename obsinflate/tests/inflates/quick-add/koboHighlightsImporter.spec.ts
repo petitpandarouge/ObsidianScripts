@@ -10,7 +10,10 @@ import { File, IFileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
-import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
+import {
+    Annotations,
+    IAnnotationsReader
+} from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
 
 describe('KoboHighlightsImporter', () => {
@@ -139,10 +142,15 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        const annotations: Annotations = {
+            annotationSet: {
+                publication: { title: 'Book Title', creator: 'Author' },
+                annotation: []
+            }
+        };
         const annotationsCount = chance.integer({ min: 1, max: 10 });
-        const annotations = [];
         for (let i = 0; i < annotationsCount; i++) {
-            annotations.push({
+            annotations.annotationSet.annotation.push({
                 target: {
                     fragment: { text: `${chance.sentence()}` }
                 },
@@ -150,12 +158,7 @@ describe('KoboHighlightsImporter', () => {
             });
         }
         const mockAnnotationsReader = mock<IAnnotationsReader>({
-            read: jest.fn().mockResolvedValue({
-                annotationSet: {
-                    publication: { title: 'Book Title', creator: 'Author' },
-                    annotation: annotations
-                }
-            })
+            read: jest.fn().mockResolvedValue(annotations)
         });
         const mockMarkdownQuoteFormatter = mock<IFormatter>();
         const importer = new KoboHighlightsImporter(
@@ -171,14 +174,10 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledTimes(
-            annotationsCount
+        expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledTimes(1);
+        expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledWith(
+            annotations
         );
-        for (const annotation of annotations) {
-            expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledWith(
-                annotation
-            );
-        }
     });
     it.todo(
         'should create a markdown file having the name "YYYYMMDDHHmm - Book Title.md"'
