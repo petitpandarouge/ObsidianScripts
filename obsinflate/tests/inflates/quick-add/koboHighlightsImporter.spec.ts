@@ -139,24 +139,21 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        // TODO : make it dynamic
-        const firstAnnotation = {
-            target: {
-                fragment: { text: `${chance.sentence()}` }
-            },
-            content: { text: `${chance.sentence()}` }
-        };
-        const secondAnnotation = {
-            target: {
-                fragment: { text: `${chance.sentence()}` }
-            },
-            content: { text: `${chance.sentence()}` }
-        };
+        const annotationsCount = chance.integer({ min: 1, max: 10 });
+        const annotations = [];
+        for (let i = 0; i < annotationsCount; i++) {
+            annotations.push({
+                target: {
+                    fragment: { text: `${chance.sentence()}` }
+                },
+                content: { text: `${chance.sentence()}` }
+            });
+        }
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
                     publication: { title: 'Book Title', creator: 'Author' },
-                    annotation: [firstAnnotation, secondAnnotation]
+                    annotation: annotations
                 }
             })
         });
@@ -174,14 +171,15 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledTimes(2);
-        expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledWith(
-            firstAnnotation
+        expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledTimes(
+            annotationsCount
         );
-        expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledWith(
-            secondAnnotation
-        );
-    }); // create data with several annotations and check if the formatted data is correct
+        for (const annotation of annotations) {
+            expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledWith(
+                annotation
+            );
+        }
+    });
     it.todo(
         'should create a markdown file having the name "YYYYMMDDHHmm - Book Title.md"'
     );
