@@ -4,7 +4,7 @@ import { AbstractCommand } from '@obsinflate/core/abstractCommand';
 import { IAppExtension } from '@obsinflate/api/obsidian/appExtension';
 import path from 'path';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { MaxNoteCreationAttemptsReachedError } from '@obsinflate/inflates/user-plugins/maxNoteCreationAttemptsReachedError';
+import { MaxNoteCreationAttemptsReachedError } from '@obsinflate/core/maxNoteCreationAttemptsReachedError';
 import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import { TFile } from 'obsidian';
 import { OpenViewStateBuilder } from '@obsinflate/api/obsidian/openViewStateBuilder';
