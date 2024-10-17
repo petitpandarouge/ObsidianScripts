@@ -1,5 +1,5 @@
 ﻿import {
-    MAX_NOTE_CREATION_ATTEMPS,
+    MAX_NOTE_CREATION_ATTEMPTS,
     NewUniqueNoteCommand,
     NO_DATA
 } from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
@@ -106,7 +106,7 @@ describe('NewUniqueNoteCommand', () => {
         // Assert
         expect(mockPlugin.app.vault.create).toHaveBeenCalledTimes(1);
         expect(mockPlugin.app.vault.create).toHaveBeenCalledWith(
-            `${mockNowResult}.${MARKDOWN_FILE_EXTENSION}`,
+            `${mockNowResult}${MARKDOWN_FILE_EXTENSION}`,
             NO_DATA
         );
         expect(mockGenerator.generateNewSeed).toHaveBeenCalledTimes(1);
@@ -174,7 +174,7 @@ describe('NewUniqueNoteCommand', () => {
         // Assert
         for (let i = 0; i < existingFilesCount + 1; i++) {
             expect(mockPlugin.app.vault.create).toHaveBeenCalledWith(
-                `${(mockNowResult + i).toString()}.${MARKDOWN_FILE_EXTENSION}`,
+                `${(mockNowResult + i).toString()}${MARKDOWN_FILE_EXTENSION}`,
                 NO_DATA
             );
         }
@@ -225,7 +225,7 @@ describe('NewUniqueNoteCommand', () => {
         ).toHaveBeenCalledTimes(1);
         expect(mockMarckdownViewLeaf.getFolderPath).toHaveBeenCalledTimes(1);
         expect(mockPlugin.app.vault.create).toHaveBeenCalledWith(
-            `${mockActiveLeafFolderPath}${mockNoteName}.${MARKDOWN_FILE_EXTENSION}`,
+            `${mockActiveLeafFolderPath}${mockNoteName}${MARKDOWN_FILE_EXTENSION}`,
             NO_DATA
         );
     });
@@ -314,10 +314,10 @@ describe('NewUniqueNoteCommand', () => {
         await newUniqueNoteCommand.callback();
         // Assert
         expect(mockPlugin.app.vault.create).toHaveBeenCalledTimes(
-            MAX_NOTE_CREATION_ATTEMPS
+            MAX_NOTE_CREATION_ATTEMPTS
         );
         expect(noticeSpy).toHaveBeenCalledWith(
-            `Could not create a new unique note after ${MAX_NOTE_CREATION_ATTEMPS} attempts`,
+            `Could not create a new unique note after ${MAX_NOTE_CREATION_ATTEMPTS} attempts`,
             BUSINESS_ERROR_COLOR
         );
     });

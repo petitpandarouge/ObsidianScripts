@@ -10,7 +10,7 @@ import { TFile } from 'obsidian';
 import { OpenViewStateBuilder } from '@obsinflate/api/obsidian/openViewStateBuilder';
 
 export const NO_DATA = '';
-export const MAX_NOTE_CREATION_ATTEMPS = 10;
+export const MAX_NOTE_CREATION_ATTEMPTS = 10;
 
 export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
     constructor(
@@ -47,7 +47,7 @@ export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
         const seed = this.nameGenerator.generateNewSeed();
         do {
             const uniqueName = seed.next();
-            const noteName = `${uniqueName}.${MARKDOWN_FILE_EXTENSION}`;
+            const noteName = `${uniqueName}${MARKDOWN_FILE_EXTENSION}`;
             const noteFullPath = path.join(folderPath, noteName);
             try {
                 attempts++;
@@ -58,9 +58,9 @@ export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
                 created = true;
             } catch {
                 // Vault create raises an error if the file already exists
-                if (attempts >= MAX_NOTE_CREATION_ATTEMPS) {
+                if (attempts >= MAX_NOTE_CREATION_ATTEMPTS) {
                     throw new MaxNoteCreationAttempsReachedError(
-                        MAX_NOTE_CREATION_ATTEMPS
+                        MAX_NOTE_CREATION_ATTEMPTS
                     );
                 }
             }
