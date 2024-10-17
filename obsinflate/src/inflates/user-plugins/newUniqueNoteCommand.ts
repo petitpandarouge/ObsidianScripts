@@ -4,7 +4,7 @@ import { AbstractCommand } from '@obsinflate/core/abstractCommand';
 import { IAppExtension } from '@obsinflate/api/obsidian/appExtension';
 import path from 'path';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { MaxNoteCreationAttempsReachedError } from '@obsinflate/inflates/user-plugins/maxNoteCreationAttempsReachedError';
+import { MaxNoteCreationAttemptsReachedError } from '@obsinflate/inflates/user-plugins/maxNoteCreationAttemptsReachedError';
 import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import { TFile } from 'obsidian';
 import { OpenViewStateBuilder } from '@obsinflate/api/obsidian/openViewStateBuilder';
@@ -59,7 +59,7 @@ export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
             } catch {
                 // Vault create raises an error if the file already exists
                 if (attempts >= MAX_NOTE_CREATION_ATTEMPTS) {
-                    throw new MaxNoteCreationAttempsReachedError(
+                    throw new MaxNoteCreationAttemptsReachedError(
                         MAX_NOTE_CREATION_ATTEMPTS
                     );
                 }
