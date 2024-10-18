@@ -1,13 +1,9 @@
 ﻿import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
-import { IUniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
 import { AbstractCommand } from '@obsinflate/core/abstractCommand';
 import { IAppExtension } from '@obsinflate/api/obsidian/appExtension';
-import path from 'path';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { MaxNoteCreationAttemptsReachedError } from '@obsinflate/core/maxNoteCreationAttemptsReachedError';
-import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
-import { TFile } from 'obsidian';
 import { OpenViewStateBuilder } from '@obsinflate/api/obsidian/openViewStateBuilder';
+import { IUniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
 
 export const NO_DATA = '';
 export const MAX_NOTE_CREATION_ATTEMPTS = 10;
@@ -16,7 +12,7 @@ export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
     constructor(
         plugin: UserPlugins,
         errorNoticer: ErrorNoticer,
-        private nameGenerator: IUniqueNameGenerator,
+        private noteCreator: IUniqueNoteCreator,
         private app: IAppExtension
     ) {
         super(plugin, errorNoticer);
@@ -30,7 +26,8 @@ export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
         const activeLeaf =
             this.app.workspace.getCenterPanelMarkdownActiveLeaf();
         const newNoteFolderPath = activeLeaf.getFolderPath();
-        const createdNote = await this.createUniqueNoteIn(newNoteFolderPath);
+        const createdNote =
+            await this.noteCreator.createUniqueNoteIn(newNoteFolderPath);
         activeLeaf.native.openFile(
             createdNote,
             OpenViewStateBuilder.create()
@@ -38,33 +35,5 @@ export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
                 .withFocusAtTheEndOfTitleView()
                 .build()
         );
-    }
-
-    private async createUniqueNoteIn(folderPath: string): Promise<TFile> {
-        let created = false;
-        let attempts = 0;
-        let createdFile: TFile | null = null;
-        const seed = this.nameGenerator.generateNewSeed();
-        do {
-            const uniqueName = seed.next();
-            const noteName = `${uniqueName}${MARKDOWN_FILE_EXTENSION}`;
-            const noteFullPath = path.join(folderPath, noteName);
-            try {
-                attempts++;
-                createdFile = await this.plugin.app.vault.create(
-                    noteFullPath,
-                    NO_DATA
-                );
-                created = true;
-            } catch {
-                // Vault create raises an error if the file already exists
-                if (attempts >= MAX_NOTE_CREATION_ATTEMPTS) {
-                    throw new MaxNoteCreationAttemptsReachedError(
-                        MAX_NOTE_CREATION_ATTEMPTS
-                    );
-                }
-            }
-        } while (!created);
-        return createdFile!;
     }
 }
