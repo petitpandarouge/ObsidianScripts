@@ -1,8 +1,4 @@
-﻿import {
-    MAX_NOTE_CREATION_ATTEMPTS,
-    NewUniqueNoteCommand,
-    NO_DATA
-} from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
+﻿import { NewUniqueNoteCommand } from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { TFile } from 'obsidian';
@@ -18,7 +14,11 @@ import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
 import { MarkdownViewLeafExtension } from '@obsinflate/api/obsidian/markdownViewLeafExtension';
 import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import { IUniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
-import { UniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
+import {
+    MAX_NOTE_CREATION_ATTEMPTS,
+    NO_DATA,
+    UniqueNoteCreator
+} from '@obsinflate/core/uniqueNoteCreator';
 
 const EMPTY_PATH = '';
 const EMPTY_NAME = '';

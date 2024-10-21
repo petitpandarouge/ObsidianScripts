@@ -3,10 +3,10 @@ import { AbstractCommand } from '@obsinflate/core/abstractCommand';
 import { IAppExtension } from '@obsinflate/api/obsidian/appExtension';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { OpenViewStateBuilder } from '@obsinflate/api/obsidian/openViewStateBuilder';
-import { IUniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
-
-export const NO_DATA = '';
-export const MAX_NOTE_CREATION_ATTEMPTS = 10;
+import {
+    IUniqueNoteCreator,
+    NO_BASENAME
+} from '@obsinflate/core/uniqueNoteCreator';
 
 export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
     constructor(
@@ -26,8 +26,10 @@ export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
         const activeLeaf =
             this.app.workspace.getCenterPanelMarkdownActiveLeaf();
         const newNoteFolderPath = activeLeaf.getFolderPath();
-        const createdNote =
-            await this.noteCreator.createUniqueNoteIn(newNoteFolderPath);
+        const createdNote = await this.noteCreator.createUniqueNoteIn(
+            newNoteFolderPath,
+            NO_BASENAME
+        );
         activeLeaf.native.openFile(
             createdNote,
             OpenViewStateBuilder.create()

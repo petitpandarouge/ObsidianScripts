@@ -5,10 +5,11 @@ import { App, TFile } from 'obsidian';
 import path from 'path';
 
 export const NO_DATA = '';
+export const NO_BASENAME = '';
 export const MAX_NOTE_CREATION_ATTEMPTS = 10;
 
 export interface IUniqueNoteCreator {
-    createUniqueNoteIn(folderPath: string): Promise<TFile>;
+    createUniqueNoteIn(folderPath: string, basename: string): Promise<TFile>;
 }
 
 export class UniqueNoteCreator implements IUniqueNoteCreator {
@@ -17,14 +18,17 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
         private app: App
     ) {}
 
-    async createUniqueNoteIn(folderPath: string): Promise<TFile> {
+    async createUniqueNoteIn(
+        folderPath: string,
+        basename: string
+    ): Promise<TFile> {
         let created = false;
         let attempts = 0;
         let createdFile: TFile | null = null;
         const seed = this.nameGenerator.generateNewSeed();
         do {
             const uniqueName = seed.next();
-            const noteName = `${uniqueName}${MARKDOWN_FILE_EXTENSION}`;
+            const noteName = this.buildNoteName(uniqueName, basename);
             const noteFullPath = path.join(folderPath, noteName);
             try {
                 attempts++;
@@ -43,5 +47,12 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
             }
         } while (!created);
         return createdFile!;
+    }
+
+    private buildNoteName(uniqueName: string, basename: string): string {
+        if (basename) {
+            return `${uniqueName} - ${basename}${MARKDOWN_FILE_EXTENSION}`;
+        }
+        return `${uniqueName}${MARKDOWN_FILE_EXTENSION}`;
     }
 }
