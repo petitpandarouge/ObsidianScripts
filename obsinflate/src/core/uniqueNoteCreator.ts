@@ -7,6 +7,7 @@ import path from 'path';
 export const NO_CONTENT = '';
 export const NO_BASENAME = '';
 export const MAX_NOTE_CREATION_ATTEMPTS = 10;
+export const NOTE_NAME_SEPARATOR = ' - ';
 
 export interface IUniqueNoteCreator {
     create(
@@ -56,7 +57,7 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
 
     private buildNoteName(uniqueName: string, basename: string): string {
         if (basename) {
-            return `${uniqueName} - ${basename}${MARKDOWN_FILE_EXTENSION}`;
+            return `${uniqueName}${NOTE_NAME_SEPARATOR}${basename}${MARKDOWN_FILE_EXTENSION}`;
         }
         return `${uniqueName}${MARKDOWN_FILE_EXTENSION}`;
     }
