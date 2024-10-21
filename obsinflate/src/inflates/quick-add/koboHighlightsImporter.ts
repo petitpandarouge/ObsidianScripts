@@ -5,6 +5,7 @@ import { NoAnnotationsFileSelectedError } from '@obsinflate/inflates/quick-add/n
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
+import { IUniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 export const ANNOTATIONS_FILE_EXTENSION = '.annot';
@@ -14,7 +15,8 @@ export class KoboHighlightsImporter implements Script {
         private fileSystem: IFileSystem,
         private errorNoticer: ErrorNoticer,
         private annotationsReader: IAnnotationsReader,
-        private annotationsFormatter: IFormatter
+        private annotationsFormatter: IFormatter,
+        private _uniqueNoteCreator: IUniqueNoteCreator
     ) {}
 
     async entry(params: Parameters): Promise<void> {

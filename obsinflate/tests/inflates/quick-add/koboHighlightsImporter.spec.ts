@@ -15,6 +15,7 @@ import {
     IAnnotationsReader
 } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
+import { IUniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
 
 describe('KoboHighlightsImporter', () => {
     it('should suggest the book highlights to import from the "Digital Editions/Annotations" directory ".annot" files', async () => {
@@ -43,11 +44,13 @@ describe('KoboHighlightsImporter', () => {
             })
         });
         const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockMarkdownQuoteFormatter
+            mockMarkdownQuoteFormatter,
+            mockUniqueNoteCreator
         );
         const mockParams = mockDeep<Parameters>({
             // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
@@ -81,11 +84,13 @@ describe('KoboHighlightsImporter', () => {
             })
         });
         const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockMarkdownQuoteFormatter
+            mockMarkdownQuoteFormatter,
+            mockUniqueNoteCreator
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: { suggester: jest.fn().mockResolvedValue(undefined) }
@@ -118,11 +123,13 @@ describe('KoboHighlightsImporter', () => {
             })
         });
         const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockMarkdownQuoteFormatter
+            mockMarkdownQuoteFormatter,
+            mockUniqueNoteCreator
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: {
@@ -161,11 +168,13 @@ describe('KoboHighlightsImporter', () => {
             read: jest.fn().mockResolvedValue(annotations)
         });
         const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockMarkdownQuoteFormatter
+            mockMarkdownQuoteFormatter,
+            mockUniqueNoteCreator
         );
         const mockParams = mockDeep<Parameters>({
             // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
