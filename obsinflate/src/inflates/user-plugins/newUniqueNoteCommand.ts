@@ -5,7 +5,8 @@ import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { OpenViewStateBuilder } from '@obsinflate/api/obsidian/openViewStateBuilder';
 import {
     IUniqueNoteCreator,
-    NO_BASENAME
+    NO_BASENAME,
+    NO_CONTENT
 } from '@obsinflate/core/uniqueNoteCreator';
 
 export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
@@ -26,9 +27,10 @@ export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
         const activeLeaf =
             this.app.workspace.getCenterPanelMarkdownActiveLeaf();
         const newNoteFolderPath = activeLeaf.getFolderPath();
-        const createdNote = await this.noteCreator.createUniqueNoteIn(
+        const createdNote = await this.noteCreator.create(
             newNoteFolderPath,
-            NO_BASENAME
+            NO_BASENAME,
+            NO_CONTENT
         );
         activeLeaf.native.openFile(
             createdNote,

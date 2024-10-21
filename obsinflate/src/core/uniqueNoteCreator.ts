@@ -4,12 +4,16 @@ import { MaxNoteCreationAttemptsReachedError } from '@obsinflate/core/maxNoteCre
 import { App, TFile } from 'obsidian';
 import path from 'path';
 
-export const NO_DATA = '';
+export const NO_CONTENT = '';
 export const NO_BASENAME = '';
 export const MAX_NOTE_CREATION_ATTEMPTS = 10;
 
 export interface IUniqueNoteCreator {
-    createUniqueNoteIn(folderPath: string, basename: string): Promise<TFile>;
+    create(
+        folderPath: string,
+        basename: string,
+        content: string
+    ): Promise<TFile>;
 }
 
 export class UniqueNoteCreator implements IUniqueNoteCreator {
@@ -18,9 +22,10 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
         private app: App
     ) {}
 
-    async createUniqueNoteIn(
+    async create(
         folderPath: string,
-        basename: string
+        basename: string,
+        content: string
     ): Promise<TFile> {
         let created = false;
         let attempts = 0;
@@ -34,7 +39,7 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
                 attempts++;
                 createdFile = await this.app.vault.create(
                     noteFullPath,
-                    NO_DATA
+                    content
                 );
                 created = true;
             } catch {

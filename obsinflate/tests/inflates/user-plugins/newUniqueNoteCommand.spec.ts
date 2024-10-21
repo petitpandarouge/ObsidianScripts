@@ -16,7 +16,7 @@ import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import { IUniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
 import {
     MAX_NOTE_CREATION_ATTEMPTS,
-    NO_DATA,
+    NO_CONTENT,
     UniqueNoteCreator
 } from '@obsinflate/core/uniqueNoteCreator';
 
@@ -116,7 +116,7 @@ describe('NewUniqueNoteCommand', () => {
         expect(mockApp.native.vault.create).toHaveBeenCalledTimes(1);
         expect(mockApp.native.vault.create).toHaveBeenCalledWith(
             `${mockNowResult}${MARKDOWN_FILE_EXTENSION}`,
-            NO_DATA
+            NO_CONTENT
         );
         expect(mockNameGenerator.generateNewSeed).toHaveBeenCalledTimes(1);
         expect(mockSeed.next).toHaveBeenCalledTimes(1);
@@ -187,7 +187,7 @@ describe('NewUniqueNoteCommand', () => {
         for (let i = 0; i < existingFilesCount + 1; i++) {
             expect(mockApp.native.vault.create).toHaveBeenCalledWith(
                 `${(mockNowResult + i).toString()}${MARKDOWN_FILE_EXTENSION}`,
-                NO_DATA
+                NO_CONTENT
             );
         }
     });
@@ -242,7 +242,7 @@ describe('NewUniqueNoteCommand', () => {
         expect(mockMarckdownViewLeaf.getFolderPath).toHaveBeenCalledTimes(1);
         expect(mockApp.native.vault.create).toHaveBeenCalledWith(
             `${mockActiveLeafFolderPath}${mockNoteName}${MARKDOWN_FILE_EXTENSION}`,
-            NO_DATA
+            NO_CONTENT
         );
     });
     it('should notice if there is no active note in the center panel', async () => {

@@ -1,13 +1,13 @@
 import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import { IUniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
 import { IUniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
-import { NO_DATA, UniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
+import { UniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { App } from 'obsidian';
 
 describe('UniqueNoteCreator', () => {
-    it('should create "YYYYMMDDHHmm - basename.md" note', async () => {
+    it('should create "YYYYMMDDHHmm - basename.md" note with the given content', async () => {
         // Arrange
         const chance = new Chance();
         const mockNowResult = chance
@@ -27,12 +27,13 @@ describe('UniqueNoteCreator', () => {
             mockApp
         );
         const mockBasename = chance.sentence();
+        const mockContent = chance.paragraph();
         // Act
-        await uniqueNoteCreator.createUniqueNoteIn('', mockBasename);
+        await uniqueNoteCreator.create('', mockBasename, mockContent);
         // Assert
         expect(mockApp.vault.create).toHaveBeenCalledWith(
             `${mockNowResult} - ${mockBasename}${MARKDOWN_FILE_EXTENSION}`,
-            NO_DATA
+            mockContent
         );
     });
 });
