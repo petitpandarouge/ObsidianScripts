@@ -8,7 +8,7 @@ import {
 import Chance from 'chance';
 import { File, IFileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { Noticer } from '@obsinflate/api/obsidian/noticer';
+import { INoticer } from '@obsinflate/api/obsidian/noticer';
 import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
 import {
     Annotations,
@@ -33,7 +33,7 @@ describe('KoboHighlightsImporter', () => {
         const mockFileSystem = mockDeep<IFileSystem>({
             getFiles: jest.fn().mockReturnValue(files)
         });
-        const mockNoticer = mock<Noticer>();
+        const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
@@ -72,7 +72,7 @@ describe('KoboHighlightsImporter', () => {
         const mockFileSystem = mockDeep<IFileSystem>({
             getFiles: jest.fn().mockReturnValue([])
         });
-        const mockNoticer = mock<Noticer>();
+        const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
         const mockAnnotationsReader = mock<IAnnotationsReader>({
@@ -112,7 +112,7 @@ describe('KoboHighlightsImporter', () => {
         const mockFileSystem = mockDeep<IFileSystem>({
             getFiles: jest.fn().mockReturnValue([mockFile])
         });
-        const mockNoticer = mock<Noticer>();
+        const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
@@ -147,7 +147,7 @@ describe('KoboHighlightsImporter', () => {
         const mockFileSystem = mockDeep<IFileSystem>({
             getFiles: jest.fn().mockReturnValue([])
         });
-        const mockNoticer = mock<Noticer>();
+        const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const annotations: Annotations = {
             annotationSet: {
@@ -188,9 +188,47 @@ describe('KoboHighlightsImporter', () => {
             annotations
         );
     });
-    it.todo(
-        'should create a markdown file having the name "YYYYMMDDHHmm - Book Title.md"'
-    );
+    it('should create a markdown file having the name "YYYYMMDDHHmm - Book Title.md"', async () => {
+        // Arrange
+        const chance = new Chance();
+        const mockFileSystem = mockDeep<IFileSystem>({
+            getFiles: jest.fn().mockReturnValue([])
+        });
+        const mockNoticer = mock<INoticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockBookTitle = chance.sentence();
+        const annotations: Annotations = {
+            annotationSet: {
+                publication: { title: mockBookTitle, creator: 'Author' },
+                annotation: []
+            }
+        };
+        const mockAnnotationsReader = mock<IAnnotationsReader>({
+            read: jest.fn().mockResolvedValue(annotations)
+        });
+        const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
+        const importer = new KoboHighlightsImporter(
+            mockFileSystem,
+            errorNoticer,
+            mockAnnotationsReader,
+            mockMarkdownQuoteFormatter,
+            mockUniqueNoteCreator
+        );
+        const mockParams = mockDeep<Parameters>({
+            // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
+            quickAddApi: { suggester: jest.fn().mockResolvedValue('') }
+        });
+        // Act
+        await importer.entry(mockParams);
+        // Assert
+        expect(mockUniqueNoteCreator.create).toHaveBeenCalledTimes(1);
+        expect(mockUniqueNoteCreator.create).toHaveBeenCalledWith(
+            '06 GARDEN/Livres',
+            annotations.annotationSet.publication.title,
+            expect.any(String)
+        );
+    });
     it.todo('should apply the "Livre" template to the markdown file');
     it.todo('should create the author note if it does not already exist');
     it.todo(

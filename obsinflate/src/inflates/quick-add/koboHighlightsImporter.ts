@@ -16,7 +16,7 @@ export class KoboHighlightsImporter implements Script {
         private errorNoticer: ErrorNoticer,
         private annotationsReader: IAnnotationsReader,
         private annotationsFormatter: IFormatter,
-        private _uniqueNoteCreator: IUniqueNoteCreator
+        private uniqueNoteCreator: IUniqueNoteCreator
     ) {}
 
     async entry(params: Parameters): Promise<void> {
@@ -30,6 +30,11 @@ export class KoboHighlightsImporter implements Script {
         const selectedFile = await this.suggest(params, files);
         const annotations = await this.annotationsReader.read(selectedFile);
         this.annotationsFormatter.format(annotations);
+        await this.uniqueNoteCreator.create(
+            '06 GARDEN/Livres',
+            annotations.annotationSet.publication.title,
+            ''
+        );
     }
 
     private async suggest(params: Parameters, files: File[]): Promise<File> {
