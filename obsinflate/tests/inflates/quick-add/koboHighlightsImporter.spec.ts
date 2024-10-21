@@ -3,6 +3,7 @@ import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import {
     ANNOTATIONS_FILE_EXTENSION,
     ANNOTATIONS_FILES_DIR_PATH,
+    BOOK_NOTE_DESTINATION_DIR,
     KoboHighlightsImporter
 } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
 import Chance from 'chance';
@@ -206,7 +207,9 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue(annotations)
         });
-        const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockMarkdownQuoteFormatter = mock<IFormatter>({
+            format: jest.fn().mockReturnValue('')
+        });
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
@@ -224,9 +227,51 @@ describe('KoboHighlightsImporter', () => {
         // Assert
         expect(mockUniqueNoteCreator.create).toHaveBeenCalledTimes(1);
         expect(mockUniqueNoteCreator.create).toHaveBeenCalledWith(
-            '06 GARDEN/Livres',
+            BOOK_NOTE_DESTINATION_DIR,
             annotations.annotationSet.publication.title,
             expect.any(String)
+        );
+    });
+    it('should initialize the content of the markdown file with the formatted annotations', async () => {
+        // Arrange
+        const chance = new Chance();
+        const mockFileSystem = mockDeep<IFileSystem>({
+            getFiles: jest.fn().mockReturnValue([])
+        });
+        const mockNoticer = mock<INoticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
+        const annotations: Annotations = {
+            annotationSet: {
+                publication: { title: 'Book Title', creator: 'Author' },
+                annotation: []
+            }
+        };
+        const mockAnnotationsReader = mock<IAnnotationsReader>({
+            read: jest.fn().mockResolvedValue(annotations)
+        });
+        const mockContent = chance.paragraph();
+        const mockMarkdownQuoteFormatter = mock<IFormatter>({
+            format: jest.fn().mockReturnValue(mockContent)
+        });
+        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
+        const importer = new KoboHighlightsImporter(
+            mockFileSystem,
+            errorNoticer,
+            mockAnnotationsReader,
+            mockMarkdownQuoteFormatter,
+            mockUniqueNoteCreator
+        );
+        const mockParams = mockDeep<Parameters>({
+            // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
+            quickAddApi: { suggester: jest.fn().mockResolvedValue('') }
+        });
+        // Act
+        await importer.entry(mockParams);
+        // Assert
+        expect(mockUniqueNoteCreator.create).toHaveBeenCalledWith(
+            expect.any(String),
+            expect.any(String),
+            expect.stringMatching(mockContent)
         );
     });
     it.todo('should apply the "Livre" template to the markdown file');
