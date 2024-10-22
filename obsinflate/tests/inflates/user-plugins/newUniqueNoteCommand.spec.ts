@@ -15,6 +15,7 @@ import { MarkdownViewLeafExtension } from '@obsinflate/api/obsidian/markdownView
 import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import { IUniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
 import {
+    FILE_ALREADY_EXISTS_ERROR_MESSAGE,
     MAX_NOTE_CREATION_ATTEMPTS,
     NO_CONTENT,
     UniqueNoteCreator
@@ -304,7 +305,7 @@ describe('NewUniqueNoteCommand', () => {
             native: {
                 vault: {
                     create: jest.fn().mockImplementation(() => {
-                        throw new Error('File already exists.');
+                        throw new Error(FILE_ALREADY_EXISTS_ERROR_MESSAGE);
                     })
                 }
             },

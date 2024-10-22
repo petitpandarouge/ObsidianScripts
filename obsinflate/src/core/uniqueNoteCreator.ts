@@ -9,6 +9,7 @@ export const NO_CONTENT = '';
 export const NO_BASENAME = '';
 export const MAX_NOTE_CREATION_ATTEMPTS = 10;
 export const NOTE_NAME_SEPARATOR = ' - ';
+export const FILE_ALREADY_EXISTS_ERROR_MESSAGE = 'File already exists.';
 
 export interface IUniqueNoteCreator {
     create(
@@ -64,7 +65,8 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
 
     private isFileAlreadyExistsError(error: any): boolean {
         return (
-            error instanceof Error && error.message === 'File already exists.'
+            error instanceof Error &&
+            error.message === FILE_ALREADY_EXISTS_ERROR_MESSAGE
         );
     }
 
