@@ -43,12 +43,18 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
                     content
                 );
                 created = true;
-            } catch {
-                // Vault create raises an error if the file already exists
-                if (attempts >= MAX_NOTE_CREATION_ATTEMPTS) {
-                    throw new MaxNoteCreationAttemptsReachedError(
-                        MAX_NOTE_CREATION_ATTEMPTS
-                    );
+            } catch (error) {
+                if (
+                    error instanceof Error &&
+                    error.message === 'File already exists.'
+                ) {
+                    if (attempts >= MAX_NOTE_CREATION_ATTEMPTS) {
+                        throw new MaxNoteCreationAttemptsReachedError(
+                            MAX_NOTE_CREATION_ATTEMPTS
+                        );
+                    }
+                } else {
+                    throw error;
                 }
             }
         } while (!created);

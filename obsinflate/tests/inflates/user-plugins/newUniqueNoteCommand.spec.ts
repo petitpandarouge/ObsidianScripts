@@ -150,7 +150,7 @@ describe('NewUniqueNoteCommand', () => {
                 vault: {
                     create: jest.fn().mockImplementation((path: string) => {
                         if (path !== createdFileName) {
-                            throw new Error('File already exists');
+                            throw new Error('File already exists.');
                         }
                         return Promise.resolve<TFile>(mock<TFile>());
                     })
@@ -304,7 +304,7 @@ describe('NewUniqueNoteCommand', () => {
             native: {
                 vault: {
                     create: jest.fn().mockImplementation(() => {
-                        throw new Error('File already exists');
+                        throw new Error('File already exists.');
                     })
                 }
             },

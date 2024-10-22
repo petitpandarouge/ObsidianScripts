@@ -2,6 +2,8 @@ import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import { IUniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
 import { IUniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
 import {
+    NO_BASENAME,
+    NO_CONTENT,
     NOTE_NAME_SEPARATOR,
     UniqueNoteCreator
 } from '@obsinflate/core/uniqueNoteCreator';
@@ -10,6 +12,7 @@ import { mock, mockDeep } from 'jest-mock-extended';
 import { App } from 'obsidian';
 
 const NO_PATH = '';
+const NO_SEED = '';
 
 describe('UniqueNoteCreator', () => {
     it('should create "YYYYMMDDHHmm - basename.md" note with the given content', async () => {
@@ -40,5 +43,34 @@ describe('UniqueNoteCreator', () => {
             `${mockNowResult}${NOTE_NAME_SEPARATOR}${mockBasename}${MARKDOWN_FILE_EXTENSION}`,
             mockContent
         );
+    });
+    it('should throw if any other error than "file already exists" occurs', async () => {
+        // Arrange
+        const chance = new Chance();
+        const mockSeed = mock<IUniqueNameGeneratorSeed>({
+            next: jest.fn().mockReturnValue(NO_SEED)
+        });
+        const mockNameGenerator = mock<IUniqueNameGenerator>({
+            generateNewSeed: jest.fn().mockImplementation(() => {
+                return mockSeed;
+            })
+        });
+        const mockErrorMessage = chance.sentence();
+        const mockApp = mockDeep<App>({
+            vault: {
+                create: jest.fn().mockImplementation(() => {
+                    throw new Error(mockErrorMessage);
+                })
+            }
+        });
+        const uniqueNoteCreator = new UniqueNoteCreator(
+            mockNameGenerator,
+            mockApp
+        );
+        // Act
+        const action = async () =>
+            await uniqueNoteCreator.create(NO_PATH, NO_BASENAME, NO_CONTENT);
+        // Assert
+        await expect(action).rejects.toThrow(mockErrorMessage);
     });
 });
