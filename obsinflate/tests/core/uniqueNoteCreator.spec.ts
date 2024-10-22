@@ -4,6 +4,7 @@ import { IUniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSe
 import {
     NO_BASENAME,
     NO_CONTENT,
+    ROOT_PATH,
     NOTE_NAME_SEPARATOR,
     UniqueNoteCreator
 } from '@obsinflate/core/uniqueNoteCreator';
@@ -11,7 +12,6 @@ import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { App } from 'obsidian';
 
-const NO_PATH = '';
 const NO_SEED = '';
 
 describe('UniqueNoteCreator', () => {
@@ -37,7 +37,7 @@ describe('UniqueNoteCreator', () => {
         const mockBasename = chance.sentence();
         const mockContent = chance.paragraph();
         // Act
-        await uniqueNoteCreator.create(NO_PATH, mockBasename, mockContent);
+        await uniqueNoteCreator.create(ROOT_PATH, mockBasename, mockContent);
         // Assert
         expect(mockApp.vault.create).toHaveBeenCalledWith(
             `${mockNowResult}${NOTE_NAME_SEPARATOR}${mockBasename}${MARKDOWN_FILE_EXTENSION}`,
@@ -69,7 +69,7 @@ describe('UniqueNoteCreator', () => {
         );
         // Act
         const action = async () =>
-            await uniqueNoteCreator.create(NO_PATH, NO_BASENAME, NO_CONTENT);
+            await uniqueNoteCreator.create(ROOT_PATH, NO_BASENAME, NO_CONTENT);
         // Assert
         await expect(action).rejects.toThrow(mockErrorMessage);
     });

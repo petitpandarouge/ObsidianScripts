@@ -4,6 +4,7 @@ import { MaxNoteCreationAttemptsReachedError } from '@obsinflate/core/maxNoteCre
 import { App, TFile } from 'obsidian';
 import path from 'path';
 
+export const ROOT_PATH = '';
 export const NO_CONTENT = '';
 export const NO_BASENAME = '';
 export const MAX_NOTE_CREATION_ATTEMPTS = 10;
@@ -44,15 +45,8 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
                 );
                 created = true;
             } catch (error) {
-                if (
-                    error instanceof Error &&
-                    error.message === 'File already exists.'
-                ) {
-                    if (attempts >= MAX_NOTE_CREATION_ATTEMPTS) {
-                        throw new MaxNoteCreationAttemptsReachedError(
-                            MAX_NOTE_CREATION_ATTEMPTS
-                        );
-                    }
+                if (this.isFileAlreadyExistsError(error)) {
+                    this.throwIfMaxNoteCreationAttemptsReached(attempts);
                 } else {
                     throw error;
                 }
@@ -66,5 +60,19 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
             return `${uniqueName}${NOTE_NAME_SEPARATOR}${basename}${MARKDOWN_FILE_EXTENSION}`;
         }
         return `${uniqueName}${MARKDOWN_FILE_EXTENSION}`;
+    }
+
+    private isFileAlreadyExistsError(error: any): boolean {
+        return (
+            error instanceof Error && error.message === 'File already exists.'
+        );
+    }
+
+    private throwIfMaxNoteCreationAttemptsReached(attempts: number): void {
+        if (attempts >= MAX_NOTE_CREATION_ATTEMPTS) {
+            throw new MaxNoteCreationAttemptsReachedError(
+                MAX_NOTE_CREATION_ATTEMPTS
+            );
+        }
     }
 }
