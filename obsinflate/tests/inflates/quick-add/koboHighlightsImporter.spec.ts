@@ -160,9 +160,12 @@ describe('KoboHighlightsImporter', () => {
         for (let i = 0; i < annotationsCount; i++) {
             annotations.annotationSet.annotation.push({
                 target: {
-                    fragment: { text: `${chance.sentence()}` }
+                    fragment: {
+                        text: chance.sentence(),
+                        progress: chance.floating()
+                    }
                 },
-                content: { text: `${chance.sentence()}` }
+                content: { text: chance.sentence() }
             });
         }
         const mockAnnotationsReader = mock<IAnnotationsReader>({
