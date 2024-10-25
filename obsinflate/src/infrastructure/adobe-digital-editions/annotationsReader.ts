@@ -3,6 +3,8 @@ import { File } from '@obsinflate/infrastructure/fileSystem';
 import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
 import { InvalidFileExtensionError } from '@obsinflate/infrastructure/invalidFileExtensionError';
 
+const NO_PREFIX = '';
+
 export interface IAnnotationsReader {
     read(file: File): Promise<Annotations>;
 }
@@ -17,9 +19,12 @@ export class AnnotationsReader implements IAnnotationsReader {
         }
         const xmlData = await file.read();
         const reader = new XmlParser<Annotations>();
-        return reader.parse(xmlData, {
-            removeNSPrefix: true
+        const annotations = reader.parse(xmlData, {
+            removeNSPrefix: true,
+            ignoreAttributes: false,
+            attributeNamePrefix: NO_PREFIX
         });
+        return annotations;
     }
 }
 export interface Annotations {

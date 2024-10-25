@@ -161,8 +161,7 @@ describe('KoboHighlightsImporter', () => {
             annotations.annotationSet.annotation.push({
                 target: {
                     fragment: {
-                        text: chance.sentence(),
-                        progress: chance.floating()
+                        text: chance.sentence()
                     }
                 },
                 content: { text: chance.sentence() }
