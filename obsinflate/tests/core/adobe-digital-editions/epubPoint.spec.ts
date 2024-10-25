@@ -67,7 +67,7 @@ describe('EpubPoint', () => {
         });
     });
     describe('isPositionned', () => {
-        it('should return InAnotherFile if both the points are not in the same file path', () => {
+        it('should return InAnotherFile if both the points are not in the same file', () => {
             // Arrange
             const chance = new Chance();
             const point1 = EpubPoint.FromString(
@@ -80,6 +80,69 @@ describe('EpubPoint', () => {
             const result = point1.isPositionned(point2);
             // Assert
             expect(result).toBe(EpubPointPosition.InAnotherFile);
+        });
+        it('should return Before if the first point is before the second point in the same file', () => {
+            // Arrange
+            const chance = new Chance();
+            const filePath = `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}${XHTML_FILE_EXTENSION}`;
+            const points1 = [
+                EpubPoint.FromString(`${filePath}#point(/1/4/173:27)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173:27)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173:27)`)
+            ];
+            const points2 = [
+                EpubPoint.FromString(`${filePath}#point(/1/4/174:27)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173/2:0)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173:28)`)
+            ];
+            for (let i = 0; i < points1.length; i++) {
+                // Act
+                const result = points1[i].isPositionned(points2[i]);
+                // Assert
+                expect(result).toBe(EpubPointPosition.Before);
+            }
+        });
+        it('should return After if the first point is after the second point in the same file', () => {
+            // Arrange
+            const chance = new Chance();
+            const filePath = `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}${XHTML_FILE_EXTENSION}`;
+            const points1 = [
+                EpubPoint.FromString(`${filePath}#point(/1/4/174:27)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173/2:0)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173:28)`)
+            ];
+            const points2 = [
+                EpubPoint.FromString(`${filePath}#point(/1/4/173:27)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173:27)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173:27)`)
+            ];
+            for (let i = 0; i < points1.length; i++) {
+                // Act
+                const result = points1[i].isPositionned(points2[i]);
+                // Assert
+                expect(result).toBe(EpubPointPosition.After);
+            }
+        });
+        it('should return Same if the first point is the same as the second point in the same file', () => {
+            // Arrange
+            const chance = new Chance();
+            const filePath = `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}${XHTML_FILE_EXTENSION}`;
+            const points1 = [
+                EpubPoint.FromString(`${filePath}#point(/1/4/174:27)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173/2:0)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173:28)`)
+            ];
+            const points2 = [
+                EpubPoint.FromString(`${filePath}#point(/1/4/174:27)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173/2:0)`),
+                EpubPoint.FromString(`${filePath}#point(/1/4/173:28)`)
+            ];
+            for (let i = 0; i < points1.length; i++) {
+                // Act
+                const result = points1[i].isPositionned(points2[i]);
+                // Assert
+                expect(result).toBe(EpubPointPosition.Same);
+            }
         });
     });
 });

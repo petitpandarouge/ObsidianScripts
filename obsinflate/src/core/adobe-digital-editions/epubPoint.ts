@@ -38,6 +38,28 @@ export class EpubPoint {
         if (this.filePath !== other.filePath) {
             return EpubPointPosition.InAnotherFile;
         }
-        throw new Error('Not implemented');
+        for (
+            let i = 0;
+            i <
+            Math.min(this.pathComponents.length, other.pathComponents.length);
+            i++
+        ) {
+            if (this.pathComponents[i] < other.pathComponents[i]) {
+                return EpubPointPosition.Before;
+            } else if (this.pathComponents[i] > other.pathComponents[i]) {
+                return EpubPointPosition.After;
+            }
+        }
+        if (this.pathComponents.length < other.pathComponents.length) {
+            return EpubPointPosition.Before;
+        } else if (this.pathComponents.length > other.pathComponents.length) {
+            return EpubPointPosition.After;
+        }
+        if (this.offset < other.offset) {
+            return EpubPointPosition.Before;
+        } else if (this.offset > other.offset) {
+            return EpubPointPosition.After;
+        }
+        return EpubPointPosition.Same;
     }
 }
