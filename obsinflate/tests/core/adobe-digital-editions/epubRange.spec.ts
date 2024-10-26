@@ -5,6 +5,7 @@ import {
 import { EpubRange } from '@obsinflate/core/adobe-digital-editions/epubRange';
 import { EpubRangeLimitsNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangeLimitsNotInTheSameFileError';
 import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubRangePosition';
+import { InvalidEpubRangeLimitsError } from '@obsinflate/core/adobe-digital-editions/invalidEpubRangeLimitsError';
 import { XHTML_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import Chance from 'chance';
 
@@ -22,6 +23,19 @@ describe('EpubRange', () => {
         const action = () => new EpubRange(start, end);
         // Assert
         expect(action).toThrow(EpubRangeLimitsNotInTheSameFileError);
+    });
+    it('should raise an error if the start point is after the end point', () => {
+        // Arrange
+        const start = EpubPoint.FromString(
+            'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
+        );
+        const end = EpubPoint.FromString(
+            'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:27)'
+        );
+        // Act
+        const action = () => new EpubRange(start, end);
+        // Assert
+        expect(action).toThrow(InvalidEpubRangeLimitsError);
     });
     describe('isPositionned', () => {
         it('should return Before if the end point is before the other range start point', () => {
