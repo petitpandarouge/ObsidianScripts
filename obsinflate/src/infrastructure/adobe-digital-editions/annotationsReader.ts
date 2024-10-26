@@ -3,6 +3,7 @@ import { File } from '@obsinflate/infrastructure/fileSystem';
 import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
 import { InvalidFileExtensionError } from '@obsinflate/infrastructure/invalidFileExtensionError';
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
+import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 
 const NO_PREFIX = '';
 
@@ -28,40 +29,15 @@ export class AnnotationsReader implements IAnnotationsReader {
                 if (attrName === 'start' || attrName === 'end') {
                     return EpubPoint.FromString(attrValue);
                 }
+                return attrValue;
+            },
+            updateTag: (tagName) => {
+                if (tagName === 'annotation') {
+                    return 'annotations';
+                }
+                return tagName;
             }
         });
         return annotations;
     }
-}
-export interface Annotations {
-    annotationSet: AnnotationSet;
-}
-
-export interface AnnotationSet {
-    publication: Publication;
-    annotation: Annotation[];
-}
-
-export interface Publication {
-    title: string;
-    creator: string;
-}
-
-export interface Annotation {
-    target: Target;
-    content: Content;
-}
-
-export interface Target {
-    fragment: Fragment;
-}
-
-export interface Fragment {
-    text: string;
-    start: EpubPoint;
-    end: EpubPoint;
-}
-
-export interface Content {
-    text: string;
 }

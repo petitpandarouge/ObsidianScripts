@@ -1,5 +1,5 @@
 import { AnnotationsMarkdownFormatter } from '@obsinflate/inflates/quick-add/annotationsMarkdownFormatter';
-import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
+import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 import Chance from 'chance';
 
 describe('AnnotationsMarkdownFormatter', () => {
@@ -13,11 +13,11 @@ describe('AnnotationsMarkdownFormatter', () => {
                     title: chance.sentence(),
                     creator: chance.name()
                 },
-                annotation: []
+                annotations: []
             }
         };
         for (let i = 0; i < annotationsCount; i++) {
-            annotations.annotationSet.annotation.push({
+            annotations.annotationSet.annotations.push({
                 target: {
                     fragment: {
                         text: chance.sentence(),
@@ -43,7 +43,7 @@ describe('AnnotationsMarkdownFormatter', () => {
         const formatted = formatter.format(annotations);
         // Assert
         expect(formatted).toBe(
-            `${annotations.annotationSet.annotation
+            `${annotations.annotationSet.annotations
                 .map(
                     (annotation) =>
                         `>[!quote]\n>${annotation.target.fragment.text}\n\n${annotation.content.text}`

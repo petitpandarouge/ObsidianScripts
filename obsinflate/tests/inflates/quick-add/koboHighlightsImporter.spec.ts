@@ -11,10 +11,8 @@ import { File, IFileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { INoticer } from '@obsinflate/api/obsidian/noticer';
 import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
-import {
-    Annotations,
-    IAnnotationsReader
-} from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
+import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
+import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
 import { IUniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
 
@@ -153,12 +151,12 @@ describe('KoboHighlightsImporter', () => {
         const annotations: Annotations = {
             annotationSet: {
                 publication: { title: 'Book Title', creator: 'Author' },
-                annotation: []
+                annotations: []
             }
         };
         const annotationsCount = chance.integer({ min: 1, max: 10 });
         for (let i = 0; i < annotationsCount; i++) {
-            annotations.annotationSet.annotation.push({
+            annotations.annotationSet.annotations.push({
                 target: {
                     fragment: {
                         text: chance.sentence(),
@@ -215,7 +213,7 @@ describe('KoboHighlightsImporter', () => {
         const annotations: Annotations = {
             annotationSet: {
                 publication: { title: mockBookTitle, creator: 'Author' },
-                annotation: []
+                annotations: []
             }
         };
         const mockAnnotationsReader = mock<IAnnotationsReader>({
@@ -257,7 +255,7 @@ describe('KoboHighlightsImporter', () => {
         const annotations: Annotations = {
             annotationSet: {
                 publication: { title: 'Book Title', creator: 'Author' },
-                annotation: []
+                annotations: []
             }
         };
         const mockAnnotationsReader = mock<IAnnotationsReader>({
