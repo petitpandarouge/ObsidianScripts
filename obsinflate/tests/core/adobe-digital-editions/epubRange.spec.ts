@@ -1,7 +1,4 @@
-import {
-    EPUB_POINT_FILE_PATH_PREFIX,
-    EpubPoint
-} from '@obsinflate/core/adobe-digital-editions/epubPoint';
+import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { EpubRange } from '@obsinflate/core/adobe-digital-editions/epubRange';
 import { EpubRangeLimitsNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangeLimitsNotInTheSameFileError';
 import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubRangePosition';
