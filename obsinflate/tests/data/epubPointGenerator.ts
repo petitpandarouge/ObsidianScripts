@@ -1,6 +1,7 @@
 import {
     EPUB_POINT_COMPONENTS_SEPARATOR,
-    EPUB_POINT_FILE_PATH_PREFIX
+    EPUB_POINT_FILE_PATH_PREFIX,
+    EpubPoint
 } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { XHTML_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import Chance from 'chance';
@@ -25,6 +26,11 @@ interface EpubPointGeneratorResult extends PathComponents {
 }
 
 const chance = new Chance();
+
+export enum Operation {
+    Add,
+    Subtract
+}
 
 export class EpubPointGenerator {
     static generate(
@@ -51,6 +57,27 @@ export class EpubPointGenerator {
         );
         return {
             filePath,
+            pointAsString,
+            ...pathComponents
+        };
+    }
+
+    static generateFrom(
+        point: EpubPoint,
+        operation: Operation,
+        offsetRange: Partial<IntegerOptions> = { min: 1, max: 100 }
+    ): EpubPointGeneratorResult {
+        const pathComponents = EpubPointGenerator.applyOffset(
+            point,
+            operation,
+            offsetRange
+        );
+        const pointAsString = EpubPointGenerator.formatPoint(
+            point.filePath,
+            pathComponents
+        );
+        return {
+            filePath: point.filePath,
             pointAsString,
             ...pathComponents
         };
@@ -104,5 +131,34 @@ export class EpubPointGenerator {
         pathComponents: PathComponents
     ): string {
         return `${EPUB_POINT_COMPONENTS_SEPARATOR}${pathComponents.elementIndexes.join(EPUB_POINT_COMPONENTS_SEPARATOR)}${EPUB_ELEMENT_INDEXES_TO_OFFSET_SEPARATOR}${pathComponents.offset}`;
+    }
+
+    private static applyOffset(
+        point: EpubPoint,
+        operation: Operation,
+        offsetRange: Partial<IntegerOptions>
+    ): PathComponents {
+        const offset = chance.integer(offsetRange);
+        const index = chance.integer({
+            min: 0,
+            max: point.elementIndexes.length
+        });
+        if (index === point.elementIndexes.length) {
+            return {
+                elementIndexes: point.elementIndexes,
+                offset:
+                    operation == Operation.Add
+                        ? point.offset + offset
+                        : point.offset - offset
+            };
+        }
+        const elementIndexes = point.elementIndexes.slice();
+        operation == Operation.Add
+            ? (elementIndexes[index] += offset)
+            : (elementIndexes[index] -= offset);
+        return {
+            elementIndexes,
+            offset: point.offset
+        };
     }
 }

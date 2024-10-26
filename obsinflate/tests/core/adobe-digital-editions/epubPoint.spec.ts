@@ -7,26 +7,23 @@ import {
 } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { EpubPointPosition } from '@obsinflate/core/adobe-digital-editions/epubPointPosition';
 import { XHTML_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
+import {
+    EpubPointGenerator,
+    Operation
+} from '@obsinflate/tests/data/epubPointGenerator';
 import Chance from 'chance';
 
 describe('EpubPoint', () => {
     describe('FromString', () => {
         it('should be able to parse a string into an EpubPoint', () => {
             // Arrange
-            const chance = new Chance();
-            const filePath = `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}/${chance.word()}${XHTML_FILE_EXTENSION}`;
-            const elementIndexes = [];
-            for (let i = 0; i < chance.integer({ min: 1, max: 5 }); i++) {
-                elementIndexes.push(chance.integer({ min: 1, max: 100 }));
-            }
-            const offset = chance.integer({ min: 1, max: 100 });
-            const pointAsString = `${filePath}#point(${EPUB_POINT_COMPONENTS_SEPARATOR}${elementIndexes.join(EPUB_POINT_COMPONENTS_SEPARATOR)}:${offset})`;
+            const generatedPoint = EpubPointGenerator.generate();
             // Act
-            const point = EpubPoint.FromString(pointAsString);
+            const point = EpubPoint.FromString(generatedPoint.pointAsString);
             // Assert
-            expect(point.filePath).toEqual(filePath);
-            expect(point.elementIndexes).toEqual(elementIndexes);
-            expect(point.offset).toEqual(offset);
+            expect(point.filePath).toEqual(generatedPoint.filePath);
+            expect(point.elementIndexes).toEqual(generatedPoint.elementIndexes);
+            expect(point.offset).toEqual(generatedPoint.offset);
         });
         it('should raise an error if the base format is not respected', () => {
             // Arrange
@@ -40,7 +37,7 @@ describe('EpubPoint', () => {
         it('should raise an error if the file path does not begin by OEBPS', () => {
             // Arrange
             const chance = new Chance();
-            const filePath = `${chance.word()}/${chance.word()}.xhtml`;
+            const filePath = `${chance.word()}/${chance.word()}${XHTML_FILE_EXTENSION}`;
             const elementIndexes = [1];
             const offset = 1;
             const pointAsString = `${filePath}#point(${EPUB_POINT_COMPONENTS_SEPARATOR}${elementIndexes.join(EPUB_POINT_COMPONENTS_SEPARATOR)}:${offset})`;
@@ -69,12 +66,11 @@ describe('EpubPoint', () => {
     describe('isPositionned', () => {
         it('should return InAnotherFile if both the points are not in the same file', () => {
             // Arrange
-            const chance = new Chance();
             const point1 = EpubPoint.FromString(
-                `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}${XHTML_FILE_EXTENSION}#point(/1/4/173:27)`
+                EpubPointGenerator.generate().pointAsString
             );
             const point2 = EpubPoint.FromString(
-                `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}${XHTML_FILE_EXTENSION}#point(/1/4/174:27)`
+                EpubPointGenerator.generate().pointAsString
             );
             // Act
             const result = point1.isPositionned(point2);
@@ -83,24 +79,17 @@ describe('EpubPoint', () => {
         });
         it('should return Before if the first point is before the second point in the same file', () => {
             // Arrange
-            const chance = new Chance();
-            const filePath = `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}${XHTML_FILE_EXTENSION}`;
-            const points1 = [
-                EpubPoint.FromString(`${filePath}#point(/1/4/173:27)`),
-                EpubPoint.FromString(`${filePath}#point(/1/4/173:27)`),
-                EpubPoint.FromString(`${filePath}#point(/1/4/173:27)`)
-            ];
-            const points2 = [
-                EpubPoint.FromString(`${filePath}#point(/1/4/174:27)`),
-                EpubPoint.FromString(`${filePath}#point(/1/4/173/2:0)`),
-                EpubPoint.FromString(`${filePath}#point(/1/4/173:28)`)
-            ];
-            for (let i = 0; i < points1.length; i++) {
-                // Act
-                const result = points1[i].isPositionned(points2[i]);
-                // Assert
-                expect(result).toBe(EpubPointPosition.Before);
-            }
+            const point1 = EpubPoint.FromString(
+                EpubPointGenerator.generate().pointAsString
+            );
+            const point2 = EpubPoint.FromString(
+                EpubPointGenerator.generateFrom(point1, Operation.Add)
+                    .pointAsString
+            );
+            // Act
+            const result = point1.isPositionned(point2);
+            // Assert
+            expect(result).toBe(EpubPointPosition.Before);
         });
         it('should return After if the first point is after the second point in the same file', () => {
             // Arrange

@@ -206,6 +206,9 @@ describe('EpubRange', () => {
                 expect(result).toBe(EpubRangePosition.Overlap);
             }
         });
+        it.todo(
+            'should raise an error if the ranges are from different XHTML files'
+        );
     });
     it('should be able to sort a set of ranges from the same XHTML file', async () => {
         // // Arrange
