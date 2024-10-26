@@ -6,18 +6,16 @@ import { EpubRange } from '@obsinflate/core/adobe-digital-editions/epubRange';
 import { EpubRangeLimitsNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangeLimitsNotInTheSameFileError';
 import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubRangePosition';
 import { InvalidEpubRangeLimitsError } from '@obsinflate/core/adobe-digital-editions/invalidEpubRangeLimitsError';
-import { XHTML_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
-import Chance from 'chance';
+import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 
 describe('EpubRange', () => {
     it('should raise error if the range points are from different XHTML files', () => {
         // Arrange
-        const chance = new Chance();
         const start = EpubPoint.FromString(
-            `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}${XHTML_FILE_EXTENSION}#point(/1/4/173:27)`
+            EpubPointGenerator.generate().pointAsString
         );
         const end = EpubPoint.FromString(
-            `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}${XHTML_FILE_EXTENSION}#point(/1/4/174:27)`
+            EpubPointGenerator.generate().pointAsString
         );
         // Act
         const action = () => new EpubRange(start, end);
@@ -26,11 +24,11 @@ describe('EpubRange', () => {
     });
     it('should raise an error if the start point is after the end point', () => {
         // Arrange
-        const start = EpubPoint.FromString(
-            'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-        );
         const end = EpubPoint.FromString(
-            'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:27)'
+            EpubPointGenerator.generate().pointAsString
+        );
+        const start = EpubPoint.FromString(
+            EpubPointGenerator.generateFromWithOffset(end).pointAsString
         );
         // Act
         const action = () => new EpubRange(start, end);
@@ -40,22 +38,20 @@ describe('EpubRange', () => {
     describe('isPositionned', () => {
         it('should return Before if the end point is before the other range start point', () => {
             // Arrange
-            const range1 = new EpubRange(
-                EpubPoint.FromString(
-                    'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:27)'
-                ),
-                EpubPoint.FromString(
-                    'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-                )
+            const point1 = EpubPoint.FromString(
+                EpubPointGenerator.generate().pointAsString
             );
-            const range2 = new EpubRange(
-                EpubPoint.FromString(
-                    'OEBPS/Text/Chapter05.xhtml#point(/1/4/175:27)'
-                ),
-                EpubPoint.FromString(
-                    'OEBPS/Text/Chapter05.xhtml#point(/1/4/176:27)'
-                )
+            const point2 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point1).pointAsString
             );
+            const point3 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point2).pointAsString
+            );
+            const point4 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point3).pointAsString
+            );
+            const range1 = new EpubRange(point1, point2);
+            const range2 = new EpubRange(point3, point4);
             // Act
             const result = range1.isPositionned(range2);
             // Assert
