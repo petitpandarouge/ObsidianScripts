@@ -2,6 +2,7 @@ import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { EpubPointPosition } from '@obsinflate/core/adobe-digital-editions/epubPointPosition';
 import { EpubRangeLimitsNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangeLimitsNotInTheSameFileError';
 import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubRangePosition';
+import { EpubRangesNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangesNotInTheSameFileError';
 import { InvalidEpubRangeLimitsError } from '@obsinflate/core/adobe-digital-editions/invalidEpubRangeLimitsError';
 
 export class EpubRange {
@@ -19,6 +20,9 @@ export class EpubRange {
     }
 
     isPositionned(other: EpubRange): EpubRangePosition {
+        if (this.start.filePath !== other.start.filePath) {
+            throw new EpubRangesNotInTheSameFileError();
+        }
         if (this.end.isPositionned(other.start) === EpubPointPosition.Before) {
             return EpubRangePosition.Before;
         }

@@ -5,6 +5,7 @@ import {
 import { EpubRange } from '@obsinflate/core/adobe-digital-editions/epubRange';
 import { EpubRangeLimitsNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangeLimitsNotInTheSameFileError';
 import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubRangePosition';
+import { EpubRangesNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangesNotInTheSameFileError';
 import { InvalidEpubRangeLimitsError } from '@obsinflate/core/adobe-digital-editions/invalidEpubRangeLimitsError';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 
@@ -137,9 +138,27 @@ describe('EpubRange', () => {
                 expect(result).toBe(EpubRangePosition.Overlap);
             }
         });
-        it.todo(
-            'should raise an error if the ranges are from different XHTML files'
-        );
+        it('should raise an error if the ranges are from different XHTML files', () => {
+            // Arrange
+            const start1 = EpubPoint.FromString(
+                EpubPointGenerator.generate().pointAsString
+            );
+            const end1 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(start1).pointAsString
+            );
+            const start2 = EpubPoint.FromString(
+                EpubPointGenerator.generate().pointAsString
+            );
+            const end2 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(start2).pointAsString
+            );
+            const range1 = new EpubRange(start1, end1);
+            const range2 = new EpubRange(start2, end2);
+            // Act
+            const action = () => range1.isPositionned(range2);
+            // Assert
+            expect(action).toThrow(EpubRangesNotInTheSameFileError);
+        });
     });
     it('should be able to sort a set of ranges from the same XHTML file', async () => {
         // // Arrange
