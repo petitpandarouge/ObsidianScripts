@@ -59,22 +59,20 @@ describe('EpubRange', () => {
         });
         it('should return After if the start point is after the other range end point', () => {
             // Arrange
-            const range1 = new EpubRange(
-                EpubPoint.FromString(
-                    'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:28)'
-                ),
-                EpubPoint.FromString(
-                    'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-                )
+            const point1 = EpubPoint.FromString(
+                EpubPointGenerator.generate().pointAsString
             );
-            const range2 = new EpubRange(
-                EpubPoint.FromString(
-                    'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
-                ),
-                EpubPoint.FromString(
-                    'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:27)'
-                )
+            const point2 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point1).pointAsString
             );
+            const point3 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point2).pointAsString
+            );
+            const point4 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point3).pointAsString
+            );
+            const range1 = new EpubRange(point3, point4);
+            const range2 = new EpubRange(point1, point2);
             // Act
             const result = range1.isPositionned(range2);
             // Assert
@@ -82,73 +80,29 @@ describe('EpubRange', () => {
         });
         it('should return Overlap if the start point is before the other range end point or the end point is after the other range start point', () => {
             // Arrange
+            const point1 = EpubPoint.FromString(
+                EpubPointGenerator.generate().pointAsString
+            );
+            const point2 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point1).pointAsString
+            );
+            const point3 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point2).pointAsString
+            );
+            const point4 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point3).pointAsString
+            );
             const ranges1 = [
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-                    )
-                ),
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-                    )
-                ),
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/175:27)'
-                    )
-                ),
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/175:27)'
-                    )
-                )
+                new EpubRange(point2, point4),
+                new EpubRange(point1, point3),
+                new EpubRange(point1, point4),
+                new EpubRange(point2, point3)
             ];
             const ranges2 = [
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/171:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:27)'
-                    )
-                ),
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/175:27)'
-                    )
-                ),
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-                    )
-                ),
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/171:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/176:27)'
-                    )
-                )
+                new EpubRange(point1, point3),
+                new EpubRange(point2, point4),
+                new EpubRange(point2, point3),
+                new EpubRange(point1, point4)
             ];
             for (let i = 0; i < ranges1.length; i++) {
                 // Act
@@ -159,41 +113,22 @@ describe('EpubRange', () => {
         });
         it('should return Overlap if the start point is the same as the other range end point or the end point is the same as the other range start point', () => {
             // Arrange
+            const point1 = EpubPoint.FromString(
+                EpubPointGenerator.generate().pointAsString
+            );
+            const point2 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point1).pointAsString
+            );
+            const point3 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point2).pointAsString
+            );
             const ranges1 = [
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-                    )
-                ),
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-                    )
-                )
+                new EpubRange(point1, point2),
+                new EpubRange(point2, point3)
             ];
             const ranges2 = [
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/176:27)'
-                    )
-                ),
-                new EpubRange(
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/170:27)'
-                    ),
-                    EpubPoint.FromString(
-                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
-                    )
-                )
+                new EpubRange(point2, point3),
+                new EpubRange(point1, point2)
             ];
             for (let i = 0; i < ranges1.length; i++) {
                 // Act
