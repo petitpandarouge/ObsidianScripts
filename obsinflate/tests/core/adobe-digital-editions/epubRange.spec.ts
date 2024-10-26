@@ -161,6 +161,51 @@ describe('EpubRange', () => {
                 expect(result).toBe(EpubRangePosition.Overlap);
             }
         });
+        it('should return Overlap if the start point is the same as the other range end point or the end point is the same as the other range start point', () => {
+            // Arrange
+            const ranges1 = [
+                new EpubRange(
+                    EpubPoint.FromString(
+                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
+                    ),
+                    EpubPoint.FromString(
+                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
+                    )
+                ),
+                new EpubRange(
+                    EpubPoint.FromString(
+                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
+                    ),
+                    EpubPoint.FromString(
+                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
+                    )
+                )
+            ];
+            const ranges2 = [
+                new EpubRange(
+                    EpubPoint.FromString(
+                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
+                    ),
+                    EpubPoint.FromString(
+                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/176:27)'
+                    )
+                ),
+                new EpubRange(
+                    EpubPoint.FromString(
+                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/170:27)'
+                    ),
+                    EpubPoint.FromString(
+                        'OEBPS/Text/Chapter05.xhtml#point(/1/4/172:27)'
+                    )
+                )
+            ];
+            for (let i = 0; i < ranges1.length; i++) {
+                // Act
+                const result = ranges1[i].isPositionned(ranges2[i]);
+                // Assert
+                expect(result).toBe(EpubRangePosition.Overlap);
+            }
+        });
     });
     it('should be able to sort a set of ranges from the same XHTML file', async () => {
         // // Arrange

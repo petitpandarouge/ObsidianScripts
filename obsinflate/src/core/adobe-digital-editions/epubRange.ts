@@ -6,6 +6,7 @@ import { InvalidEpubRangeLimitsError } from '@obsinflate/core/adobe-digital-edit
 
 export class EpubRange {
     constructor(
+        // TODO : must be a fragment
         public start: EpubPoint,
         public end: EpubPoint
     ) {
