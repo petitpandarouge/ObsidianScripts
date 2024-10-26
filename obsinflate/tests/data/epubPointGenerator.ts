@@ -27,11 +27,6 @@ interface EpubPointGeneratorResult extends PathComponents {
 
 const chance = new Chance();
 
-export enum Operation {
-    Add,
-    Subtract
-}
-
 export class EpubPointGenerator {
     static generate(
         filePathElementsCount: Partial<IntegerOptions> = { min: 1, max: 5 },
@@ -62,14 +57,12 @@ export class EpubPointGenerator {
         };
     }
 
-    static generateFrom(
+    static generateFromWithOffset(
         point: EpubPoint,
-        operation: Operation,
         offsetRange: Partial<IntegerOptions> = { min: 1, max: 100 }
     ): EpubPointGeneratorResult {
         const pathComponents = EpubPointGenerator.applyOffset(
             point,
-            operation,
             offsetRange
         );
         const pointAsString = EpubPointGenerator.formatPoint(
@@ -135,7 +128,6 @@ export class EpubPointGenerator {
 
     private static applyOffset(
         point: EpubPoint,
-        operation: Operation,
         offsetRange: Partial<IntegerOptions>
     ): PathComponents {
         const offset = chance.integer(offsetRange);
@@ -146,16 +138,11 @@ export class EpubPointGenerator {
         if (index === point.elementIndexes.length) {
             return {
                 elementIndexes: point.elementIndexes,
-                offset:
-                    operation == Operation.Add
-                        ? point.offset + offset
-                        : point.offset - offset
+                offset: point.offset + offset
             };
         }
         const elementIndexes = point.elementIndexes.slice();
-        operation == Operation.Add
-            ? (elementIndexes[index] += offset)
-            : (elementIndexes[index] -= offset);
+        elementIndexes[index] += offset;
         return {
             elementIndexes,
             offset: point.offset
