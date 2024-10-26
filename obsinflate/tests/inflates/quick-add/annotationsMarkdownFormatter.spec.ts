@@ -19,7 +19,21 @@ describe('AnnotationsMarkdownFormatter', () => {
         for (let i = 0; i < annotationsCount; i++) {
             annotations.annotationSet.annotation.push({
                 target: {
-                    fragment: { text: chance.sentence() }
+                    fragment: {
+                        text: chance.sentence(),
+                        start: {
+                            filePath: chance.word(),
+                            elementIndexes: [1],
+                            offset: 1,
+                            isPositionned: jest.fn()
+                        },
+                        end: {
+                            filePath: chance.word(),
+                            elementIndexes: [1],
+                            offset: 1,
+                            isPositionned: jest.fn()
+                        }
+                    }
                 },
                 content: { text: chance.sentence() }
             });

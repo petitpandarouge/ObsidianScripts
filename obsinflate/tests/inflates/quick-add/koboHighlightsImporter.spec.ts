@@ -161,7 +161,19 @@ describe('KoboHighlightsImporter', () => {
             annotations.annotationSet.annotation.push({
                 target: {
                     fragment: {
-                        text: chance.sentence()
+                        text: chance.sentence(),
+                        start: {
+                            filePath: chance.word(),
+                            elementIndexes: [1],
+                            offset: 1,
+                            isPositionned: jest.fn()
+                        },
+                        end: {
+                            filePath: chance.word(),
+                            elementIndexes: [1],
+                            offset: 1,
+                            isPositionned: jest.fn()
+                        }
                     }
                 },
                 content: { text: chance.sentence() }
