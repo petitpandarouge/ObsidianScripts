@@ -21,6 +21,9 @@ export class EpubRange {
         if (this.end.isPositionned(other.start) === EpubPointPosition.Before) {
             return EpubRangePosition.Before;
         }
-        throw new Error('Method not implemented.');
+        if (this.start.isPositionned(other.end) === EpubPointPosition.After) {
+            return EpubRangePosition.After;
+        }
+        return EpubRangePosition.Overlap;
     }
 }
