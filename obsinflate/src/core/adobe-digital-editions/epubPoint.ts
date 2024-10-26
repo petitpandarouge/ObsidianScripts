@@ -9,7 +9,7 @@ export const EPUB_POINT_COMPONENTS_SEPARATOR = '/';
 export class EpubPoint {
     constructor(
         public filePath: string,
-        public pathComponents: number[],
+        public elementIndexes: number[],
         public offset: number
     ) {}
 
@@ -26,12 +26,12 @@ export class EpubPoint {
         if (!filePath.endsWith(XHTML_FILE_EXTENSION)) {
             throw BadEpubPointFilePathFormatError.DoesNotEndByXHTML();
         }
-        const pathComponents = match[2]
+        const elementIndexes = match[2]
             .split(EPUB_POINT_COMPONENTS_SEPARATOR)
             .slice(1)
             .map(Number);
         const offset = Number(match[3]);
-        return new EpubPoint(filePath, pathComponents, offset);
+        return new EpubPoint(filePath, elementIndexes, offset);
     }
 
     isPositionned(other: EpubPoint): EpubPointPosition {
@@ -41,18 +41,18 @@ export class EpubPoint {
         for (
             let i = 0;
             i <
-            Math.min(this.pathComponents.length, other.pathComponents.length);
+            Math.min(this.elementIndexes.length, other.elementIndexes.length);
             i++
         ) {
-            if (this.pathComponents[i] < other.pathComponents[i]) {
+            if (this.elementIndexes[i] < other.elementIndexes[i]) {
                 return EpubPointPosition.Before;
-            } else if (this.pathComponents[i] > other.pathComponents[i]) {
+            } else if (this.elementIndexes[i] > other.elementIndexes[i]) {
                 return EpubPointPosition.After;
             }
         }
-        if (this.pathComponents.length < other.pathComponents.length) {
+        if (this.elementIndexes.length < other.elementIndexes.length) {
             return EpubPointPosition.Before;
-        } else if (this.pathComponents.length > other.pathComponents.length) {
+        } else if (this.elementIndexes.length > other.elementIndexes.length) {
             return EpubPointPosition.After;
         }
         if (this.offset < other.offset) {

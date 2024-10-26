@@ -15,17 +15,17 @@ describe('EpubPoint', () => {
             // Arrange
             const chance = new Chance();
             const filePath = `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}/${chance.word()}${XHTML_FILE_EXTENSION}`;
-            const pathComponents = [];
+            const elementIndexes = [];
             for (let i = 0; i < chance.integer({ min: 1, max: 5 }); i++) {
-                pathComponents.push(chance.integer({ min: 1, max: 100 }));
+                elementIndexes.push(chance.integer({ min: 1, max: 100 }));
             }
             const offset = chance.integer({ min: 1, max: 100 });
-            const pointAsString = `${filePath}#point(${EPUB_POINT_COMPONENTS_SEPARATOR}${pathComponents.join(EPUB_POINT_COMPONENTS_SEPARATOR)}:${offset})`;
+            const pointAsString = `${filePath}#point(${EPUB_POINT_COMPONENTS_SEPARATOR}${elementIndexes.join(EPUB_POINT_COMPONENTS_SEPARATOR)}:${offset})`;
             // Act
             const point = EpubPoint.FromString(pointAsString);
             // Assert
             expect(point.filePath).toEqual(filePath);
-            expect(point.pathComponents).toEqual(pathComponents);
+            expect(point.elementIndexes).toEqual(elementIndexes);
             expect(point.offset).toEqual(offset);
         });
         it('should raise an error if the base format is not respected', () => {
@@ -41,9 +41,9 @@ describe('EpubPoint', () => {
             // Arrange
             const chance = new Chance();
             const filePath = `${chance.word()}/${chance.word()}.xhtml`;
-            const pathComponents = [1];
+            const elementIndexes = [1];
             const offset = 1;
-            const pointAsString = `${filePath}#point(${EPUB_POINT_COMPONENTS_SEPARATOR}${pathComponents.join(EPUB_POINT_COMPONENTS_SEPARATOR)}:${offset})`;
+            const pointAsString = `${filePath}#point(${EPUB_POINT_COMPONENTS_SEPARATOR}${elementIndexes.join(EPUB_POINT_COMPONENTS_SEPARATOR)}:${offset})`;
             // Act
             const action = () => EpubPoint.FromString(pointAsString);
             // Assert
@@ -55,9 +55,9 @@ describe('EpubPoint', () => {
             // Arrange
             const chance = new Chance();
             const filePath = `${EPUB_POINT_FILE_PATH_PREFIX}${chance.word()}/${chance.word()}`;
-            const pathComponents = [1];
+            const elementIndexes = [1];
             const offset = 1;
-            const pointAsString = `${filePath}#point(${EPUB_POINT_COMPONENTS_SEPARATOR}${pathComponents.join(EPUB_POINT_COMPONENTS_SEPARATOR)}:${offset})`;
+            const pointAsString = `${filePath}#point(${EPUB_POINT_COMPONENTS_SEPARATOR}${elementIndexes.join(EPUB_POINT_COMPONENTS_SEPARATOR)}:${offset})`;
             // Act
             const action = () => EpubPoint.FromString(pointAsString);
             // Assert
