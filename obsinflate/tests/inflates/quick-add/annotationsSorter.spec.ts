@@ -46,15 +46,86 @@ describe('AnnotationsSorter', () => {
         ];
         const sorter = new AnnotationsSorter();
         // Act
-        sorter.sort(annotations);
+        const result = sorter.sort(annotations);
         // Assert
-        expect(annotations).toEqual([
-            annotation1,
-            annotation2,
-            annotation3,
-            annotation4,
-            annotation5
+        expect(result).toEqual([
+            {
+                path: annotation1.target.fragment.start.filePath,
+                annotations: [
+                    annotation1,
+                    annotation2,
+                    annotation3,
+                    annotation4,
+                    annotation5
+                ]
+            }
         ]);
     });
-    it.todo('should sort the annotations of different file paths by file path');
+    it('should sort the annotations of different file paths by file path', () => {
+        // Arrange
+        const file1Annotation1 = new MockAnnotation(
+            EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
+        );
+        const file1Annotation2 = new MockAnnotation(
+            EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(
+                    file1Annotation1.target.fragment.start
+                ).pointAsString
+            )
+        );
+        const file1Annotation3 = new MockAnnotation(
+            EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(
+                    file1Annotation2.target.fragment.start
+                ).pointAsString
+            )
+        );
+        const file2Annotation1 = new MockAnnotation(
+            EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
+        );
+        const file2Annotation2 = new MockAnnotation(
+            EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(
+                    file2Annotation1.target.fragment.start
+                ).pointAsString
+            )
+        );
+        const file2Annotation3 = new MockAnnotation(
+            EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(
+                    file2Annotation2.target.fragment.start
+                ).pointAsString
+            )
+        );
+        const annotations = [
+            file1Annotation3,
+            file2Annotation1,
+            file2Annotation3,
+            file1Annotation2,
+            file2Annotation2,
+            file1Annotation1
+        ];
+        const sorter = new AnnotationsSorter();
+        // Act
+        const result = sorter.sort(annotations);
+        // Assert
+        expect(result).toEqual([
+            {
+                path: file1Annotation1.target.fragment.start.filePath,
+                annotations: [
+                    file1Annotation1,
+                    file1Annotation2,
+                    file1Annotation3
+                ]
+            },
+            {
+                path: file2Annotation1.target.fragment.start.filePath,
+                annotations: [
+                    file2Annotation1,
+                    file2Annotation2,
+                    file2Annotation3
+                ]
+            }
+        ]);
+    });
 });
