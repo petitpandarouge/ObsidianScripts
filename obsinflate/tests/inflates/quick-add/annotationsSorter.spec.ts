@@ -56,4 +56,5 @@ describe('AnnotationsSorter', () => {
             annotation5
         ]);
     });
+    it.todo('should sort the annotations of different file paths by file path');
 });
