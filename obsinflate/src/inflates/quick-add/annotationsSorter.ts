@@ -1,17 +1,17 @@
 import { EpubPointPosition } from '@obsinflate/core/adobe-digital-editions/epubPointPosition';
 import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 
-export interface File {
+export interface EpubFile {
     path: string;
     annotations: Annotation[];
 }
 
 export interface IAnnotationsSorter {
-    sort(annotations: Annotation[]): File[];
+    sort(annotations: Annotation[]): EpubFile[];
 }
 
 export class AnnotationsSorter {
-    sort(annotations: Annotation[]): File[] {
+    sort(annotations: Annotation[]): EpubFile[] {
         const groupedAnnotations = this.groupByFilePath(annotations);
         groupedAnnotations.forEach((file) => {
             file.annotations.sort((a, b) => {
@@ -26,7 +26,7 @@ export class AnnotationsSorter {
         return groupedAnnotations;
     }
 
-    private groupByFilePath(annotations: Annotation[]): File[] {
+    private groupByFilePath(annotations: Annotation[]): EpubFile[] {
         const grouped: { [key: string]: Annotation[] } = {};
 
         annotations.forEach((annotation) => {

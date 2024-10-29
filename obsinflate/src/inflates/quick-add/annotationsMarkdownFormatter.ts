@@ -2,13 +2,17 @@ import { Formatter } from '@obsinflate/infrastructure/formatter';
 
 export class AnnotationsMarkdownFormatter extends Formatter {
     constructor() {
-        super(`{{#each annotationSet.annotations}}
+        super(`{{#each files}}
+## {{this.path}}
+
+{{#each this.annotations}}
 >[!quote]
 >{{this.target.fragment.text}}
 
 {{this.content.text}}
 
 
+{{/each}}
 {{/each}}
 `);
     }
