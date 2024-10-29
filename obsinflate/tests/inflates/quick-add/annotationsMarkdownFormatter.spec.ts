@@ -1,5 +1,8 @@
+import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { AnnotationsMarkdownFormatter } from '@obsinflate/inflates/quick-add/annotationsMarkdownFormatter';
 import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
+import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
+import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotations';
 import Chance from 'chance';
 
 describe('AnnotationsMarkdownFormatter', () => {
@@ -17,26 +20,13 @@ describe('AnnotationsMarkdownFormatter', () => {
             }
         };
         for (let i = 0; i < annotationsCount; i++) {
-            annotations.annotationSet.annotations.push({
-                target: {
-                    fragment: {
-                        text: chance.sentence(),
-                        start: {
-                            filePath: chance.word(),
-                            elementIndexes: [1],
-                            offset: 1,
-                            isPositionned: jest.fn()
-                        },
-                        end: {
-                            filePath: chance.word(),
-                            elementIndexes: [1],
-                            offset: 1,
-                            isPositionned: jest.fn()
-                        }
-                    }
-                },
-                content: { text: chance.sentence() }
-            });
+            annotations.annotationSet.annotations.push(
+                new MockAnnotation(
+                    EpubPoint.FromString(
+                        EpubPointGenerator.generate().pointAsString
+                    )
+                )
+            );
         }
         const formatter = new AnnotationsMarkdownFormatter();
         // Act
