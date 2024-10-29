@@ -10,7 +10,7 @@ export interface IAnnotationsSorter {
     sort(annotations: Annotation[]): EpubFile[];
 }
 
-export class AnnotationsSorter {
+export class AnnotationsSorter implements IAnnotationsSorter {
     sort(annotations: Annotation[]): EpubFile[] {
         const groupedAnnotations = this.groupByFilePath(annotations);
         groupedAnnotations.forEach((file) => {

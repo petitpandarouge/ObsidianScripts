@@ -6,6 +6,7 @@ import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
 import { IUniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
+import { IAnnotationsSorter } from '@obsinflate/inflates/quick-add/annotationsSorter';
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 export const ANNOTATIONS_FILE_EXTENSION = '.annot';
@@ -16,6 +17,7 @@ export class KoboHighlightsImporter implements Script {
         private fileSystem: IFileSystem,
         private errorNoticer: ErrorNoticer,
         private annotationsReader: IAnnotationsReader,
+        private annotationsSorter: IAnnotationsSorter,
         private annotationsFormatter: IFormatter,
         private uniqueNoteCreator: IUniqueNoteCreator
     ) {}
@@ -30,6 +32,9 @@ export class KoboHighlightsImporter implements Script {
         );
         const selectedFile = await this.suggest(params, files);
         const annotations = await this.annotationsReader.read(selectedFile);
+        const annotationsByFiles = this.annotationsSorter.sort(
+            annotations.annotationSet.annotations
+        );
         const content = this.annotationsFormatter.format(annotations);
         await this.uniqueNoteCreator.create(
             BOOK_NOTE_DESTINATION_DIR,
