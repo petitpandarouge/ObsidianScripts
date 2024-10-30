@@ -35,7 +35,9 @@ export class KoboHighlightsImporter implements Script {
         const annotationsByFiles = this.annotationsSorter.sort(
             annotations.annotationSet.annotations
         );
-        const content = this.annotationsFormatter.format(annotations);
+        const content = this.annotationsFormatter.format({
+            files: annotationsByFiles
+        });
         await this.uniqueNoteCreator.create(
             BOOK_NOTE_DESTINATION_DIR,
             annotations.annotationSet.publication.title,
