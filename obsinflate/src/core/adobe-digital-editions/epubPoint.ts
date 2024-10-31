@@ -34,7 +34,6 @@ export class EpubPoint {
         return new EpubPoint(filePath, elementIndexes, offset);
     }
 
-    // TODO : precise the tests as they don't always cover all the pathes. Add a test for each "if"
     isPositionned(other: EpubPoint): EpubPointPosition {
         if (this.filePath !== other.filePath) {
             return EpubPointPosition.InAnotherFile;

@@ -25,6 +25,13 @@ interface EpubPointGeneratorResult extends PathComponents {
     pointAsString: string;
 }
 
+export enum OffsetOperation {
+    AddElementIndexes,
+    AddOnOffset,
+    AddOnElementIndex,
+    Random
+}
+
 const chance = new Chance();
 
 export class EpubPointGenerator {
@@ -59,10 +66,12 @@ export class EpubPointGenerator {
 
     static generateFromWithOffset(
         point: EpubPoint,
+        offsetOperation: OffsetOperation = OffsetOperation.Random,
         offsetRange: Partial<IntegerOptions> = { min: 1, max: 100 }
     ): EpubPointGeneratorResult {
         const pathComponents = EpubPointGenerator.applyOffset(
             point,
+            offsetOperation,
             offsetRange
         );
         const pointAsString = EpubPointGenerator.formatPoint(
@@ -128,24 +137,36 @@ export class EpubPointGenerator {
 
     private static applyOffset(
         point: EpubPoint,
+        offsetOperation: OffsetOperation,
         offsetRange: Partial<IntegerOptions>
     ): PathComponents {
         const offset = chance.integer(offsetRange);
-        const index = chance.integer({
-            min: 0,
-            max: point.elementIndexes.length
-        });
-        if (index === point.elementIndexes.length) {
-            return {
-                elementIndexes: point.elementIndexes,
-                offset: point.offset + offset
-            };
+        const pointElementIndexes = point.elementIndexes.slice();
+        let pointOffset = point.offset;
+        if (offsetOperation === OffsetOperation.Random) {
+            offsetOperation = chance.pickone([
+                OffsetOperation.AddElementIndexes,
+                OffsetOperation.AddOnOffset,
+                OffsetOperation.AddOnElementIndex
+            ]);
         }
-        const elementIndexes = point.elementIndexes.slice();
-        elementIndexes[index] += offset;
+        if (offsetOperation === OffsetOperation.AddElementIndexes) {
+            for (let i = 0; i < offset; i++) {
+                pointElementIndexes.push(chance.integer(offsetRange));
+            }
+        } else if (offsetOperation === OffsetOperation.AddOnOffset) {
+            pointOffset += offset;
+        } else if (offsetOperation === OffsetOperation.AddOnElementIndex) {
+            const index = chance.integer({
+                min: 0,
+                max: point.elementIndexes.length - 1
+            });
+            pointElementIndexes[index] += offset;
+        }
+
         return {
-            elementIndexes,
-            offset: point.offset
+            elementIndexes: pointElementIndexes,
+            offset: pointOffset
         };
     }
 }

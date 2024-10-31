@@ -7,7 +7,10 @@ import {
 } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { EpubPointPosition } from '@obsinflate/core/adobe-digital-editions/epubPointPosition';
 import { XHTML_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
-import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
+import {
+    EpubPointGenerator,
+    OffsetOperation
+} from '@obsinflate/tests/data/epubPointGenerator';
 import Chance from 'chance';
 
 describe('EpubPoint', () => {
@@ -76,29 +79,83 @@ describe('EpubPoint', () => {
         });
         it('should return Before if the first point is before the second point in the same file', () => {
             // Arrange
-            const point1 = EpubPoint.FromString(
-                EpubPointGenerator.generate().pointAsString
-            );
-            const point2 = EpubPoint.FromString(
-                EpubPointGenerator.generateFromWithOffset(point1).pointAsString
-            );
-            // Act
-            const result = point1.isPositionned(point2);
-            // Assert
-            expect(result).toBe(EpubPointPosition.Before);
+            const pointsFrom = [
+                EpubPoint.FromString(
+                    EpubPointGenerator.generate().pointAsString
+                ),
+                EpubPoint.FromString(
+                    EpubPointGenerator.generate().pointAsString
+                ),
+                EpubPoint.FromString(
+                    EpubPointGenerator.generate().pointAsString
+                )
+            ];
+            const pointsTo = [
+                EpubPoint.FromString(
+                    EpubPointGenerator.generateFromWithOffset(
+                        pointsFrom[0],
+                        OffsetOperation.AddElementIndexes
+                    ).pointAsString
+                ),
+                EpubPoint.FromString(
+                    EpubPointGenerator.generateFromWithOffset(
+                        pointsFrom[1],
+                        OffsetOperation.AddOnElementIndex
+                    ).pointAsString
+                ),
+                EpubPoint.FromString(
+                    EpubPointGenerator.generateFromWithOffset(
+                        pointsFrom[2],
+                        OffsetOperation.AddOnOffset
+                    ).pointAsString
+                )
+            ];
+            for (let i = 0; i < pointsFrom.length; i++) {
+                // Act
+                const result = pointsFrom[i].isPositionned(pointsTo[i]);
+                // Assert
+                expect(result).toBe(EpubPointPosition.Before);
+            }
         });
         it('should return After if the first point is after the second point in the same file', () => {
             // Arrange
-            const point1 = EpubPoint.FromString(
-                EpubPointGenerator.generate().pointAsString
-            );
-            const point2 = EpubPoint.FromString(
-                EpubPointGenerator.generateFromWithOffset(point1).pointAsString
-            );
-            // Act
-            const result = point2.isPositionned(point1);
-            // Assert
-            expect(result).toBe(EpubPointPosition.After);
+            const pointsFrom = [
+                EpubPoint.FromString(
+                    EpubPointGenerator.generate().pointAsString
+                ),
+                EpubPoint.FromString(
+                    EpubPointGenerator.generate().pointAsString
+                ),
+                EpubPoint.FromString(
+                    EpubPointGenerator.generate().pointAsString
+                )
+            ];
+            const pointsTo = [
+                EpubPoint.FromString(
+                    EpubPointGenerator.generateFromWithOffset(
+                        pointsFrom[0],
+                        OffsetOperation.AddElementIndexes
+                    ).pointAsString
+                ),
+                EpubPoint.FromString(
+                    EpubPointGenerator.generateFromWithOffset(
+                        pointsFrom[1],
+                        OffsetOperation.AddOnElementIndex
+                    ).pointAsString
+                ),
+                EpubPoint.FromString(
+                    EpubPointGenerator.generateFromWithOffset(
+                        pointsFrom[2],
+                        OffsetOperation.AddOnOffset
+                    ).pointAsString
+                )
+            ];
+            for (let i = 0; i < pointsFrom.length; i++) {
+                // Act
+                const result = pointsTo[i].isPositionned(pointsFrom[i]);
+                // Assert
+                expect(result).toBe(EpubPointPosition.After);
+            }
         });
         it('should return Same if the first point is the same as the second point in the same file', () => {
             // Arrange
