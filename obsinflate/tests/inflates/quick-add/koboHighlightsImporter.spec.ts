@@ -24,6 +24,8 @@ import {
     IAnnotationsSorter
 } from '@obsinflate/inflates/quick-add/annotationsSorter';
 
+const PREVENT_CRASH_STRING = '';
+
 describe('KoboHighlightsImporter', () => {
     it('should suggest the book highlights to import from the "Digital Editions/Annotations" directory ".annot" files', async () => {
         // Arrange
@@ -62,8 +64,9 @@ describe('KoboHighlightsImporter', () => {
             mockUniqueNoteCreator
         );
         const mockParams = mockDeep<Parameters>({
-            // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
-            quickAddApi: { suggester: jest.fn().mockResolvedValue('') }
+            quickAddApi: {
+                suggester: jest.fn().mockResolvedValue(PREVENT_CRASH_STRING)
+            }
         });
         // Act
         await importer.entry(mockParams);
@@ -257,8 +260,9 @@ describe('KoboHighlightsImporter', () => {
             mockUniqueNoteCreator
         );
         const mockParams = mockDeep<Parameters>({
-            // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
-            quickAddApi: { suggester: jest.fn().mockResolvedValue('') }
+            quickAddApi: {
+                suggester: jest.fn().mockResolvedValue(PREVENT_CRASH_STRING)
+            }
         });
         // Act
         await importer.entry(mockParams);
@@ -288,7 +292,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsSorter = mock<IAnnotationsSorter>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
-            format: jest.fn().mockReturnValue('')
+            format: jest.fn().mockReturnValue(PREVENT_CRASH_STRING)
         });
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
@@ -300,8 +304,9 @@ describe('KoboHighlightsImporter', () => {
             mockUniqueNoteCreator
         );
         const mockParams = mockDeep<Parameters>({
-            // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
-            quickAddApi: { suggester: jest.fn().mockResolvedValue('') }
+            quickAddApi: {
+                suggester: jest.fn().mockResolvedValue(PREVENT_CRASH_STRING)
+            }
         });
         // Act
         await importer.entry(mockParams);
@@ -345,8 +350,9 @@ describe('KoboHighlightsImporter', () => {
             mockUniqueNoteCreator
         );
         const mockParams = mockDeep<Parameters>({
-            // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
-            quickAddApi: { suggester: jest.fn().mockResolvedValue('') }
+            quickAddApi: {
+                suggester: jest.fn().mockResolvedValue(PREVENT_CRASH_STRING)
+            }
         });
         // Act
         await importer.entry(mockParams);

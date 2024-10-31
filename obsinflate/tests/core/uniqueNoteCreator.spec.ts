@@ -6,7 +6,8 @@ import {
     NO_CONTENT,
     ROOT_PATH,
     NOTE_NAME_SEPARATOR,
-    UniqueNoteCreator
+    UniqueNoteCreator,
+    NOTE_TITLE_FORBIDDEN_CARACTERS
 } from '@obsinflate/core/uniqueNoteCreator';
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
@@ -72,5 +73,32 @@ describe('UniqueNoteCreator', () => {
             await uniqueNoteCreator.create(ROOT_PATH, NO_BASENAME, NO_CONTENT);
         // Assert
         await expect(action).rejects.toThrow(mockErrorMessage);
+    });
+    it('should format the basename for it to be a valid note title', async () => {
+        // Arrange
+        const mockSeed = mock<IUniqueNameGeneratorSeed>({
+            next: jest.fn().mockReturnValue(NO_SEED)
+        });
+        const mockNameGenerator = mock<IUniqueNameGenerator>({
+            generateNewSeed: jest.fn().mockImplementation(() => {
+                return mockSeed;
+            })
+        });
+        const mockApp = mockDeep<App>();
+        const uniqueNoteCreator = new UniqueNoteCreator(
+            mockNameGenerator,
+            mockApp
+        );
+        // Act
+        await uniqueNoteCreator.create(
+            ROOT_PATH,
+            NOTE_TITLE_FORBIDDEN_CARACTERS.join(' '),
+            NO_CONTENT
+        );
+        // Assert
+        expect(mockApp.vault.create).toHaveBeenCalledWith(
+            `${NOTE_NAME_SEPARATOR}- - - - - - - - -${MARKDOWN_FILE_EXTENSION}`,
+            expect.any(String)
+        );
     });
 });
