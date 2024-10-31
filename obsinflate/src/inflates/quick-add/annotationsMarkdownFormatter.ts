@@ -1,6 +1,7 @@
+import { EpubFiles } from '@obsinflate/inflates/quick-add/annotationsSorter';
 import { Formatter } from '@obsinflate/infrastructure/formatter';
 
-export class AnnotationsMarkdownFormatter extends Formatter {
+export class AnnotationsMarkdownFormatter extends Formatter<EpubFiles> {
     constructor() {
         super(`{{#each files}}
 ## {{this.path}}

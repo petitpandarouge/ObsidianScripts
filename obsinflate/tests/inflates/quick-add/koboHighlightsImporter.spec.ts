@@ -20,6 +20,7 @@ import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 import {
     EpubFile,
+    EpubFiles,
     IAnnotationsSorter
 } from '@obsinflate/inflates/quick-add/annotationsSorter';
 
@@ -50,7 +51,7 @@ describe('KoboHighlightsImporter', () => {
             })
         });
         const mockAnnotationsSorter = mock<IAnnotationsSorter>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
@@ -92,7 +93,7 @@ describe('KoboHighlightsImporter', () => {
             })
         });
         const mockAnnotationsSorter = mock<IAnnotationsSorter>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
@@ -133,7 +134,7 @@ describe('KoboHighlightsImporter', () => {
             })
         });
         const mockAnnotationsSorter = mock<IAnnotationsSorter>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
@@ -181,7 +182,7 @@ describe('KoboHighlightsImporter', () => {
             read: jest.fn().mockResolvedValue(annotations)
         });
         const mockAnnotationsSorter = mock<IAnnotationsSorter>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
@@ -243,9 +244,9 @@ describe('KoboHighlightsImporter', () => {
             files.push(file);
         }
         const mockAnnotationsSorter = mock<IAnnotationsSorter>({
-            sort: jest.fn().mockReturnValue(files)
+            sort: jest.fn().mockReturnValue({ files })
         });
-        const mockMarkdownQuoteFormatter = mock<IFormatter>();
+        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
@@ -286,7 +287,7 @@ describe('KoboHighlightsImporter', () => {
             read: jest.fn().mockResolvedValue(annotations)
         });
         const mockAnnotationsSorter = mock<IAnnotationsSorter>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter>({
+        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
             format: jest.fn().mockReturnValue('')
         });
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
@@ -330,7 +331,7 @@ describe('KoboHighlightsImporter', () => {
             read: jest.fn().mockResolvedValue(annotations)
         });
         const mockContent = chance.paragraph();
-        const mockMarkdownQuoteFormatter = mock<IFormatter>({
+        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
             format: jest.fn().mockReturnValue(mockContent)
         });
         const mockAnnotationsSorter = mock<IAnnotationsSorter>();

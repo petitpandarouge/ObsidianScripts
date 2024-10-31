@@ -48,18 +48,20 @@ describe('AnnotationsSorter', () => {
         // Act
         const result = sorter.sort(annotations);
         // Assert
-        expect(result).toEqual([
-            {
-                path: annotation1.target.fragment.start.filePath,
-                annotations: [
-                    annotation1,
-                    annotation2,
-                    annotation3,
-                    annotation4,
-                    annotation5
-                ]
-            }
-        ]);
+        expect(result).toEqual({
+            files: [
+                {
+                    path: annotation1.target.fragment.start.filePath,
+                    annotations: [
+                        annotation1,
+                        annotation2,
+                        annotation3,
+                        annotation4,
+                        annotation5
+                    ]
+                }
+            ]
+        });
     });
     it('should sort the annotations of different file paths by file path', () => {
         // Arrange
@@ -109,23 +111,25 @@ describe('AnnotationsSorter', () => {
         // Act
         const result = sorter.sort(annotations);
         // Assert
-        expect(result).toEqual([
-            {
-                path: file1Annotation1.target.fragment.start.filePath,
-                annotations: [
-                    file1Annotation1,
-                    file1Annotation2,
-                    file1Annotation3
-                ]
-            },
-            {
-                path: file2Annotation1.target.fragment.start.filePath,
-                annotations: [
-                    file2Annotation1,
-                    file2Annotation2,
-                    file2Annotation3
-                ]
-            }
-        ]);
+        expect(result).toEqual({
+            files: [
+                {
+                    path: file1Annotation1.target.fragment.start.filePath,
+                    annotations: [
+                        file1Annotation1,
+                        file1Annotation2,
+                        file1Annotation3
+                    ]
+                },
+                {
+                    path: file2Annotation1.target.fragment.start.filePath,
+                    annotations: [
+                        file2Annotation1,
+                        file2Annotation2,
+                        file2Annotation3
+                    ]
+                }
+            ]
+        });
     });
 });
