@@ -1,17 +1,38 @@
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { AnnotationsMerger } from '@obsinflate/inflates/quick-add/annotationsMerger';
-import { EpubFiles } from '@obsinflate/inflates/quick-add/annotationsSorter';
+import {
+    EpubFiles,
+    IAnnotationsSorter
+} from '@obsinflate/inflates/quick-add/annotationsSorter';
+import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 import Chance from 'chance';
+import { mock } from 'jest-mock-extended';
 
 describe('AnnotationsMerger', () => {
+    it('should call the sorter before trying to merge the annotations', async () => {
+        // Arrange
+        const annotations: Annotation[] = [];
+        const mockSorter = mock<IAnnotationsSorter>({
+            sort: jest.fn().mockReturnValue({ files: [] })
+        });
+        const merger = new AnnotationsMerger(mockSorter);
+        // Act
+        merger.merge(annotations);
+        // Assert
+        expect(mockSorter.sort).toHaveBeenCalledTimes(1);
+        expect(mockSorter.sort).toHaveBeenCalledWith(annotations);
+    });
     it('should not merge anything if there is no file', () => {
         // Arrange
         const epubFiles = { files: [] };
-        const merger = new AnnotationsMerger();
+        const mockSorter = mock<IAnnotationsSorter>({
+            sort: jest.fn().mockReturnValue(epubFiles)
+        });
+        const merger = new AnnotationsMerger(mockSorter);
         // Act
-        const mergedAnnotations = merger.merge(epubFiles);
+        const mergedAnnotations = merger.merge([]);
         // Assert
         expect(mergedAnnotations).toEqual(epubFiles);
     });
@@ -28,9 +49,12 @@ describe('AnnotationsMerger', () => {
                 }
             ]
         };
-        const merger = new AnnotationsMerger();
+        const mockSorter = mock<IAnnotationsSorter>({
+            sort: jest.fn().mockReturnValue(epubFiles)
+        });
+        const merger = new AnnotationsMerger(mockSorter);
         // Act
-        const mergedAnnotations = merger.merge(epubFiles);
+        const mergedAnnotations = merger.merge([]);
         // Assert
         expect(mergedAnnotations).toEqual(epubFiles);
     });
@@ -54,9 +78,12 @@ describe('AnnotationsMerger', () => {
                 }
             ]
         };
-        const merger = new AnnotationsMerger();
+        const mockSorter = mock<IAnnotationsSorter>({
+            sort: jest.fn().mockReturnValue(epubFiles)
+        });
+        const merger = new AnnotationsMerger(mockSorter);
         // Act
-        const mergedAnnotations = merger.merge(epubFiles);
+        const mergedAnnotations = merger.merge([]);
         // Assert
         expect(mergedAnnotations).toEqual(epubFiles);
     });
@@ -91,9 +118,12 @@ describe('AnnotationsMerger', () => {
                 annotations
             });
         }
-        const merger = new AnnotationsMerger();
+        const mockSorter = mock<IAnnotationsSorter>({
+            sort: jest.fn().mockReturnValue(epubFiles)
+        });
+        const merger = new AnnotationsMerger(mockSorter);
         // Act
-        const mergedAnnotations = merger.merge(epubFiles);
+        const mergedAnnotations = merger.merge([]);
         // Assert
         expect(mergedAnnotations).toEqual(epubFiles);
     });
@@ -123,9 +153,12 @@ describe('AnnotationsMerger', () => {
                 annotations
             });
         }
-        const merger = new AnnotationsMerger();
+        const mockSorter = mock<IAnnotationsSorter>({
+            sort: jest.fn().mockReturnValue(epubFiles)
+        });
+        const merger = new AnnotationsMerger(mockSorter);
         // Act
-        const mergedAnnotations = merger.merge(epubFiles);
+        const mergedAnnotations = merger.merge([]);
         // Assert
         const mergedFiles = epubFiles.files.map((file) => {
             return {
