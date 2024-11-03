@@ -86,7 +86,7 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
         return basename;
     }
 
-    private isFileAlreadyExistsError(error: any): boolean {
+    private isFileAlreadyExistsError(error: unknown): boolean {
         return (
             error instanceof Error &&
             error.message === FILE_ALREADY_EXISTS_ERROR_MESSAGE

@@ -251,6 +251,7 @@ describe('NewUniqueNoteCommand', () => {
         const mockPlugin = mockDeep<UserPlugins>();
         const noticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(noticer);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
         const mockNameGenerator = mock<IUniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
@@ -293,6 +294,7 @@ describe('NewUniqueNoteCommand', () => {
         const mockPlugin = mockDeep<UserPlugins>();
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
         const mockNameGenerator = mock<IUniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {

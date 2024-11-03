@@ -32,6 +32,7 @@ export interface Api {
     ) => Promise<string[]>;
     executeChoice: (
         choiceName: string,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         variables?: { [key: string]: any }
     ) => Promise<void>;
     utility: Utility;
