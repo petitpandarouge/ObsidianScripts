@@ -1,7 +1,7 @@
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { AnnotationsSorter } from '@obsinflate/inflates/quick-add/annotationsSorter';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
-import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotations';
+import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 
 describe('AnnotationsSorter', () => {
     it('should sort the annotations of a same file path by fragment start', () => {

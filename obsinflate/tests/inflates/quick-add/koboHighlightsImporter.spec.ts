@@ -15,7 +15,7 @@ import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-edi
 import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
 import { IUniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
-import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotations';
+import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 import {
@@ -86,6 +86,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({

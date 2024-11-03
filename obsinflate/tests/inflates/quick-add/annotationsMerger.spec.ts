@@ -1,7 +1,7 @@
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { AnnotationsMerger } from '@obsinflate/inflates/quick-add/annotationsMerger';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
-import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotations';
+import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 
 describe('AnnotationsMerger', () => {
     it('should not merge anything if there is no file', () => {
