@@ -20,9 +20,9 @@ import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 import {
     EpubFile,
-    EpubFiles,
-    IAnnotationsSorter
+    EpubFiles
 } from '@obsinflate/inflates/quick-add/annotationsSorter';
+import { IAnnotationsMerger } from '@obsinflate/inflates/quick-add/annotationsMerger';
 
 const PREVENT_CRASH_STRING = '';
 
@@ -52,14 +52,14 @@ describe('KoboHighlightsImporter', () => {
                 }
             })
         });
-        const mockAnnotationsSorter = mock<IAnnotationsSorter>();
+        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockAnnotationsSorter,
+            mockAnnotationsMerger,
             mockMarkdownQuoteFormatter,
             mockUniqueNoteCreator
         );
@@ -96,14 +96,14 @@ describe('KoboHighlightsImporter', () => {
                 }
             })
         });
-        const mockAnnotationsSorter = mock<IAnnotationsSorter>();
+        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockAnnotationsSorter,
+            mockAnnotationsMerger,
             mockMarkdownQuoteFormatter,
             mockUniqueNoteCreator
         );
@@ -137,14 +137,14 @@ describe('KoboHighlightsImporter', () => {
                 }
             })
         });
-        const mockAnnotationsSorter = mock<IAnnotationsSorter>();
+        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockAnnotationsSorter,
+            mockAnnotationsMerger,
             mockMarkdownQuoteFormatter,
             mockUniqueNoteCreator
         );
@@ -185,14 +185,14 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue(annotations)
         });
-        const mockAnnotationsSorter = mock<IAnnotationsSorter>();
+        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockAnnotationsSorter,
+            mockAnnotationsMerger,
             mockMarkdownQuoteFormatter,
             mockUniqueNoteCreator
         );
@@ -203,8 +203,8 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockAnnotationsSorter.sort).toHaveBeenCalledTimes(1);
-        expect(mockAnnotationsSorter.sort).toHaveBeenCalledWith(
+        expect(mockAnnotationsMerger.merge).toHaveBeenCalledTimes(1);
+        expect(mockAnnotationsMerger.merge).toHaveBeenCalledWith(
             annotations.annotationSet.annotations
         );
     });
@@ -247,8 +247,8 @@ describe('KoboHighlightsImporter', () => {
             }
             files.push(file);
         }
-        const mockAnnotationsSorter = mock<IAnnotationsSorter>({
-            sort: jest.fn().mockReturnValue({ files })
+        const mockAnnotationsMerger = mock<IAnnotationsMerger>({
+            merge: jest.fn().mockReturnValue({ files })
         });
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
@@ -256,7 +256,7 @@ describe('KoboHighlightsImporter', () => {
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockAnnotationsSorter,
+            mockAnnotationsMerger,
             mockMarkdownQuoteFormatter,
             mockUniqueNoteCreator
         );
@@ -291,7 +291,7 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue(annotations)
         });
-        const mockAnnotationsSorter = mock<IAnnotationsSorter>();
+        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
             format: jest.fn().mockReturnValue(PREVENT_CRASH_STRING)
         });
@@ -300,7 +300,7 @@ describe('KoboHighlightsImporter', () => {
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockAnnotationsSorter,
+            mockAnnotationsMerger,
             mockMarkdownQuoteFormatter,
             mockUniqueNoteCreator
         );
@@ -340,13 +340,13 @@ describe('KoboHighlightsImporter', () => {
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
             format: jest.fn().mockReturnValue(mockContent)
         });
-        const mockAnnotationsSorter = mock<IAnnotationsSorter>();
+        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
-            mockAnnotationsSorter,
+            mockAnnotationsMerger,
             mockMarkdownQuoteFormatter,
             mockUniqueNoteCreator
         );

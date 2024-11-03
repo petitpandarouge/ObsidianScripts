@@ -5,6 +5,7 @@ import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { UniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
 import { UniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
 import { AnnotationsMarkdownFormatter } from '@obsinflate/inflates/quick-add/annotationsMarkdownFormatter';
+import { AnnotationsMerger } from '@obsinflate/inflates/quick-add/annotationsMerger';
 import { AnnotationsSorter } from '@obsinflate/inflates/quick-add/annotationsSorter';
 import { KoboHighlightsImporter } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
 import { AnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
@@ -17,6 +18,7 @@ const entryPoint: ScriptEntryPoint = async (params: Parameters) => {
     const errorNoticer = new ErrorNoticer(noticer);
     const annotationsReader = new AnnotationsReader();
     const annotationsSorter = new AnnotationsSorter();
+    const annotationsMerger = new AnnotationsMerger(annotationsSorter);
     const annotationsFormatter = new AnnotationsMarkdownFormatter();
     const dateTimeProvider = new DateTimeProvider();
     const uniqueNameGenerator = new UniqueNameGenerator(dateTimeProvider);
@@ -28,7 +30,7 @@ const entryPoint: ScriptEntryPoint = async (params: Parameters) => {
         fileSystem,
         errorNoticer,
         annotationsReader,
-        annotationsSorter,
+        annotationsMerger,
         annotationsFormatter,
         uniqueNoteCreator
     );

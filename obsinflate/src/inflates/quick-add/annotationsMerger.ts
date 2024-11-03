@@ -10,7 +10,6 @@ export interface IAnnotationsMerger {
     merge(annotations: Annotation[]): EpubFiles;
 }
 
-// TODO : the sorter must be used into the merger
 export class AnnotationsMerger implements IAnnotationsMerger {
     constructor(private sorter: IAnnotationsSorter) {}
 
@@ -45,7 +44,6 @@ export class AnnotationsMerger implements IAnnotationsMerger {
                 mergedFile.annotations.push(currentAnnotation);
             }
         }
-
         return mergedFile;
     }
 
