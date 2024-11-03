@@ -35,23 +35,22 @@ export class AnnotationsMerger {
         const firstAnnotation = this.copyAnnotation(file.annotations[0]);
         mergedFile.annotations.push(firstAnnotation);
         for (let i = 1; i < file.annotations.length; i++) {
-            const annotation1Range = new EpubRange(
-                mergedFile.annotations[mergedFile.annotations.length - 1]
-            );
+            const lastAnnotation =
+                mergedFile.annotations[mergedFile.annotations.length - 1];
             const currentAnnotation = this.copyAnnotation(file.annotations[i]);
+
+            const annotation1Range = new EpubRange(lastAnnotation);
             const annotation2Range = new EpubRange(currentAnnotation);
             if (
-                annotation1Range.isPositionned(annotation2Range) ===
+                annotation1Range.isPositionned(annotation2Range) !==
                 EpubRangePosition.Overlap
             ) {
-                const mergedAnnotation = this.mergeAnnotations(
+                mergedFile.annotations.push(annotation2Range.annotation);
+            } else {
+                this.mergeAnnotations(
                     annotation1Range.annotation,
                     annotation2Range.annotation
                 );
-                mergedFile.annotations.pop();
-                mergedFile.annotations.push(mergedAnnotation);
-            } else {
-                mergedFile.annotations.push(annotation2Range.annotation);
             }
         }
 
@@ -92,14 +91,10 @@ export class AnnotationsMerger {
         return true;
     }
 
-    mergeAnnotations(
-        annotation1: Annotation,
-        annotation2: Annotation
-    ): Annotation {
+    mergeAnnotations(annotation1: Annotation, annotation2: Annotation): void {
         annotation1.target.fragment.end = annotation2.target.fragment.end;
         annotation1.target.fragment.text = `${annotation1.target.fragment.text} ${annotation2.target.fragment.text}`;
         annotation1.content.text = `${annotation1.content.text} ${annotation2.content.text}`;
-        return annotation1;
     }
 
     // mergeAnnotations(annotations: Annotation[]): Annotation[] {
