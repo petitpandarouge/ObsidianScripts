@@ -16,41 +16,46 @@ export class AnnotationsMerger {
         if (firstFile.annotations.length < 2) {
             return epubFiles;
         }
-
-        const mergedFile: EpubFile = {
-            path: firstFile.path,
-            annotations: []
-        };
         const result: EpubFiles = {
-            files: [mergedFile]
+            files: [this.mergeFileAnnotations(firstFile)]
         };
-        mergedFile.annotations.push(firstFile.annotations[0]);
-
-        for (let i = 1; i < firstFile.annotations.length; i++) {
-            const annotation1Range = new EpubRange(
-                mergedFile.annotations[mergedFile.annotations.length - 1]
-            );
-            const annotation2Range = new EpubRange(firstFile.annotations[i]);
-            if (
-                annotation1Range.isPositionned(annotation2Range) ===
-                EpubRangePosition.Overlap
-            ) {
-                const mergedAnnotation = this.mergeAnnotations(
-                    mergedFile.annotations[mergedFile.annotations.length - 1],
-                    firstFile.annotations[i]
-                );
-                mergedFile.annotations.pop();
-                mergedFile.annotations.push(mergedAnnotation);
-            } else {
-                mergedFile.annotations.push(firstFile.annotations[i]);
-            }
-        }
         return result;
         // const mergedFiles = epubFiles.files.map((file) => {
         //     file.annotations = this.mergeAnnotations(file.annotations);
         //     return file;
         // });
         // return { files: mergedFiles };
+    }
+
+    mergeFileAnnotations(file: EpubFile): EpubFile {
+        const mergedFile: EpubFile = {
+            path: file.path,
+            annotations: []
+        };
+
+        mergedFile.annotations.push(file.annotations[0]);
+
+        for (let i = 1; i < file.annotations.length; i++) {
+            const annotation1Range = new EpubRange(
+                mergedFile.annotations[mergedFile.annotations.length - 1]
+            );
+            const annotation2Range = new EpubRange(file.annotations[i]);
+            if (
+                annotation1Range.isPositionned(annotation2Range) ===
+                EpubRangePosition.Overlap
+            ) {
+                const mergedAnnotation = this.mergeAnnotations(
+                    mergedFile.annotations[mergedFile.annotations.length - 1],
+                    file.annotations[i]
+                );
+                mergedFile.annotations.pop();
+                mergedFile.annotations.push(mergedAnnotation);
+            } else {
+                mergedFile.annotations.push(file.annotations[i]);
+            }
+        }
+
+        return mergedFile;
     }
 
     mergeAnnotations(
