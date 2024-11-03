@@ -14,25 +14,31 @@ export class AnnotationsMerger {
             return epubFiles;
         }
         const annotations = [];
-        const annotation1Fragment = firstFile.annotations[0].target.fragment;
-        const annotation2Fragment = firstFile.annotations[1].target.fragment;
-        const annotation1Range = new EpubRange(
-            annotation1Fragment.start,
-            annotation1Fragment.end
-        );
-        const annotation2Range = new EpubRange(
-            annotation2Fragment.start,
-            annotation2Fragment.end
-        );
-        if (
-            annotation1Range.isPositionned(annotation2Range) ===
-            EpubRangePosition.Overlap
-        ) {
-            const mergedAnnotation = this.mergeAnnotations(
-                firstFile.annotations[0],
-                firstFile.annotations[1]
+        annotations.push(firstFile.annotations[0]);
+        if (firstFile.annotations.length >= 2) {
+            const lastAnnotation = annotations[annotations.length - 1];
+            const annotation1Fragment = lastAnnotation.target.fragment;
+            const annotation2Fragment =
+                firstFile.annotations[1].target.fragment;
+            const annotation1Range = new EpubRange(
+                annotation1Fragment.start,
+                annotation1Fragment.end
             );
-            annotations.push(mergedAnnotation);
+            const annotation2Range = new EpubRange(
+                annotation2Fragment.start,
+                annotation2Fragment.end
+            );
+            if (
+                annotation1Range.isPositionned(annotation2Range) ===
+                EpubRangePosition.Overlap
+            ) {
+                const mergedAnnotation = this.mergeAnnotations(
+                    lastAnnotation,
+                    firstFile.annotations[1]
+                );
+                annotations.pop();
+                annotations.push(mergedAnnotation);
+            }
         }
         if (firstFile.annotations.length >= 3) {
             const lastAnnotation = annotations[annotations.length - 1];
