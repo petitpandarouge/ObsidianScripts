@@ -50,6 +50,12 @@ export class EpubRange {
     private mergeAnnotations(other: Annotation, into: Annotation): void {
         into.target.fragment.end = other.target.fragment.end;
         into.target.fragment.text = `${into.target.fragment.text} ${other.target.fragment.text}`;
-        into.content.text = `${into.content.text} ${other.content.text}`;
+        if (!other.content) {
+            return;
+        } else if (!into.content) {
+            into.content = { text: other.content.text };
+        } else {
+            into.content.text = `${into.content.text} ${other.content.text}`;
+        }
     }
 }

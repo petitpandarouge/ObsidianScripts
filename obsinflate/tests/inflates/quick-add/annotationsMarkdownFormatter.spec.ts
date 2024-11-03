@@ -5,6 +5,7 @@ import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 import Chance from 'chance';
 
+// TODO : double line break must not be added if there is no content
 describe('AnnotationsMarkdownFormatter', () => {
     it('should format the annotations in markdown', () => {
         // Arrange
@@ -43,7 +44,7 @@ describe('AnnotationsMarkdownFormatter', () => {
                         `## ${file.path}\n\n${file.annotations
                             .map(
                                 (annotation) =>
-                                    `>[!quote]\n>${annotation.target.fragment.text}\n\n${annotation.content.text}`
+                                    `>[!quote]\n>${annotation.target.fragment.text}\n\n${annotation.content?.text || ''}`
                             )
                             .join('\n\n\n')}\n\n\n`
                 )

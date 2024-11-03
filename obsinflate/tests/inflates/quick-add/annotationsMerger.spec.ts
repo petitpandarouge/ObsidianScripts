@@ -182,7 +182,8 @@ describe('AnnotationsMerger', () => {
                         },
                         content: {
                             text: file.annotations
-                                .map((annotation) => annotation.content.text)
+                                .filter((annotation) => annotation.content)
+                                .map((annotation) => annotation.content!.text)
                                 .join(' ')
                         }
                     }

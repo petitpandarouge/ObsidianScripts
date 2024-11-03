@@ -16,7 +16,7 @@ export interface Publication {
 
 export interface Annotation {
     target: Target;
-    content: Content;
+    content?: Content;
 }
 
 export interface Target {

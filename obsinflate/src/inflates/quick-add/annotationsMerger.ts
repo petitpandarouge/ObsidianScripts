@@ -57,17 +57,20 @@ export class AnnotationsMerger implements IAnnotationsMerger {
     }
 
     private copyAnnotation(annotation: Annotation): Annotation {
-        return {
+        const copiedAnnotation: Annotation = {
             target: {
                 fragment: {
                     start: annotation.target.fragment.start,
                     end: annotation.target.fragment.end,
                     text: annotation.target.fragment.text
                 }
-            },
-            content: {
-                text: annotation.content.text
             }
         };
+        if (annotation.content) {
+            copiedAnnotation.content = {
+                text: annotation.content.text
+            };
+        }
+        return copiedAnnotation;
     }
 }

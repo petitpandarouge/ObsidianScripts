@@ -37,11 +37,13 @@ export class MockAnnotation implements Annotation {
                           )
             }
         };
-        this.content = {
-            text: chance.paragraph()
-        };
+        if (chance.bool()) {
+            this.content = {
+                text: chance.paragraph()
+            };
+        }
     }
 
     target: Target;
-    content: Content;
+    content?: Content;
 }
