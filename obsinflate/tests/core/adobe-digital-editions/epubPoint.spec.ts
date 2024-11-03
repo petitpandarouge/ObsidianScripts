@@ -92,22 +92,22 @@ describe('EpubPoint', () => {
             ];
             const pointsTo = [
                 EpubPoint.FromString(
-                    EpubPointGenerator.generateFromWithOffset(
-                        pointsFrom[0],
-                        OffsetOperation.AddElementIndexes
-                    ).pointAsString
+                    EpubPointGenerator.generateFromWithOffset(pointsFrom[0], {
+                        operation: OffsetOperation.AddElementIndexes,
+                        range: { min: 1, max: 100 }
+                    }).pointAsString
                 ),
                 EpubPoint.FromString(
-                    EpubPointGenerator.generateFromWithOffset(
-                        pointsFrom[1],
-                        OffsetOperation.AddOnElementIndex
-                    ).pointAsString
+                    EpubPointGenerator.generateFromWithOffset(pointsFrom[1], {
+                        operation: OffsetOperation.AddOnElementIndex,
+                        range: { min: 1, max: 100 }
+                    }).pointAsString
                 ),
                 EpubPoint.FromString(
-                    EpubPointGenerator.generateFromWithOffset(
-                        pointsFrom[2],
-                        OffsetOperation.AddOnOffset
-                    ).pointAsString
+                    EpubPointGenerator.generateFromWithOffset(pointsFrom[2], {
+                        operation: OffsetOperation.AddOnOffset,
+                        range: { min: 1, max: 100 }
+                    }).pointAsString
                 )
             ];
             for (let i = 0; i < pointsFrom.length; i++) {
@@ -132,22 +132,22 @@ describe('EpubPoint', () => {
             ];
             const pointsTo = [
                 EpubPoint.FromString(
-                    EpubPointGenerator.generateFromWithOffset(
-                        pointsFrom[0],
-                        OffsetOperation.AddElementIndexes
-                    ).pointAsString
+                    EpubPointGenerator.generateFromWithOffset(pointsFrom[0], {
+                        operation: OffsetOperation.AddElementIndexes,
+                        range: { min: 1, max: 100 }
+                    }).pointAsString
                 ),
                 EpubPoint.FromString(
-                    EpubPointGenerator.generateFromWithOffset(
-                        pointsFrom[1],
-                        OffsetOperation.AddOnElementIndex
-                    ).pointAsString
+                    EpubPointGenerator.generateFromWithOffset(pointsFrom[1], {
+                        operation: OffsetOperation.AddOnElementIndex,
+                        range: { min: 1, max: 100 }
+                    }).pointAsString
                 ),
                 EpubPoint.FromString(
-                    EpubPointGenerator.generateFromWithOffset(
-                        pointsFrom[2],
-                        OffsetOperation.AddOnOffset
-                    ).pointAsString
+                    EpubPointGenerator.generateFromWithOffset(pointsFrom[2], {
+                        operation: OffsetOperation.AddOnOffset,
+                        range: { min: 1, max: 100 }
+                    }).pointAsString
                 )
             ];
             for (let i = 0; i < pointsFrom.length; i++) {

@@ -10,11 +10,6 @@ const EPUB_ELEMENT_INDEXES_TO_OFFSET_SEPARATOR = ':';
 const EPUB_FRAGMENT_IDENTIFIER_PREFIX = '#point(';
 const EPUB_FRAGMENT_IDENTIFIER_SUFFIX = ')';
 
-interface IntegerOptions {
-    min: number;
-    max: number;
-}
-
 interface PathComponents {
     elementIndexes: number[];
     offset: number;
@@ -30,6 +25,16 @@ export enum OffsetOperation {
     AddOnOffset,
     AddOnElementIndex,
     Random
+}
+
+interface IntegerOptions {
+    min: number;
+    max: number;
+}
+
+export interface OffsetOptions {
+    operation: OffsetOperation;
+    range: Partial<IntegerOptions>;
 }
 
 const chance = new Chance();
@@ -66,13 +71,14 @@ export class EpubPointGenerator {
 
     static generateFromWithOffset(
         point: EpubPoint,
-        offsetOperation: OffsetOperation = OffsetOperation.Random,
-        offsetRange: Partial<IntegerOptions> = { min: 1, max: 100 }
+        offsetOptions: OffsetOptions = {
+            operation: OffsetOperation.Random,
+            range: { min: 1, max: 100 }
+        }
     ): EpubPointGeneratorResult {
         const pathComponents = EpubPointGenerator.applyOffset(
             point,
-            offsetOperation,
-            offsetRange
+            offsetOptions
         );
         const pointAsString = EpubPointGenerator.formatPoint(
             point.filePath,
@@ -137,26 +143,27 @@ export class EpubPointGenerator {
 
     private static applyOffset(
         point: EpubPoint,
-        offsetOperation: OffsetOperation,
-        offsetRange: Partial<IntegerOptions>
+        offsetOptions: OffsetOptions
     ): PathComponents {
-        const offset = chance.integer(offsetRange);
+        const offset = chance.integer(offsetOptions.range);
         const pointElementIndexes = point.elementIndexes.slice();
         let pointOffset = point.offset;
-        if (offsetOperation === OffsetOperation.Random) {
-            offsetOperation = chance.pickone([
+        if (offsetOptions.operation === OffsetOperation.Random) {
+            offsetOptions.operation = chance.pickone([
                 OffsetOperation.AddElementIndexes,
                 OffsetOperation.AddOnOffset,
                 OffsetOperation.AddOnElementIndex
             ]);
         }
-        if (offsetOperation === OffsetOperation.AddElementIndexes) {
+        if (offsetOptions.operation === OffsetOperation.AddElementIndexes) {
             for (let i = 0; i < offset; i++) {
-                pointElementIndexes.push(chance.integer(offsetRange));
+                pointElementIndexes.push(chance.integer(offsetOptions.range));
             }
-        } else if (offsetOperation === OffsetOperation.AddOnOffset) {
+        } else if (offsetOptions.operation === OffsetOperation.AddOnOffset) {
             pointOffset += offset;
-        } else if (offsetOperation === OffsetOperation.AddOnElementIndex) {
+        } else if (
+            offsetOptions.operation === OffsetOperation.AddOnElementIndex
+        ) {
             const index = chance.integer({
                 min: 0,
                 max: point.elementIndexes.length - 1
