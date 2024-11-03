@@ -25,6 +25,7 @@ export class EpubRange {
     }
 
     // TODO : Only use overlap
+    // and overlap should be the first before the other anyway, otherwise it's an error
     isPositionned(other: EpubRange): EpubRangePosition {
         if (this.start.filePath !== other.start.filePath) {
             throw new EpubRangesNotInTheSameFileError();
