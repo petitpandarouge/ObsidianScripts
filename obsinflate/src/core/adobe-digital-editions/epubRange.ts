@@ -38,4 +38,18 @@ export class EpubRange {
         }
         return EpubRangePosition.Overlap;
     }
+
+    tryMerge(other: EpubRange): boolean {
+        if (this.isPositionned(other) !== EpubRangePosition.Overlap) {
+            return false;
+        }
+        this.mergeAnnotations(other.annotation, this.annotation);
+        return true;
+    }
+
+    private mergeAnnotations(other: Annotation, into: Annotation): void {
+        into.target.fragment.end = other.target.fragment.end;
+        into.target.fragment.text = `${into.target.fragment.text} ${other.target.fragment.text}`;
+        into.content.text = `${into.content.text} ${other.content.text}`;
+    }
 }
