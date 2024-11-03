@@ -15,11 +15,12 @@ export class AnnotationsMerger {
         }
         const annotations = [];
         annotations.push(firstFile.annotations[0]);
-        if (firstFile.annotations.length >= 2) {
-            const lastAnnotation = annotations[annotations.length - 1];
-            const annotation1Fragment = lastAnnotation.target.fragment;
+
+        for (let i = 1; i < firstFile.annotations.length; i++) {
+            const annotation1Fragment =
+                annotations[annotations.length - 1].target.fragment;
             const annotation2Fragment =
-                firstFile.annotations[1].target.fragment;
+                firstFile.annotations[i].target.fragment;
             const annotation1Range = new EpubRange(
                 annotation1Fragment.start,
                 annotation1Fragment.end
@@ -33,63 +34,14 @@ export class AnnotationsMerger {
                 EpubRangePosition.Overlap
             ) {
                 const mergedAnnotation = this.mergeAnnotations(
-                    lastAnnotation,
-                    firstFile.annotations[1]
+                    annotations[annotations.length - 1],
+                    firstFile.annotations[i]
                 );
                 annotations.pop();
                 annotations.push(mergedAnnotation);
             }
         }
-        if (firstFile.annotations.length >= 3) {
-            const lastAnnotation = annotations[annotations.length - 1];
-            const annotation1Fragment = lastAnnotation.target.fragment;
-            const annotation2Fragment =
-                firstFile.annotations[2].target.fragment;
-            const annotation1Range = new EpubRange(
-                annotation1Fragment.start,
-                annotation1Fragment.end
-            );
-            const annotation2Range = new EpubRange(
-                annotation2Fragment.start,
-                annotation2Fragment.end
-            );
-            if (
-                annotation1Range.isPositionned(annotation2Range) ===
-                EpubRangePosition.Overlap
-            ) {
-                const mergedAnnotation = this.mergeAnnotations(
-                    lastAnnotation,
-                    firstFile.annotations[2]
-                );
-                annotations.pop();
-                annotations.push(mergedAnnotation);
-            }
-        }
-        if (firstFile.annotations.length === 4) {
-            const lastAnnotation = annotations[annotations.length - 1];
-            const annotation1Fragment = lastAnnotation.target.fragment;
-            const annotation2Fragment =
-                firstFile.annotations[3].target.fragment;
-            const annotation1Range = new EpubRange(
-                annotation1Fragment.start,
-                annotation1Fragment.end
-            );
-            const annotation2Range = new EpubRange(
-                annotation2Fragment.start,
-                annotation2Fragment.end
-            );
-            if (
-                annotation1Range.isPositionned(annotation2Range) ===
-                EpubRangePosition.Overlap
-            ) {
-                const mergedAnnotation = this.mergeAnnotations(
-                    lastAnnotation,
-                    firstFile.annotations[3]
-                );
-                annotations.pop();
-                annotations.push(mergedAnnotation);
-            }
-        }
+
         epubFiles.files[0].annotations = annotations;
         return epubFiles;
         // const mergedFiles = epubFiles.files.map((file) => {

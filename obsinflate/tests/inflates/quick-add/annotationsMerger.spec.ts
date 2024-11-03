@@ -240,6 +240,69 @@ describe('AnnotationsMerger', () => {
             ]
         });
     });
+    it('should merge five annotations of a same file path if the fragments overlap', () => {
+        // Arrange
+        const file1Annotation1 = new MockAnnotation(
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/1:1)'),
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/12:1)')
+        );
+        const file1Annotation2 = new MockAnnotation(
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/12:1)'),
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/15:1)')
+        );
+        const file1Annotation3 = new MockAnnotation(
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/14:1)'),
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/22:1)')
+        );
+        const file1Annotation4 = new MockAnnotation(
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/19:1)'),
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/30:1)')
+        );
+        const file1Annotation5 = new MockAnnotation(
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/30:1)'),
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/37:1)')
+        );
+        const epubFiles = {
+            files: [
+                {
+                    path: 'OEBPS/Text/Text.xhtml',
+                    annotations: [
+                        file1Annotation1,
+                        file1Annotation2,
+                        file1Annotation3,
+                        file1Annotation4,
+                        file1Annotation5
+                    ]
+                }
+            ]
+        };
+        const merger = new AnnotationsMerger();
+        // Act
+        const mergedAnnotations = merger.merge(epubFiles);
+        // Assert
+        expect(mergedAnnotations).toEqual({
+            files: [
+                {
+                    path: 'OEBPS/Text/Text.xhtml',
+                    annotations: [
+                        {
+                            target: {
+                                fragment: {
+                                    start: file1Annotation1.target.fragment
+                                        .start,
+                                    end: file1Annotation5.target.fragment.end,
+                                    text: `${file1Annotation1.target.fragment.text} ${file1Annotation2.target.fragment.text} ${file1Annotation3.target.fragment.text} ${file1Annotation4.target.fragment.text} ${file1Annotation5.target.fragment.text}`
+                                }
+                            },
+                            content: {
+                                text: `${file1Annotation1.content.text} ${file1Annotation2.content.text} ${file1Annotation3.content.text} ${file1Annotation4.content.text} ${file1Annotation5.content.text}`
+                            }
+                        }
+                    ]
+                }
+            ]
+        });
+    });
     // it('should merge the annotations of a same file path if the fragments overlap', () => {
     //     // Arrange
     //     const file1Annotation1 = new MockAnnotation(
