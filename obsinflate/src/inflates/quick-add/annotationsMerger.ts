@@ -1,5 +1,4 @@
 import { EpubRange } from '@obsinflate/core/adobe-digital-editions/epubRange';
-import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubRangePosition';
 import {
     EpubFile,
     EpubFiles
@@ -27,7 +26,7 @@ export class AnnotationsMerger {
         // return { files: mergedFiles };
     }
 
-    mergeFileAnnotations(file: EpubFile): EpubFile {
+    private mergeFileAnnotations(file: EpubFile): EpubFile {
         const mergedFile: EpubFile = {
             path: file.path,
             annotations: []
@@ -46,26 +45,16 @@ export class AnnotationsMerger {
         return mergedFile;
     }
 
-    tryMergeAnnotations(
+    private tryMergeAnnotations(
         annotation1: Annotation,
         annotation2: Annotation
     ): boolean {
         const annotation1Range = new EpubRange(annotation1);
         const annotation2Range = new EpubRange(annotation2);
-        if (
-            annotation1Range.isPositionned(annotation2Range) !==
-            EpubRangePosition.Overlap
-        ) {
-            return false;
-        }
-        this.mergeAnnotations(
-            annotation1Range.annotation,
-            annotation2Range.annotation
-        );
-        return true;
+        return annotation1Range.tryMerge(annotation2Range);
     }
 
-    copyAnnotation(annotation: Annotation): Annotation {
+    private copyAnnotation(annotation: Annotation): Annotation {
         return {
             target: {
                 fragment: {
@@ -78,11 +67,5 @@ export class AnnotationsMerger {
                 text: annotation.content.text
             }
         };
-    }
-
-    mergeAnnotations(annotation1: Annotation, annotation2: Annotation): void {
-        annotation1.target.fragment.end = annotation2.target.fragment.end;
-        annotation1.target.fragment.text = `${annotation1.target.fragment.text} ${annotation2.target.fragment.text}`;
-        annotation1.content.text = `${annotation1.content.text} ${annotation2.content.text}`;
     }
 }
