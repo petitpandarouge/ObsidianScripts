@@ -32,14 +32,14 @@ export class AnnotationsMerger {
             path: file.path,
             annotations: []
         };
-        mergedFile.annotations.push(this.copyAnnotation(file.annotations[0]));
+        const firstAnnotation = this.copyAnnotation(file.annotations[0]);
+        mergedFile.annotations.push(firstAnnotation);
         for (let i = 1; i < file.annotations.length; i++) {
             const annotation1Range = new EpubRange(
                 mergedFile.annotations[mergedFile.annotations.length - 1]
             );
-            const annotation2Range = new EpubRange(
-                this.copyAnnotation(file.annotations[i])
-            );
+            const currentAnnotation = this.copyAnnotation(file.annotations[i]);
+            const annotation2Range = new EpubRange(currentAnnotation);
             if (
                 annotation1Range.isPositionned(annotation2Range) ===
                 EpubRangePosition.Overlap
@@ -85,7 +85,10 @@ export class AnnotationsMerger {
         ) {
             return false;
         }
-        this.mergeAnnotations(annotation1, annotation2);
+        this.mergeAnnotations(
+            annotation1Range.annotation,
+            annotation1Range.annotation
+        );
         return true;
     }
 
