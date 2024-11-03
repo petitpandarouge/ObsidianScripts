@@ -13,6 +13,25 @@ describe('AnnotationsMerger', () => {
         // Assert
         expect(mergedAnnotations).toEqual(epubFiles);
     });
+    it('should not merge the annotations of a same file path if there is only one annotation', () => {
+        // Arrange
+        const file1Annotation = new MockAnnotation(
+            EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
+        );
+        const epubFiles = {
+            files: [
+                {
+                    path: file1Annotation.target.fragment.start.filePath,
+                    annotations: [file1Annotation]
+                }
+            ]
+        };
+        const merger = new AnnotationsMerger();
+        // Act
+        const mergedAnnotations = merger.merge(epubFiles);
+        // Assert
+        expect(mergedAnnotations).toEqual(epubFiles);
+    });
     it('should not merge the annotations of different file pathes', () => {
         // Arrange
         const file1Annotation = new MockAnnotation(

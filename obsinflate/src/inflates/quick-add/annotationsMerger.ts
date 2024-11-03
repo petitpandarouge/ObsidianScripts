@@ -6,7 +6,13 @@ import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/an
 // TODO : the sorter must be used into the merger
 export class AnnotationsMerger {
     merge(epubFiles: EpubFiles): EpubFiles {
-        // const firstFile = epubFiles.files[0];
+        if (epubFiles.files.length === 0) {
+            return epubFiles;
+        }
+        const firstFile = epubFiles.files[0];
+        if (firstFile.annotations.length < 2) {
+            return epubFiles;
+        }
         // if (epubFiles.files.length === 1 || firstFile.annotations.length < 2) {
         //     return epubFiles;
         // }
