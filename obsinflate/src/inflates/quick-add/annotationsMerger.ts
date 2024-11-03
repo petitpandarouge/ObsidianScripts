@@ -17,18 +17,10 @@ export class AnnotationsMerger {
         annotations.push(firstFile.annotations[0]);
 
         for (let i = 1; i < firstFile.annotations.length; i++) {
-            const annotation1Fragment =
-                annotations[annotations.length - 1].target.fragment;
-            const annotation2Fragment =
-                firstFile.annotations[i].target.fragment;
             const annotation1Range = new EpubRange(
-                annotation1Fragment.start,
-                annotation1Fragment.end
+                annotations[annotations.length - 1]
             );
-            const annotation2Range = new EpubRange(
-                annotation2Fragment.start,
-                annotation2Fragment.end
-            );
+            const annotation2Range = new EpubRange(firstFile.annotations[i]);
             if (
                 annotation1Range.isPositionned(annotation2Range) ===
                 EpubRangePosition.Overlap

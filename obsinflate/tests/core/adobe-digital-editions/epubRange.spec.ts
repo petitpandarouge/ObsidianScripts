@@ -5,6 +5,7 @@ import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubR
 import { EpubRangesNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangesNotInTheSameFileError';
 import { InvalidEpubRangeLimitsError } from '@obsinflate/core/adobe-digital-editions/invalidEpubRangeLimitsError';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
+import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 
 describe('EpubRange', () => {
     it('should raise error if the range points are from different XHTML files', () => {
@@ -16,7 +17,7 @@ describe('EpubRange', () => {
             EpubPointGenerator.generate().pointAsString
         );
         // Act
-        const action = () => new EpubRange(start, end);
+        const action = () => new EpubRange(new MockAnnotation(start, end));
         // Assert
         expect(action).toThrow(EpubRangeLimitsNotInTheSameFileError);
     });
@@ -29,7 +30,7 @@ describe('EpubRange', () => {
             EpubPointGenerator.generateFromWithOffset(end).pointAsString
         );
         // Act
-        const action = () => new EpubRange(start, end);
+        const action = () => new EpubRange(new MockAnnotation(start, end));
         // Assert
         expect(action).toThrow(InvalidEpubRangeLimitsError);
     });
@@ -48,8 +49,8 @@ describe('EpubRange', () => {
             const point4 = EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(point3).pointAsString
             );
-            const range1 = new EpubRange(point1, point2);
-            const range2 = new EpubRange(point3, point4);
+            const range1 = new EpubRange(new MockAnnotation(point1, point2));
+            const range2 = new EpubRange(new MockAnnotation(point3, point4));
             // Act
             const result = range1.isPositionned(range2);
             // Assert
@@ -69,8 +70,8 @@ describe('EpubRange', () => {
             const point4 = EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(point3).pointAsString
             );
-            const range1 = new EpubRange(point3, point4);
-            const range2 = new EpubRange(point1, point2);
+            const range1 = new EpubRange(new MockAnnotation(point3, point4));
+            const range2 = new EpubRange(new MockAnnotation(point1, point2));
             // Act
             const result = range1.isPositionned(range2);
             // Assert
@@ -91,16 +92,16 @@ describe('EpubRange', () => {
                 EpubPointGenerator.generateFromWithOffset(point3).pointAsString
             );
             const ranges1 = [
-                new EpubRange(point2, point4),
-                new EpubRange(point1, point3),
-                new EpubRange(point1, point4),
-                new EpubRange(point2, point3)
+                new EpubRange(new MockAnnotation(point2, point4)),
+                new EpubRange(new MockAnnotation(point1, point3)),
+                new EpubRange(new MockAnnotation(point1, point4)),
+                new EpubRange(new MockAnnotation(point2, point3))
             ];
             const ranges2 = [
-                new EpubRange(point1, point3),
-                new EpubRange(point2, point4),
-                new EpubRange(point2, point3),
-                new EpubRange(point1, point4)
+                new EpubRange(new MockAnnotation(point1, point3)),
+                new EpubRange(new MockAnnotation(point2, point4)),
+                new EpubRange(new MockAnnotation(point2, point3)),
+                new EpubRange(new MockAnnotation(point1, point4))
             ];
             for (let i = 0; i < ranges1.length; i++) {
                 // Act
@@ -121,12 +122,12 @@ describe('EpubRange', () => {
                 EpubPointGenerator.generateFromWithOffset(point2).pointAsString
             );
             const ranges1 = [
-                new EpubRange(point1, point2),
-                new EpubRange(point2, point3)
+                new EpubRange(new MockAnnotation(point1, point2)),
+                new EpubRange(new MockAnnotation(point2, point3))
             ];
             const ranges2 = [
-                new EpubRange(point2, point3),
-                new EpubRange(point1, point2)
+                new EpubRange(new MockAnnotation(point2, point3)),
+                new EpubRange(new MockAnnotation(point1, point2))
             ];
             for (let i = 0; i < ranges1.length; i++) {
                 // Act
@@ -149,47 +150,48 @@ describe('EpubRange', () => {
             const end2 = EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(start2).pointAsString
             );
-            const range1 = new EpubRange(start1, end1);
-            const range2 = new EpubRange(start2, end2);
+            const range1 = new EpubRange(new MockAnnotation(start1, end1));
+            const range2 = new EpubRange(new MockAnnotation(start2, end2));
             // Act
             const action = () => range1.isPositionned(range2);
             // Assert
             expect(action).toThrow(EpubRangesNotInTheSameFileError);
         });
     });
-    it('should be able to sort a set of ranges from the same XHTML file', async () => {
-        // // Arrange
-        // const ranges: EpubRange[] = [
-        //     new EpubRange(
-        //         EpubPoint.FromString(
-        //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:27)'
-        //         ),
-        //         EpubPoint.FromString(
-        //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-        //         )
-        //     ),
-        //     new EpubRange(
-        //         EpubPoint.FromString(
-        //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/169/1:1)'
-        //         ),
-        //         EpubPoint.FromString(
-        //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/172/1:0)'
-        //         )
-        //     ),
-        //     new EpubRange(
-        //         EpubPoint.FromString(
-        //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/75:1)'
-        //         ),
-        //         EpubPoint.FromString(
-        //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/78:0)'
-        //         )
-        //     )
-        // ];
-        // // Act
-        // ranges.sort((a, b) => (a.isBefore(b) ? -1 : 1));
-        // // Assert
-        // expect(ranges[0].start.pathComponents).toEqual([1, 4, 75]);
-        // expect(ranges[1].start.pathComponents).toEqual([1, 4, 169, 1]);
-        // expect(ranges[2].start.pathComponents).toEqual([1, 4, 173]);
-    });
+    it.todo('should be able to sort a set of ranges from the same XHTML file');
+    //, async () => {
+    // // Arrange
+    // const ranges: EpubRange[] = [
+    //     new EpubRange(
+    //         EpubPoint.FromString(
+    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:27)'
+    //         ),
+    //         EpubPoint.FromString(
+    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
+    //         )
+    //     ),
+    //     new EpubRange(
+    //         EpubPoint.FromString(
+    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/169/1:1)'
+    //         ),
+    //         EpubPoint.FromString(
+    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/172/1:0)'
+    //         )
+    //     ),
+    //     new EpubRange(
+    //         EpubPoint.FromString(
+    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/75:1)'
+    //         ),
+    //         EpubPoint.FromString(
+    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/78:0)'
+    //         )
+    //     )
+    // ];
+    // // Act
+    // ranges.sort((a, b) => (a.isBefore(b) ? -1 : 1));
+    // // Assert
+    // expect(ranges[0].start.pathComponents).toEqual([1, 4, 75]);
+    // expect(ranges[1].start.pathComponents).toEqual([1, 4, 169, 1]);
+    // expect(ranges[2].start.pathComponents).toEqual([1, 4, 173]);
+    //});
 });

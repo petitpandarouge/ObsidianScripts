@@ -4,21 +4,27 @@ import { EpubRangeLimitsNotInTheSameFileError } from '@obsinflate/core/adobe-dig
 import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubRangePosition';
 import { EpubRangesNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangesNotInTheSameFileError';
 import { InvalidEpubRangeLimitsError } from '@obsinflate/core/adobe-digital-editions/invalidEpubRangeLimitsError';
+import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 
 export class EpubRange {
-    constructor(
-        // TODO : must be a fragment
-        public start: EpubPoint,
-        public end: EpubPoint
-    ) {
-        if (start.filePath !== end.filePath) {
+    constructor(public annotation: Annotation) {
+        if (this.start.filePath !== this.end.filePath) {
             throw new EpubRangeLimitsNotInTheSameFileError();
         }
-        if (start.isPositionned(end) === EpubPointPosition.After) {
+        if (this.start.isPositionned(this.end) === EpubPointPosition.After) {
             throw new InvalidEpubRangeLimitsError();
         }
     }
 
+    public get start(): EpubPoint {
+        return this.annotation.target.fragment.start;
+    }
+
+    public get end(): EpubPoint {
+        return this.annotation.target.fragment.end;
+    }
+
+    // TODO : Only use overlap
     isPositionned(other: EpubRange): EpubRangePosition {
         if (this.start.filePath !== other.start.filePath) {
             throw new EpubRangesNotInTheSameFileError();
