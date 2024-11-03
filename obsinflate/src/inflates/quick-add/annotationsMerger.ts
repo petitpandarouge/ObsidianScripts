@@ -34,7 +34,7 @@ export class AnnotationsMerger {
             );
             annotations.push(mergedAnnotation);
         }
-        if (firstFile.annotations.length === 3) {
+        if (firstFile.annotations.length >= 3) {
             const lastAnnotation = annotations[annotations.length - 1];
             const annotation1Fragment = lastAnnotation.target.fragment;
             const annotation2Fragment =
@@ -54,6 +54,31 @@ export class AnnotationsMerger {
                 const mergedAnnotation = this.mergeAnnotations(
                     lastAnnotation,
                     firstFile.annotations[2]
+                );
+                annotations.pop();
+                annotations.push(mergedAnnotation);
+            }
+        }
+        if (firstFile.annotations.length === 4) {
+            const lastAnnotation = annotations[annotations.length - 1];
+            const annotation1Fragment = lastAnnotation.target.fragment;
+            const annotation2Fragment =
+                firstFile.annotations[3].target.fragment;
+            const annotation1Range = new EpubRange(
+                annotation1Fragment.start,
+                annotation1Fragment.end
+            );
+            const annotation2Range = new EpubRange(
+                annotation2Fragment.start,
+                annotation2Fragment.end
+            );
+            if (
+                annotation1Range.isPositionned(annotation2Range) ===
+                EpubRangePosition.Overlap
+            ) {
+                const mergedAnnotation = this.mergeAnnotations(
+                    lastAnnotation,
+                    firstFile.annotations[3]
                 );
                 annotations.pop();
                 annotations.push(mergedAnnotation);
