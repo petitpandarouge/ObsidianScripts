@@ -1,6 +1,9 @@
 import { EpubRange } from '@obsinflate/core/adobe-digital-editions/epubRange';
 import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubRangePosition';
-import { EpubFiles } from '@obsinflate/inflates/quick-add/annotationsSorter';
+import {
+    EpubFile,
+    EpubFiles
+} from '@obsinflate/inflates/quick-add/annotationsSorter';
 import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 
 // TODO : the sorter must be used into the merger
@@ -13,12 +16,19 @@ export class AnnotationsMerger {
         if (firstFile.annotations.length < 2) {
             return epubFiles;
         }
-        const annotations = [];
-        annotations.push(firstFile.annotations[0]);
+
+        const mergedFile: EpubFile = {
+            path: firstFile.path,
+            annotations: []
+        };
+        const result: EpubFiles = {
+            files: [mergedFile]
+        };
+        mergedFile.annotations.push(firstFile.annotations[0]);
 
         for (let i = 1; i < firstFile.annotations.length; i++) {
             const annotation1Range = new EpubRange(
-                annotations[annotations.length - 1]
+                mergedFile.annotations[mergedFile.annotations.length - 1]
             );
             const annotation2Range = new EpubRange(firstFile.annotations[i]);
             if (
@@ -26,16 +36,16 @@ export class AnnotationsMerger {
                 EpubRangePosition.Overlap
             ) {
                 const mergedAnnotation = this.mergeAnnotations(
-                    annotations[annotations.length - 1],
+                    mergedFile.annotations[mergedFile.annotations.length - 1],
                     firstFile.annotations[i]
                 );
-                annotations.pop();
-                annotations.push(mergedAnnotation);
+                mergedFile.annotations.pop();
+                mergedFile.annotations.push(mergedAnnotation);
+            } else {
+                mergedFile.annotations.push(firstFile.annotations[i]);
             }
         }
-
-        epubFiles.files[0].annotations = annotations;
-        return epubFiles;
+        return result;
         // const mergedFiles = epubFiles.files.map((file) => {
         //     file.annotations = this.mergeAnnotations(file.annotations);
         //     return file;
