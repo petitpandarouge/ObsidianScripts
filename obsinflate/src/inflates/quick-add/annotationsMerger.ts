@@ -32,48 +32,71 @@ export class AnnotationsMerger {
             path: file.path,
             annotations: []
         };
-
-        mergedFile.annotations.push(file.annotations[0]);
-
+        mergedFile.annotations.push(this.copyAnnotation(file.annotations[0]));
         for (let i = 1; i < file.annotations.length; i++) {
             const annotation1Range = new EpubRange(
                 mergedFile.annotations[mergedFile.annotations.length - 1]
             );
-            const annotation2Range = new EpubRange(file.annotations[i]);
+            const annotation2Range = new EpubRange(
+                this.copyAnnotation(file.annotations[i])
+            );
             if (
                 annotation1Range.isPositionned(annotation2Range) ===
                 EpubRangePosition.Overlap
             ) {
                 const mergedAnnotation = this.mergeAnnotations(
-                    mergedFile.annotations[mergedFile.annotations.length - 1],
-                    file.annotations[i]
+                    annotation1Range.annotation,
+                    annotation2Range.annotation
                 );
                 mergedFile.annotations.pop();
                 mergedFile.annotations.push(mergedAnnotation);
             } else {
-                mergedFile.annotations.push(file.annotations[i]);
+                mergedFile.annotations.push(annotation2Range.annotation);
             }
         }
 
         return mergedFile;
     }
 
+    copyAnnotation(annotation: Annotation): Annotation {
+        return {
+            target: {
+                fragment: {
+                    start: annotation.target.fragment.start,
+                    end: annotation.target.fragment.end,
+                    text: annotation.target.fragment.text
+                }
+            },
+            content: {
+                text: annotation.content.text
+            }
+        };
+    }
+
+    tryMergeAnnotations(
+        annotation1: Annotation,
+        annotation2: Annotation
+    ): boolean {
+        const annotation1Range = new EpubRange(annotation1);
+        const annotation2Range = new EpubRange(annotation2);
+        if (
+            annotation1Range.isPositionned(annotation2Range) !==
+            EpubRangePosition.Overlap
+        ) {
+            return false;
+        }
+        this.mergeAnnotations(annotation1, annotation2);
+        return true;
+    }
+
     mergeAnnotations(
         annotation1: Annotation,
         annotation2: Annotation
     ): Annotation {
-        return {
-            target: {
-                fragment: {
-                    start: annotation1.target.fragment.start,
-                    end: annotation2.target.fragment.end,
-                    text: `${annotation1.target.fragment.text} ${annotation2.target.fragment.text}`
-                }
-            },
-            content: {
-                text: `${annotation1.content.text} ${annotation2.content.text}`
-            }
-        };
+        annotation1.target.fragment.end = annotation2.target.fragment.end;
+        annotation1.target.fragment.text = `${annotation1.target.fragment.text} ${annotation2.target.fragment.text}`;
+        annotation1.content.text = `${annotation1.content.text} ${annotation2.content.text}`;
+        return annotation1;
     }
 
     // mergeAnnotations(annotations: Annotation[]): Annotation[] {
