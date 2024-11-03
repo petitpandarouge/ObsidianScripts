@@ -11,14 +11,16 @@ export class AnnotationsMerger {
         if (epubFiles.files.length === 0) {
             return epubFiles;
         }
-        const firstFile = epubFiles.files[0];
-        if (firstFile.annotations.length < 2) {
-            return epubFiles;
-        }
-        const result: EpubFiles = {
-            files: [this.mergeFileAnnotations(firstFile)]
+        const mergeFiles: EpubFiles = {
+            files: []
         };
-        return result;
+        for (const file of epubFiles.files) {
+            if (file.annotations.length < 2) {
+                return epubFiles;
+            }
+            mergeFiles.files.push(this.mergeFileAnnotations(file));
+        }
+        return mergeFiles;
         // const mergedFiles = epubFiles.files.map((file) => {
         //     file.annotations = this.mergeAnnotations(file.annotations);
         //     return file;
