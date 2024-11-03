@@ -58,7 +58,7 @@ describe('AnnotationsMerger', () => {
         // Assert
         expect(mergedAnnotations).toEqual(epubFiles);
     });
-    it('should not merge the annotations of a same file path if the fragments do not overlap ', () => {
+    it('should not merge the annotations of a same file path if the fragments do not overlap', () => {
         // Arrange
         const file1Annotation1 = new MockAnnotation(
             EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
@@ -84,51 +84,51 @@ describe('AnnotationsMerger', () => {
         // Assert
         expect(mergedAnnotations).toEqual(epubFiles);
     });
-    // it('should merge the annotations of a same file path if the fragments overlap', () => {
-    //     // Arrange
-    //     const file1Annotation1 = new MockAnnotation(
-    //         EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/1:1)'),
-    //         EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/12:1)')
-    //     );
-    //     const file1Annotation2 = new MockAnnotation(
-    //         EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/12:1)'),
-    //         EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/15:1)')
-    //     );
-    //     const epubFiles = {
-    //         files: [
-    //             {
-    //                 path: 'OEBPS/Text/Text.xhtml',
-    //                 annotations: [file1Annotation1, file1Annotation2]
-    //             }
-    //         ]
-    //     };
-    //     const merger = new AnnotationsMerger();
-    //     // Act
-    //     const mergedAnnotations = merger.merge(epubFiles);
-    //     // Assert
-    //     expect(mergedAnnotations).toEqual({
-    //         files: [
-    //             {
-    //                 path: 'OEBPS/Text/Text.xhtml',
-    //                 annotations: [
-    //                     {
-    //                         target: {
-    //                             fragment: {
-    //                                 start: file1Annotation1.target.fragment
-    //                                     .start,
-    //                                 end: file1Annotation2.target.fragment.end,
-    //                                 text: `${file1Annotation1.target.fragment.text} ${file1Annotation2.target.fragment.text}`
-    //                             }
-    //                         },
-    //                         content: {
-    //                             text: `${file1Annotation1.content.text} ${file1Annotation2.content.text}`
-    //                         }
-    //                     }
-    //                 ]
-    //             }
-    //         ]
-    //     });
-    // });
+    it('should merge the annotations of a same file path if the fragments overlap', () => {
+        // Arrange
+        const file1Annotation1 = new MockAnnotation(
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/1:1)'),
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/12:1)')
+        );
+        const file1Annotation2 = new MockAnnotation(
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/12:1)'),
+            EpubPoint.FromString('OEBPS/Text/Text.xhtml#point(/15:1)')
+        );
+        const epubFiles = {
+            files: [
+                {
+                    path: 'OEBPS/Text/Text.xhtml',
+                    annotations: [file1Annotation1, file1Annotation2]
+                }
+            ]
+        };
+        const merger = new AnnotationsMerger();
+        // Act
+        const mergedAnnotations = merger.merge(epubFiles);
+        // Assert
+        expect(mergedAnnotations).toEqual({
+            files: [
+                {
+                    path: 'OEBPS/Text/Text.xhtml',
+                    annotations: [
+                        {
+                            target: {
+                                fragment: {
+                                    start: file1Annotation1.target.fragment
+                                        .start,
+                                    end: file1Annotation2.target.fragment.end,
+                                    text: `${file1Annotation1.target.fragment.text} ${file1Annotation2.target.fragment.text}`
+                                }
+                            },
+                            content: {
+                                text: `${file1Annotation1.content.text} ${file1Annotation2.content.text}`
+                            }
+                        }
+                    ]
+                }
+            ]
+        });
+    });
     // it('should merge the annotations of a same file path if the fragments overlap', () => {
     //     // Arrange
     //     const file1Annotation1 = new MockAnnotation(
