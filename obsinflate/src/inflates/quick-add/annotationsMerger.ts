@@ -12,20 +12,14 @@ export class AnnotationsMerger {
             return epubFiles;
         }
         const mergeFiles: EpubFiles = {
-            files: []
+            files: epubFiles.files.map((file) => {
+                if (file.annotations.length < 2) {
+                    return file;
+                }
+                return this.mergeFileAnnotations(file);
+            })
         };
-        for (const file of epubFiles.files) {
-            if (file.annotations.length < 2) {
-                return epubFiles;
-            }
-            mergeFiles.files.push(this.mergeFileAnnotations(file));
-        }
         return mergeFiles;
-        // const mergedFiles = epubFiles.files.map((file) => {
-        //     file.annotations = this.mergeAnnotations(file.annotations);
-        //     return file;
-        // });
-        // return { files: mergedFiles };
     }
 
     private mergeFileAnnotations(file: EpubFile): EpubFile {
