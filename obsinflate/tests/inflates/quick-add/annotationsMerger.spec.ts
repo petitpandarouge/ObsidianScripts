@@ -30,6 +30,32 @@ describe('AnnotationsMerger', () => {
         // Assert
         expect(mergedAnnotations).toEqual(epubFiles);
     });
+    it('should not merge the annotations of a same file path if the fragments do not overlap ', () => {
+        // Arrange
+        const file1Annotation1 = new MockAnnotation(
+            EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
+        );
+        const file1Annotation2 = new MockAnnotation(
+            EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(
+                    file1Annotation1.target.fragment.end
+                ).pointAsString
+            )
+        );
+        const epubFiles = {
+            files: [
+                {
+                    path: file1Annotation1.target.fragment.start.filePath,
+                    annotations: [file1Annotation1, file1Annotation2]
+                }
+            ]
+        };
+        const merger = new AnnotationsMerger();
+        // Act
+        const mergedAnnotations = merger.merge(epubFiles);
+        // Assert
+        expect(mergedAnnotations).toEqual(epubFiles);
+    });
     // it('should merge the annotations of a same file path if the fragments overlap', () => {
     //     // Arrange
     //     const file1Annotation1 = new MockAnnotation(
