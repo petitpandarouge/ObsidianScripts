@@ -55,7 +55,9 @@ export class EpubPoint {
         } else if (this.elementIndexes.length > other.elementIndexes.length) {
             return EpubPointPosition.After;
         }
-        if (this.offset < other.offset) {
+        if (this.offset + 1 === other.offset) {
+            return EpubPointPosition.Stick;
+        } else if (this.offset < other.offset) {
             return EpubPointPosition.Before;
         } else if (this.offset > other.offset) {
             return EpubPointPosition.After;

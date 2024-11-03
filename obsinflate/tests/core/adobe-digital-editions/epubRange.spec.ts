@@ -4,7 +4,10 @@ import { EpubRangeLimitsNotInTheSameFileError } from '@obsinflate/core/adobe-dig
 import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubRangePosition';
 import { EpubRangesNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangesNotInTheSameFileError';
 import { InvalidEpubRangeLimitsError } from '@obsinflate/core/adobe-digital-editions/invalidEpubRangeLimitsError';
-import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
+import {
+    EpubPointGenerator,
+    OffsetOperation
+} from '@obsinflate/tests/data/epubPointGenerator';
 import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 
 describe('EpubRange', () => {
@@ -136,6 +139,30 @@ describe('EpubRange', () => {
                 expect(result).toBe(EpubRangePosition.Overlap);
             }
         });
+        it('should return Stick if the start point is right after the other range end point', () => {
+            // Arrange
+            const point1 = EpubPoint.FromString(
+                EpubPointGenerator.generate().pointAsString
+            );
+            const point2 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point1).pointAsString
+            );
+            const point3 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point2, {
+                    operation: OffsetOperation.AddOnOffset,
+                    range: { min: 1, max: 1 }
+                }).pointAsString
+            );
+            const point4 = EpubPoint.FromString(
+                EpubPointGenerator.generateFromWithOffset(point3).pointAsString
+            );
+            const range1 = new EpubRange(new MockAnnotation(point1, point2));
+            const range2 = new EpubRange(new MockAnnotation(point3, point4));
+            // Act
+            const result = range1.isPositionned(range2);
+            // Assert
+            expect(result).toBe(EpubRangePosition.Stick);
+        });
         it('should raise an error if the ranges are from different XHTML files', () => {
             // Arrange
             const start1 = EpubPoint.FromString(
@@ -158,40 +185,4 @@ describe('EpubRange', () => {
             expect(action).toThrow(EpubRangesNotInTheSameFileError);
         });
     });
-    it.todo('should be able to sort a set of ranges from the same XHTML file');
-    //, async () => {
-    // // Arrange
-    // const ranges: EpubRange[] = [
-    //     new EpubRange(
-    //         EpubPoint.FromString(
-    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/173:27)'
-    //         ),
-    //         EpubPoint.FromString(
-    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/174:27)'
-    //         )
-    //     ),
-    //     new EpubRange(
-    //         EpubPoint.FromString(
-    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/169/1:1)'
-    //         ),
-    //         EpubPoint.FromString(
-    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/172/1:0)'
-    //         )
-    //     ),
-    //     new EpubRange(
-    //         EpubPoint.FromString(
-    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/75:1)'
-    //         ),
-    //         EpubPoint.FromString(
-    //             'OEBPS/Text/Chapter05.xhtml#point(/1/4/78:0)'
-    //         )
-    //     )
-    // ];
-    // // Act
-    // ranges.sort((a, b) => (a.isBefore(b) ? -1 : 1));
-    // // Assert
-    // expect(ranges[0].start.pathComponents).toEqual([1, 4, 75]);
-    // expect(ranges[1].start.pathComponents).toEqual([1, 4, 169, 1]);
-    // expect(ranges[2].start.pathComponents).toEqual([1, 4, 173]);
-    //});
 });

@@ -30,6 +30,9 @@ export class EpubRange {
         if (this.start.filePath !== other.start.filePath) {
             throw new EpubRangesNotInTheSameFileError();
         }
+        if (this.end.isPositionned(other.start) === EpubPointPosition.Stick) {
+            return EpubRangePosition.Stick;
+        }
         if (this.end.isPositionned(other.start) === EpubPointPosition.Before) {
             return EpubRangePosition.Before;
         }

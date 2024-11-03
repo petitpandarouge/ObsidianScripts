@@ -1,5 +1,6 @@
 export enum EpubRangePosition {
     Before = -1,
     Overlap = 0,
-    After = 1
+    Stick = 1,
+    After = 2
 }
