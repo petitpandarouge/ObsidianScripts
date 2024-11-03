@@ -5,7 +5,10 @@ import {
     IAnnotationsSorter
 } from '@obsinflate/inflates/quick-add/annotationsSorter';
 import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
-import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
+import {
+    EpubPointGenerator,
+    OffsetOperation
+} from '@obsinflate/tests/data/epubPointGenerator';
 import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 import Chance from 'chance';
 import { mock } from 'jest-mock-extended';
@@ -127,7 +130,7 @@ describe('AnnotationsMerger', () => {
         // Assert
         expect(mergedAnnotations).toEqual(epubFiles);
     });
-    it('should merge the annotations of a same file path if the fragments overlap', () => {
+    it('should merge the annotations of a same file path if the fragments overlap or stick', () => {
         // Arrange
         const chance = new Chance();
         const filesCount = chance.integer({ min: 2, max: 10 });
@@ -142,11 +145,33 @@ describe('AnnotationsMerger', () => {
                 )
             ];
             for (let j = 1; j < annotationsCount; j++) {
-                annotations.push(
-                    new MockAnnotation(
-                        annotations[annotations.length - 1].target.fragment.end
-                    )
-                );
+                if (chance.bool()) {
+                    annotations.push(
+                        new MockAnnotation(
+                            annotations[
+                                annotations.length - 1
+                            ].target.fragment.end
+                        )
+                    );
+                } else {
+                    annotations.push(
+                        new MockAnnotation(
+                            EpubPoint.FromString(
+                                EpubPointGenerator.generateFromWithOffset(
+                                    annotations[annotations.length - 1].target
+                                        .fragment.end,
+                                    {
+                                        operation: OffsetOperation.AddOnOffset,
+                                        range: {
+                                            min: 1,
+                                            max: 1
+                                        }
+                                    }
+                                ).pointAsString
+                            )
+                        )
+                    );
+                }
             }
             epubFiles.files.push({
                 path: annotations[0].target.fragment.start.filePath,

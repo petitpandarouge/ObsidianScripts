@@ -43,7 +43,11 @@ export class EpubRange {
     }
 
     tryMerge(other: EpubRange): boolean {
-        if (this.isPositionned(other) !== EpubRangePosition.Overlap) {
+        const position = this.isPositionned(other);
+        if (
+            position !== EpubRangePosition.Overlap &&
+            position !== EpubRangePosition.Stick
+        ) {
             return false;
         }
         this.mergeAnnotations(other.annotation, this.annotation);
