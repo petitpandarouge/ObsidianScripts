@@ -38,23 +38,31 @@ export class AnnotationsMerger {
             const lastAnnotation =
                 mergedFile.annotations[mergedFile.annotations.length - 1];
             const currentAnnotation = this.copyAnnotation(file.annotations[i]);
-
-            const annotation1Range = new EpubRange(lastAnnotation);
-            const annotation2Range = new EpubRange(currentAnnotation);
-            if (
-                annotation1Range.isPositionned(annotation2Range) !==
-                EpubRangePosition.Overlap
-            ) {
-                mergedFile.annotations.push(annotation2Range.annotation);
-            } else {
-                this.mergeAnnotations(
-                    annotation1Range.annotation,
-                    annotation2Range.annotation
-                );
+            if (!this.tryMergeAnnotations(lastAnnotation, currentAnnotation)) {
+                mergedFile.annotations.push(currentAnnotation);
             }
         }
 
         return mergedFile;
+    }
+
+    tryMergeAnnotations(
+        annotation1: Annotation,
+        annotation2: Annotation
+    ): boolean {
+        const annotation1Range = new EpubRange(annotation1);
+        const annotation2Range = new EpubRange(annotation2);
+        if (
+            annotation1Range.isPositionned(annotation2Range) !==
+            EpubRangePosition.Overlap
+        ) {
+            return false;
+        }
+        this.mergeAnnotations(
+            annotation1Range.annotation,
+            annotation2Range.annotation
+        );
+        return true;
     }
 
     copyAnnotation(annotation: Annotation): Annotation {
@@ -72,32 +80,9 @@ export class AnnotationsMerger {
         };
     }
 
-    tryMergeAnnotations(
-        annotation1: Annotation,
-        annotation2: Annotation
-    ): boolean {
-        const annotation1Range = new EpubRange(annotation1);
-        const annotation2Range = new EpubRange(annotation2);
-        if (
-            annotation1Range.isPositionned(annotation2Range) !==
-            EpubRangePosition.Overlap
-        ) {
-            return false;
-        }
-        this.mergeAnnotations(
-            annotation1Range.annotation,
-            annotation1Range.annotation
-        );
-        return true;
-    }
-
     mergeAnnotations(annotation1: Annotation, annotation2: Annotation): void {
         annotation1.target.fragment.end = annotation2.target.fragment.end;
         annotation1.target.fragment.text = `${annotation1.target.fragment.text} ${annotation2.target.fragment.text}`;
         annotation1.content.text = `${annotation1.content.text} ${annotation2.content.text}`;
     }
-
-    // mergeAnnotations(annotations: Annotation[]): Annotation[] {
-    //     throw new Error('Method not implemented.');
-    // }
 }
