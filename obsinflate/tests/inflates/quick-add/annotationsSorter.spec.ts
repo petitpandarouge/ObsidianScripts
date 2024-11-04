@@ -1,4 +1,5 @@
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
+import { AnnotationsNotStrictlyBeforeOrAfterError } from '@obsinflate/inflates/quick-add/annotationsNotStrictlyBeforeOrAfterError';
 import { AnnotationsSorter } from '@obsinflate/inflates/quick-add/annotationsSorter';
 import {
     EpubPointGenerator,
@@ -138,5 +139,20 @@ describe('AnnotationsSorter', () => {
                 }
             ]
         });
+    });
+    it('should raise an error if the annotations start at same point', () => {
+        // Arrange
+        const annotation1 = new MockAnnotation(
+            EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
+        );
+        const annotation2 = new MockAnnotation(
+            annotation1.target.fragment.start
+        );
+        const annotations = [annotation1, annotation2];
+        const sorter = new AnnotationsSorter();
+        // Act
+        const action = () => sorter.sort(annotations);
+        // Assert
+        expect(action).toThrow(AnnotationsNotStrictlyBeforeOrAfterError);
     });
 });

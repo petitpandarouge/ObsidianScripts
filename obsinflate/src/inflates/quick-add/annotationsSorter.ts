@@ -1,4 +1,5 @@
 import { EpubPointPosition } from '@obsinflate/core/adobe-digital-editions/epubPointPosition';
+import { AnnotationsNotStrictlyBeforeOrAfterError } from '@obsinflate/inflates/quick-add/annotationsNotStrictlyBeforeOrAfterError';
 import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 
 export interface EpubFiles {
@@ -31,9 +32,7 @@ export class AnnotationsSorter implements IAnnotationsSorter {
                 } else if (position === EpubPointPosition.After) {
                     return 1;
                 } else {
-                    throw new Error(
-                        'Annotations are not strictly before or after each other'
-                    );
+                    throw new AnnotationsNotStrictlyBeforeOrAfterError();
                 }
             });
         });
