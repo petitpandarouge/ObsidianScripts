@@ -11,6 +11,8 @@ export interface IAnnotationsReader {
     read(file: File): Promise<Annotations>;
 }
 
+// TODO : must be covered by tests
+// TODO must be in core
 export class AnnotationsReader implements IAnnotationsReader {
     async read(file: File): Promise<Annotations> {
         if (file.extension !== ANNOTATIONS_FILE_EXTENSION) {

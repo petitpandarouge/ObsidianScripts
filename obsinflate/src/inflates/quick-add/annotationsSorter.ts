@@ -2,6 +2,8 @@ import { EpubPointPosition } from '@obsinflate/core/adobe-digital-editions/epubP
 import { AnnotationsNotStrictlyBeforeOrAfterError } from '@obsinflate/inflates/quick-add/annotationsNotStrictlyBeforeOrAfterError';
 import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 
+// TODO extact into an other file
+// TODO must be in core
 export interface EpubFiles {
     files: EpubFile[];
 }
@@ -15,6 +17,7 @@ export interface IAnnotationsSorter {
     sort(annotations: Annotation[]): EpubFiles;
 }
 
+// TODO all the services must be in core
 export class AnnotationsSorter implements IAnnotationsSorter {
     sort(annotations: Annotation[]): EpubFiles {
         const groupedAnnotations = this.groupByFilePath(annotations);
