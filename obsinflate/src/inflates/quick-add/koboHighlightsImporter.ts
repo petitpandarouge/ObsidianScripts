@@ -43,6 +43,11 @@ export class KoboHighlightsImporter implements Script {
             annotations.annotationSet.publication.title,
             content
         );
+
+        params.variables['title'] = annotations.annotationSet.publication.title;
+        params.variables['author'] =
+            annotations.annotationSet.publication.creator;
+        params.variables['annotations'] = content;
     }
 
     private async suggest(params: Parameters, files: File[]): Promise<File> {

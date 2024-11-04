@@ -273,6 +273,7 @@ describe('KoboHighlightsImporter', () => {
             files
         });
     });
+    // TODO useless
     it('should create a markdown file having the name "YYYYMMDDHHmm - Book Title.md"', async () => {
         // Arrange
         const chance = new Chance();
@@ -319,6 +320,7 @@ describe('KoboHighlightsImporter', () => {
             expect.any(String)
         );
     });
+    // TODO useless
     it('should initialize the content of the markdown file with the formatted annotations', async () => {
         // Arrange
         const chance = new Chance();
