@@ -139,7 +139,7 @@ describe('EpubRange', () => {
                 expect(result).toBe(EpubRangePosition.Overlap);
             }
         });
-        it('should return Stick if the start point is right after the other range end point', () => {
+        it('should return Stick and Before if the start point is right after the other range end point', () => {
             // Arrange
             const point1 = EpubPoint.FromString(
                 EpubPointGenerator.generate().pointAsString
@@ -161,7 +161,9 @@ describe('EpubRange', () => {
             // Act
             const result = range1.isPositionned(range2);
             // Assert
-            expect(result).toBe(EpubRangePosition.Stick);
+            expect(result).toBe(
+                EpubRangePosition.Stick | EpubRangePosition.Before
+            );
         });
         it('should raise an error if the ranges are from different XHTML files', () => {
             // Arrange

@@ -27,13 +27,23 @@ export class EpubRange {
     // TODO : Only use overlap
     // and overlap should be the first before the other anyway, otherwise it's an error
     isPositionned(other: EpubRange): EpubRangePosition {
-        if (this.start.filePath !== other.start.filePath) {
+        if (
+            this.start.isPositionned(other.start) ===
+            EpubPointPosition.InAnotherFile
+        ) {
             throw new EpubRangesNotInTheSameFileError();
         }
-        if (this.end.isPositionned(other.start) === EpubPointPosition.Stick) {
-            return EpubRangePosition.Stick;
-        }
-        if (this.end.isPositionned(other.start) === EpubPointPosition.Before) {
+        const endToStartPosition = this.end.isPositionned(other.start);
+        if (
+            (endToStartPosition & EpubPointPosition.Before) ===
+            EpubPointPosition.Before
+        ) {
+            if (
+                (endToStartPosition & EpubPointPosition.Stick) ===
+                EpubPointPosition.Stick
+            ) {
+                return EpubRangePosition.Before | EpubRangePosition.Stick;
+            }
             return EpubRangePosition.Before;
         }
         if (this.start.isPositionned(other.end) === EpubPointPosition.After) {
@@ -46,7 +56,7 @@ export class EpubRange {
         const position = this.isPositionned(other);
         if (
             position !== EpubRangePosition.Overlap &&
-            position !== EpubRangePosition.Stick
+            (position & EpubRangePosition.Stick) !== EpubRangePosition.Stick
         ) {
             return false;
         }

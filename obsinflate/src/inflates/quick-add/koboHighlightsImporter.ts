@@ -13,6 +13,7 @@ export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 export const ANNOTATIONS_FILE_EXTENSION = '.annot';
 export const BOOK_NOTE_DESTINATION_DIR = '06 GARDEN/Livres';
 
+// TODO : Using error noticer should be part of the core logic
 export class KoboHighlightsImporter implements Script {
     constructor(
         private fileSystem: IFileSystem,

@@ -1,7 +1,7 @@
 export enum EpubPointPosition {
-    Before = 'Before',
-    Same = 'Same',
-    Stick = 'Stick',
-    After = 'After',
-    InAnotherFile = 'InAnotherFile'
+    InAnotherFile = 1 << 0,
+    Same = 1 << 1,
+    Before = 1 << 2,
+    Stick = 1 << 3,
+    After = 1 << 4
 }

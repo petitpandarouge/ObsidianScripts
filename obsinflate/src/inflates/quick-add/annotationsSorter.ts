@@ -14,6 +14,7 @@ export interface IAnnotationsSorter {
     sort(annotations: Annotation[]): EpubFiles;
 }
 
+// TODO if not strictly before or after, then raise an error
 export class AnnotationsSorter implements IAnnotationsSorter {
     sort(annotations: Annotation[]): EpubFiles {
         const groupedAnnotations = this.groupByFilePath(annotations);
