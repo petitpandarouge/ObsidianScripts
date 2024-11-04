@@ -20,11 +20,21 @@ export class AnnotationsSorter implements IAnnotationsSorter {
         const groupedAnnotations = this.groupByFilePath(annotations);
         groupedAnnotations.forEach((file) => {
             file.annotations.sort((a, b) => {
-                return a.target.fragment.start.isPositionned(
+                const position = a.target.fragment.start.isPositionned(
                     b.target.fragment.start
-                ) === EpubPointPosition.Before
-                    ? -1
-                    : 1;
+                );
+                if (
+                    (position & EpubPointPosition.Before) ===
+                    EpubPointPosition.Before
+                ) {
+                    return -1;
+                } else if (position === EpubPointPosition.After) {
+                    return 1;
+                } else {
+                    throw new Error(
+                        'Annotations are not strictly before or after each other'
+                    );
+                }
             });
         });
 

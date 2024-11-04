@@ -1,6 +1,9 @@
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { AnnotationsSorter } from '@obsinflate/inflates/quick-add/annotationsSorter';
-import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
+import {
+    EpubPointGenerator,
+    OffsetOperation
+} from '@obsinflate/tests/data/epubPointGenerator';
 import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 
 describe('AnnotationsSorter', () => {
@@ -26,7 +29,11 @@ describe('AnnotationsSorter', () => {
         const annotation4 = new MockAnnotation(
             EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(
-                    annotation3.target.fragment.start
+                    annotation3.target.fragment.start,
+                    {
+                        operation: OffsetOperation.AddOnOffset,
+                        range: { min: 1, max: 1 }
+                    }
                 ).pointAsString
             )
         );
