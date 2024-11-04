@@ -24,8 +24,6 @@ export class EpubRange {
         return this.annotation.target.fragment.end;
     }
 
-    // TODO : Only use overlap
-    // and overlap should be the first before the other anyway, otherwise it's an error
     isPositionned(other: EpubRange): EpubRangePosition {
         if (
             this.start.isPositionned(other.start) ===
