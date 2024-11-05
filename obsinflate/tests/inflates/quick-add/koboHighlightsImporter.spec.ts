@@ -47,7 +47,10 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
-                    publication: { title: 'Book Title', creator: 'Author' },
+                    publication: {
+                        title: PREVENT_CRASH_STRING,
+                        creator: PREVENT_CRASH_STRING
+                    },
                     annotation: []
                 }
             })
@@ -91,7 +94,10 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
-                    publication: { title: 'Book Title', creator: 'Author' },
+                    publication: {
+                        title: PREVENT_CRASH_STRING,
+                        creator: PREVENT_CRASH_STRING
+                    },
                     annotation: []
                 }
             })
@@ -132,7 +138,10 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
-                    publication: { title: 'Book Title', creator: 'Author' },
+                    publication: {
+                        title: PREVENT_CRASH_STRING,
+                        creator: PREVENT_CRASH_STRING
+                    },
                     annotation: []
                 }
             })
@@ -168,7 +177,10 @@ describe('KoboHighlightsImporter', () => {
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const annotations: Annotations = {
             annotationSet: {
-                publication: { title: 'Book Title', creator: 'Author' },
+                publication: {
+                    title: PREVENT_CRASH_STRING,
+                    creator: PREVENT_CRASH_STRING
+                },
                 annotations: []
             }
         };
@@ -219,7 +231,10 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
-                    publication: { title: 'Book Title', creator: 'Author' },
+                    publication: {
+                        title: PREVENT_CRASH_STRING,
+                        creator: PREVENT_CRASH_STRING
+                    },
                     annotations: []
                 }
             })
@@ -451,6 +466,51 @@ describe('KoboHighlightsImporter', () => {
         await importer.entry(mockParams);
         // Assert
         expect(mockParams.variables['author']).toBe(mockAuthor);
+    });
+    it('should set the formatted annotations in the "annotations" variable', async () => {
+        // Arrange
+        const chance = new Chance();
+        const mockFileSystem = mockDeep<IFileSystem>({
+            getFiles: jest.fn().mockReturnValue([])
+        });
+        const mockNoticer = mock<INoticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockContent = chance.paragraph();
+        const annotations: Annotations = {
+            annotationSet: {
+                publication: {
+                    title: PREVENT_CRASH_STRING,
+                    creator: PREVENT_CRASH_STRING
+                },
+                annotations: []
+            }
+        };
+        const mockAnnotationsReader = mock<IAnnotationsReader>({
+            read: jest.fn().mockResolvedValue(annotations)
+        });
+        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
+        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
+            format: jest.fn().mockReturnValue(mockContent)
+        });
+        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
+        const importer = new KoboHighlightsImporter(
+            mockFileSystem,
+            errorNoticer,
+            mockAnnotationsReader,
+            mockAnnotationsMerger,
+            mockMarkdownQuoteFormatter,
+            mockUniqueNoteCreator
+        );
+        const mockParams = mockDeep<Parameters>({
+            quickAddApi: {
+                suggester: jest.fn().mockResolvedValue(PREVENT_CRASH_STRING)
+            },
+            variables: {}
+        });
+        // Act
+        await importer.entry(mockParams);
+        // Assert
+        expect(mockParams.variables['annotations']).toBe(mockContent);
     });
     it.todo('should apply the "Livre" template to the markdown file');
     it.todo('should create the author note if it does not already exist');
