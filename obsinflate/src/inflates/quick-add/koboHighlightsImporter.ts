@@ -5,13 +5,11 @@ import { NoAnnotationsFileSelectedError } from '@obsinflate/inflates/quick-add/n
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
-import { IUniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
 import { EpubFiles } from '@obsinflate/inflates/quick-add/annotationsSorter';
 import { IAnnotationsMerger } from '@obsinflate/inflates/quick-add/annotationsMerger';
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 export const ANNOTATIONS_FILE_EXTENSION = '.annot';
-export const BOOK_NOTE_DESTINATION_DIR = '06 GARDEN/Livres';
 export const BOOK_TITLE_VAR_NAME = 'title';
 export const BOOK_AUTHOR_VAR_NAME = 'author';
 export const BOOK_ANNOTATIONS_VAR_NAME = 'annotations';
@@ -23,8 +21,7 @@ export class KoboHighlightsImporter implements Script {
         private errorNoticer: ErrorNoticer,
         private annotationsReader: IAnnotationsReader,
         private annotationsMerger: IAnnotationsMerger,
-        private annotationsFormatter: IFormatter<EpubFiles>,
-        private uniqueNoteCreator: IUniqueNoteCreator
+        private annotationsFormatter: IFormatter<EpubFiles>
     ) {}
 
     async entry(params: Parameters): Promise<void> {
@@ -41,14 +38,7 @@ export class KoboHighlightsImporter implements Script {
             annotations.annotationSet.annotations
         );
         const content = this.annotationsFormatter.format(annotationsByFiles);
-        await this.uniqueNoteCreator.create(
-            BOOK_NOTE_DESTINATION_DIR,
-            annotations.annotationSet.publication.title,
-            content
-        );
-
         // TODO : Needs to be formated
-        // TODO : name of the variables must be constants
         params.variables[BOOK_TITLE_VAR_NAME] =
             annotations.annotationSet.publication.title;
         params.variables[BOOK_AUTHOR_VAR_NAME] =

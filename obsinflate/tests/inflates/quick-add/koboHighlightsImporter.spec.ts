@@ -5,7 +5,6 @@ import {
     ANNOTATIONS_FILES_DIR_PATH,
     BOOK_ANNOTATIONS_VAR_NAME,
     BOOK_AUTHOR_VAR_NAME,
-    BOOK_NOTE_DESTINATION_DIR,
     BOOK_TITLE_VAR_NAME,
     KoboHighlightsImporter
 } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
@@ -17,7 +16,6 @@ import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
 import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
 import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
-import { IUniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
 import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
@@ -60,14 +58,12 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
             mockAnnotationsMerger,
-            mockMarkdownQuoteFormatter,
-            mockUniqueNoteCreator
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: {
@@ -107,14 +103,12 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
             mockAnnotationsMerger,
-            mockMarkdownQuoteFormatter,
-            mockUniqueNoteCreator
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: { suggester: jest.fn().mockResolvedValue(undefined) }
@@ -151,14 +145,12 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
             mockAnnotationsMerger,
-            mockMarkdownQuoteFormatter,
-            mockUniqueNoteCreator
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: {
@@ -202,14 +194,12 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
             mockAnnotationsMerger,
-            mockMarkdownQuoteFormatter,
-            mockUniqueNoteCreator
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             // Empty string is returned to prevent the NoAnnotationsFileSelectedError error to be raised.
@@ -269,14 +259,12 @@ describe('KoboHighlightsImporter', () => {
             merge: jest.fn().mockReturnValue({ files })
         });
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
             mockAnnotationsMerger,
-            mockMarkdownQuoteFormatter,
-            mockUniqueNoteCreator
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: {
@@ -290,99 +278,6 @@ describe('KoboHighlightsImporter', () => {
         expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledWith({
             files
         });
-    });
-    // TODO useless
-    it('should create a markdown file having the name "YYYYMMDDHHmm - Book Title.md"', async () => {
-        // Arrange
-        const chance = new Chance();
-        const mockFileSystem = mockDeep<IFileSystem>({
-            getFiles: jest.fn().mockReturnValue([])
-        });
-        const mockNoticer = mock<INoticer>();
-        const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockBookTitle = chance.sentence();
-        const annotations: Annotations = {
-            annotationSet: {
-                publication: { title: mockBookTitle, creator: 'Author' },
-                annotations: []
-            }
-        };
-        const mockAnnotationsReader = mock<IAnnotationsReader>({
-            read: jest.fn().mockResolvedValue(annotations)
-        });
-        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
-            format: jest.fn().mockReturnValue(PREVENT_CRASH_STRING)
-        });
-        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
-        const importer = new KoboHighlightsImporter(
-            mockFileSystem,
-            errorNoticer,
-            mockAnnotationsReader,
-            mockAnnotationsMerger,
-            mockMarkdownQuoteFormatter,
-            mockUniqueNoteCreator
-        );
-        const mockParams = mockDeep<Parameters>({
-            quickAddApi: {
-                suggester: jest.fn().mockResolvedValue(PREVENT_CRASH_STRING)
-            }
-        });
-        // Act
-        await importer.entry(mockParams);
-        // Assert
-        expect(mockUniqueNoteCreator.create).toHaveBeenCalledTimes(1);
-        expect(mockUniqueNoteCreator.create).toHaveBeenCalledWith(
-            BOOK_NOTE_DESTINATION_DIR,
-            annotations.annotationSet.publication.title,
-            expect.any(String)
-        );
-    });
-    // TODO useless
-    it('should initialize the content of the markdown file with the formatted annotations', async () => {
-        // Arrange
-        const chance = new Chance();
-        const mockFileSystem = mockDeep<IFileSystem>({
-            getFiles: jest.fn().mockReturnValue([])
-        });
-        const mockNoticer = mock<INoticer>();
-        const errorNoticer = new ErrorNoticer(mockNoticer);
-        const annotations: Annotations = {
-            annotationSet: {
-                publication: { title: 'Book Title', creator: 'Author' },
-                annotations: []
-            }
-        };
-        const mockAnnotationsReader = mock<IAnnotationsReader>({
-            read: jest.fn().mockResolvedValue(annotations)
-        });
-        const mockContent = chance.paragraph();
-        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
-            format: jest.fn().mockReturnValue(mockContent)
-        });
-        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
-        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
-        const importer = new KoboHighlightsImporter(
-            mockFileSystem,
-            errorNoticer,
-            mockAnnotationsReader,
-            mockAnnotationsMerger,
-            mockMarkdownQuoteFormatter,
-            mockUniqueNoteCreator
-        );
-        const mockParams = mockDeep<Parameters>({
-            quickAddApi: {
-                suggester: jest.fn().mockResolvedValue(PREVENT_CRASH_STRING)
-            }
-        });
-        // Act
-        await importer.entry(mockParams);
-        // Assert
-        expect(mockUniqueNoteCreator.create).toHaveBeenCalledWith(
-            expect.any(String),
-            expect.any(String),
-            expect.stringMatching(mockContent)
-        );
     });
     it('should set the title of the book in the "title" variable', async () => {
         // Arrange
@@ -407,14 +302,12 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
             mockAnnotationsMerger,
-            mockMarkdownQuoteFormatter,
-            mockUniqueNoteCreator
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: {
@@ -450,14 +343,12 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
             mockAnnotationsMerger,
-            mockMarkdownQuoteFormatter,
-            mockUniqueNoteCreator
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: {
@@ -495,14 +386,12 @@ describe('KoboHighlightsImporter', () => {
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
             format: jest.fn().mockReturnValue(mockContent)
         });
-        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
         const importer = new KoboHighlightsImporter(
             mockFileSystem,
             errorNoticer,
             mockAnnotationsReader,
             mockAnnotationsMerger,
-            mockMarkdownQuoteFormatter,
-            mockUniqueNoteCreator
+            mockMarkdownQuoteFormatter
         );
         const mockParams = mockDeep<Parameters>({
             quickAddApi: {
