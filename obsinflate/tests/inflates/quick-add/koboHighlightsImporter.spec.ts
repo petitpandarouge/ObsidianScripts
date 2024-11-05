@@ -3,7 +3,10 @@ import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import {
     ANNOTATIONS_FILE_EXTENSION,
     ANNOTATIONS_FILES_DIR_PATH,
+    BOOK_ANNOTATIONS_VAR_NAME,
+    BOOK_AUTHOR_VAR_NAME,
     BOOK_NOTE_DESTINATION_DIR,
+    BOOK_TITLE_VAR_NAME,
     KoboHighlightsImporter
 } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
 import Chance from 'chance';
@@ -422,7 +425,7 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockParams.variables['title']).toBe(mockBookTitle);
+        expect(mockParams.variables[BOOK_TITLE_VAR_NAME]).toBe(mockBookTitle);
     });
     it('should set the author of the book in the "author" variable', async () => {
         // Arrange
@@ -465,7 +468,7 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockParams.variables['author']).toBe(mockAuthor);
+        expect(mockParams.variables[BOOK_AUTHOR_VAR_NAME]).toBe(mockAuthor);
     });
     it('should set the formatted annotations in the "annotations" variable', async () => {
         // Arrange
@@ -510,7 +513,9 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockParams.variables['annotations']).toBe(mockContent);
+        expect(mockParams.variables[BOOK_ANNOTATIONS_VAR_NAME]).toBe(
+            mockContent
+        );
     });
     it.todo('should apply the "Livre" template to the markdown file');
     it.todo('should create the author note if it does not already exist');

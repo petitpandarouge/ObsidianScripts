@@ -12,6 +12,9 @@ import { IAnnotationsMerger } from '@obsinflate/inflates/quick-add/annotationsMe
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 export const ANNOTATIONS_FILE_EXTENSION = '.annot';
 export const BOOK_NOTE_DESTINATION_DIR = '06 GARDEN/Livres';
+export const BOOK_TITLE_VAR_NAME = 'title';
+export const BOOK_AUTHOR_VAR_NAME = 'author';
+export const BOOK_ANNOTATIONS_VAR_NAME = 'annotations';
 
 // TODO : Using error noticer should be part of the core logic
 export class KoboHighlightsImporter implements Script {
@@ -46,10 +49,11 @@ export class KoboHighlightsImporter implements Script {
 
         // TODO : Needs to be formated
         // TODO : name of the variables must be constants
-        params.variables['title'] = annotations.annotationSet.publication.title;
-        params.variables['author'] =
+        params.variables[BOOK_TITLE_VAR_NAME] =
+            annotations.annotationSet.publication.title;
+        params.variables[BOOK_AUTHOR_VAR_NAME] =
             annotations.annotationSet.publication.creator;
-        params.variables['annotations'] = content;
+        params.variables[BOOK_ANNOTATIONS_VAR_NAME] = content;
     }
 
     private async suggest(params: Parameters, files: File[]): Promise<File> {
