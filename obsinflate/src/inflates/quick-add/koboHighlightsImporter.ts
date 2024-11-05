@@ -45,6 +45,7 @@ export class KoboHighlightsImporter implements Script {
         );
 
         // TODO : Needs to be formated
+        // TODO : name of the variables must be constants
         params.variables['title'] = annotations.annotationSet.publication.title;
         params.variables['author'] =
             annotations.annotationSet.publication.creator;

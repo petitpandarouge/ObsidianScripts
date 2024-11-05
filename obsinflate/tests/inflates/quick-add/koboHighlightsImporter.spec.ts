@@ -366,6 +366,46 @@ describe('KoboHighlightsImporter', () => {
             expect.stringMatching(mockContent)
         );
     });
+    it('should set the title of the book in the "title" variable', async () => {
+        // Arrange
+        const chance = new Chance();
+        const mockFileSystem = mockDeep<IFileSystem>({
+            getFiles: jest.fn().mockReturnValue([])
+        });
+        const mockNoticer = mock<INoticer>();
+        const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockBookTitle = chance.sentence();
+        const annotations: Annotations = {
+            annotationSet: {
+                publication: { title: mockBookTitle, creator: 'Author' },
+                annotations: []
+            }
+        };
+        const mockAnnotationsReader = mock<IAnnotationsReader>({
+            read: jest.fn().mockResolvedValue(annotations)
+        });
+        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
+        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
+        const mockUniqueNoteCreator = mock<IUniqueNoteCreator>();
+        const importer = new KoboHighlightsImporter(
+            mockFileSystem,
+            errorNoticer,
+            mockAnnotationsReader,
+            mockAnnotationsMerger,
+            mockMarkdownQuoteFormatter,
+            mockUniqueNoteCreator
+        );
+        const mockParams = mockDeep<Parameters>({
+            quickAddApi: {
+                suggester: jest.fn().mockResolvedValue(PREVENT_CRASH_STRING)
+            },
+            variables: {}
+        });
+        // Act
+        await importer.entry(mockParams);
+        // Assert
+        expect(mockParams.variables['title']).toBe(mockBookTitle);
+    });
     it.todo('should apply the "Livre" template to the markdown file');
     it.todo('should create the author note if it does not already exist');
     it.todo(
