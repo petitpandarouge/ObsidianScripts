@@ -406,9 +406,4 @@ describe('KoboHighlightsImporter', () => {
             mockContent
         );
     });
-    it.todo('should apply the "Livre" template to the markdown file');
-    it.todo('should create the author note if it does not already exist');
-    it.todo(
-        'should reference the author note in the "author" property of the book note'
-    );
 });
