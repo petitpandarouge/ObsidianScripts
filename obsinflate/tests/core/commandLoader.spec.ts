@@ -9,7 +9,6 @@ import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { Plugin } from 'obsidian';
 import { DuplicatedIdError } from '@obsinflate/core/duplicatedIdError';
 
-// TODO must be in tests/core
 describe('CommandLoader', () => {
     it('should build command', async () => {
         // Arrange

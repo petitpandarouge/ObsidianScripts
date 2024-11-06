@@ -22,7 +22,7 @@ import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 import {
     EpubFile,
     EpubFiles
-} from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
+} from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 
 const PREVENT_CRASH_STRING = '';
