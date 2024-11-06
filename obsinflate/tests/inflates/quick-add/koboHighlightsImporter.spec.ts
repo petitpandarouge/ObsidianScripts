@@ -22,8 +22,8 @@ import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 import {
     EpubFile,
     EpubFiles
-} from '@obsinflate/inflates/quick-add/annotationsSorter';
-import { IAnnotationsMerger } from '@obsinflate/inflates/quick-add/annotationsMerger';
+} from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
+import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 
 const PREVENT_CRASH_STRING = '';
 

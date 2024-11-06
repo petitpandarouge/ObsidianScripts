@@ -1,10 +1,10 @@
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
-import { AnnotationsMerger } from '@obsinflate/inflates/quick-add/annotationsMerger';
+import { AnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import {
     EpubFile,
     EpubFiles,
     IAnnotationsSorter
-} from '@obsinflate/inflates/quick-add/annotationsSorter';
+} from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
 import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 import {
     EpubPointGenerator,

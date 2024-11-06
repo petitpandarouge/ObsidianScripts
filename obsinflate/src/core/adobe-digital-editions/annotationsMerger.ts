@@ -3,7 +3,7 @@ import {
     EpubFile,
     EpubFiles,
     IAnnotationsSorter
-} from '@obsinflate/inflates/quick-add/annotationsSorter';
+} from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
 import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 
 export interface IAnnotationsMerger {

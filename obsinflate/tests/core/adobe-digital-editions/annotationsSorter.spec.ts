@@ -1,6 +1,6 @@
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
-import { AnnotationsNotStrictlyBeforeOrAfterError } from '@obsinflate/inflates/quick-add/annotationsNotStrictlyBeforeOrAfterError';
-import { AnnotationsSorter } from '@obsinflate/inflates/quick-add/annotationsSorter';
+import { AnnotationsNotStrictlyBeforeOrAfterError } from '@obsinflate/core/adobe-digital-editions/annotationsNotStrictlyBeforeOrAfterError';
+import { AnnotationsSorter } from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
 import {
     EpubPointGenerator,
     OffsetOperation

@@ -5,8 +5,8 @@ import { NoAnnotationsFileSelectedError } from '@obsinflate/inflates/quick-add/n
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
-import { EpubFiles } from '@obsinflate/inflates/quick-add/annotationsSorter';
-import { IAnnotationsMerger } from '@obsinflate/inflates/quick-add/annotationsMerger';
+import { EpubFiles } from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
+import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 export const ANNOTATIONS_FILE_EXTENSION = '.annot';

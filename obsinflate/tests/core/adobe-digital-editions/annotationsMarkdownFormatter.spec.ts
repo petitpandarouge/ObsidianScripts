@@ -1,6 +1,6 @@
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
-import { AnnotationsMarkdownFormatter } from '@obsinflate/inflates/quick-add/annotationsMarkdownFormatter';
-import { EpubFile } from '@obsinflate/inflates/quick-add/annotationsSorter';
+import { AnnotationsMarkdownFormatter } from '@obsinflate/core/adobe-digital-editions/annotationsMarkdownFormatter';
+import { EpubFile } from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
 import Chance from 'chance';

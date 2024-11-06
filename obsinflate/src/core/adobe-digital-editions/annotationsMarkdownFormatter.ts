@@ -1,4 +1,4 @@
-import { EpubFiles } from '@obsinflate/inflates/quick-add/annotationsSorter';
+import { EpubFiles } from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
 import { Formatter } from '@obsinflate/infrastructure/formatter';
 
 export class AnnotationsMarkdownFormatter extends Formatter<EpubFiles> {
