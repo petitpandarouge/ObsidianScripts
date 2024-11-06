@@ -186,7 +186,7 @@ describe('AnnotationsMerger', () => {
         const mergedAnnotations = merger.merge([]);
         // Assert
         const mergedFiles = epubFiles.files.map((file) => {
-            return {
+            const result: EpubFile = {
                 path: file.annotations[0].target.fragment.start.filePath,
                 annotations: [
                     {
@@ -204,16 +204,19 @@ describe('AnnotationsMerger', () => {
                                     )
                                     .join(' ')
                             }
-                        },
-                        content: {
-                            text: file.annotations
-                                .filter((annotation) => annotation.content)
-                                .map((annotation) => annotation.content!.text)
-                                .join(' ')
                         }
                     }
                 ]
             };
+            if (file.annotations.some((annotation) => annotation.content)) {
+                result.annotations[0].content = {
+                    text: file.annotations
+                        .filter((annotation) => annotation.content)
+                        .map((annotation) => annotation.content!.text)
+                        .join(' ')
+                };
+            }
+            return result;
         });
         expect(mergedAnnotations).toEqual({ files: mergedFiles });
     });
