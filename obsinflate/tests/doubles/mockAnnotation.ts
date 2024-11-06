@@ -19,7 +19,7 @@ export class MockAnnotation implements Annotation {
         start: EpubPoint,
         end: EpubPoint | OffsetOptions = {
             operation: OffsetOperation.Random,
-            range: { min: 1, max: 100 }
+            range: { min: 2, max: 100 }
         }
     ) {
         this.target = {

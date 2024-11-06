@@ -1,6 +1,7 @@
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { AnnotationsMerger } from '@obsinflate/inflates/quick-add/annotationsMerger';
 import {
+    EpubFile,
     EpubFiles,
     IAnnotationsSorter
 } from '@obsinflate/inflates/quick-add/annotationsSorter';
@@ -90,7 +91,7 @@ describe('AnnotationsMerger', () => {
         // Assert
         expect(mergedAnnotations).toEqual(epubFiles);
     });
-    it('should not merge the annotations of a same file path if the fragments do not overlap', () => {
+    it('should not merge the annotations of a same file path if the fragments do not overlap nor stick', () => {
         // Arrange
         const chance = new Chance();
         const filesCount = chance.integer({ min: 2, max: 10 });
