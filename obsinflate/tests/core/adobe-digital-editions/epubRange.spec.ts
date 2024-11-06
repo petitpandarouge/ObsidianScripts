@@ -8,7 +8,7 @@ import {
     EpubPointGenerator,
     OffsetOperation
 } from '@obsinflate/tests/data/epubPointGenerator';
-import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
+import { StubAnnotation } from '@obsinflate/tests/doubles/stubAnnotation';
 
 describe('EpubRange', () => {
     it('should raise error if the range points are from different XHTML files', () => {
@@ -20,7 +20,7 @@ describe('EpubRange', () => {
             EpubPointGenerator.generate().pointAsString
         );
         // Act
-        const action = () => new EpubRange(new MockAnnotation(start, end));
+        const action = () => new EpubRange(new StubAnnotation(start, end));
         // Assert
         expect(action).toThrow(EpubRangeLimitsNotInTheSameFileError);
     });
@@ -33,7 +33,7 @@ describe('EpubRange', () => {
             EpubPointGenerator.generateFromWithOffset(end).pointAsString
         );
         // Act
-        const action = () => new EpubRange(new MockAnnotation(start, end));
+        const action = () => new EpubRange(new StubAnnotation(start, end));
         // Assert
         expect(action).toThrow(InvalidEpubRangeLimitsError);
     });
@@ -52,8 +52,8 @@ describe('EpubRange', () => {
             const point4 = EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(point3).pointAsString
             );
-            const range1 = new EpubRange(new MockAnnotation(point1, point2));
-            const range2 = new EpubRange(new MockAnnotation(point3, point4));
+            const range1 = new EpubRange(new StubAnnotation(point1, point2));
+            const range2 = new EpubRange(new StubAnnotation(point3, point4));
             // Act
             const result = range1.isPositionned(range2);
             // Assert
@@ -73,8 +73,8 @@ describe('EpubRange', () => {
             const point4 = EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(point3).pointAsString
             );
-            const range1 = new EpubRange(new MockAnnotation(point3, point4));
-            const range2 = new EpubRange(new MockAnnotation(point1, point2));
+            const range1 = new EpubRange(new StubAnnotation(point3, point4));
+            const range2 = new EpubRange(new StubAnnotation(point1, point2));
             // Act
             const result = range1.isPositionned(range2);
             // Assert
@@ -95,16 +95,16 @@ describe('EpubRange', () => {
                 EpubPointGenerator.generateFromWithOffset(point3).pointAsString
             );
             const ranges1 = [
-                new EpubRange(new MockAnnotation(point2, point4)),
-                new EpubRange(new MockAnnotation(point1, point3)),
-                new EpubRange(new MockAnnotation(point1, point4)),
-                new EpubRange(new MockAnnotation(point2, point3))
+                new EpubRange(new StubAnnotation(point2, point4)),
+                new EpubRange(new StubAnnotation(point1, point3)),
+                new EpubRange(new StubAnnotation(point1, point4)),
+                new EpubRange(new StubAnnotation(point2, point3))
             ];
             const ranges2 = [
-                new EpubRange(new MockAnnotation(point1, point3)),
-                new EpubRange(new MockAnnotation(point2, point4)),
-                new EpubRange(new MockAnnotation(point2, point3)),
-                new EpubRange(new MockAnnotation(point1, point4))
+                new EpubRange(new StubAnnotation(point1, point3)),
+                new EpubRange(new StubAnnotation(point2, point4)),
+                new EpubRange(new StubAnnotation(point2, point3)),
+                new EpubRange(new StubAnnotation(point1, point4))
             ];
             for (let i = 0; i < ranges1.length; i++) {
                 // Act
@@ -125,12 +125,12 @@ describe('EpubRange', () => {
                 EpubPointGenerator.generateFromWithOffset(point2).pointAsString
             );
             const ranges1 = [
-                new EpubRange(new MockAnnotation(point1, point2)),
-                new EpubRange(new MockAnnotation(point2, point3))
+                new EpubRange(new StubAnnotation(point1, point2)),
+                new EpubRange(new StubAnnotation(point2, point3))
             ];
             const ranges2 = [
-                new EpubRange(new MockAnnotation(point2, point3)),
-                new EpubRange(new MockAnnotation(point1, point2))
+                new EpubRange(new StubAnnotation(point2, point3)),
+                new EpubRange(new StubAnnotation(point1, point2))
             ];
             for (let i = 0; i < ranges1.length; i++) {
                 // Act
@@ -156,8 +156,8 @@ describe('EpubRange', () => {
             const point4 = EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(point3).pointAsString
             );
-            const range1 = new EpubRange(new MockAnnotation(point1, point2));
-            const range2 = new EpubRange(new MockAnnotation(point3, point4));
+            const range1 = new EpubRange(new StubAnnotation(point1, point2));
+            const range2 = new EpubRange(new StubAnnotation(point3, point4));
             // Act
             const result = range1.isPositionned(range2);
             // Assert
@@ -179,8 +179,8 @@ describe('EpubRange', () => {
             const end2 = EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(start2).pointAsString
             );
-            const range1 = new EpubRange(new MockAnnotation(start1, end1));
-            const range2 = new EpubRange(new MockAnnotation(start2, end2));
+            const range1 = new EpubRange(new StubAnnotation(start1, end1));
+            const range2 = new EpubRange(new StubAnnotation(start2, end2));
             // Act
             const action = () => range1.isPositionned(range2);
             // Assert

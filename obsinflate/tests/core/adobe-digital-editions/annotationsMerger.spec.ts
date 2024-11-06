@@ -10,7 +10,7 @@ import {
     EpubPointGenerator,
     OffsetOperation
 } from '@obsinflate/tests/data/epubPointGenerator';
-import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
+import { StubAnnotation } from '@obsinflate/tests/doubles/stubAnnotation';
 import Chance from 'chance';
 import { mock } from 'jest-mock-extended';
 
@@ -42,7 +42,7 @@ describe('AnnotationsMerger', () => {
     });
     it('should not merge the annotations of a same file path if there is only one annotation', () => {
         // Arrange
-        const file1Annotation = new MockAnnotation(
+        const file1Annotation = new StubAnnotation(
             EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
         );
         const epubFiles = {
@@ -64,10 +64,10 @@ describe('AnnotationsMerger', () => {
     });
     it('should not merge the annotations of different file pathes', () => {
         // Arrange
-        const file1Annotation = new MockAnnotation(
+        const file1Annotation = new StubAnnotation(
             EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
         );
-        const file2Annotation = new MockAnnotation(
+        const file2Annotation = new StubAnnotation(
             EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
         );
         const epubFiles = {
@@ -99,7 +99,7 @@ describe('AnnotationsMerger', () => {
         for (let i = 0; i < filesCount; i++) {
             const annotationsCount = chance.integer({ min: 1, max: 10 });
             const annotations = [
-                new MockAnnotation(
+                new StubAnnotation(
                     EpubPoint.FromString(
                         EpubPointGenerator.generate().pointAsString
                     )
@@ -107,7 +107,7 @@ describe('AnnotationsMerger', () => {
             ];
             for (let j = 1; j < annotationsCount; j++) {
                 annotations.push(
-                    new MockAnnotation(
+                    new StubAnnotation(
                         EpubPoint.FromString(
                             EpubPointGenerator.generateFromWithOffset(
                                 annotations[annotations.length - 1].target
@@ -139,7 +139,7 @@ describe('AnnotationsMerger', () => {
         for (let i = 0; i < filesCount; i++) {
             const annotationsCount = chance.integer({ min: 2, max: 10 });
             const annotations = [
-                new MockAnnotation(
+                new StubAnnotation(
                     EpubPoint.FromString(
                         EpubPointGenerator.generate().pointAsString
                     )
@@ -148,7 +148,7 @@ describe('AnnotationsMerger', () => {
             for (let j = 1; j < annotationsCount; j++) {
                 if (chance.bool()) {
                     annotations.push(
-                        new MockAnnotation(
+                        new StubAnnotation(
                             annotations[
                                 annotations.length - 1
                             ].target.fragment.end
@@ -156,7 +156,7 @@ describe('AnnotationsMerger', () => {
                     );
                 } else {
                     annotations.push(
-                        new MockAnnotation(
+                        new StubAnnotation(
                             EpubPoint.FromString(
                                 EpubPointGenerator.generateFromWithOffset(
                                     annotations[annotations.length - 1].target

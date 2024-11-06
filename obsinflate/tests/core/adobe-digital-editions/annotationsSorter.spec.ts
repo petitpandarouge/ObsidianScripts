@@ -5,29 +5,29 @@ import {
     EpubPointGenerator,
     OffsetOperation
 } from '@obsinflate/tests/data/epubPointGenerator';
-import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
+import { StubAnnotation } from '@obsinflate/tests/doubles/stubAnnotation';
 
 describe('AnnotationsSorter', () => {
     it('should sort the annotations of a same file path by fragment start', () => {
         // Arrange
-        const annotation1 = new MockAnnotation(
+        const annotation1 = new StubAnnotation(
             EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
         );
-        const annotation2 = new MockAnnotation(
+        const annotation2 = new StubAnnotation(
             EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(
                     annotation1.target.fragment.start
                 ).pointAsString
             )
         );
-        const annotation3 = new MockAnnotation(
+        const annotation3 = new StubAnnotation(
             EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(
                     annotation2.target.fragment.start
                 ).pointAsString
             )
         );
-        const annotation4 = new MockAnnotation(
+        const annotation4 = new StubAnnotation(
             EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(
                     annotation3.target.fragment.start,
@@ -38,7 +38,7 @@ describe('AnnotationsSorter', () => {
                 ).pointAsString
             )
         );
-        const annotation5 = new MockAnnotation(
+        const annotation5 = new StubAnnotation(
             EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(
                     annotation4.target.fragment.start
@@ -73,34 +73,34 @@ describe('AnnotationsSorter', () => {
     });
     it('should sort the annotations of different file paths by file path', () => {
         // Arrange
-        const file1Annotation1 = new MockAnnotation(
+        const file1Annotation1 = new StubAnnotation(
             EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
         );
-        const file1Annotation2 = new MockAnnotation(
+        const file1Annotation2 = new StubAnnotation(
             EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(
                     file1Annotation1.target.fragment.start
                 ).pointAsString
             )
         );
-        const file1Annotation3 = new MockAnnotation(
+        const file1Annotation3 = new StubAnnotation(
             EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(
                     file1Annotation2.target.fragment.start
                 ).pointAsString
             )
         );
-        const file2Annotation1 = new MockAnnotation(
+        const file2Annotation1 = new StubAnnotation(
             EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
         );
-        const file2Annotation2 = new MockAnnotation(
+        const file2Annotation2 = new StubAnnotation(
             EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(
                     file2Annotation1.target.fragment.start
                 ).pointAsString
             )
         );
-        const file2Annotation3 = new MockAnnotation(
+        const file2Annotation3 = new StubAnnotation(
             EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(
                     file2Annotation2.target.fragment.start
@@ -142,10 +142,10 @@ describe('AnnotationsSorter', () => {
     });
     it('should raise an error if the annotations start at same point', () => {
         // Arrange
-        const annotation1 = new MockAnnotation(
+        const annotation1 = new StubAnnotation(
             EpubPoint.FromString(EpubPointGenerator.generate().pointAsString)
         );
-        const annotation2 = new MockAnnotation(
+        const annotation2 = new StubAnnotation(
             annotation1.target.fragment.start
         );
         const annotations = [annotation1, annotation2];

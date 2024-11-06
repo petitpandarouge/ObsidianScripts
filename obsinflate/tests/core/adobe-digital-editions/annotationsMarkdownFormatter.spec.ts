@@ -2,7 +2,7 @@ import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { AnnotationsMarkdownFormatter } from '@obsinflate/core/adobe-digital-editions/annotationsMarkdownFormatter';
 import { EpubFile } from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
-import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
+import { StubAnnotation } from '@obsinflate/tests/doubles/stubAnnotation';
 import Chance from 'chance';
 
 // TODO : double line break must not be added if there is no content
@@ -23,7 +23,7 @@ describe('AnnotationsMarkdownFormatter', () => {
             const annotationsCount = chance.integer({ min: 1, max: 10 });
             for (let i = 0; i < annotationsCount; i++) {
                 file.annotations.push(
-                    new MockAnnotation(
+                    new StubAnnotation(
                         EpubPoint.FromString(
                             EpubPointGenerator.generateFromWithOffset(refPoint)
                                 .pointAsString

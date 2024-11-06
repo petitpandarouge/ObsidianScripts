@@ -13,8 +13,7 @@ import Chance from 'chance';
 
 const chance = new Chance();
 
-// TODO : not a mock, a stub
-export class MockAnnotation implements Annotation {
+export class StubAnnotation implements Annotation {
     constructor(
         start: EpubPoint,
         end: EpubPoint | OffsetOptions = {

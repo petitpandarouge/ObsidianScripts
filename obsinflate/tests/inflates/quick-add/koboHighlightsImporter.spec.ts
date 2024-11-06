@@ -16,7 +16,7 @@ import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
 import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
 import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
-import { MockAnnotation } from '@obsinflate/tests/doubles/mockAnnotation';
+import { StubAnnotation } from '@obsinflate/tests/doubles/stubAnnotation';
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 import {
@@ -182,7 +182,7 @@ describe('KoboHighlightsImporter', () => {
         const annotationsCount = chance.integer({ min: 1, max: 10 });
         for (let i = 0; i < annotationsCount; i++) {
             annotations.annotationSet.annotations.push(
-                new MockAnnotation(
+                new StubAnnotation(
                     EpubPoint.FromString(
                         EpubPointGenerator.generate().pointAsString
                     )
@@ -245,7 +245,7 @@ describe('KoboHighlightsImporter', () => {
             const annotationsCount = chance.integer({ min: 1, max: 10 });
             for (let i = 0; i < annotationsCount; i++) {
                 file.annotations.push(
-                    new MockAnnotation(
+                    new StubAnnotation(
                         EpubPoint.FromString(
                             EpubPointGenerator.generateFromWithOffset(refPoint)
                                 .pointAsString
