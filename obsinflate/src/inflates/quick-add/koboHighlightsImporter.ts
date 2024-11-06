@@ -1,4 +1,3 @@
-import { Script } from '@obsinflate/api/quick-add/script';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import { IFileSystem, File } from '@obsinflate/infrastructure/fileSystem';
 import { NoAnnotationsFileSelectedError } from '@obsinflate/inflates/quick-add/noAnnotationsFileSelectedError';
@@ -7,6 +6,7 @@ import { IAnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-edi
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
 import { EpubFiles } from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
+import { AbstractScript } from '@obsinflate/api/quick-add/abstractScript';
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 export const ANNOTATIONS_FILE_EXTENSION = '.annot';
@@ -14,21 +14,18 @@ export const BOOK_TITLE_VAR_NAME = 'title';
 export const BOOK_AUTHOR_VAR_NAME = 'author';
 export const BOOK_ANNOTATIONS_VAR_NAME = 'annotations';
 
-// TODO : Using error noticer should be part of the core logic
-export class KoboHighlightsImporter implements Script {
+export class KoboHighlightsImporter extends AbstractScript {
     constructor(
+        errorNoticer: ErrorNoticer,
         private fileSystem: IFileSystem,
-        private errorNoticer: ErrorNoticer,
         private annotationsReader: IAnnotationsReader,
         private annotationsMerger: IAnnotationsMerger,
         private annotationsFormatter: IFormatter<EpubFiles>
-    ) {}
-
-    async entry(params: Parameters): Promise<void> {
-        await this.errorNoticer.wrap(async () => await this.innerEntry(params));
+    ) {
+        super(errorNoticer);
     }
 
-    private async innerEntry(params: Parameters): Promise<void> {
+    protected async innerEntry(params: Parameters): Promise<void> {
         const files = await this.fileSystem.getFiles(
             ANNOTATIONS_FILES_DIR_PATH
         );
@@ -38,7 +35,7 @@ export class KoboHighlightsImporter implements Script {
             annotations.annotationSet.annotations
         );
         const content = this.annotationsFormatter.format(annotationsByFiles);
-        // TODO : Needs to be formated
+
         params.variables[BOOK_TITLE_VAR_NAME] =
             annotations.annotationSet.publication.title;
         params.variables[BOOK_AUTHOR_VAR_NAME] =

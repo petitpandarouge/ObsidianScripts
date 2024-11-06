@@ -10,16 +10,16 @@ import { AnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-edit
 import { FileSystem } from '@obsinflate/infrastructure/fileSystem';
 
 const entryPoint: ScriptEntryPoint = async (params: Parameters) => {
-    const fileSystem = new FileSystem();
     const noticer = new Noticer();
     const errorNoticer = new ErrorNoticer(noticer);
+    const fileSystem = new FileSystem();
     const annotationsReader = new AnnotationsReader();
     const annotationsSorter = new AnnotationsSorter();
     const annotationsMerger = new AnnotationsMerger(annotationsSorter);
     const annotationsFormatter = new AnnotationsMarkdownFormatter();
     const importer = new KoboHighlightsImporter(
-        fileSystem,
         errorNoticer,
+        fileSystem,
         annotationsReader,
         annotationsMerger,
         annotationsFormatter

@@ -59,8 +59,8 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
-            mockFileSystem,
             errorNoticer,
+            mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
@@ -104,8 +104,8 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
-            mockFileSystem,
             errorNoticer,
+            mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
@@ -146,8 +146,8 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
-            mockFileSystem,
             errorNoticer,
+            mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
@@ -195,8 +195,8 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
-            mockFileSystem,
             errorNoticer,
+            mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
@@ -260,8 +260,8 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
-            mockFileSystem,
             errorNoticer,
+            mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
@@ -303,8 +303,8 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
-            mockFileSystem,
             errorNoticer,
+            mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
@@ -344,8 +344,8 @@ describe('KoboHighlightsImporter', () => {
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
-            mockFileSystem,
             errorNoticer,
+            mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
@@ -387,8 +387,8 @@ describe('KoboHighlightsImporter', () => {
             format: jest.fn().mockReturnValue(mockContent)
         });
         const importer = new KoboHighlightsImporter(
-            mockFileSystem,
             errorNoticer,
+            mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
