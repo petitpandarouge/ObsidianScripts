@@ -3,6 +3,7 @@ import { IdValidator } from '@obsinflate/core/idValidator';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Plugin } from 'obsidian';
 
+//TODO user plugins
 export class CommandLoader<TPlugin extends Plugin> {
     constructor(
         private plugin: TPlugin,

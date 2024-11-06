@@ -6,7 +6,7 @@ import {
     BOOK_AUTHOR_VAR_NAME,
     BOOK_TITLE_VAR_NAME,
     KoboHighlightsImporter
-} from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
+} from '@obsinflate/inflates/quick-add/kobo-highlights-importer/script';
 import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editions/fileExtensions';
 import Chance from 'chance';
 import { File, IFileSystem } from '@obsinflate/infrastructure/fileSystem';

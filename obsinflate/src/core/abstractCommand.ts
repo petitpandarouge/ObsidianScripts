@@ -2,6 +2,7 @@
 import { Identifiable } from '@obsinflate/core/identifiable';
 import { Command, Plugin } from 'obsidian';
 
+// TODO obsidian
 export abstract class AbstractCommand<TPlugin extends Plugin>
     implements Command, Identifiable<string>
 {

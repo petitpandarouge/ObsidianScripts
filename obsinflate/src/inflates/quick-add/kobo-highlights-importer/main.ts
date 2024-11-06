@@ -5,7 +5,7 @@ import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { AnnotationsMarkdownFormatter } from '@obsinflate/core/adobe-digital-editions/annotationsMarkdownFormatter';
 import { AnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { AnnotationsSorter } from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
-import { KoboHighlightsImporter } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
+import { KoboHighlightsImporter } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/script';
 import { AnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
 import { FileSystem } from '@obsinflate/infrastructure/fileSystem';
 
