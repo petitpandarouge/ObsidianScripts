@@ -1,13 +1,13 @@
 import { mock, mockDeep } from 'jest-mock-extended';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import {
-    ANNOTATIONS_FILE_EXTENSION,
     ANNOTATIONS_FILES_DIR_PATH,
     BOOK_ANNOTATIONS_VAR_NAME,
     BOOK_AUTHOR_VAR_NAME,
     BOOK_TITLE_VAR_NAME,
     KoboHighlightsImporter
 } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
+import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editions/fileExtensions';
 import Chance from 'chance';
 import { File, IFileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';

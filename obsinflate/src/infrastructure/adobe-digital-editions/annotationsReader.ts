@@ -1,6 +1,6 @@
 import { XmlParser } from '@obsinflate/infrastructure/xmlParser';
 import { File } from '@obsinflate/infrastructure/fileSystem';
-import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/inflates/quick-add/koboHighlightsImporter';
+import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editions/fileExtensions';
 import { InvalidFileExtensionError } from '@obsinflate/infrastructure/invalidFileExtensionError';
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';

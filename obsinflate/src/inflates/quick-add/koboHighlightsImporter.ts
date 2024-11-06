@@ -9,7 +9,6 @@ import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/anno
 import { AbstractScript } from '@obsinflate/api/quick-add/abstractScript';
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
-export const ANNOTATIONS_FILE_EXTENSION = '.annot';
 export const BOOK_TITLE_VAR_NAME = 'title';
 export const BOOK_AUTHOR_VAR_NAME = 'author';
 export const BOOK_ANNOTATIONS_VAR_NAME = 'annotations';
