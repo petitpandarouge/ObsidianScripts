@@ -1,5 +1,5 @@
 ﻿import { StubCommand } from '@obsinflate/tests/doubles/stubCommand';
-import { AbstractCommand } from '@obsinflate/core/abstractCommand';
+import { AbstractCommand } from '@obsinflate/core/obsidian/abstractCommand';
 import { CommandBuilder } from '@obsinflate/core/commandBuilder';
 import { CommandLoader } from '@obsinflate/core/commandLoader';
 import Chance from 'chance';

@@ -1,5 +1,5 @@
 ﻿import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
-import { AbstractCommand } from '@obsinflate/core/abstractCommand';
+import { AbstractCommand } from '@obsinflate/core/obsidian/abstractCommand';
 import { IAppExtension } from '@obsinflate/api/obsidian/appExtension';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { OpenViewStateBuilder } from '@obsinflate/api/obsidian/openViewStateBuilder';

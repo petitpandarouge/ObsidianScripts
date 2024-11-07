@@ -1,4 +1,4 @@
-﻿import { AbstractCommand } from '@obsinflate/core/abstractCommand';
+﻿import { AbstractCommand } from '@obsinflate/core/obsidian/abstractCommand';
 import { Plugin } from 'obsidian';
 
 //TODO user plugins

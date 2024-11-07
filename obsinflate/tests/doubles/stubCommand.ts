@@ -1,4 +1,4 @@
-﻿import { AbstractCommand } from '@obsinflate/core/abstractCommand';
+﻿import { AbstractCommand } from '@obsinflate/core/obsidian/abstractCommand';
 import Chance from 'chance';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Plugin } from 'obsidian';
