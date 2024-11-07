@@ -5,10 +5,10 @@ import { InvalidFileExtensionError } from '@obsinflate/infrastructure/invalidFil
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { Annotations } from '@obsinflate/core/adobe-digital-editions/annotations';
 
-const START_ATTRIBUTE_NAME = 'start';
-const END_ATTRIBUTE_NAME = 'end';
-const ANNOTATION_TAG_NAME = 'annotation';
-const ANNOTATIONS_TAG_NAME = 'annotations';
+export const START_ATTRIBUTE_NAME = 'start';
+export const END_ATTRIBUTE_NAME = 'end';
+export const ANNOTATION_TAG_NAME = 'annotation';
+export const ANNOTATIONS_TAG_NAME = 'annotations';
 
 export const NO_PREFIX = '';
 
