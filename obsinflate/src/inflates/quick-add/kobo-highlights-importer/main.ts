@@ -6,10 +6,10 @@ import { AnnotationsMarkdownFormatter } from '@obsinflate/core/adobe-digital-edi
 import { AnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { AnnotationsSorter } from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
 import { KoboHighlightsImporter } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/script';
-import { AnnotationsReader } from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
+import { AnnotationsReader } from '@obsinflate/core/adobe-digital-editions/annotationsReader';
 import { FileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { XmlParser } from '@obsinflate/infrastructure/xmlParser';
-import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
+import { Annotations } from '@obsinflate/core/adobe-digital-editions/annotations';
 
 const entryPoint: ScriptEntryPoint = async (params: Parameters) => {
     const noticer = new Noticer();

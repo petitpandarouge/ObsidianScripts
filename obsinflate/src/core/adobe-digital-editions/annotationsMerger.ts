@@ -4,7 +4,7 @@ import {
     EpubFile,
     EpubFiles
 } from '@obsinflate/core/adobe-digital-editions/epubFile';
-import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
+import { Annotation } from '@obsinflate/core/adobe-digital-editions/annotations';
 
 export interface IAnnotationsMerger {
     merge(annotations: Annotation[]): EpubFiles;

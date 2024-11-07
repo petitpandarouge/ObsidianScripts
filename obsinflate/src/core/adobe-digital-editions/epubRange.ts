@@ -4,7 +4,7 @@ import { EpubRangeLimitsNotInTheSameFileError } from '@obsinflate/core/adobe-dig
 import { EpubRangePosition } from '@obsinflate/core/adobe-digital-editions/epubRangePosition';
 import { EpubRangesNotInTheSameFileError } from '@obsinflate/core/adobe-digital-editions/epubRangesNotInTheSameFileError';
 import { InvalidEpubRangeLimitsError } from '@obsinflate/core/adobe-digital-editions/invalidEpubRangeLimitsError';
-import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
+import { Annotation } from '@obsinflate/core/adobe-digital-editions/annotations';
 
 export class EpubRange {
     constructor(public annotation: Annotation) {

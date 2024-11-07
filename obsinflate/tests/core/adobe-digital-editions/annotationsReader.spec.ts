@@ -2,13 +2,13 @@ import { File } from '@obsinflate/infrastructure/fileSystem';
 import { mock } from 'jest-mock-extended';
 import Chance from 'chance';
 import { IXmlParser } from '@obsinflate/infrastructure/xmlParser';
-import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
+import { Annotations } from '@obsinflate/core/adobe-digital-editions/annotations';
 import {
     AnnotationsReader,
     attributeValueProcessor,
     NO_PREFIX,
     updateTag
-} from '@obsinflate/infrastructure/adobe-digital-editions/annotationsReader';
+} from '@obsinflate/core/adobe-digital-editions/annotationsReader';
 import { InvalidFileExtensionError } from '@obsinflate/infrastructure/invalidFileExtensionError';
 import { PREVENT_CRASH_STRING } from '@obsinflate/tests/data/constants';
 import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editions/fileExtensions';

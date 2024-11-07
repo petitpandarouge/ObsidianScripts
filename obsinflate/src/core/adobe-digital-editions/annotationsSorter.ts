@@ -1,6 +1,6 @@
 import { EpubPointPosition } from '@obsinflate/core/adobe-digital-editions/epubPointPosition';
 import { AnnotationsNotStrictlyBeforeOrAfterError } from '@obsinflate/core/adobe-digital-editions/annotationsNotStrictlyBeforeOrAfterError';
-import { Annotation } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
+import { Annotation } from '@obsinflate/core/adobe-digital-editions/annotations';
 import {
     EpubFiles,
     EpubFile

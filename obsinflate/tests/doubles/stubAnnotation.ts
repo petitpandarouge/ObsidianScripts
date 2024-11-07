@@ -3,7 +3,7 @@ import {
     Annotation,
     Content,
     Target
-} from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
+} from '@obsinflate/core/adobe-digital-editions/annotations';
 import {
     EpubPointGenerator,
     OffsetOperation,

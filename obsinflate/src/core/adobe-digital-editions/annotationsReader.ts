@@ -3,7 +3,7 @@ import { File } from '@obsinflate/infrastructure/fileSystem';
 import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editions/fileExtensions';
 import { InvalidFileExtensionError } from '@obsinflate/infrastructure/invalidFileExtensionError';
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
-import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
+import { Annotations } from '@obsinflate/core/adobe-digital-editions/annotations';
 
 const START_ATTRIBUTE_NAME = 'start';
 const END_ATTRIBUTE_NAME = 'end';
