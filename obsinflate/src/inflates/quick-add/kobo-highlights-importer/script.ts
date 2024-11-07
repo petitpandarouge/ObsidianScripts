@@ -1,6 +1,6 @@
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import { IFileSystem, File } from '@obsinflate/infrastructure/fileSystem';
-import { NoAnnotationsFileSelectedError } from '@obsinflate/inflates/quick-add/noAnnotationsFileSelectedError';
+import { NoAnnotationsFileSelectedError } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/noAnnotationsFileSelectedError';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { IAnnotationsReader } from '@obsinflate/core/adobe-digital-editions/annotationsReader';
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
