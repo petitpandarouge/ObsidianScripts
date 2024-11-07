@@ -5,7 +5,6 @@ import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
 import { StubAnnotation } from '@obsinflate/tests/doubles/stubAnnotation';
 import Chance from 'chance';
 
-// TODO : double line break must not be added if there is no content
 describe('AnnotationsMarkdownFormatter', () => {
     it('should format the annotations in markdown', () => {
         // Arrange
