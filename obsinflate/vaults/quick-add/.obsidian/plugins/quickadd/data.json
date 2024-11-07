@@ -72,8 +72,8 @@
             },
             "openFile": true,
             "openFileInMode": "default",
-            "fileExistsMode": "Increment the file name",
-            "setFileExistsBehavior": false
+            "fileExistsMode": "Overwrite the file",
+            "setFileExistsBehavior": true
           }
         },
         {
@@ -153,8 +153,8 @@
             },
             "openFile": false,
             "openFileInMode": "default",
-            "fileExistsMode": "Increment the file name",
-            "setFileExistsBehavior": false
+            "fileExistsMode": "Overwrite the file",
+            "setFileExistsBehavior": true
           }
         }
       ],
