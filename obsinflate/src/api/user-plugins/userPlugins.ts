@@ -1,8 +1,5 @@
-﻿import { Plugin } from 'obsidian';
-import * as obsidian from 'obsidian';
-
-// TODO : Must be in a separate file
-export type ObsidianModule = typeof obsidian;
+﻿import { ObsidianModule } from '@obsinflate/api/obsidian/module';
+import { Plugin } from 'obsidian';
 
 export interface Modules {
     obsidian: ObsidianModule;
