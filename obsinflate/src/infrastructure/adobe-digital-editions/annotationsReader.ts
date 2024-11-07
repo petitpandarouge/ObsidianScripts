@@ -5,21 +5,26 @@ import { InvalidFileExtensionError } from '@obsinflate/infrastructure/invalidFil
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 
+const START_ATTRIBUTE_NAME = 'start';
+const END_ATTRIBUTE_NAME = 'end';
+const ANNOTATION_TAG_NAME = 'annotation';
+const ANNOTATIONS_TAG_NAME = 'annotations';
+
 export const NO_PREFIX = '';
 
 export function attributeValueProcessor(
     attrName: string,
     attrValue: string
 ): string | EpubPoint {
-    if (attrName === 'start' || attrName === 'end') {
+    if (attrName === START_ATTRIBUTE_NAME || attrName === END_ATTRIBUTE_NAME) {
         return EpubPoint.FromString(attrValue);
     }
     return attrValue;
 }
 
 export function updateTag(tagName: string): string {
-    if (tagName === 'annotation') {
-        return 'annotations';
+    if (tagName === ANNOTATION_TAG_NAME) {
+        return ANNOTATIONS_TAG_NAME;
     }
     return tagName;
 }
