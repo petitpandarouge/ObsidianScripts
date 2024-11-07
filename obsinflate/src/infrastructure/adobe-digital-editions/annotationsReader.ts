@@ -5,7 +5,24 @@ import { InvalidFileExtensionError } from '@obsinflate/infrastructure/invalidFil
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { Annotations } from '@obsinflate/infrastructure/adobe-digital-editions/annotations';
 
-const NO_PREFIX = '';
+export const NO_PREFIX = '';
+
+export function attributeValueProcessor(
+    attrName: string,
+    attrValue: string
+): string | EpubPoint {
+    if (attrName === 'start' || attrName === 'end') {
+        return EpubPoint.FromString(attrValue);
+    }
+    return attrValue;
+}
+
+export function updateTag(tagName: string): string {
+    if (tagName === 'annotation') {
+        return 'annotations';
+    }
+    return tagName;
+}
 
 export interface IAnnotationsReader {
     read(file: File): Promise<Annotations>;
@@ -28,18 +45,8 @@ export class AnnotationsReader implements IAnnotationsReader {
             removeNSPrefix: true,
             ignoreAttributes: false,
             attributeNamePrefix: NO_PREFIX,
-            attributeValueProcessor: (attrName, attrValue) => {
-                if (attrName === 'start' || attrName === 'end') {
-                    return EpubPoint.FromString(attrValue);
-                }
-                return attrValue;
-            },
-            updateTag: (tagName) => {
-                if (tagName === 'annotation') {
-                    return 'annotations';
-                }
-                return tagName;
-            }
+            attributeValueProcessor: attributeValueProcessor,
+            updateTag: updateTag
         });
         return annotations;
     }
