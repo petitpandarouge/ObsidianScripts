@@ -1,7 +1,7 @@
 ﻿import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
-import { CommandLoader } from '@obsinflate/core/commandLoader';
+import { CommandLoader } from '@obsinflate/core/user-plugins/commandLoader';
 import { HelloWorldCommand } from '@obsinflate/hello-world/user-plugins/helloWorldCommand';
 
 export async function onload(plugin: UserPlugins): Promise<void> {

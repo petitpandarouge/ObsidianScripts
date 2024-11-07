@@ -1,7 +1,7 @@
 ﻿import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
 import { DateTimeProvider } from '@obsinflate/infrastructure/dateTimeProvider';
 import { UniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
-import { CommandLoader } from '@obsinflate/core/commandLoader';
+import { CommandLoader } from '@obsinflate/core/user-plugins/commandLoader';
 import { NewProjectCommand } from '@obsinflate/inflates/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';

@@ -1,7 +1,7 @@
 ﻿import { StubCommand } from '@obsinflate/tests/doubles/stubCommand';
 import { AbstractCommand } from '@obsinflate/core/obsidian/abstractCommand';
-import { CommandBuilder } from '@obsinflate/core/commandBuilder';
-import { CommandLoader } from '@obsinflate/core/commandLoader';
+import { CommandBuilder } from '@obsinflate/core/user-plugins/commandBuilder';
+import { CommandLoader } from '@obsinflate/core/user-plugins/commandLoader';
 import Chance from 'chance';
 import { mock } from 'jest-mock-extended';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';

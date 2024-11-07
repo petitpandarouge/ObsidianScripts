@@ -1,11 +1,11 @@
-﻿jest.mock('@obsinflate/core/commandLoader', () => {
+﻿jest.mock('@obsinflate/core/user-plugins/commandLoader', () => {
     return {
         CommandLoader: jest.fn()
     };
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { CommandLoader } from '@obsinflate/core/commandLoader';
+import { CommandLoader } from '@obsinflate/core/user-plugins/commandLoader';
 import { onload } from '@obsinflate/inflates/user-plugins/main';
 import { NewProjectCommand } from '@obsinflate/inflates/user-plugins/newProjectCommand';
 import { NewUniqueNoteCommand } from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
