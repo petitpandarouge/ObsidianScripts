@@ -94,19 +94,19 @@ describe('EpubPoint', () => {
                 EpubPoint.FromString(
                     EpubPointGenerator.generateFromWithOffset(pointsFrom[0], {
                         operation: OffsetOperation.AddElementIndexes,
-                        range: { min: 1, max: 100 }
+                        range: { min: 2, max: 100 }
                     }).pointAsString
                 ),
                 EpubPoint.FromString(
                     EpubPointGenerator.generateFromWithOffset(pointsFrom[1], {
                         operation: OffsetOperation.AddOnElementIndex,
-                        range: { min: 1, max: 100 }
+                        range: { min: 2, max: 100 }
                     }).pointAsString
                 ),
                 EpubPoint.FromString(
                     EpubPointGenerator.generateFromWithOffset(pointsFrom[2], {
                         operation: OffsetOperation.AddOnOffset,
-                        range: { min: 1, max: 100 }
+                        range: { min: 2, max: 100 }
                     }).pointAsString
                 )
             ];
