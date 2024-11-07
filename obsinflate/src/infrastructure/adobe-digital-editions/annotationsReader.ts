@@ -1,4 +1,4 @@
-import { XmlParser } from '@obsinflate/infrastructure/xmlParser';
+import { IXmlParser } from '@obsinflate/infrastructure/xmlParser';
 import { File } from '@obsinflate/infrastructure/fileSystem';
 import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editions/fileExtensions';
 import { InvalidFileExtensionError } from '@obsinflate/infrastructure/invalidFileExtensionError';
@@ -14,6 +14,8 @@ export interface IAnnotationsReader {
 // TODO : must be covered by tests
 // TODO must be in core
 export class AnnotationsReader implements IAnnotationsReader {
+    constructor(private xmlParser: IXmlParser<Annotations>) {}
+
     async read(file: File): Promise<Annotations> {
         if (file.extension !== ANNOTATIONS_FILE_EXTENSION) {
             throw new InvalidFileExtensionError(
@@ -22,8 +24,7 @@ export class AnnotationsReader implements IAnnotationsReader {
             );
         }
         const xmlData = await file.read();
-        const reader = new XmlParser<Annotations>();
-        const annotations = reader.parse(xmlData, {
+        const annotations = this.xmlParser.parse(xmlData, {
             removeNSPrefix: true,
             ignoreAttributes: false,
             attributeNamePrefix: NO_PREFIX,
