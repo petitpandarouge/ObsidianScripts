@@ -9,6 +9,7 @@ import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/anno
 import { AbstractScript } from '@obsinflate/api/quick-add/abstractScript';
 import { Settings } from '@obsinflate/api/quick-add/settings/settings';
 
+// TODO: Move to a separate file
 export class SettingsFieldsNames {
     static BookTitleVariableName = 'Output - Book Title Variable Name';
     static BookAuthorVariableName = 'Output - Book Author Variable Name';
@@ -17,9 +18,6 @@ export class SettingsFieldsNames {
 }
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
-export const BOOK_TITLE_VAR_NAME = 'title';
-export const BOOK_AUTHOR_VAR_NAME = 'author';
-export const BOOK_ANNOTATIONS_VAR_NAME = 'annotations';
 
 export class KoboHighlightsImporter extends AbstractScript {
     constructor(

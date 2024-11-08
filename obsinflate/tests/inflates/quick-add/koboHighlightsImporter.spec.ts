@@ -23,7 +23,6 @@ import {
 } from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { PREVENT_CRASH_STRING } from '@obsinflate/tests/data/constants';
-import { Settings } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
 
 describe('KoboHighlightsImporter', () => {
     it('should suggest the book highlights to import from the "Digital Editions/Annotations" directory ".annot" files', async () => {
