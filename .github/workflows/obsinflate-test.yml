@@ -12,7 +12,7 @@ on:
 
 jobs:
   format:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     name: Check code formatting
     steps:
     - uses: actions/checkout@v4
@@ -25,7 +25,7 @@ jobs:
     - run: npm run format:check
       working-directory: obsinflate
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     name: Build project
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
       - run: npm run build
         working-directory: obsinflate
   test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     name: Test project
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
       - run: npm run test:unit
         working-directory: obsinflate
   bundle:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     name: Test the project bundling
     steps:
       - uses: actions/checkout@v4
@@ -64,7 +64,7 @@ jobs:
       - run: npm run bundle
         working-directory: obsinflate
   bundle-helloworld:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     name: Test the hello world samples bundling
     steps:
       - uses: actions/checkout@v4
