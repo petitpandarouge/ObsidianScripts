@@ -8,14 +8,7 @@ import { EpubFiles } from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { AbstractScript } from '@obsinflate/api/quick-add/abstractScript';
 import { Settings } from '@obsinflate/api/quick-add/settings/settings';
-
-// TODO: Move to a separate file
-export class SettingsFieldsNames {
-    static BookTitleVariableName = 'Output - Book Title Variable Name';
-    static BookAuthorVariableName = 'Output - Book Author Variable Name';
-    static BookAnnotationsVariableName =
-        'Output - Book Annotations Variable Name';
-}
+import { SettingsFieldsNames } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 

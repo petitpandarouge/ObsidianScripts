@@ -2,9 +2,9 @@ import { mock, mockDeep } from 'jest-mock-extended';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import {
     ANNOTATIONS_FILES_DIR_PATH,
-    KoboHighlightsImporter,
-    SettingsFieldsNames
+    KoboHighlightsImporter
 } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/script';
+import { SettingsFieldsNames } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
 import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editions/fileExtensions';
 import Chance from 'chance';
 import { File, IFileSystem } from '@obsinflate/infrastructure/fileSystem';
