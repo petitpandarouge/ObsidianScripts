@@ -35,11 +35,15 @@
       "id": "64f69cd0-47ee-4f8e-a2ed-926bd41176ab",
       "commands": [
         {
-          "name": "koboHighlightsImporter",
+          "name": "kobo-highlights-importer",
           "type": "UserScript",
-          "id": "4c8efa44-eb31-461e-8f34-5fe449bef98d",
-          "path": "scripts/koboHighlightsImporter.js",
-          "settings": {}
+          "id": "33643dc5-1a1d-41b3-8c19-093a5d8ac658",
+          "path": "scripts/kobo-highlights-importer.js",
+          "settings": {
+            "Output - Book Title Variable Name": "title",
+            "Output - Book Author Variable Name": "author",
+            "Output - Book Annotations Variable Name": "annotations"
+          }
         },
         {
           "name": "Create book note",
