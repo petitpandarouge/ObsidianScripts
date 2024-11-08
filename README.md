@@ -151,7 +151,7 @@ class HelloWorld implements SettingableScript {
     }
     entry(
         _params: Parameters,
-        settings: { [key: string]: string | boolean }
+        settings: Settings
     ): Promise<void> {
         noticer.notice(`Hello ${settings['Name']} !`, 5000);
         return Promise.resolve();

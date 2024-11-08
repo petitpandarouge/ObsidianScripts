@@ -22,7 +22,8 @@
                 'ci',
                 'build',
                 'release',
-                'newuniquenotecommand'
+                'newuniquenotecommand',
+                'kobohighlightsimporter'
             ]
         ],
         'scope-empty': [1, 'never'],

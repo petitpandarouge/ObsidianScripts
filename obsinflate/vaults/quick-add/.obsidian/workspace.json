@@ -13,10 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "How to debug.md",
+                "file": "macros/kobo highlights importer/GARDEN/202411050015 - L’ art subtil de s’ en foutre.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "202411050015 - L’ art subtil de s’ en foutre"
             }
           }
         ]
@@ -39,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -54,7 +58,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -62,7 +68,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
@@ -85,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "How to debug.md",
+                "file": "macros/kobo highlights importer/GARDEN/202411050015 - L’ art subtil de s’ en foutre.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,7 +101,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for 202411050015 - L’ art subtil de s’ en foutre"
             }
           },
           {
@@ -102,10 +112,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "How to debug.md",
+                "file": "macros/kobo highlights importer/GARDEN/202411050015 - L’ art subtil de s’ en foutre.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from 202411050015 - L’ art subtil de s’ en foutre"
             }
           },
           {
@@ -116,7 +128,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -125,8 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "How to debug.md"
-              }
+                "file": "macros/kobo highlights importer/GARDEN/202411050015 - L’ art subtil de s’ en foutre.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 202411050015 - L’ art subtil de s’ en foutre"
             }
           }
         ]
@@ -148,6 +164,11 @@
   },
   "active": "a6753226fe1d720a",
   "lastOpenFiles": [
+    "scripts/kobo-highlights-importer.js",
+    "scripts",
+    "macros/kobo highlights importer/GARDEN/Mark Manson.md",
+    "macros/kobo highlights importer/GARDEN/202411050015 - L’ art subtil de s’ en foutre.md",
+    "How to debug.md",
     "resources/Pasted image 20240920222408.png",
     "resources/Pasted image 20240920222247.png",
     "resources/Pasted image 20240920222201.png",
@@ -159,12 +180,9 @@
     "resources/Pasted image 20240920213624.png",
     "scripts/HelloWorld.js",
     "resources",
-    "How to debug.md",
     "scripts/helloWorld.js",
     "resources/Pasted image 20240919161309.png",
-    "resources/Pasted image 20240919161141.png",
     "resources",
-    "How to debug.md",
     "Welcome.md"
   ]
 }

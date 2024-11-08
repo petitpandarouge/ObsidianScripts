@@ -1,4 +1,4 @@
-﻿import { CommandBuilder } from '@obsinflate/core/commandBuilder';
+﻿import { CommandBuilder } from '@obsinflate/core/user-plugins/commandBuilder';
 import { IdValidator } from '@obsinflate/core/idValidator';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Plugin } from 'obsidian';

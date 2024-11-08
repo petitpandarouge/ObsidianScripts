@@ -8,7 +8,7 @@ import {
 } from '@obsinflate/api/obsidian/color';
 import { AbstractBusinessError } from '@obsinflate/core/abstractBusinessError';
 
-export const DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS = 5000;
+export const DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS = 20000;
 
 export class ErrorNoticer {
     constructor(

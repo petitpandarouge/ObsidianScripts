@@ -1,7 +1,7 @@
-﻿import { MockCommand } from '@obsinflate/tests/doubles/mockCommand';
-import { AbstractCommand } from '@obsinflate/core/abstractCommand';
-import { CommandBuilder } from '@obsinflate/core/commandBuilder';
-import { CommandLoader } from '@obsinflate/core/commandLoader';
+﻿import { StubCommand } from '@obsinflate/tests/doubles/stubCommand';
+import { AbstractCommand } from '@obsinflate/core/obsidian/abstractCommand';
+import { CommandBuilder } from '@obsinflate/core/user-plugins/commandBuilder';
+import { CommandLoader } from '@obsinflate/core/user-plugins/commandLoader';
 import Chance from 'chance';
 import { mock } from 'jest-mock-extended';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
@@ -17,7 +17,7 @@ describe('CommandLoader', () => {
         const mockCommandBuilder: CommandBuilder<Plugin> = jest
             .fn()
             .mockImplementation(
-                () => new MockCommand(mockPlugin, mockErrorNoticer)
+                () => new StubCommand(mockPlugin, mockErrorNoticer)
             );
         const builders = [mockCommandBuilder];
         const mockedNoticer = mock<Noticer>();
@@ -38,7 +38,7 @@ describe('CommandLoader', () => {
         const mockCommandBuilder: CommandBuilder<Plugin> = jest
             .fn()
             .mockImplementation(
-                () => new MockCommand(mockPlugin, mockErrorNoticer)
+                () => new StubCommand(mockPlugin, mockErrorNoticer)
             );
         const builders = Array.from(
             { length: buildersCount },
@@ -76,7 +76,7 @@ describe('CommandLoader', () => {
         const mockCommandBuilder: CommandBuilder<Plugin> = jest
             .fn()
             .mockImplementation(
-                () => new MockCommand(mockPlugin, mockErrorNoticer)
+                () => new StubCommand(mockPlugin, mockErrorNoticer)
             );
         const builders = Array.from(
             { length: buildersCount },
@@ -102,7 +102,7 @@ describe('CommandLoader', () => {
         const mockCommandBuilder: CommandBuilder<Plugin> = jest
             .fn()
             .mockImplementation(() => {
-                const command = new MockCommand(mockPlugin, mockErrorNoticer);
+                const command = new StubCommand(mockPlugin, mockErrorNoticer);
                 command.id = commandId;
                 return command;
             });

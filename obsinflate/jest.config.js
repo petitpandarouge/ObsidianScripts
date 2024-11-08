@@ -7,7 +7,7 @@ module.exports = {
     collectCoverage: true,
     moduleNameMapper: makeModuleNameMapper(tsconfig),
     testRegex: '(/tests/.*spec)\\.tsx?$',
-    coveragePathIgnorePatterns: ['doubles', 'api', 'infrastructure'],
+    coveragePathIgnorePatterns: ['doubles', 'api', 'infrastructure', 'data'],
     reporters: [
         'default',
         [

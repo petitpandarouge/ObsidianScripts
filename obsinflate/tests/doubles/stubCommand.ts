@@ -1,11 +1,11 @@
-﻿import { AbstractCommand } from '@obsinflate/core/abstractCommand';
+﻿import { AbstractCommand } from '@obsinflate/core/obsidian/abstractCommand';
 import Chance from 'chance';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Plugin } from 'obsidian';
 
 const chance = new Chance();
 
-export class MockCommand extends AbstractCommand<Plugin> {
+export class StubCommand extends AbstractCommand<Plugin> {
     constructor(plugin: Plugin, errorNoticer: ErrorNoticer) {
         super(plugin, errorNoticer);
     }
