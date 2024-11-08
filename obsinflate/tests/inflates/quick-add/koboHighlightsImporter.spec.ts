@@ -2,7 +2,8 @@ import { mock, mockDeep } from 'jest-mock-extended';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import {
     ANNOTATIONS_FILES_DIR_PATH,
-    KoboHighlightsImporter
+    KoboHighlightsImporter,
+    SettingsFieldsNames
 } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/script';
 import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editions/fileExtensions';
 import Chance from 'chance';
@@ -42,7 +43,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockSettings = mockDeep<Settings>();
+        const mockSettings = {};
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
@@ -87,7 +88,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockSettings = mockDeep<Settings>();
+        const mockSettings = {};
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
         const mockAnnotationsReader = mock<IAnnotationsReader>({
@@ -133,7 +134,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockSettings = mockDeep<Settings>();
+        const mockSettings = {};
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
@@ -173,7 +174,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockSettings = mockDeep<Settings>();
+        const mockSettings = {};
         const annotations: Annotations = {
             annotationSet: {
                 publication: {
@@ -226,7 +227,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockSettings = mockDeep<Settings>();
+        const mockSettings = {};
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
@@ -294,9 +295,9 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockSettings = mockDeep<Settings>({
-            BookTitleVariableName: chance.word()
-        });
+        const mockSettings = {
+            [SettingsFieldsNames.BookTitleVariableName]: chance.word()
+        };
         const mockBookTitle = chance.sentence();
         const annotations: Annotations = {
             annotationSet: {
@@ -329,9 +330,11 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockParams.variables[mockSettings.BookTitleVariableName]).toBe(
-            mockBookTitle
-        );
+        expect(
+            mockParams.variables[
+                mockSettings[SettingsFieldsNames.BookTitleVariableName]
+            ]
+        ).toBe(mockBookTitle);
     });
     it('should set the author of the book in the "Settings.BookAuthorVariableName" variable', async () => {
         // Arrange
@@ -341,9 +344,9 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockSettings = mockDeep<Settings>({
-            BookAuthorVariableName: chance.word()
-        });
+        const mockSettings = {
+            [SettingsFieldsNames.BookAuthorVariableName]: chance.word()
+        };
         const mockAuthor = chance.name();
         const annotations: Annotations = {
             annotationSet: {
@@ -376,9 +379,11 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockParams.variables[mockSettings.BookAuthorVariableName]).toBe(
-            mockAuthor
-        );
+        expect(
+            mockParams.variables[
+                mockSettings[SettingsFieldsNames.BookAuthorVariableName]
+            ]
+        ).toBe(mockAuthor);
     });
     it('should set the formatted annotations in the "Settings.BookAnnotationsVariableName" variable', async () => {
         // Arrange
@@ -388,9 +393,9 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockSettings = mockDeep<Settings>({
-            BookAnnotationsVariableName: chance.word()
-        });
+        const mockSettings = {
+            [SettingsFieldsNames.BookAnnotationsVariableName]: chance.word()
+        };
         const mockContent = chance.paragraph();
         const annotations: Annotations = {
             annotationSet: {
@@ -426,7 +431,9 @@ describe('KoboHighlightsImporter', () => {
         await importer.entry(mockParams);
         // Assert
         expect(
-            mockParams.variables[mockSettings.BookAnnotationsVariableName]
+            mockParams.variables[
+                mockSettings[SettingsFieldsNames.BookAnnotationsVariableName]
+            ]
         ).toBe(mockContent);
     });
 });

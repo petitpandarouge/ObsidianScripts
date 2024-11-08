@@ -7,7 +7,14 @@ import { IFormatter } from '@obsinflate/infrastructure/formatter';
 import { EpubFiles } from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { AbstractScript } from '@obsinflate/api/quick-add/abstractScript';
-import { Settings } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
+import { Settings } from '@obsinflate/api/quick-add/settings/settings';
+
+export class SettingsFieldsNames {
+    static BookTitleVariableName = 'Output - Book Title Variable Name';
+    static BookAuthorVariableName = 'Output - Book Author Variable Name';
+    static BookAnnotationsVariableName =
+        'Output - Book Annotations Variable Name';
+}
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 export const BOOK_TITLE_VAR_NAME = 'title';
@@ -37,11 +44,17 @@ export class KoboHighlightsImporter extends AbstractScript {
         );
         const content = this.annotationsFormatter.format(annotationsByFiles);
 
-        params.variables[this.settings.BookTitleVariableName] =
-            annotations.annotationSet.publication.title;
-        params.variables[this.settings.BookAuthorVariableName] =
-            annotations.annotationSet.publication.creator;
-        params.variables[this.settings.BookAnnotationsVariableName] = content;
+        params.variables[
+            this.settings[SettingsFieldsNames.BookTitleVariableName] as string
+        ] = annotations.annotationSet.publication.title;
+        params.variables[
+            this.settings[SettingsFieldsNames.BookAuthorVariableName] as string
+        ] = annotations.annotationSet.publication.creator;
+        params.variables[
+            this.settings[
+                SettingsFieldsNames.BookAnnotationsVariableName
+            ] as string
+        ] = content;
     }
 
     private async suggest(params: Parameters, files: File[]): Promise<File> {
