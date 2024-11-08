@@ -1,5 +1,5 @@
-export class Settings {
-    public BookTitleVariableName: string = '';
-    public BookAuthorVariableName: string = '';
-    public BookAnnotationsVariableName: string = '';
+export interface Settings {
+    BookTitleVariableName: string;
+    BookAuthorVariableName: string;
+    BookAnnotationsVariableName: string;
 }

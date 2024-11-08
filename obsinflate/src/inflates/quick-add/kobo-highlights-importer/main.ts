@@ -23,7 +23,12 @@ const entryPoint: ScriptEntryPoint = async (params: Parameters) => {
     const annotationsFormatter = new AnnotationsMarkdownFormatter();
     const importer = new KoboHighlightsImporter(
         errorNoticer,
-        new Settings(),
+        // TODO to replace by the good one
+        {
+            BookTitleVariableName: 'title',
+            BookAuthorVariableName: 'author',
+            BookAnnotationsVariableName: 'annotations'
+        } as Settings,
         fileSystem,
         annotationsReader,
         annotationsMerger,
