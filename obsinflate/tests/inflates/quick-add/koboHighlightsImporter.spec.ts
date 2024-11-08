@@ -2,9 +2,6 @@ import { mock, mockDeep } from 'jest-mock-extended';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import {
     ANNOTATIONS_FILES_DIR_PATH,
-    BOOK_ANNOTATIONS_VAR_NAME,
-    BOOK_AUTHOR_VAR_NAME,
-    BOOK_TITLE_VAR_NAME,
     KoboHighlightsImporter
 } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/script';
 import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editions/fileExtensions';
@@ -25,6 +22,7 @@ import {
 } from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { PREVENT_CRASH_STRING } from '@obsinflate/tests/data/constants';
+import { Settings } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
 
 describe('KoboHighlightsImporter', () => {
     it('should suggest the book highlights to import from the "Digital Editions/Annotations" directory ".annot" files', async () => {
@@ -44,6 +42,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockSettings = mockDeep<Settings>();
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
@@ -59,6 +58,7 @@ describe('KoboHighlightsImporter', () => {
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
             errorNoticer,
+            mockSettings,
             mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
@@ -87,6 +87,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockSettings = mockDeep<Settings>();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
         const mockAnnotationsReader = mock<IAnnotationsReader>({
@@ -104,6 +105,7 @@ describe('KoboHighlightsImporter', () => {
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
             errorNoticer,
+            mockSettings,
             mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
@@ -131,6 +133,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockSettings = mockDeep<Settings>();
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
@@ -146,6 +149,7 @@ describe('KoboHighlightsImporter', () => {
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
             errorNoticer,
+            mockSettings,
             mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
@@ -169,6 +173,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockSettings = mockDeep<Settings>();
         const annotations: Annotations = {
             annotationSet: {
                 publication: {
@@ -195,6 +200,7 @@ describe('KoboHighlightsImporter', () => {
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
             errorNoticer,
+            mockSettings,
             mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
@@ -220,6 +226,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockSettings = mockDeep<Settings>();
         const mockAnnotationsReader = mock<IAnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
@@ -260,6 +267,7 @@ describe('KoboHighlightsImporter', () => {
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
             errorNoticer,
+            mockSettings,
             mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
@@ -278,7 +286,7 @@ describe('KoboHighlightsImporter', () => {
             files
         });
     });
-    it('should set the title of the book in the "title" variable', async () => {
+    it('should set the title of the book in the "Settings.BookTitleVariableName" variable', async () => {
         // Arrange
         const chance = new Chance();
         const mockFileSystem = mockDeep<IFileSystem>({
@@ -286,6 +294,9 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockSettings = mockDeep<Settings>({
+            BookTitleVariableName: chance.word()
+        });
         const mockBookTitle = chance.sentence();
         const annotations: Annotations = {
             annotationSet: {
@@ -303,6 +314,7 @@ describe('KoboHighlightsImporter', () => {
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
             errorNoticer,
+            mockSettings,
             mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
@@ -317,9 +329,11 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockParams.variables[BOOK_TITLE_VAR_NAME]).toBe(mockBookTitle);
+        expect(mockParams.variables[mockSettings.BookTitleVariableName]).toBe(
+            mockBookTitle
+        );
     });
-    it('should set the author of the book in the "author" variable', async () => {
+    it('should set the author of the book in the "Settings.BookAuthorVariableName" variable', async () => {
         // Arrange
         const chance = new Chance();
         const mockFileSystem = mockDeep<IFileSystem>({
@@ -327,6 +341,9 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockSettings = mockDeep<Settings>({
+            BookAuthorVariableName: chance.word()
+        });
         const mockAuthor = chance.name();
         const annotations: Annotations = {
             annotationSet: {
@@ -344,6 +361,7 @@ describe('KoboHighlightsImporter', () => {
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
         const importer = new KoboHighlightsImporter(
             errorNoticer,
+            mockSettings,
             mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
@@ -358,9 +376,11 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockParams.variables[BOOK_AUTHOR_VAR_NAME]).toBe(mockAuthor);
+        expect(mockParams.variables[mockSettings.BookAuthorVariableName]).toBe(
+            mockAuthor
+        );
     });
-    it('should set the formatted annotations in the "annotations" variable', async () => {
+    it('should set the formatted annotations in the "Settings.BookAnnotationsVariableName" variable', async () => {
         // Arrange
         const chance = new Chance();
         const mockFileSystem = mockDeep<IFileSystem>({
@@ -368,6 +388,9 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
+        const mockSettings = mockDeep<Settings>({
+            BookAnnotationsVariableName: chance.word()
+        });
         const mockContent = chance.paragraph();
         const annotations: Annotations = {
             annotationSet: {
@@ -387,6 +410,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const importer = new KoboHighlightsImporter(
             errorNoticer,
+            mockSettings,
             mockFileSystem,
             mockAnnotationsReader,
             mockAnnotationsMerger,
@@ -401,8 +425,8 @@ describe('KoboHighlightsImporter', () => {
         // Act
         await importer.entry(mockParams);
         // Assert
-        expect(mockParams.variables[BOOK_ANNOTATIONS_VAR_NAME]).toBe(
-            mockContent
-        );
+        expect(
+            mockParams.variables[mockSettings.BookAnnotationsVariableName]
+        ).toBe(mockContent);
     });
 });

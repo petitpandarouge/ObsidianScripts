@@ -10,6 +10,7 @@ import { AnnotationsReader } from '@obsinflate/core/adobe-digital-editions/annot
 import { FileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { XmlParser } from '@obsinflate/infrastructure/xmlParser';
 import { Annotations } from '@obsinflate/core/adobe-digital-editions/annotations';
+import { Settings } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
 
 const entryPoint: ScriptEntryPoint = async (params: Parameters) => {
     const noticer = new Noticer();
@@ -22,6 +23,7 @@ const entryPoint: ScriptEntryPoint = async (params: Parameters) => {
     const annotationsFormatter = new AnnotationsMarkdownFormatter();
     const importer = new KoboHighlightsImporter(
         errorNoticer,
+        new Settings(),
         fileSystem,
         annotationsReader,
         annotationsMerger,

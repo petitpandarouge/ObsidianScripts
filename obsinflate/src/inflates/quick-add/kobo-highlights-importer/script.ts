@@ -7,6 +7,7 @@ import { IFormatter } from '@obsinflate/infrastructure/formatter';
 import { EpubFiles } from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { AbstractScript } from '@obsinflate/api/quick-add/abstractScript';
+import { Settings } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 export const BOOK_TITLE_VAR_NAME = 'title';
@@ -16,6 +17,7 @@ export const BOOK_ANNOTATIONS_VAR_NAME = 'annotations';
 export class KoboHighlightsImporter extends AbstractScript {
     constructor(
         errorNoticer: ErrorNoticer,
+        private settings: Settings,
         private fileSystem: IFileSystem,
         private annotationsReader: IAnnotationsReader,
         private annotationsMerger: IAnnotationsMerger,
@@ -35,11 +37,11 @@ export class KoboHighlightsImporter extends AbstractScript {
         );
         const content = this.annotationsFormatter.format(annotationsByFiles);
 
-        params.variables[BOOK_TITLE_VAR_NAME] =
+        params.variables[this.settings.BookTitleVariableName] =
             annotations.annotationSet.publication.title;
-        params.variables[BOOK_AUTHOR_VAR_NAME] =
+        params.variables[this.settings.BookAuthorVariableName] =
             annotations.annotationSet.publication.creator;
-        params.variables[BOOK_ANNOTATIONS_VAR_NAME] = content;
+        params.variables[this.settings.BookAnnotationsVariableName] = content;
     }
 
     private async suggest(params: Parameters, files: File[]): Promise<File> {
