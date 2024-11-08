@@ -47,7 +47,10 @@ describe('EpubRange', () => {
                 EpubPointGenerator.generateFromWithOffset(point1).pointAsString
             );
             const point3 = EpubPoint.FromString(
-                EpubPointGenerator.generateFromWithOffset(point2).pointAsString
+                EpubPointGenerator.generateFromWithOffset(point2, {
+                    operation: OffsetOperation.Random,
+                    range: { min: 2, max: 100 }
+                }).pointAsString
             );
             const point4 = EpubPoint.FromString(
                 EpubPointGenerator.generateFromWithOffset(point3).pointAsString

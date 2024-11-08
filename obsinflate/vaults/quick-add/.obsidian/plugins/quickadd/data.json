@@ -2,10 +2,17 @@
   "choices": [
     {
       "id": "ed1c69cd-96de-4edf-be6f-2372a163e4b8",
-      "name": "HelloWorld",
+      "name": "HelloWorld Script",
       "type": "Macro",
       "command": true,
       "macroId": "07dcfe40-0203-4e07-a2c9-a0fec1ba5a56"
+    },
+    {
+      "id": "592d340c-5031-4717-ae48-3a675d162bb8",
+      "name": "HelloWorld SettingableScript",
+      "type": "Macro",
+      "command": true,
+      "macroId": "59d99f32-830d-4aa2-8ccb-8fc5a64eb19a"
     },
     {
       "id": "76b474ba-864a-4fc3-90e4-8dbf8bb28e14",
@@ -17,14 +24,14 @@
   ],
   "macros": [
     {
-      "name": "HelloWorld",
+      "name": "HelloWorld Script",
       "id": "07dcfe40-0203-4e07-a2c9-a0fec1ba5a56",
       "commands": [
         {
-          "name": "helloWorld",
+          "name": "helloWorld-script",
           "type": "UserScript",
-          "id": "c73bb7ba-e3b5-43e7-b8bd-2ce5b3c1bbd7",
-          "path": "scripts/helloWorld.js",
+          "id": "e74bb0fb-6ec2-4c4c-be77-0d6af482790f",
+          "path": "scripts/helloWorld-script.js",
           "settings": {}
         }
       ],
@@ -159,6 +166,22 @@
             "openFileInMode": "default",
             "fileExistsMode": "Overwrite the file",
             "setFileExistsBehavior": true
+          }
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "HelloWorld SettingableScript",
+      "id": "59d99f32-830d-4aa2-8ccb-8fc5a64eb19a",
+      "commands": [
+        {
+          "name": "helloWorld-settingablescript",
+          "type": "UserScript",
+          "id": "d5df23e8-7c08-443a-ad40-cd81f0f2e646",
+          "path": "scripts/helloWorld-settingablescript.js",
+          "settings": {
+            "Name to say hello": "World"
           }
         }
       ],

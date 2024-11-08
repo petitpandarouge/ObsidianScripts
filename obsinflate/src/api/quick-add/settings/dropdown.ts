@@ -1,7 +1,12 @@
-﻿export type DropdownType = 'dropdown';
+﻿export const DROPDOWN_TYPE = 'dropdown';
+export type DropdownType = 'dropdown';
 
-export interface Dropdown {
-    type: DropdownType;
+export interface DropdownBase {
     options: string[];
     defaultValue: string;
+}
+
+export interface Dropdown extends Partial<DropdownBase> {
+    type: DropdownType;
+    name: string;
 }

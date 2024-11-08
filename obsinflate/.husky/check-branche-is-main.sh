@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # List of main branches
-MAIN_BRANCHES="main next/main"
+MAIN_BRANCHES="next/main"
 
 # Get the current branch name
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)

@@ -9,10 +9,6 @@ export interface SettingsDefinition {
     name: string;
     author: string;
     options: {
-        [key: string]:
-            | Partial<TextField>
-            | Checkbox
-            | Dropdown
-            | Partial<Format>;
+        [key: string]: TextField | Checkbox | Dropdown | Format;
     };
 }

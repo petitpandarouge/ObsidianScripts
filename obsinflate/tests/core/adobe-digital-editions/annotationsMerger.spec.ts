@@ -111,7 +111,14 @@ describe('AnnotationsMerger', () => {
                         EpubPoint.FromString(
                             EpubPointGenerator.generateFromWithOffset(
                                 annotations[annotations.length - 1].target
-                                    .fragment.end
+                                    .fragment.end,
+                                {
+                                    operation: OffsetOperation.Random,
+                                    range: {
+                                        min: 2,
+                                        max: 100
+                                    }
+                                }
                             ).pointAsString
                         )
                     )

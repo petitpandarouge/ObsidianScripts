@@ -5,16 +5,22 @@ import { AnnotationsMarkdownFormatter } from '@obsinflate/core/adobe-digital-edi
 import { AnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { AnnotationsSorter } from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
 import { KoboHighlightsImporter } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/script';
-import { SettingsDefinition } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
+import {
+    KoboHighlightsImporterSettings,
+    SettingsDefinition
+} from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
 import { AnnotationsReader } from '@obsinflate/core/adobe-digital-editions/annotationsReader';
 import { FileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { XmlParser } from '@obsinflate/infrastructure/xmlParser';
 import { Annotations } from '@obsinflate/core/adobe-digital-editions/annotations';
 import { SettingableScriptEntryPoint } from '@obsinflate/api/quick-add/settingableScriptEntryPoint';
 import { Settings } from '@obsinflate/api/quick-add/settings/settings';
+import { SettingsBuilder } from '@obsinflate/core/quick-add/settingsBuilder';
 
-export class main implements SettingableScriptEntryPoint {
-    public async entry(params: Parameters, settings: Settings): Promise<void> {
+export class EntryPoint implements SettingableScriptEntryPoint {
+    async entry(params: Parameters, settings: Settings): Promise<void> {
+        const settingsBuilder =
+            new SettingsBuilder<KoboHighlightsImporterSettings>();
         const noticer = new Noticer();
         const errorNoticer = new ErrorNoticer(noticer);
         const fileSystem = new FileSystem();
@@ -25,7 +31,7 @@ export class main implements SettingableScriptEntryPoint {
         const annotationsFormatter = new AnnotationsMarkdownFormatter();
         const importer = new KoboHighlightsImporter(
             errorNoticer,
-            settings,
+            settingsBuilder.build(settings, SettingsDefinition),
             fileSystem,
             annotationsReader,
             annotationsMerger,
@@ -37,4 +43,4 @@ export class main implements SettingableScriptEntryPoint {
     settings = SettingsDefinition;
 }
 
-module.exports = new main();
+module.exports = new EntryPoint();

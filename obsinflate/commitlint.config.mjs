@@ -16,14 +16,13 @@
             2,
             'always',
             [
-                'api',
-                'core',
-                'infrastructure',
+                'obsidian',
+                'quickadd',
+                'userplugins',
+                'dataview',
                 'ci',
                 'build',
-                'release',
-                'newuniquenotecommand',
-                'kobohighlightsimporter'
+                'release'
             ]
         ],
         'scope-empty': [1, 'never'],

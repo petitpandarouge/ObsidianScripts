@@ -5,6 +5,7 @@ export interface IDateTime {
     plus(duration: DurationLike): this;
 }
 
+// TODO : Delete the interfaces ?
 export interface IDateTimeProvider {
     now(): IDateTime;
 }

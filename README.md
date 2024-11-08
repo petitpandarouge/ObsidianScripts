@@ -111,72 +111,39 @@ One ts file must contain only one script that can be implemented using two ways.
 
 #### Script without settings
 
-- Using the `Script` interface, a script must be implemented as follow.
+- Using the `AbstractScript` class, a script must be implemented as follow.
 
-``` typescript
-class HelloWorld implements Script {
-    constructor(private noticer: INoticer) {}
-    entry() {
-        this.noticer.notice('Hello World !', 5000);
-        return Promise.resolve();
-    }
-}
-```
+https://github.com/petitpandarouge/ObsidianScripts/blob/6c7c3737ad0715bafc6050b8f9af89452048e8bd/obsinflate/src/hello-world/quick-add/script.ts#L7-L18
 
 - The script can be initialized and exported using the `module.exports` directive.
 
-``` typescript
-const entryPoint: ScriptEntryPoint = async () => {
-    const noticer = new Noticer();
-    const helloWorld = new HelloWorld(noticer);
-    await helloWorld.entry();
-};
-
-module.exports = entryPoint;
-```
+https://github.com/petitpandarouge/ObsidianScripts/blob/6c7c3737ad0715bafc6050b8f9af89452048e8bd/obsinflate/src/hello-world/quick-add/script.ts#L20-L27
 
 #### Script with settings
 
-- This interface `SettingableScript` must be implemented to implement a script having UI settings.
+- The script settings is a basic interface containing only first level properties.
 
-> ⚠️
-> All the dependencies must be `public` and called without `this` in order to be reachable at runtime.
-> It's the case here with the `noticer` property. 
+https://github.com/petitpandarouge/ObsidianScripts/blob/85bfbba16c13dc24637b659baae8c3808b14a627/obsinflate/src/hello-world/quick-add/settingableScript.ts#L11-L13
 
-``` typescript
-class HelloWorld implements SettingableScript {
-    noticer: Noticer;
-    constructor(noticer: INoticer) {
-        this.noticer = noticer;
-    }
-    entry(
-        _params: Parameters,
-        settings: Settings
-    ): Promise<void> {
-        noticer.notice(`Hello ${settings['Name']} !`, 5000);
-        return Promise.resolve();
-    }
-    settings = {
-        name: 'Hello World',
-        author: 'me',
-        options: {
-            Name: {
-                type: 'text' as TextFieldType,
-                description: 'The name to say hello',
-                defaultValue: 'World',
-                placeholder: 'World'
-            }
-        }
-    };
-}
-```
+- Using the `SettingsDefinitionBuilder`, you can define the corresponding UI definition.
 
-- The script is exported by exporting an instance of the created class.
+https://github.com/petitpandarouge/ObsidianScripts/blob/85bfbba16c13dc24637b659baae8c3808b14a627/obsinflate/src/hello-world/quick-add/settingableScript.ts#L15-L23
 
-``` typescript
-const noticer = new Noticer();
-module.exports = new HelloWorld(noticer);
-```
+> ⚠️ The `name` property of each option must reference the name of one of the properties defined in the previous setting interface. This is how the mapping is done between the UI definition and the settings finaly given to the script.
+
+- The script implementation is done using the `AbstractSettingableScript`.
+
+https://github.com/petitpandarouge/ObsidianScripts/blob/85bfbba16c13dc24637b659baae8c3808b14a627/obsinflate/src/hello-world/quick-add/settingableScript.ts#L25-L37
+
+> ⚠️ Notice the settings given as constructor parameter.
+
+- Finally, the entry point is implemented using the `SettingableScriptEntryPoint` interface.
+
+https://github.com/petitpandarouge/ObsidianScripts/blob/85bfbba16c13dc24637b659baae8c3808b14a627/obsinflate/src/hello-world/quick-add/settingableScript.ts#L39-L54
+
+> ⚠️ `SettingsBuilder` class is used to map the native setting to the specific settings interface.
+
+> ⚠️ Notice that the `settings` property is never referenced as `this.settings` in the `entry`method. This would not work. At runtime, the entry point is not considered as a class but as a javascript object, and `this` does not exist. This is why `SettingsDefinition` is used twice.
 
 ### Dataview 🧩
 

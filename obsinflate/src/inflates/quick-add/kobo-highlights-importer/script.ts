@@ -6,22 +6,21 @@ import { IAnnotationsReader } from '@obsinflate/core/adobe-digital-editions/anno
 import { IFormatter } from '@obsinflate/infrastructure/formatter';
 import { EpubFiles } from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
-import { AbstractScript } from '@obsinflate/api/quick-add/abstractScript';
-import { Settings } from '@obsinflate/api/quick-add/settings/settings';
-import { SettingsFieldsNames } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
+import { KoboHighlightsImporterSettings } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
+import { AbstractSettingableScript } from '@obsinflate/api/quick-add/abstractSettingableScript';
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';
 
-export class KoboHighlightsImporter extends AbstractScript {
+export class KoboHighlightsImporter extends AbstractSettingableScript<KoboHighlightsImporterSettings> {
     constructor(
         errorNoticer: ErrorNoticer,
-        private settings: Settings,
+        settings: KoboHighlightsImporterSettings,
         private fileSystem: IFileSystem,
         private annotationsReader: IAnnotationsReader,
         private annotationsMerger: IAnnotationsMerger,
         private annotationsFormatter: IFormatter<EpubFiles>
     ) {
-        super(errorNoticer);
+        super(errorNoticer, settings);
     }
 
     protected async innerEntry(params: Parameters): Promise<void> {
@@ -35,17 +34,11 @@ export class KoboHighlightsImporter extends AbstractScript {
         );
         const content = this.annotationsFormatter.format(annotationsByFiles);
 
-        params.variables[
-            this.settings[SettingsFieldsNames.BookTitleVariableName] as string
-        ] = annotations.annotationSet.publication.title;
-        params.variables[
-            this.settings[SettingsFieldsNames.BookAuthorVariableName] as string
-        ] = annotations.annotationSet.publication.creator;
-        params.variables[
-            this.settings[
-                SettingsFieldsNames.BookAnnotationsVariableName
-            ] as string
-        ] = content;
+        params.variables[this.settings.BookTitleVariableName] =
+            annotations.annotationSet.publication.title;
+        params.variables[this.settings.BookAuthorVariableName] =
+            annotations.annotationSet.publication.creator;
+        params.variables[this.settings.BookAnnotationsVariableName] = content;
     }
 
     private async suggest(params: Parameters, files: File[]): Promise<File> {

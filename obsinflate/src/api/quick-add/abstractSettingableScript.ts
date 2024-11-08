@@ -6,7 +6,7 @@ export abstract class AbstractSettingableScript<
 > extends AbstractScript {
     constructor(
         errorNoticer: ErrorNoticer,
-        private settings: TSettings
+        protected settings: TSettings
     ) {
         super(errorNoticer);
     }

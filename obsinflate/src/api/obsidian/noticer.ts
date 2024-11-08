@@ -3,6 +3,7 @@ import { Notice } from 'obsidian';
 
 export const OBSINFLATE_NOTICE_PREFIX = 'Obsinflate 📢 ';
 
+// TODO use Duration
 export interface INoticer {
     notice(
         message: string | DocumentFragment,
