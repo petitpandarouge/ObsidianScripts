@@ -1,0 +1,6 @@
+cd obsinflate
+
+./.husky/check-branche-is-main.sh || exit 0
+
+./.husky/check-commit-messages.sh
+./.husky/check-pipeline.sh

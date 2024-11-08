@@ -1,2 +1,5 @@
 cd obsinflate
+
+./.husky/check-branche-is-main.sh || exit 0
+
 npx --no-install commitlint --edit "$1"
