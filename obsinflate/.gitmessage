@@ -103,7 +103,7 @@ Fixes #<issue number>
 #   │       │          │
 #   │       │          └─⫸ Subject in present tense. Not capitalized. No period at the end.
 #   │       │
-#   │       └─⫸ Commit Scope: api|core|infrastructure|<inflate-name>|ci|build|release
+#   │       └─⫸ Commit Scope: obsidian|quickadd|userplugins|dataview|ci|build|release
 #   │
 #   └─⫸ Commit Type: docs|feat|fix|refactor|style|test|chore
 #
