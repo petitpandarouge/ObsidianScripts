@@ -1,3 +1,30 @@
+# [2.0.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-1.1.0...obsinflate-2.0.0) (2024-11-09)
+
+
+### Features
+
+* **kobohighlightsimporter:** implement the KoboHighlightsImporter QuickAdd script ([#39](https://github.com/petitpandarouge/ObsidianScripts/issues/39)) ([313e3e7](https://github.com/petitpandarouge/ObsidianScripts/commit/313e3e77d6cfffec823a6beac66381f0cd95622e)), closes [#45](https://github.com/petitpandarouge/ObsidianScripts/issues/45)
+* **quickadd:** implement builders for the settings ([#48](https://github.com/petitpandarouge/ObsidianScripts/issues/48)) ([a703742](https://github.com/petitpandarouge/ObsidianScripts/commit/a7037425642b469f407cb991acb53b9c60a29805))
+
+
+### BREAKING CHANGES
+
+* **quickadd:** QuickAdd scripts are not using the native settings system anymore. It is now based on specific
+SettingsDefinitionBuilder and SettingsBuilder builders.
+* **kobohighlightsimporter:** Project configuration
+- deactivate @typescript-eslint/no-explicit-any lint is a bad idea. using any will not raise type
+error. It has been a problem when I dealed with the formatter, I was not able to see the object I
+gave was badly formed.
+- add snippets for it.todo.
+
+Core and Infrastructure implementations
+- implement a FileSystem service used to get the files contained into a folder.
+- implement an XmlParser service.
+- UniqueNoteCreator is extracted from the UserPlugins NewUniqueNoteCommand.
+- implement services and utility classes to handle Adobe Digital Editions annotations files.
+- modify the SettingableScript architecture. The interface becomes the entry point and the
+implementation is supported by an inner script.
+
 # [1.1.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-1.0.0...obsinflate-1.1.0) (2024-10-06)
 
 
