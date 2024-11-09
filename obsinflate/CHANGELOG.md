@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-2.0.0...obsinflate-2.0.1) (2024-11-09)
+
+
+### Bug Fixes
+
+* **quickadd:** fix require.extensions is not supported by webpack. Use a loader instead error ([#43](https://github.com/petitpandarouge/ObsidianScripts/issues/43)) ([a2816f0](https://github.com/petitpandarouge/ObsidianScripts/commit/a2816f07506f7232e7f18d33bd557c129e7fc8db))
+
 # [2.0.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-1.1.0...obsinflate-2.0.0) (2024-11-09)
 
 
