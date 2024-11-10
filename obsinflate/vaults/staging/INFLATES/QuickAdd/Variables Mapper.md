@@ -7,4 +7,4 @@ dependencies:
 ---
 ## Configuration
 
-
+See the script configuration panel.

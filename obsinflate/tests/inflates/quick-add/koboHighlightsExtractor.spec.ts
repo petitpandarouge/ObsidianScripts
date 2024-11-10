@@ -97,7 +97,12 @@ describe('KoboHighlightsExtractor', () => {
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
         );
-        const mockParams = mockDeep<Parameters>();
+        const preventCrashFile = mock<File>();
+        const mockParams = mockDeep<Parameters>({
+            variables: {
+                [mockSettings.annotationsFileVariableName]: preventCrashFile
+            }
+        });
         // Act
         await extractor.entry(mockParams);
         // Assert
@@ -157,7 +162,12 @@ describe('KoboHighlightsExtractor', () => {
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
         );
-        const mockParams = mockDeep<Parameters>();
+        const preventCrashFile = mock<File>();
+        const mockParams = mockDeep<Parameters>({
+            variables: {
+                [mockSettings.annotationsFileVariableName]: preventCrashFile
+            }
+        });
         // Act
         await extractor.entry(mockParams);
         // Assert
@@ -196,8 +206,11 @@ describe('KoboHighlightsExtractor', () => {
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
         );
+        const preventCrashFile = mock<File>();
         const mockParams = mockDeep<Parameters>({
-            variables: {}
+            variables: {
+                [mockSettings.annotationsFileVariableName]: preventCrashFile
+            }
         });
         // Act
         await extractor.entry(mockParams);
@@ -236,8 +249,11 @@ describe('KoboHighlightsExtractor', () => {
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
         );
+        const preventCrashFile = mock<File>();
         const mockParams = mockDeep<Parameters>({
-            variables: {}
+            variables: {
+                [mockSettings.annotationsFileVariableName]: preventCrashFile
+            }
         });
         // Act
         await extractor.entry(mockParams);
@@ -278,8 +294,11 @@ describe('KoboHighlightsExtractor', () => {
             mockAnnotationsMerger,
             mockMarkdownQuoteFormatter
         );
+        const preventCrashFile = mock<File>();
         const mockParams = mockDeep<Parameters>({
-            variables: {}
+            variables: {
+                [mockSettings.annotationsFileVariableName]: preventCrashFile
+            }
         });
         // Act
         await extractor.entry(mockParams);

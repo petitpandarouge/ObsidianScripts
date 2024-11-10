@@ -23,9 +23,10 @@ export class KoboHighlightsExtractor extends AbstractSettingableScript<KoboHighl
 
     protected async innerEntry(params: Parameters): Promise<void> {
         // Input
-        const selectedFile = params.variables[
+        const selectedFile = this.secureGetVariable<File>(
+            params,
             this.settings.annotationsFileVariableName
-        ] as File;
+        );
         // Processing
         const annotations = await this.annotationsReader.read(selectedFile);
         const annotationsByFiles = this.annotationsMerger.merge(

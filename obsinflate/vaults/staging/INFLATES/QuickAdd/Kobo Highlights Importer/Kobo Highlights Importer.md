@@ -6,11 +6,14 @@ dependencies:
   - "[[QuickAdd]]"
   - "[[Kobo Highlights Extractor]]"
   - "[[Files Suggester]]"
+  - "[[Variables Mapper]]"
 ---
 ## Configuration
 
-Kindly see the macro configuration to see the configuration in details.
-Here are the main decisions to make when configuring this macro on your side: 
+Kindly see the macro configuration to have the configuration in details.
+Here are the main decisions to take when configuring this macro on your side: 
+### file-suggester step
+- Define the annotations directory into the `Input - Directory Path` option.
 ### Create book note step
 - Reference the template to use in the `Template Path` option.
 - Select the folder where to create the note using the `Choose folder when creating a new note`.

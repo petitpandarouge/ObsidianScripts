@@ -24,6 +24,16 @@
           }
         },
         {
+          "name": "variables-mapper",
+          "type": "UserScript",
+          "id": "54905bdc-0c1b-44c4-af23-3280f95e75d6",
+          "path": "SCRIPTS/quick-add/variables-mapper.js",
+          "settings": {
+            "Input Variable Name": "selectedFile",
+            "Output Variable Name": "annotationsFile"
+          }
+        },
+        {
           "name": "kobo-highlights-extractor",
           "type": "UserScript",
           "id": "7f90bd88-89c3-4058-a0ed-95ac9fa7484e",
@@ -32,7 +42,7 @@
             "Output - Book Title Variable Name": "title",
             "Output - Book Author Variable Name": "author",
             "Output - Book Annotations Variable Name": "annotations",
-            "Input - Annotations File Variable Name": "selectedFile"
+            "Input - Annotations File Variable Name": "annotationsFile"
           }
         },
         {
