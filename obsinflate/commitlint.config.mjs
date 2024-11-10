@@ -22,7 +22,9 @@
                 'dataview',
                 'ci',
                 'build',
-                'release'
+                'release',
+                'cms',
+                'integration'
             ]
         ],
         'scope-empty': [1, 'never'],

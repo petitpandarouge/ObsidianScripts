@@ -1,0 +1,9 @@
+{
+  "snippets": [
+    ""
+  ],
+  "scriptsFolder": "SCRIPTS/user-plugins",
+  "enabledScripts": [
+    "SCRIPTS/user-plugins/commands.js"
+  ]
+}

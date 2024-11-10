@@ -13,22 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Views.md",
+                "file": "How to debug.md",
                 "mode": "source",
                 "source": false
-              }
-            }
-          },
-          {
-            "id": "83d16f3871d8e663",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Views.md",
-                "mode": "source",
-                "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "How to debug"
             }
           }
         ]
@@ -51,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -66,15 +58,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
-            }
-          },
-          {
-            "id": "21e52cdf2e2aeff5",
-            "type": "leaf",
-            "state": {
-              "type": "bookmarks",
-              "state": {}
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           }
         ]
@@ -97,7 +83,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Views.md",
+                "file": "How to debug.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +91,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for How to debug"
             }
           },
           {
@@ -117,7 +105,9 @@
                 "file": "Views.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Views"
             }
           },
           {
@@ -128,7 +118,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -138,7 +130,9 @@
               "type": "outline",
               "state": {
                 "file": "Views.md"
-              }
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Views"
             }
           }
         ]
@@ -150,18 +144,14 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false
     }
   },
   "active": "c3692f7a8d966bb1",
   "lastOpenFiles": [
-    "How to debug.md",
     "Views.md",
+    "How to debug.md",
     "resources/Pasted image 20240922193307.png",
     "resources/Pasted image 20240922193214.png",
     "resources/Pasted image 20240922193136.png",

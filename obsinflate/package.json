@@ -25,6 +25,7 @@
     "test:integration:quickadd": "rimraf ./vaults/quick-add/scripts && ncp ./bundles/quick-add ./vaults/quick-add/scripts && start obsidian://open?vault=quick-add",
     "test:integration:userplugins": "rimraf ./vaults/user-plugins/scripts && ncp ./bundles/user-plugins ./vaults/user-plugins/scripts && start obsidian://open?vault=user-plugins",
     "test:integration:dataview": "rimraf ./vaults/dataview/scripts && ncp ./bundles/dataview ./vaults/dataview/scripts && start obsidian://open?vault=dataview",
+    "test:integration": "rimraf ./vaults/staging/SCRIPTS && ncp ./bundles ./vaults/staging/SCRIPTS && start obsidian://open?vault=staging",
     "bundle:dataview": "",
     "bundle:quickadd:kobohighlightsimporter": "npx webpack --config webpack.quickadd.kobohighlightsimporter.config.js",
     "bundle:quickadd": "npm run bundle:quickadd:kobohighlightsimporter",

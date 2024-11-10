@@ -4,24 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "03bcf836fbb5a682",
+        "id": "0f0793bb76353f13",
         "type": "tabs",
         "children": [
           {
-            "id": "c853c4c1a3967846",
+            "id": "b8d979bdf17dc18c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "How to debug.md",
+                "file": "Start here.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "How to debug"
+              "title": "Start here"
+            }
+          },
+          {
+            "id": "9c3f92b3cb04e77f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Start here.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Start here"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -83,7 +98,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "macros/kobo highlights importer/GARDEN/202411050015 - L’ art subtil de s’ en foutre.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,7 +107,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 202411050015 - L’ art subtil de s’ en foutre"
+              "title": "Backlinks"
             }
           },
           {
@@ -128,40 +142,88 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "macros/kobo highlights importer/GARDEN/202411050015 - L’ art subtil de s’ en foutre.md"
-              },
+              "state": {},
               "icon": "lucide-list",
-              "title": "Outline of 202411050015 - L’ art subtil de s’ en foutre"
+              "title": "Outline"
+            }
+          },
+          {
+            "id": "c853c4c1a3967846",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          },
+          {
+            "id": "003a1ff7859e1550",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 645.5
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false
     }
   },
-  "active": "7971274628d22076",
+  "active": "9c3f92b3cb04e77f",
   "lastOpenFiles": [
+    "INFLATES/QuickAdd/Guideline/Keep your macros clean.md",
+    "Start here.md",
+    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411101445 - L’ art subtil de s’ en foutre.md",
+    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/Mark Manson.md",
+    "INFLATES/UserPlugins/Commands/New Unique Note.md",
+    "INFLATES/UserPlugins/Commands/202411101440.md",
+    "INFLATES/UserPlugins/Commands/Commands.md",
+    "INFLATES/QuickAdd/Kobo Highlights Importer/Kobo Highlights Importer.md",
+    "INFLATES/QuickAdd/Variable Mapper.md",
+    "INFLATES/QuickAdd/Kobo Highlights Extractor.md",
+    "PLUGINS/Dataview.md",
+    "PLUGINS/QuickAdd.md",
+    "PLUGINS/UserPlugins.md",
+    "TEMPLATES/Command.md",
+    "SCRIPTS/user-plugins/commands.js",
+    "TEMPLATES/QuickAdd Script.md",
+    "TEMPLATES/Plugin.md",
+    "TEMPLATES/Inflate.md",
+    "202411101414.md",
+    "INFLATES/UserPlugins/Commands",
+    "INFLATES/QuickAdd/Guideline",
+    "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Livre.md",
+    "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Person.md",
+    "RESOURCES/Pasted image 20241110115942.png",
+    "RESOURCES",
+    "Untitled.md",
+    "PLUGINS",
+    "TEMPLATES",
+    "INFLATES",
+    "INFLATES/Dataview",
+    "INFLATES/UserPlugins",
     "macros/kobo highlights importer/GARDEN/Mark Manson.md",
     "How to debug.md",
     "macros/kobo highlights importer/GARDEN/202411091806 - L’ art subtil de s’ en foutre.md",
-    "macros/kobo highlights importer/How to.md",
     "macros/kobo highlights importer/GARDEN/202411091804 - L’ art subtil de s’ en foutre.md",
     "macros/kobo highlights importer/GARDEN/202411050015 - L’ art subtil de s’ en foutre.md",
     "scripts/kobo-highlights-importer.js",
-    "scripts",
     "resources/Pasted image 20240920222408.png",
     "resources/Pasted image 20240920222247.png",
     "resources/Pasted image 20240920222201.png",
@@ -170,12 +232,6 @@
     "resources/Pasted image 20240920214534.png",
     "resources/Pasted image 20240920214238.png",
     "resources/Pasted image 20240920214021.png",
-    "resources/Pasted image 20240920213624.png",
-    "scripts/HelloWorld.js",
-    "resources",
-    "scripts/helloWorld.js",
-    "resources/Pasted image 20240919161309.png",
-    "resources",
-    "Welcome.md"
+    "resources/Pasted image 20240920213624.png"
   ]
 }

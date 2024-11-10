@@ -16,7 +16,9 @@
                 "file": "How to debug.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "How to debug"
             }
           }
         ]
@@ -39,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -54,15 +58,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
-            }
-          },
-          {
-            "id": "21e52cdf2e2aeff5",
-            "type": "leaf",
-            "state": {
-              "type": "bookmarks",
-              "state": {}
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           }
         ]
@@ -93,7 +91,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for How to debug"
             }
           },
           {
@@ -105,18 +105,9 @@
                 "file": "How to debug.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
-            "id": "1bf4d292621c0c01",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from How to debug"
             }
           },
           {
@@ -126,7 +117,9 @@
               "type": "outline",
               "state": {
                 "file": "How to debug.md"
-              }
+              },
+              "icon": "lucide-list",
+              "title": "Outline of How to debug"
             }
           }
         ]

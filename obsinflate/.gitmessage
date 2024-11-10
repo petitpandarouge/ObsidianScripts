@@ -10,7 +10,7 @@ at 100 characters.>
 
 
 # ─── Example: Simple refactor ────────────────────────────────────────────────────────────────────┤
-# refactor(core): rename refreshDynamicEmbeddedViews to refreshEmbeddedViews
+# refactor: rename refreshDynamicEmbeddedViews to refreshEmbeddedViews
 #
 # Improve code readability. The original name no longer matches how the function is used.
 # ─────────────────────────────────────────────────────────────────────────────────────────────────┤
@@ -96,9 +96,10 @@ at 100 characters.>
 #   │       │          │
 #   │       │          └─⫸ Subject in present tense. Not capitalized. No period at the end.
 #   │       │
-#   │       └─⫸ Commit Scope: obsidian|quickadd|userplugins|dataview|ci|build|release
+#   │       └─⫸ Commit Scope: obsidian|quickadd|userplugins|dataview|
+#   |                          ci|build|release|cms|integration
 #   │
-#   └─⫸ Commit Type: docs|feat|fix|refactor|style|test|chore
+#   └─⫸ Commit Type: chore|docs|feat|fix|refactor|style|test
 #
 #
 # Commit Message Body

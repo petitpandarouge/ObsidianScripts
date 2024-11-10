@@ -12,9 +12,10 @@ function withUserPluginsConfiguration() {
 
 module.exports = (scriptName) => {
     let entryName = `inflates/user-plugins/${scriptName}`;
-    let bundleName = scriptName;
+    let bundleName = 'commands';
     if (scriptName.toLowerCase() === 'helloworld') {
         entryName = `hello-world/user-plugins/main`;
+        bundleName = 'helloworld';
     }
     return make(
         entryName,

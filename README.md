@@ -18,6 +18,8 @@ TypeScript framework that allows building extension scripts for the following Ob
 - [User Plugins](https://github.com/mnowotnik/obsidian-user-plugins)
 - [Quick Add](https://quickadd.obsidian.guide/docs/)
 
+## Highlights
+
 The benefits of this framework are
 - having a fully tested code, to easely **maintain** it,
 - having a fully typed code, to easely **read** it.
@@ -38,6 +40,8 @@ The framework is implemented following the [TDD](https://en.wikipedia.org/wiki/T
   - [Jest considerations](https://github.com/petitpandarouge/ObsidianScripts/blob/master/obsinflate/docs/working-with-obsidian-api/jest-considerations.md)
   - [Webpack considerations](https://github.com/petitpandarouge/ObsidianScripts/blob/master/obsinflate/docs/working-with-obsidian-api/webpack-considerations.md)
   - [Module functions considerations](https://github.com/petitpandarouge/ObsidianScripts/blob/master/obsinflate/docs/working-with-obsidian-api/module-functions-considerations.md)
+- Usages
+  - [Configuring inflates into Obsidian](https://github.com/petitpandarouge/ObsidianScripts/blob/master/obsinflate/docs/usages/configuring-inflates-into-obsidian.md)
 - Contributing
   - [Coding rules](https://github.com/petitpandarouge/ObsidianScripts/blob/master/obsinflate/docs/contributing/coding-rules.md)
   - [Commit message format](https://github.com/petitpandarouge/ObsidianScripts/blob/master/obsinflate/docs/contributing/commit-message-format.md)
