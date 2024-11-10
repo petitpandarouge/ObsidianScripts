@@ -22,6 +22,7 @@ This documentation will aggregate all the inflates, either JS modules and specif
 	- Each note describes the configuration to apply for the inflates to work properly.
 	- A plugin note can be initialized using the `TEMPLATES/Plugin` template.
 - The `RESOURCES` directory contains all the images and other resources references by the notes.
+- The `SCRIPTS` directory contains all the inflate module scripts.
 - The `TEMPLATES` directory contains the templates that must be used to create this documentation.
 ## Graph view
 

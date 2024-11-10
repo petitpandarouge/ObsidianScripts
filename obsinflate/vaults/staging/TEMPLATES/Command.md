@@ -4,6 +4,7 @@ tags:
   - inflates/command
 dependencies:
   - "[[UserPlugins]]"
+embedded: "[[Command]]"
 ---
 ## Configuration
 

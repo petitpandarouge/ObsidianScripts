@@ -10,7 +10,6 @@ import {
     SettingsDefinition
 } from '@obsinflate/inflates/quick-add/kobo-highlights-extractor/settings';
 import { AnnotationsReader } from '@obsinflate/core/adobe-digital-editions/annotationsReader';
-import { FileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { XmlParser } from '@obsinflate/infrastructure/xmlParser';
 import { Annotations } from '@obsinflate/core/adobe-digital-editions/annotations';
 import { SettingableScriptEntryPoint } from '@obsinflate/api/quick-add/settingableScriptEntryPoint';
@@ -23,7 +22,6 @@ export class EntryPoint implements SettingableScriptEntryPoint {
             new SettingsBuilder<KoboHighlightsImporterSettings>();
         const noticer = new Noticer();
         const errorNoticer = new ErrorNoticer(noticer);
-        const fileSystem = new FileSystem();
         const xmlReader = new XmlParser<Annotations>();
         const annotationsReader = new AnnotationsReader(xmlReader);
         const annotationsSorter = new AnnotationsSorter();
@@ -32,7 +30,6 @@ export class EntryPoint implements SettingableScriptEntryPoint {
         const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             settingsBuilder.build(settings, SettingsDefinition),
-            fileSystem,
             annotationsReader,
             annotationsMerger,
             annotationsFormatter

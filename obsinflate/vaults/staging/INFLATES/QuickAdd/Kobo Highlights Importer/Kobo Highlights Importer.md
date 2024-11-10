@@ -5,6 +5,7 @@ tags:
 dependencies:
   - "[[QuickAdd]]"
   - "[[Kobo Highlights Extractor]]"
+  - "[[Files Suggester]]"
 ---
 ## Configuration
 

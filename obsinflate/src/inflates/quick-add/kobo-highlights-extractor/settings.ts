@@ -3,9 +3,10 @@ import { ME } from '@obsinflate/inflates/constants';
 import { nameof } from 'ts-simple-nameof';
 
 export interface KoboHighlightsImporterSettings {
-    BookTitleVariableName: string;
-    BookAuthorVariableName: string;
-    BookAnnotationsVariableName: string;
+    annotationsFileVariableName: string;
+    bookTitleVariableName: string;
+    bookAuthorVariableName: string;
+    bookAnnotationsVariableName: string;
 }
 
 export const SettingsDefinition = new SettingsDefinitionBuilder()
@@ -13,21 +14,28 @@ export const SettingsDefinition = new SettingsDefinitionBuilder()
     .implementedBy(ME)
     .havingTextFieldOption({
         name: nameof<KoboHighlightsImporterSettings>(
-            (s) => s.BookTitleVariableName
+            (s) => s.annotationsFileVariableName
+        ),
+        label: 'Input - Annotations File Variable Name',
+        defaultValue: 'annotationsFile'
+    })
+    .havingTextFieldOption({
+        name: nameof<KoboHighlightsImporterSettings>(
+            (s) => s.bookTitleVariableName
         ),
         label: 'Output - Book Title Variable Name',
         defaultValue: 'title'
     })
     .havingTextFieldOption({
         name: nameof<KoboHighlightsImporterSettings>(
-            (s) => s.BookAuthorVariableName
+            (s) => s.bookAuthorVariableName
         ),
         label: 'Output - Book Author Variable Name',
         defaultValue: 'author'
     })
     .havingTextFieldOption({
         name: nameof<KoboHighlightsImporterSettings>(
-            (s) => s.BookAnnotationsVariableName
+            (s) => s.bookAnnotationsVariableName
         ),
         label: 'Output - Book Annotations Variable Name',
         defaultValue: 'annotations'

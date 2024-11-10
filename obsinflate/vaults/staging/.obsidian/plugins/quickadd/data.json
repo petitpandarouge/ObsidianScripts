@@ -14,6 +14,16 @@
       "id": "64f69cd0-47ee-4f8e-a2ed-926bd41176ab",
       "commands": [
         {
+          "name": "files-suggester",
+          "type": "UserScript",
+          "id": "1e91b596-245a-449f-9bdb-5ddf2551f775",
+          "path": "SCRIPTS/quick-add/files-suggester.js",
+          "settings": {
+            "Output - Selected File Variable Name": "selectedFile",
+            "Input - Directory Path": "C:\\Workspace\\Perso\\annotations"
+          }
+        },
+        {
           "name": "kobo-highlights-extractor",
           "type": "UserScript",
           "id": "7f90bd88-89c3-4058-a0ed-95ac9fa7484e",
@@ -21,7 +31,8 @@
           "settings": {
             "Output - Book Title Variable Name": "title",
             "Output - Book Author Variable Name": "author",
-            "Output - Book Annotations Variable Name": "annotations"
+            "Output - Book Annotations Variable Name": "annotations",
+            "Input - Annotations File Variable Name": "selectedFile"
           }
         },
         {
