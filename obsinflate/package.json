@@ -32,9 +32,9 @@
     "bundle": "rimraf ./bundles && npm run bundle:quickadd && npm run bundle:dataview && npm run bundle:userplugins",
     "bundle:quickadd:helloworld": "npx webpack --config webpack.quickadd.script.helloworld.config.js && npx webpack --config webpack.quickadd.settingablescript.helloworld.config.js",
     "bundle:userplugins:helloworld": "npx webpack --config webpack.userplugins.helloworld.config.js",
-    "bundle:dataview:helloworld": "npx webpack --config webpack.dataview.view.helloworld.config.js && node dataview.view.build.js HelloWorld",
+    "bundle:dataview:helloworld": "npx webpack --config webpack.dataview.view.helloworld.config.js && node dataview.view.build.mjs HelloWorld",
     "bundle:helloworld": "rimraf ./bundles && npm run bundle:quickadd:helloworld && npm run bundle:userplugins:helloworld && npm run bundle:dataview:helloworld",
-    "deploy": "node ./deploy.js"
+    "deploy": "node ./deploy.mjs"
   },
   "repository": {
     "type": "git",

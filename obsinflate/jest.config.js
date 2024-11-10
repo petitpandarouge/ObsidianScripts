@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-require-imports */
 const tsconfig = require('./tsconfig.jest.json');
 const makeModuleNameMapper = require('tsconfig-paths-jest');
 
