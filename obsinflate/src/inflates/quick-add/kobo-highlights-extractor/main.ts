@@ -4,11 +4,11 @@ import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { AnnotationsMarkdownFormatter } from '@obsinflate/core/adobe-digital-editions/annotationsMarkdownFormatter';
 import { AnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { AnnotationsSorter } from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
-import { KoboHighlightsImporter } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/script';
+import { KoboHighlightsExtractor } from '@obsinflate/inflates/quick-add/kobo-highlights-extractor/script';
 import {
     KoboHighlightsImporterSettings,
     SettingsDefinition
-} from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
+} from '@obsinflate/inflates/quick-add/kobo-highlights-extractor/settings';
 import { AnnotationsReader } from '@obsinflate/core/adobe-digital-editions/annotationsReader';
 import { FileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { XmlParser } from '@obsinflate/infrastructure/xmlParser';
@@ -29,7 +29,7 @@ export class EntryPoint implements SettingableScriptEntryPoint {
         const annotationsSorter = new AnnotationsSorter();
         const annotationsMerger = new AnnotationsMerger(annotationsSorter);
         const annotationsFormatter = new AnnotationsMarkdownFormatter();
-        const importer = new KoboHighlightsImporter(
+        const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             settingsBuilder.build(settings, SettingsDefinition),
             fileSystem,
@@ -37,7 +37,7 @@ export class EntryPoint implements SettingableScriptEntryPoint {
             annotationsMerger,
             annotationsFormatter
         );
-        await importer.entry(params);
+        await extractor.entry(params);
     }
 
     settings = SettingsDefinition;

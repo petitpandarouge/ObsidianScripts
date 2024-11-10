@@ -14,10 +14,10 @@
       "id": "64f69cd0-47ee-4f8e-a2ed-926bd41176ab",
       "commands": [
         {
-          "name": "kobo-highlights-importer",
+          "name": "kobo-highlights-extractor",
           "type": "UserScript",
-          "id": "88f75574-e112-452f-be53-4a6b025ba22d",
-          "path": "SCRIPTS/quick-add/kobo-highlights-importer.js",
+          "id": "7f90bd88-89c3-4058-a0ed-95ac9fa7484e",
+          "path": "SCRIPTS/quick-add/kobo-highlights-extractor.js",
           "settings": {
             "Output - Book Title Variable Name": "title",
             "Output - Book Author Variable Name": "author",

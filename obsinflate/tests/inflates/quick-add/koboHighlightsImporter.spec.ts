@@ -2,9 +2,9 @@ import { mock, mockDeep } from 'jest-mock-extended';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import {
     ANNOTATIONS_FILES_DIR_PATH,
-    KoboHighlightsImporter
-} from '@obsinflate/inflates/quick-add/kobo-highlights-importer/script';
-import { KoboHighlightsImporterSettings } from '@obsinflate/inflates/quick-add/kobo-highlights-importer/settings';
+    KoboHighlightsExtractor
+} from '@obsinflate/inflates/quick-add/kobo-highlights-extractor/script';
+import { KoboHighlightsImporterSettings } from '@obsinflate/inflates/quick-add/kobo-highlights-extractor/settings';
 import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editions/fileExtensions';
 import Chance from 'chance';
 import { File, IFileSystem } from '@obsinflate/infrastructure/fileSystem';
@@ -56,7 +56,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const importer = new KoboHighlightsImporter(
+        const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
             mockFileSystem,
@@ -70,7 +70,7 @@ describe('KoboHighlightsImporter', () => {
             }
         });
         // Act
-        await importer.entry(mockParams);
+        await extractor.entry(mockParams);
         // Assert
         expect(mockFileSystem.getFiles).toHaveBeenCalledWith(
             ANNOTATIONS_FILES_DIR_PATH
@@ -103,7 +103,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const importer = new KoboHighlightsImporter(
+        const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
             mockFileSystem,
@@ -115,7 +115,7 @@ describe('KoboHighlightsImporter', () => {
             quickAddApi: { suggester: jest.fn().mockResolvedValue(undefined) }
         });
         // Act
-        await importer.entry(mockParams);
+        await extractor.entry(mockParams);
         // Assert
         expect(noticeSpy).toHaveBeenCalledWith(
             'No annotations file selected. Aborting import.',
@@ -147,7 +147,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const importer = new KoboHighlightsImporter(
+        const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
             mockFileSystem,
@@ -161,7 +161,7 @@ describe('KoboHighlightsImporter', () => {
             }
         });
         // Act
-        await importer.entry(mockParams);
+        await extractor.entry(mockParams);
         // Assert
         expect(mockAnnotationsReader.read).toHaveBeenCalledWith(mockFile);
     });
@@ -198,7 +198,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const importer = new KoboHighlightsImporter(
+        const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
             mockFileSystem,
@@ -211,7 +211,7 @@ describe('KoboHighlightsImporter', () => {
             quickAddApi: { suggester: jest.fn().mockResolvedValue('') }
         });
         // Act
-        await importer.entry(mockParams);
+        await extractor.entry(mockParams);
         // Assert
         expect(mockAnnotationsMerger.merge).toHaveBeenCalledTimes(1);
         expect(mockAnnotationsMerger.merge).toHaveBeenCalledWith(
@@ -265,7 +265,7 @@ describe('KoboHighlightsImporter', () => {
             merge: jest.fn().mockReturnValue({ files })
         });
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const importer = new KoboHighlightsImporter(
+        const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
             mockFileSystem,
@@ -279,7 +279,7 @@ describe('KoboHighlightsImporter', () => {
             }
         });
         // Act
-        await importer.entry(mockParams);
+        await extractor.entry(mockParams);
         // Assert
         expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledTimes(1);
         expect(mockMarkdownQuoteFormatter.format).toHaveBeenCalledWith({
@@ -312,7 +312,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const importer = new KoboHighlightsImporter(
+        const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
             mockFileSystem,
@@ -327,7 +327,7 @@ describe('KoboHighlightsImporter', () => {
             variables: {}
         });
         // Act
-        await importer.entry(mockParams);
+        await extractor.entry(mockParams);
         // Assert
         expect(mockParams.variables[mockSettings.BookTitleVariableName]).toBe(
             mockBookTitle
@@ -359,7 +359,7 @@ describe('KoboHighlightsImporter', () => {
         });
         const mockAnnotationsMerger = mock<IAnnotationsMerger>();
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
-        const importer = new KoboHighlightsImporter(
+        const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
             mockFileSystem,
@@ -374,7 +374,7 @@ describe('KoboHighlightsImporter', () => {
             variables: {}
         });
         // Act
-        await importer.entry(mockParams);
+        await extractor.entry(mockParams);
         // Assert
         expect(mockParams.variables[mockSettings.BookAuthorVariableName]).toBe(
             mockAuthor
@@ -408,7 +408,7 @@ describe('KoboHighlightsImporter', () => {
         const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
             format: jest.fn().mockReturnValue(mockContent)
         });
-        const importer = new KoboHighlightsImporter(
+        const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
             mockFileSystem,
@@ -423,7 +423,7 @@ describe('KoboHighlightsImporter', () => {
             variables: {}
         });
         // Act
-        await importer.entry(mockParams);
+        await extractor.entry(mockParams);
         // Assert
         expect(
             mockParams.variables[mockSettings.BookAnnotationsVariableName]

@@ -9,7 +9,7 @@ export interface KoboHighlightsImporterSettings {
 }
 
 export const SettingsDefinition = new SettingsDefinitionBuilder()
-    .forScript('Kobo Highlights Importer')
+    .forScript('Kobo Highlights Extractor')
     .implementedBy(ME)
     .havingTextFieldOption({
         name: nameof<KoboHighlightsImporterSettings>(
