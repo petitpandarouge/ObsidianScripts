@@ -6,7 +6,7 @@ When it comes to talk about Obsidian, an inflate can be a `combination of severa
 Let's take the `Kobo Highlights Importer` macro as example.
 For the macro to be able to work, it uses several Obsinflate inflates :
 - `Kobo Highlights Extractor`
-- `Variable Mapper`
+- `Variables Mapper`
 - etc
 
 This documentation will aggregate all the inflates, either JS modules and specific plugin concepts (macro, view...) if the distinction is needed.

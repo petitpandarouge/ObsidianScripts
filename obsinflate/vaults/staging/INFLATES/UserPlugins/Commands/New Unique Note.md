@@ -1,7 +1,7 @@
 ---
 tags:
-  - inflates/command
   - inflate
+  - inflates/command
 dependencies:
   - "[[UserPlugins]]"
 embedded: "[[Command]]"

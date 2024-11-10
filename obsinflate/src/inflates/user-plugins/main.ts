@@ -2,8 +2,7 @@
 import { DateTimeProvider } from '@obsinflate/infrastructure/dateTimeProvider';
 import { UniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
 import { CommandLoader } from '@obsinflate/core/user-plugins/commandLoader';
-import { NewProjectCommand } from '@obsinflate/inflates/user-plugins/newProjectCommand';
-import { NewUniqueNoteCommand } from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
+import { NewUniqueNote } from '@obsinflate/inflates/user-plugins/newUniqueNote';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { AppExtension } from '@obsinflate/api/obsidian/appExtension';
@@ -14,7 +13,6 @@ export async function onload(plugin: UserPlugins): Promise<void> {
     const errorNoticer = new ErrorNoticer(noticer);
     const commandLoader = new CommandLoader(plugin, errorNoticer);
     await commandLoader.load([
-        (plugin) => new NewProjectCommand(plugin, errorNoticer),
         (plugin) => {
             const appExtension = AppExtension.extends(plugin.app);
             const dateTimeProvider = new DateTimeProvider();
@@ -23,7 +21,7 @@ export async function onload(plugin: UserPlugins): Promise<void> {
                 nameGenerator,
                 appExtension.native
             );
-            return new NewUniqueNoteCommand(
+            return new NewUniqueNote(
                 plugin,
                 errorNoticer,
                 noteCreator,

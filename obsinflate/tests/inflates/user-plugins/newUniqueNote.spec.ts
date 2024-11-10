@@ -1,4 +1,4 @@
-﻿import { NewUniqueNoteCommand } from '@obsinflate/inflates/user-plugins/newUniqueNoteCommand';
+﻿import { NewUniqueNote } from '@obsinflate/inflates/user-plugins/newUniqueNote';
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { TFile } from 'obsidian';
@@ -57,7 +57,7 @@ describe('NewUniqueNoteCommand', () => {
             mockNameGenerator,
             mockApp.native
         );
-        const newUniqueNoteCommand = new NewUniqueNoteCommand(
+        const newUniqueNoteCommand = new NewUniqueNote(
             mockPlugin,
             errorNoticer,
             noteCreator,
@@ -105,7 +105,7 @@ describe('NewUniqueNoteCommand', () => {
             mockNameGenerator,
             mockApp.native
         );
-        const newUniqueNoteCommand = new NewUniqueNoteCommand(
+        const newUniqueNoteCommand = new NewUniqueNote(
             mockPlugin,
             errorNoticer,
             noteCreator,
@@ -176,7 +176,7 @@ describe('NewUniqueNoteCommand', () => {
             mockNameGenerator,
             mockApp.native
         );
-        const newUniqueNoteCommand = new NewUniqueNoteCommand(
+        const newUniqueNoteCommand = new NewUniqueNote(
             mockPlugin,
             errorNoticer,
             noteCreator,
@@ -228,7 +228,7 @@ describe('NewUniqueNoteCommand', () => {
             mockNameGenerator,
             mockApp.native
         );
-        const newUniqueNoteCommand = new NewUniqueNoteCommand(
+        const newUniqueNoteCommand = new NewUniqueNote(
             mockPlugin,
             errorNoticer,
             noteCreator,
@@ -274,7 +274,7 @@ describe('NewUniqueNoteCommand', () => {
             mockNameGenerator,
             mockApp.native
         );
-        const newUniqueNoteCommand = new NewUniqueNoteCommand(
+        const newUniqueNoteCommand = new NewUniqueNote(
             mockPlugin,
             errorNoticer,
             noteCreator,
@@ -330,7 +330,7 @@ describe('NewUniqueNoteCommand', () => {
             mockNameGenerator,
             mockApp.native
         );
-        const newUniqueNoteCommand = new NewUniqueNoteCommand(
+        const newUniqueNoteCommand = new NewUniqueNote(
             mockPlugin,
             errorNoticer,
             noteCreator,
@@ -390,7 +390,7 @@ describe('NewUniqueNoteCommand', () => {
             mockNameGenerator,
             mockApp.native
         );
-        const newUniqueNoteCommand = new NewUniqueNoteCommand(
+        const newUniqueNoteCommand = new NewUniqueNote(
             mockPlugin,
             errorNoticer,
             noteCreator,

@@ -9,7 +9,7 @@ import {
     NO_CONTENT
 } from '@obsinflate/core/uniqueNoteCreator';
 
-export class NewUniqueNoteCommand extends AbstractCommand<UserPlugins> {
+export class NewUniqueNote extends AbstractCommand<UserPlugins> {
     constructor(
         plugin: UserPlugins,
         errorNoticer: ErrorNoticer,
