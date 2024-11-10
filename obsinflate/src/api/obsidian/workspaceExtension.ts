@@ -7,11 +7,13 @@ import {
     isWorkspaceLeafRuntime,
     WorkspaceLeafExtension
 } from '@obsinflate/api/obsidian/workspaceLeafExtension';
-import { Workspace } from 'obsidian';
+import { NoActiveFileFoundError } from '@obsinflate/api/obsidian/noActiveFileFoundError';
+import { TFile, Workspace } from 'obsidian';
 
 export interface IWorkspaceExtension {
     native: Workspace;
     getCenterPanelMarkdownActiveLeaf: () => MarkdownViewLeafExtension;
+    getActiveFile: () => TFile;
 }
 
 export class WorkspaceExtension implements IWorkspaceExtension {
@@ -42,5 +44,13 @@ export class WorkspaceExtension implements IWorkspaceExtension {
             throw new NoActiveNoteFoundError(PanelPosition.Center);
         }
         return MarkdownViewLeafExtension.extends(leaf);
+    }
+
+    getActiveFile(): TFile {
+        const activeFile = this.native.getActiveFile();
+        if (!activeFile) {
+            throw new NoActiveFileFoundError();
+        }
+        return activeFile;
     }
 }

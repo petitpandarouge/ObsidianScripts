@@ -87,6 +87,16 @@
           "time": 500
         },
         {
+          "name": "active-file-infos",
+          "type": "UserScript",
+          "id": "6f18703c-754a-459e-af98-4ca59eca7d73",
+          "path": "SCRIPTS/quick-add/active-file-infos.js",
+          "settings": {
+            "Output - Basename Variable Name": "bookNoteBasename",
+            "Output - Path Variable Name": "bookNotePath"
+          }
+        },
+        {
           "name": "Fill book note",
           "type": "NestedChoice",
           "id": "6ac7cdc0-5ae9-40f2-8b66-7d60bfca294c",
@@ -160,6 +170,12 @@
             "fileExistsMode": "Overwrite the file",
             "setFileExistsBehavior": true
           }
+        },
+        {
+          "name": "Wait",
+          "type": "Wait",
+          "id": "25ba6438-9997-4913-9932-129f4600b081",
+          "time": 500
         }
       ],
       "runOnStartup": false

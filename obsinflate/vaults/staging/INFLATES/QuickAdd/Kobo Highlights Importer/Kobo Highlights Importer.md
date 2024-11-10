@@ -7,6 +7,7 @@ dependencies:
   - "[[Kobo Highlights Extractor]]"
   - "[[Files Suggester]]"
   - "[[Variables Mapper]]"
+  - "[[Active File Infos]]"
 ---
 ## Configuration
 
