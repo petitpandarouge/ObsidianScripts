@@ -1,3 +1,11 @@
+# [2.1.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-2.0.1...obsinflate-2.1.0) (2024-11-10)
+
+
+### Features
+
+* **quickadd:** implement a files suggester ([#45](https://github.com/petitpandarouge/ObsidianScripts/issues/45)) ([0802285](https://github.com/petitpandarouge/ObsidianScripts/commit/0802285a239e3679acec46a042adaee007c4be1e))
+* **quickadd:** implement a Variables mapper ([#46](https://github.com/petitpandarouge/ObsidianScripts/issues/46)) ([90960e6](https://github.com/petitpandarouge/ObsidianScripts/commit/90960e65d826397970f974ccc3cd9e9cde01d064))
+
 ## [2.0.1](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-2.0.0...obsinflate-2.0.1) (2024-11-09)
 
 
