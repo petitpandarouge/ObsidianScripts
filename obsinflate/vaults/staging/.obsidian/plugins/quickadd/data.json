@@ -176,6 +176,17 @@
           "type": "Wait",
           "id": "25ba6438-9997-4913-9932-129f4600b081",
           "time": 500
+        },
+        {
+          "name": "note-property-updater",
+          "type": "UserScript",
+          "id": "ededfd88-13d8-4654-938d-02312698085a",
+          "path": "SCRIPTS/quick-add/note-property-updater.js",
+          "settings": {
+            "Input - Value Variable Name": "value",
+            "Input - Property Name Variable Name": "propertyName",
+            "Input - Note Path Variable Name": "notePath"
+          }
         }
       ],
       "runOnStartup": false

@@ -6,7 +6,7 @@ import { Ai } from '@obsinflate/api/quick-add/modules/ai';
  * v1.11.1
  * https://quickadd.obsidian.guide/docs/QuickAddAPI
  */
-export interface Api {
+export interface QuickAddApi {
     inputPrompt: (
         header: string,
         placeholder?: string,

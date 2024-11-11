@@ -7,7 +7,7 @@ import { isWorkspaceRootRuntime } from '@obsinflate/api/obsidian/workspaceRootEx
 import { WorkspaceLeaf } from 'obsidian';
 
 export interface IWorkspaceLeafExtension {
-    native: WorkspaceLeaf;
+    native: WorkspaceLeafRuntime;
     isInCenterPanel(): boolean;
     hasTabActive(): boolean;
     hasMarkdownFile(): boolean;

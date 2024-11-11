@@ -1,13 +1,10 @@
 ﻿import { OpenViewState } from 'obsidian';
 
 export class OpenViewStateBuilder {
-    private constructor() {
+    constructor() {
         this.viewState = {};
     }
     private viewState: OpenViewState;
-    static create(): OpenViewStateBuilder {
-        return new OpenViewStateBuilder();
-    }
     inSourceMode(): OpenViewStateBuilder {
         if (!this.viewState.state) {
             this.viewState.state = {};

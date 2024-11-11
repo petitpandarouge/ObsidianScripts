@@ -8,6 +8,8 @@ dependencies:
   - "[[Files Suggester]]"
   - "[[Variables Mapper]]"
   - "[[Active File Infos]]"
+  - "[[MetaEdit]]"
+  - "[[Note Property Updater]]"
 ---
 ## Configuration
 

@@ -36,5 +36,35 @@
             "it.todo('$1');"
 		],
 		"description": "Create a new jest test suite todo"
-	}
+	},
+    "QuickAdd entry point":{
+        "scope": "typescript",
+        "prefix": "qsentry",
+        "body": [
+            "import { SettingableScriptEntryPoint } from '@obsinflate/api/quick-add/settingableScriptEntryPoint';",
+            "import { Parameters } from '@obsinflate/api/quick-add/parameters';",
+            "import { Settings } from '@obsinflate/api/quick-add/settings/settings';",
+            "import { SettingsBuilder } from '@obsinflate/core/quick-add/settingsBuilder';",
+            "import { Noticer } from '@obsinflate/api/obsidian/noticer';",
+            "import { ErrorNoticer } from '@obsinflate/core/errorNoticer';",
+            "",
+            "export class EntryPoint implements SettingableScriptEntryPoint {",
+            "\tasync entry(params: Parameters, settings: Settings): Promise<void> {",
+            "\t\tconst settingsBuilder = new SettingsBuilder<$1>();",
+            "\t\tconst noticer = new Noticer();",
+            "\t\tconst errorNoticer = new ErrorNoticer(noticer);",
+            "\t\tconst script = new $2(",
+            "\t\t\terrorNoticer,",
+            "\t\t\tsettingsBuilder.build(settings, SettingsDefinition)",
+            "\t\t);",
+            "\t\tawait script.entry(params);",
+            "\t}",
+            "\tsettings = SettingsDefinition;",
+            "}",
+            "",
+            "module.exports = new EntryPoint();",
+            "",
+        ],
+        "description": "Quickly add an entry point"
+    },
 }

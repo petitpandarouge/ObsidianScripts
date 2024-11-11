@@ -34,7 +34,7 @@ export class NewUniqueNote extends AbstractCommand<UserPlugins> {
         );
         activeLeaf.native.openFile(
             createdNote,
-            OpenViewStateBuilder.create()
+            new OpenViewStateBuilder()
                 .inSourceMode()
                 .withFocusAtTheEndOfTitleView()
                 .build()

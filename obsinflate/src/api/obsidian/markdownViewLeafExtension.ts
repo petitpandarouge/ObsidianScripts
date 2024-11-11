@@ -16,7 +16,7 @@ export class MarkdownViewLeafExtension implements IMarkdownViewLeafExtension {
     }
 
     getFolderPath(): string {
-        const activeFileFolder = this.native.view.file!.parent!;
-        return activeFileFolder.path;
+        const folder = this.native.view.file!.parent!;
+        return folder.path;
     }
 }

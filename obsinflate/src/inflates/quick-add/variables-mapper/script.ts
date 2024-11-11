@@ -1,6 +1,6 @@
 import { AbstractSettingableScript } from '@obsinflate/api/quick-add/abstractSettingableScript';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { VariablesMapperSettings } from './settings';
+import { VariablesMapperSettings } from '@obsinflate/inflates/quick-add/variables-mapper/settings';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 
 export class VariablesMapper extends AbstractSettingableScript<VariablesMapperSettings> {
