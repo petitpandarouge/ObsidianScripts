@@ -14,7 +14,7 @@ export class NotePropertyUpdater extends AbstractSettingableScript<NotePropertyU
         super(errorNoticer, settings);
     }
 
-    protected innerEntry(params: Parameters): Promise<void> {
+    protected async innerEntry(params: Parameters): Promise<void> {
         // Input
         const propertyName = this.secureGetVariable<string>(
             params,
@@ -31,6 +31,6 @@ export class NotePropertyUpdater extends AbstractSettingableScript<NotePropertyU
         // Process
         const app = AppExtension.extends(params.app);
         const metaEdit = app.getPlugin<MetaEdit>(PluginId.MetaEdit);
-        return metaEdit.api.update(propertyName, value, notePath);
+        return await metaEdit.api.update(propertyName, value, notePath);
     }
 }

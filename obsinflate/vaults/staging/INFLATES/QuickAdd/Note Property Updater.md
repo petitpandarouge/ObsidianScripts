@@ -4,6 +4,7 @@ tags:
   - inflates/script
 dependencies:
   - "[[QuickAdd]]"
+  - "[[MetaEdit]]"
 ---
 ## Configuration
 

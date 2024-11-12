@@ -2,22 +2,22 @@ import { SettingsDefinitionBuilder } from '@obsinflate/core/quick-add/settingsDe
 import { ME } from '@obsinflate/inflates/constants';
 import { nameof } from 'ts-simple-nameof';
 
-export interface VariablesMapperSettings {
-    inputVariableName: string;
-    outputVariableName: string;
+export interface StringVariableSetterSettings {
+    variableName: string;
+    value: string;
 }
 
 export const SettingsDefinition = new SettingsDefinitionBuilder()
-    .forScript('Variables Mapper')
+    .forScript('String Variable Setter')
     .implementedBy(ME)
     .havingTextFieldOption({
-        name: nameof<VariablesMapperSettings>((s) => s.inputVariableName),
+        name: nameof<StringVariableSetterSettings>((s) => s.variableName),
         label: 'Input - Variable Name',
         defaultValue: 'input'
     })
     .havingTextFieldOption({
-        name: nameof<VariablesMapperSettings>((s) => s.outputVariableName),
-        label: 'Output - Variable Name',
+        name: nameof<StringVariableSetterSettings>((s) => s.value),
+        label: 'Input - Value',
         defaultValue: 'output'
     })
     .build();

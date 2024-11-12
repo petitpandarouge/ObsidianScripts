@@ -24,16 +24,6 @@
           }
         },
         {
-          "name": "variables-mapper",
-          "type": "UserScript",
-          "id": "54905bdc-0c1b-44c4-af23-3280f95e75d6",
-          "path": "SCRIPTS/quick-add/variables-mapper.js",
-          "settings": {
-            "Input Variable Name": "selectedFile",
-            "Output Variable Name": "annotationsFile"
-          }
-        },
-        {
           "name": "kobo-highlights-extractor",
           "type": "UserScript",
           "id": "7f90bd88-89c3-4058-a0ed-95ac9fa7484e",
@@ -42,7 +32,7 @@
             "Output - Book Title Variable Name": "title",
             "Output - Book Author Variable Name": "author",
             "Output - Book Annotations Variable Name": "annotations",
-            "Input - Annotations File Variable Name": "annotationsFile"
+            "Input - Annotations File Variable Name": "selectedFile"
           }
         },
         {
@@ -178,14 +168,24 @@
           "time": 500
         },
         {
+          "name": "string-variable-setter",
+          "type": "UserScript",
+          "id": "a9483e0c-0de9-4656-a132-c9f8558bf672",
+          "path": "SCRIPTS/quick-add/string-variable-setter.js",
+          "settings": {
+            "Input - Variable Name": "authorPropertyName",
+            "Input - Value": "auteurs"
+          }
+        },
+        {
           "name": "note-property-updater",
           "type": "UserScript",
-          "id": "ededfd88-13d8-4654-938d-02312698085a",
+          "id": "c0ed63a9-b983-4a65-b1f8-22f10990b0d3",
           "path": "SCRIPTS/quick-add/note-property-updater.js",
           "settings": {
-            "Input - Value Variable Name": "value",
-            "Input - Property Name Variable Name": "propertyName",
-            "Input - Note Path Variable Name": "notePath"
+            "Input - Property Name Variable Name": "authorPropertyName",
+            "Input - Property Value Variable Name": "author",
+            "Input - Note Path Variable Name": "bookNotePath"
           }
         }
       ],

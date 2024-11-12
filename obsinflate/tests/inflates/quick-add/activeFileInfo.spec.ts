@@ -7,13 +7,14 @@ import { TFile } from 'obsidian';
 import { NoActiveFileFoundError } from '@obsinflate/api/obsidian/noActiveFileFoundError';
 import { PREVENT_CRASH_STRING } from '@obsinflate/tests/data/constants';
 import { ActiveFileInfos } from '@obsinflate/inflates/quick-add/active-file-infos/script';
+import { ActiveFileInfosSettings } from '@obsinflate/inflates/quick-add/active-file-infos/settings';
 
 describe('ActiveFileInfos', () => {
     it('should raise an error if there is no active file in the workspace', async () => {
         // Arrange
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockSettings = {
+        const mockSettings: ActiveFileInfosSettings = {
             basenameVariableName: PREVENT_CRASH_STRING,
             pathVariableName: PREVENT_CRASH_STRING
         };
@@ -35,7 +36,7 @@ describe('ActiveFileInfos', () => {
         const chance = new Chance();
         const mockNoticer = mock<INoticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockSettings = {
+        const mockSettings: ActiveFileInfosSettings = {
             basenameVariableName: chance.word(),
             pathVariableName: chance.word()
         };
