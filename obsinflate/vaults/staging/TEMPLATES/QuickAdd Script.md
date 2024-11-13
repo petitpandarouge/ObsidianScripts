@@ -7,4 +7,5 @@ dependencies:
 ---
 ## Configuration
 
-![[Keep your macros clean]]
+Nothing to do.
+See the script configuration panel.

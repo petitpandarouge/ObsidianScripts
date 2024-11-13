@@ -8,4 +8,4 @@ dependencies:
 ---
 ## Configuration
 
-![[Keep your macros clean]]
+See the script configuration panel.

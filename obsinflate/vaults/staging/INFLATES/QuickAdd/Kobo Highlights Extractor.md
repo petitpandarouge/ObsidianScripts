@@ -7,4 +7,4 @@ dependencies:
 ---
 ## Configuration
 
-![[Keep your macros clean]]
+Nothing to do.

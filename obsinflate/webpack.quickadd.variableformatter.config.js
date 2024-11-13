@@ -2,4 +2,4 @@
 /* eslint-disable no-undef */
 const make = require('./webpack.base.quickadd.config');
 
-module.exports = make('variables-mapper');
+module.exports = make('variable-formatter');
