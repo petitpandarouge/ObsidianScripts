@@ -1,3 +1,13 @@
+# [2.2.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-2.1.0...obsinflate-2.2.0) (2024-11-13)
+
+
+### Features
+
+* **quickadd:** implement an active file infos retriever ([#53](https://github.com/petitpandarouge/ObsidianScripts/issues/53)) ([574cbdc](https://github.com/petitpandarouge/ObsidianScripts/commit/574cbdc4ea9d636ddb9cd55a673c314917ba465d))
+* **quickadd:** implement the note property updater ([#47](https://github.com/petitpandarouge/ObsidianScripts/issues/47)) ([6d72f70](https://github.com/petitpandarouge/ObsidianScripts/commit/6d72f7063134c77be338a6c642f0847ee666c789))
+* **quickadd:** implement the string variable setter ([#54](https://github.com/petitpandarouge/ObsidianScripts/issues/54)) ([f1a3526](https://github.com/petitpandarouge/ObsidianScripts/commit/f1a3526581b28242b82f08f71c7336b88054b35a))
+* **quickadd:** variables mapper becomes variable formatter ([#56](https://github.com/petitpandarouge/ObsidianScripts/issues/56)) ([db058a3](https://github.com/petitpandarouge/ObsidianScripts/commit/db058a3f7db4dfbafc1869c4fe494e6d18bee30a))
+
 # [2.1.0](https://github.com/petitpandarouge/ObsidianScripts/compare/obsinflate-2.0.1...obsinflate-2.1.0) (2024-11-10)
 
 
