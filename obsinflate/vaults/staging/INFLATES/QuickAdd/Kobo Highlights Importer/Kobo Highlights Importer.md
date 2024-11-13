@@ -2,13 +2,13 @@
 tags:
   - inflate
   - inflates/macro
+inflates: "[[QuickAdd]]"
 dependencies:
-  - "[[QuickAdd]]"
   - "[[Kobo Highlights Extractor]]"
   - "[[Files Suggester]]"
-  - "[[Variables Mapper]]"
   - "[[Active File Infos]]"
   - "[[Note Property Updater]]"
+  - "[[String Variable Setter]]"
 ---
 ## Configuration
 

@@ -1,6 +1,7 @@
 ---
 tags:
   - inflate
+inflates: 
 dependencies:
 ---
 ## Configuration

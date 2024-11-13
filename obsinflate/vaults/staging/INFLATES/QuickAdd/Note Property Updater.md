@@ -2,8 +2,8 @@
 tags:
   - inflate
   - inflates/script
+inflates: "[[QuickAdd]]"
 dependencies:
-  - "[[QuickAdd]]"
   - "[[MetaEdit]]"
 ---
 ## Configuration

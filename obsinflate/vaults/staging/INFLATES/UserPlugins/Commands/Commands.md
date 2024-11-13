@@ -2,8 +2,8 @@
 tags:
   - inflate
   - inflates/script
+inflates: "[[UserPlugins]]"
 dependencies:
-  - "[[UserPlugins]]"
 ---
 
 The `commands` main script loads all the commands that can be executed using the UserPlugins plugin.

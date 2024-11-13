@@ -2,9 +2,9 @@
 tags:
   - inflate
   - inflates/command
-dependencies:
-  - "[[UserPlugins]]"
-embedded: "[[Command]]"
+inflates: "[[UserPlugins]]"
+dependencies: 
+embedded: "[[Commands]]"
 ---
 ## Configuration
 

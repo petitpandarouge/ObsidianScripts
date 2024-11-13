@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "0f0793bb76353f13",
+        "id": "ac5f00c1c8bcfd10",
         "type": "tabs",
         "children": [
           {
-            "id": "b8d979bdf17dc18c",
+            "id": "df4c3986b0dea5e9",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -135,16 +135,6 @@
             }
           },
           {
-            "id": "c853c4c1a3967846",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
-            }
-          },
-          {
             "id": "003a1ff7859e1550",
             "type": "leaf",
             "state": {
@@ -157,49 +147,72 @@
               "icon": "lucide-archive",
               "title": "All properties"
             }
+          },
+          {
+            "id": "c853c4c1a3967846",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          },
+          {
+            "id": "b8d979bdf17dc18c",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "GRAPH.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "GRAPH"
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 645.5
+    "width": 747.5
   },
   "left-ribbon": {
     "hiddenItems": {
       "graph:Open graph view": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "b8d979bdf17dc18c",
+  "active": "df4c3986b0dea5e9",
   "lastOpenFiles": [
+    "INFLATES/QuickAdd/Guideline/Keep your macros clean.md",
+    "INFLATES/QuickAdd/Kobo Highlights Importer/Kobo Highlights Importer.md",
+    "INFLATES/QuickAdd/String Variable Setter.md",
+    "INFLATES/QuickAdd/Variables Mapper.md",
+    "INFLATES/QuickAdd/Note Property Updater.md",
+    "INFLATES/QuickAdd/Kobo Highlights Extractor.md",
+    "INFLATES/QuickAdd/Files Suggester.md",
+    "INFLATES/QuickAdd/Active File Infos.md",
+    "GRAPH.md",
+    "TEMPLATES/QuickAdd Script.md",
+    "TEMPLATES/Plugin.md",
+    "TEMPLATES/Inflate.md",
+    "TEMPLATES/Command.md",
+    "INFLATES/UserPlugins/Commands/New Unique Note.md",
+    "INFLATES/UserPlugins/Commands/Commands.md",
+    "START HERE.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130057 - L’ art subtil de s’ en foutre.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130055 - L’ art subtil de s’ en foutre.md",
-    "START HERE.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130054 - L’ art subtil de s’ en foutre.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/Mark Manson.md",
-    "INFLATES/QuickAdd/Note Property Updater.md",
-    "INFLATES/QuickAdd/Variables Mapper.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Livre.md",
-    "INFLATES/UserPlugins/Commands/New Unique Note.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130037 - L’ art subtil de s’ en foutre.md",
-    "INFLATES/UserPlugins/Commands/Commands.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/Kobo Highlights Importer.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130034 - L’ art subtil de s’ en foutre.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130019 - L’ art subtil de s’ en foutre.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130008 - L’ art subtil de s’ en foutre.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130010 - L’ art subtil de s’ en foutre.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130013 - L’ art subtil de s’ en foutre.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411122359 - L’ art subtil de s’ en foutre.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Person.md",
-    "PLUGINS/MetaEdit.md",
-    "202411111108.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411111108 - L’ art subtil de s’ en foutre.md",
-    "202411110216.md",
-    "Untitled.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411110052 - L’ art subtil de s’ en foutre.md",
-    "INFLATES/QuickAdd/Active File Infos.md",
     "SCRIPTS/quick-add/kobo-highlights-extractor.js",
     "SCRIPTS/user-plugins/commands.js",
     "INFLATES/UserPlugins/Commands",
