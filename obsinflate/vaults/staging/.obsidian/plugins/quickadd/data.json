@@ -36,6 +36,47 @@
           }
         },
         {
+          "name": "Create author note",
+          "type": "NestedChoice",
+          "id": "5b9e5305-4b82-4fef-b709-b705885efb8e",
+          "choice": {
+            "id": "5550a12b-bdb2-42a5-96f8-509505a46d3d",
+            "name": "Create author note",
+            "type": "Template",
+            "command": false,
+            "templatePath": "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Person.md",
+            "fileNameFormat": {
+              "enabled": true,
+              "format": "{{value:author}}"
+            },
+            "folder": {
+              "enabled": true,
+              "folders": [
+                "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN"
+              ],
+              "chooseWhenCreatingNote": false,
+              "createInSameFolderAsActiveFile": false,
+              "chooseFromSubfolders": false
+            },
+            "appendLink": false,
+            "openFileInNewTab": {
+              "enabled": false,
+              "direction": "vertical",
+              "focus": true
+            },
+            "openFile": false,
+            "openFileInMode": "default",
+            "fileExistsMode": "Overwrite the file",
+            "setFileExistsBehavior": true
+          }
+        },
+        {
+          "name": "Wait",
+          "type": "Wait",
+          "id": "9bd842e5-f69f-41fa-8c85-9794d447694f",
+          "time": 500
+        },
+        {
           "name": "Create book note",
           "type": "NestedChoice",
           "id": "34347f8e-af89-4c8d-b973-09c9fa9b677b",
@@ -68,124 +109,6 @@
             "openFileInMode": "default",
             "fileExistsMode": "Overwrite the file",
             "setFileExistsBehavior": true
-          }
-        },
-        {
-          "name": "Wait",
-          "type": "Wait",
-          "id": "9bd842e5-f69f-41fa-8c85-9794d447694f",
-          "time": 500
-        },
-        {
-          "name": "active-file-infos",
-          "type": "UserScript",
-          "id": "6f18703c-754a-459e-af98-4ca59eca7d73",
-          "path": "SCRIPTS/quick-add/active-file-infos.js",
-          "settings": {
-            "Output - Basename Variable Name": "bookNoteBasename",
-            "Output - Path Variable Name": "bookNotePath"
-          }
-        },
-        {
-          "name": "Fill book note",
-          "type": "NestedChoice",
-          "id": "6ac7cdc0-5ae9-40f2-8b66-7d60bfca294c",
-          "choice": {
-            "id": "8e435414-00f3-4774-8e55-5c71ef4562a9",
-            "name": "Fill book note",
-            "type": "Capture",
-            "command": false,
-            "appendLink": false,
-            "captureTo": "{{value:title}}",
-            "captureToActiveFile": true,
-            "createFileIfItDoesntExist": {
-              "enabled": true,
-              "createWithTemplate": true,
-              "template": "TEMPLATE/Livre.md"
-            },
-            "format": {
-              "enabled": true,
-              "format": "{{value:annotations}}"
-            },
-            "insertAfter": {
-              "enabled": false,
-              "after": "",
-              "insertAtEnd": false,
-              "considerSubsections": false,
-              "createIfNotFound": false,
-              "createIfNotFoundLocation": "top"
-            },
-            "prepend": true,
-            "task": false,
-            "openFileInNewTab": {
-              "enabled": false,
-              "direction": "vertical",
-              "focus": true
-            },
-            "openFile": true,
-            "openFileInMode": "default"
-          }
-        },
-        {
-          "name": "Create author note",
-          "type": "NestedChoice",
-          "id": "5b9e5305-4b82-4fef-b709-b705885efb8e",
-          "choice": {
-            "id": "5550a12b-bdb2-42a5-96f8-509505a46d3d",
-            "name": "Create author note",
-            "type": "Template",
-            "command": false,
-            "templatePath": "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Livre.md",
-            "fileNameFormat": {
-              "enabled": true,
-              "format": "{{value:author}}"
-            },
-            "folder": {
-              "enabled": true,
-              "folders": [
-                "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN"
-              ],
-              "chooseWhenCreatingNote": false,
-              "createInSameFolderAsActiveFile": false,
-              "chooseFromSubfolders": false
-            },
-            "appendLink": false,
-            "openFileInNewTab": {
-              "enabled": false,
-              "direction": "vertical",
-              "focus": true
-            },
-            "openFile": false,
-            "openFileInMode": "default",
-            "fileExistsMode": "Overwrite the file",
-            "setFileExistsBehavior": true
-          }
-        },
-        {
-          "name": "Wait",
-          "type": "Wait",
-          "id": "25ba6438-9997-4913-9932-129f4600b081",
-          "time": 500
-        },
-        {
-          "name": "string-variable-setter",
-          "type": "UserScript",
-          "id": "a9483e0c-0de9-4656-a132-c9f8558bf672",
-          "path": "SCRIPTS/quick-add/string-variable-setter.js",
-          "settings": {
-            "Input - Variable Name": "authorPropertyName",
-            "Input - Value": "auteurs"
-          }
-        },
-        {
-          "name": "note-property-updater",
-          "type": "UserScript",
-          "id": "c0ed63a9-b983-4a65-b1f8-22f10990b0d3",
-          "path": "SCRIPTS/quick-add/note-property-updater.js",
-          "settings": {
-            "Input - Property Name Variable Name": "authorPropertyName",
-            "Input - Property Value Variable Name": "author",
-            "Input - Note Path Variable Name": "bookNotePath"
           }
         }
       ],

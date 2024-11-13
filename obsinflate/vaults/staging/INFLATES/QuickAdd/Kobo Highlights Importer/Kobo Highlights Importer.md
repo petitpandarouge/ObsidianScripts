@@ -6,9 +6,6 @@ inflates: "[[QuickAdd]]"
 dependencies:
   - "[[Kobo Highlights Extractor]]"
   - "[[Files Suggester]]"
-  - "[[Active File Infos]]"
-  - "[[Note Property Updater]]"
-  - "[[String Variable Setter]]"
 ---
 ## Configuration
 
@@ -16,10 +13,10 @@ Kindly see the macro configuration to have the configuration in details.
 Here are the main decisions to take when configuring this macro on your side: 
 ### file-suggester step
 - Define the annotations directory into the `Input - Directory Path` option.
-### Create book note step
+### Create author note step
 - Reference the template to use in the `Template Path` option.
 - Select the folder where to create the note using the `Choose folder when creating a new note`.
-### Create author note step
+### Create book note step
 - The exact same decision as the `Create book note step` must be taken for this step.
 ## How to run
 
