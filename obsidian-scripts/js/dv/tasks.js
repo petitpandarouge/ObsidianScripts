@@ -1,3 +1,4 @@
+//#region UTILS
 
 let _dv;
 let _options;
@@ -537,7 +538,7 @@ function renderTasks(filter) {
 	}
 }
 
-module.exports = {
+const module = {
 	init: function (dv, options) {
 		_dv = dv;
 		_options = options;
@@ -577,3 +578,19 @@ module.exports = {
 		})
 	}
 };
+
+//#endregion
+
+// RENDER
+module.init(dv, input);
+if (input.status) {
+	module.renderTasksByStatus(input.status);
+} else if (input.priority) {
+	module.renderTasksByPriority(input.priority);
+} else if (input.quick) {
+	module.renderQuickTasks();
+} else if (input.errors) {
+	module.renderTasksInError();
+} else {
+	module.renderActiveTasks({projectFilePath: input.projectFilePath, folderToExclude: input.folderToExclude});
+}
