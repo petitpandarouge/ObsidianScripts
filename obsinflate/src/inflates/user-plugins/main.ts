@@ -7,6 +7,7 @@ import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { AppExtension } from '@obsinflate/api/obsidian/appExtension';
 import { UniqueNoteCreator } from '@obsinflate/core/uniqueNoteCreator';
+import { FileNameSanitizer } from '@obsinflate/core/fileNameSanitizer';
 
 export async function onload(plugin: UserPlugins): Promise<void> {
     const noticer = new Noticer();
@@ -17,8 +18,10 @@ export async function onload(plugin: UserPlugins): Promise<void> {
             const appExtension = AppExtension.extends(plugin.app);
             const dateTimeProvider = new DateTimeProvider();
             const nameGenerator = new UniqueNameGenerator(dateTimeProvider);
+            const fileNameSanitizer = new FileNameSanitizer();
             const noteCreator = new UniqueNoteCreator(
                 nameGenerator,
+                fileNameSanitizer,
                 appExtension.native
             );
             return new NewUniqueNote(

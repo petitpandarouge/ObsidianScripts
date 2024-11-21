@@ -77,6 +77,16 @@
           "time": 500
         },
         {
+          "name": "file-name-sanitizer",
+          "type": "UserScript",
+          "id": "4498fc75-939e-4727-8e18-0e8db399eb93",
+          "path": "SCRIPTS/quick-add/file-name-sanitizer.js",
+          "settings": {
+            "Input - File Name Variable Name": "title",
+            "Output - Sanitized File Name Variable Name": "sanitizedTitle"
+          }
+        },
+        {
           "name": "Create book note",
           "type": "NestedChoice",
           "id": "34347f8e-af89-4c8d-b973-09c9fa9b677b",
@@ -88,7 +98,7 @@
             "templatePath": "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Livre.md",
             "fileNameFormat": {
               "enabled": true,
-              "format": "{{date:YYYYMMDDHHmm}} - {{value:title}}"
+              "format": "{{date:YYYYMMDDHHmm}} - {{value:sanitizedTitle}}"
             },
             "folder": {
               "enabled": true,

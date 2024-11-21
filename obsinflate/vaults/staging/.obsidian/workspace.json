@@ -4,25 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "ac5f00c1c8bcfd10",
+        "id": "9e6a0c45d773eb67",
         "type": "tabs",
         "children": [
           {
-            "id": "df4c3986b0dea5e9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "START HERE.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "START HERE"
-            }
-          },
-          {
-            "id": "5560f5a984307e38",
+            "id": "163a31fe599c475b",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -35,8 +21,7 @@
               "title": "START HERE"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -174,7 +159,7 @@
             }
           },
           {
-            "id": "b8d979bdf17dc18c",
+            "id": "5560f5a984307e38",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
@@ -202,33 +187,33 @@
   },
   "active": "5560f5a984307e38",
   "lastOpenFiles": [
+    "INFLATES/QuickAdd/Kobo Highlights Importer/Kobo Highlights Importer.md",
+    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/Eric Jorgenson.md",
+    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411222154 - The Almanack of Naval Ravikant- A Guide to Wealth and Happiness.md",
+    "GRAPH.md",
+    "INFLATES/QuickAdd/File Name Sanitizer.md",
+    "Untitled.md",
+    "INFLATES/QuickAdd/Kobo Highlights Extractor.md",
+    "INFLATES/QuickAdd/Note Property Updater.md",
     "INFLATES/QuickAdd/Variable Formatter.md",
+    "START HERE.md",
     "INFLATES/QuickAdd/Variables Mapper.md",
     "INFLATES/QuickAdd/Guideline/Keep your macros clean.md",
     "INFLATES/QuickAdd/Guideline",
     "TEMPLATES/QuickAdd Script.md",
     "INFLATES/QuickAdd/String Variable Setter.md",
-    "INFLATES/QuickAdd/Note Property Updater.md",
-    "INFLATES/QuickAdd/Kobo Highlights Extractor.md",
     "INFLATES/QuickAdd/Files Suggester.md",
     "INFLATES/QuickAdd/Active File Infos.md",
     "TEMPLATES/Inflate.md",
     "TEMPLATES/Command.md",
     "TEMPLATES/Plugin.md",
     "INFLATES/UserPlugins/Commands/New Unique Note.md",
-    "START HERE.md",
-    "GRAPH.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/Kobo Highlights Importer.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411132047 - L’ art subtil de s’ en foutre.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/Mark Manson.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411132040 - L’ art subtil de s’ en foutre.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Person.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Livre.md",
     "INFLATES/UserPlugins/Commands/Commands.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130057 - L’ art subtil de s’ en foutre.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130055 - L’ art subtil de s’ en foutre.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130054 - L’ art subtil de s’ en foutre.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411130037 - L’ art subtil de s’ en foutre.md",
     "SCRIPTS/quick-add/kobo-highlights-extractor.js",
     "SCRIPTS/user-plugins/commands.js",
     "INFLATES/UserPlugins/Commands",

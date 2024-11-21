@@ -1,4 +1,5 @@
 import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
+import { FileNameSanitizer } from '@obsinflate/core/fileNameSanitizer';
 import { IUniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
 import { IUniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
 import {
@@ -6,8 +7,7 @@ import {
     NO_CONTENT,
     ROOT_PATH,
     NOTE_NAME_SEPARATOR,
-    UniqueNoteCreator,
-    NOTE_TITLE_FORBIDDEN_CARACTERS
+    UniqueNoteCreator
 } from '@obsinflate/core/uniqueNoteCreator';
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
@@ -30,9 +30,15 @@ describe('UniqueNoteCreator', () => {
                 return mockSeed;
             })
         });
+        const mockFileNameSanitizer = mock<FileNameSanitizer>({
+            sanitize: jest.fn().mockImplementation((name: string) => {
+                return name;
+            })
+        });
         const mockApp = mockDeep<App>();
         const uniqueNoteCreator = new UniqueNoteCreator(
             mockNameGenerator,
+            mockFileNameSanitizer,
             mockApp
         );
         const mockBasename = chance.sentence();
@@ -57,6 +63,11 @@ describe('UniqueNoteCreator', () => {
             })
         });
         const mockErrorMessage = chance.sentence();
+        const mockFileNameSanitizer = mock<FileNameSanitizer>({
+            sanitize: jest.fn().mockImplementation((name: string) => {
+                return name;
+            })
+        });
         const mockApp = mockDeep<App>({
             vault: {
                 create: jest.fn().mockImplementation(() => {
@@ -66,6 +77,7 @@ describe('UniqueNoteCreator', () => {
         });
         const uniqueNoteCreator = new UniqueNoteCreator(
             mockNameGenerator,
+            mockFileNameSanitizer,
             mockApp
         );
         // Act
@@ -74,8 +86,9 @@ describe('UniqueNoteCreator', () => {
         // Assert
         await expect(action).rejects.toThrow(mockErrorMessage);
     });
-    it('should format the basename for it to be a valid note title', async () => {
+    it('should sanitizes the basename for it to be a valid note title', async () => {
         // Arrange
+        const chance = new Chance();
         const mockSeed = mock<IUniqueNameGeneratorSeed>({
             next: jest.fn().mockReturnValue(NO_SEED)
         });
@@ -84,21 +97,22 @@ describe('UniqueNoteCreator', () => {
                 return mockSeed;
             })
         });
+        const mockFileNameSanitizer = mock<FileNameSanitizer>({
+            sanitize: jest.fn().mockImplementation((name: string) => {
+                return name;
+            })
+        });
         const mockApp = mockDeep<App>();
         const uniqueNoteCreator = new UniqueNoteCreator(
             mockNameGenerator,
+            mockFileNameSanitizer,
             mockApp
         );
+        const baseName = chance.sentence();
         // Act
-        await uniqueNoteCreator.create(
-            ROOT_PATH,
-            NOTE_TITLE_FORBIDDEN_CARACTERS.join(' '),
-            NO_CONTENT
-        );
+        await uniqueNoteCreator.create(ROOT_PATH, baseName, NO_CONTENT);
         // Assert
-        expect(mockApp.vault.create).toHaveBeenCalledWith(
-            `${NOTE_NAME_SEPARATOR}- - - - - - - - -${MARKDOWN_FILE_EXTENSION}`,
-            expect.any(String)
-        );
+        expect(mockFileNameSanitizer.sanitize).toHaveBeenCalledTimes(1);
+        expect(mockFileNameSanitizer.sanitize).toHaveBeenCalledWith(baseName);
     });
 });

@@ -6,6 +6,7 @@ inflates: "[[QuickAdd]]"
 dependencies:
   - "[[Kobo Highlights Extractor]]"
   - "[[Files Suggester]]"
+  - "[[File Name Sanitizer]]"
 ---
 ## Configuration
 

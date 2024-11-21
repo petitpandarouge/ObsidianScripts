@@ -20,6 +20,7 @@ import {
     NO_CONTENT,
     UniqueNoteCreator
 } from '@obsinflate/core/uniqueNoteCreator';
+import { FileNameSanitizer } from '@obsinflate/core/fileNameSanitizer';
 
 const EMPTY_PATH = '';
 const EMPTY_NAME = '';
@@ -53,8 +54,14 @@ describe('NewUniqueNoteCommand', () => {
                     })
             }
         });
+        const mockFileNameSanitizer = mock<FileNameSanitizer>({
+            sanitize: jest.fn().mockImplementation((name: string) => {
+                return name;
+            })
+        });
         const noteCreator = new UniqueNoteCreator(
             mockNameGenerator,
+            mockFileNameSanitizer,
             mockApp.native
         );
         const newUniqueNoteCommand = new NewUniqueNote(
@@ -101,8 +108,14 @@ describe('NewUniqueNoteCommand', () => {
                     })
             }
         });
+        const mockFileNameSanitizer = mock<FileNameSanitizer>({
+            sanitize: jest.fn().mockImplementation((name: string) => {
+                return name;
+            })
+        });
         const noteCreator = new UniqueNoteCreator(
             mockNameGenerator,
+            mockFileNameSanitizer,
             mockApp.native
         );
         const newUniqueNoteCommand = new NewUniqueNote(
@@ -172,8 +185,14 @@ describe('NewUniqueNoteCommand', () => {
                     })
             }
         });
+        const mockFileNameSanitizer = mock<FileNameSanitizer>({
+            sanitize: jest.fn().mockImplementation((name: string) => {
+                return name;
+            })
+        });
         const noteCreator = new UniqueNoteCreator(
             mockNameGenerator,
+            mockFileNameSanitizer,
             mockApp.native
         );
         const newUniqueNoteCommand = new NewUniqueNote(
@@ -224,8 +243,14 @@ describe('NewUniqueNoteCommand', () => {
                     })
             }
         });
+        const mockFileNameSanitizer = mock<FileNameSanitizer>({
+            sanitize: jest.fn().mockImplementation((name: string) => {
+                return name;
+            })
+        });
         const noteCreator = new UniqueNoteCreator(
             mockNameGenerator,
+            mockFileNameSanitizer,
             mockApp.native
         );
         const newUniqueNoteCommand = new NewUniqueNote(
@@ -270,8 +295,14 @@ describe('NewUniqueNoteCommand', () => {
                     })
             }
         });
+        const mockFileNameSanitizer = mock<FileNameSanitizer>({
+            sanitize: jest.fn().mockImplementation((name: string) => {
+                return name;
+            })
+        });
         const noteCreator = new UniqueNoteCreator(
             mockNameGenerator,
+            mockFileNameSanitizer,
             mockApp.native
         );
         const newUniqueNoteCommand = new NewUniqueNote(
@@ -326,8 +357,14 @@ describe('NewUniqueNoteCommand', () => {
                     })
             }
         });
+        const mockFileNameSanitizer = mock<FileNameSanitizer>({
+            sanitize: jest.fn().mockImplementation((name: string) => {
+                return name;
+            })
+        });
         const noteCreator = new UniqueNoteCreator(
             mockNameGenerator,
+            mockFileNameSanitizer,
             mockApp.native
         );
         const newUniqueNoteCommand = new NewUniqueNote(
@@ -386,8 +423,14 @@ describe('NewUniqueNoteCommand', () => {
                     })
             }
         });
+        const mockFileNameSanitizer = mock<FileNameSanitizer>({
+            sanitize: jest.fn().mockImplementation((name: string) => {
+                return name;
+            })
+        });
         const noteCreator = new UniqueNoteCreator(
             mockNameGenerator,
+            mockFileNameSanitizer,
             mockApp.native
         );
         const newUniqueNoteCommand = new NewUniqueNote(

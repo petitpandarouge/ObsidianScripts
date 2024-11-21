@@ -3,6 +3,7 @@ import { IUniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
 import { MaxNoteCreationAttemptsReachedError } from '@obsinflate/core/maxNoteCreationAttemptsReachedError';
 import { App, TFile } from 'obsidian';
 import path from 'path';
+import { FileNameSanitizer } from '@obsinflate/core/fileNameSanitizer';
 
 export const ROOT_PATH = '';
 export const NO_CONTENT = '';
@@ -10,18 +11,6 @@ export const NO_BASENAME = '';
 export const MAX_NOTE_CREATION_ATTEMPTS = 10;
 export const NOTE_NAME_SEPARATOR = ' - ';
 export const FILE_ALREADY_EXISTS_ERROR_MESSAGE = 'File already exists.';
-export const NOTE_TITLE_FORBIDDEN_CARACTERS = [
-    '/',
-    '\\',
-    ':',
-    '*',
-    '?',
-    '"',
-    '<',
-    '>',
-    '|'
-];
-export const NOTE_TITLE_FORBIDDEN_CARACTERS_REPLACEMENT = '-';
 
 export interface IUniqueNoteCreator {
     create(
@@ -34,6 +23,7 @@ export interface IUniqueNoteCreator {
 export class UniqueNoteCreator implements IUniqueNoteCreator {
     constructor(
         private nameGenerator: IUniqueNameGenerator,
+        private fileNameSanitizer: FileNameSanitizer,
         private app: App
     ) {}
 
@@ -70,20 +60,10 @@ export class UniqueNoteCreator implements IUniqueNoteCreator {
 
     private buildNoteName(uniqueName: string, basename: string): string {
         if (basename) {
-            basename = this.cleanBasename(basename);
+            basename = this.fileNameSanitizer.sanitize(basename);
             return `${uniqueName}${NOTE_NAME_SEPARATOR}${basename}${MARKDOWN_FILE_EXTENSION}`;
         }
         return `${uniqueName}${MARKDOWN_FILE_EXTENSION}`;
-    }
-
-    private cleanBasename(basename: string): string {
-        for (const forbiddenCaracter of NOTE_TITLE_FORBIDDEN_CARACTERS) {
-            basename = basename.replace(
-                forbiddenCaracter,
-                NOTE_TITLE_FORBIDDEN_CARACTERS_REPLACEMENT
-            );
-        }
-        return basename;
     }
 
     private isFileAlreadyExistsError(error: unknown): boolean {
