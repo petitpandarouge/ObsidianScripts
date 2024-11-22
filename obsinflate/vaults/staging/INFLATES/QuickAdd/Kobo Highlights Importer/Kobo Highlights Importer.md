@@ -8,6 +8,9 @@ dependencies:
   - "[[Files Suggester]]"
   - "[[File Name Sanitizer]]"
 ---
+## Why
+
+I want to be able to import my highlights from my Kobo.
 ## Configuration
 
 Kindly see the macro configuration to have the configuration in details.

@@ -6,6 +6,13 @@
       "type": "Macro",
       "command": true,
       "macroId": "64f69cd0-47ee-4f8e-a2ed-926bd41176ab"
+    },
+    {
+      "id": "e9f9192e-91b8-4518-ba59-f2e19b7f5ff4",
+      "name": "New Task Note",
+      "type": "Macro",
+      "command": true,
+      "macroId": "fac9da32-98f8-4106-aec0-f78919bd75f0"
     }
   ],
   "macros": [
@@ -119,6 +126,104 @@
             "openFileInMode": "default",
             "fileExistsMode": "Overwrite the file",
             "setFileExistsBehavior": true
+          }
+        }
+      ],
+      "runOnStartup": false
+    },
+    {
+      "name": "New Task Note",
+      "id": "fac9da32-98f8-4106-aec0-f78919bd75f0",
+      "commands": [
+        {
+          "name": "active-file-infos",
+          "type": "UserScript",
+          "id": "8c83ac53-023c-40a4-9016-0b294218f3af",
+          "path": "SCRIPTS/quick-add/active-file-infos.js",
+          "settings": {
+            "Output - Basename Variable Name": "parentNoteBasename",
+            "Output - Path Variable Name": "parentNotePath"
+          }
+        },
+        {
+          "name": "Create task note",
+          "type": "NestedChoice",
+          "id": "caaaef7c-047a-4f69-b3e0-5de2d58265de",
+          "choice": {
+            "id": "f8da55cf-3258-419b-a660-d1306af4c164",
+            "name": "Create task note",
+            "type": "Template",
+            "command": false,
+            "templatePath": "INFLATES/QuickAdd/New Task Note/TEMPLATES/Task.md",
+            "fileNameFormat": {
+              "enabled": true,
+              "format": "{{DATE:yyyyMMDDHHmm}} - {{selected}}"
+            },
+            "folder": {
+              "enabled": true,
+              "folders": [],
+              "chooseWhenCreatingNote": false,
+              "createInSameFolderAsActiveFile": true,
+              "chooseFromSubfolders": false
+            },
+            "appendLink": true,
+            "openFileInNewTab": {
+              "enabled": false,
+              "direction": "vertical",
+              "focus": true
+            },
+            "openFile": true,
+            "openFileInMode": "default",
+            "fileExistsMode": "Increment the file name",
+            "setFileExistsBehavior": false
+          }
+        },
+        {
+          "name": "Wait",
+          "type": "Wait",
+          "id": "c4fe4cbc-79d6-4e31-9537-84a7ec50bba0",
+          "time": 500
+        },
+        {
+          "name": "active-file-infos",
+          "type": "UserScript",
+          "id": "8b7df784-de99-41ae-b6a9-90bec99395f8",
+          "path": "SCRIPTS/quick-add/active-file-infos.js",
+          "settings": {
+            "Output - Basename Variable Name": "taskNoteBasename",
+            "Output - Path Variable Name": "taskNotePath"
+          }
+        },
+        {
+          "name": "string-variable-setter",
+          "type": "UserScript",
+          "id": "9c6c2bc7-fb69-4d6b-925f-0a9a7f713b69",
+          "path": "SCRIPTS/quick-add/string-variable-setter.js",
+          "settings": {
+            "Input - Variable Name": "taskOfPropertyName",
+            "Input - Value": "task-of"
+          }
+        },
+        {
+          "name": "variable-formatter",
+          "type": "UserScript",
+          "id": "1e81b7e4-bddb-4c31-aa34-68a65e19183b",
+          "path": "SCRIPTS/quick-add/variable-formatter.js",
+          "settings": {
+            "Input - Value Variable Name": "parentNoteBasename",
+            "Format": "[[{{value}}]]",
+            "Output - Formatted Value Variable Name": "parentNoteLink"
+          }
+        },
+        {
+          "name": "note-property-updater",
+          "type": "UserScript",
+          "id": "10af1c51-59fa-48d7-a872-55991588b357",
+          "path": "SCRIPTS/quick-add/note-property-updater.js",
+          "settings": {
+            "Input - Property Name Variable Name": "taskOfPropertyName",
+            "Input - Property Value Variable Name": "parentNoteLink",
+            "Input - Note Path Variable Name": "taskNotePath"
           }
         }
       ],

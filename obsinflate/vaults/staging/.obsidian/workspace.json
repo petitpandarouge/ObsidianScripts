@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "163a31fe599c475b",
+            "id": "cc6ef487d4973ad2",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -21,7 +21,8 @@
               "title": "START HERE"
             }
           }
-        ]
+        ],
+        "stacked": true
       }
     ],
     "direction": "vertical"
@@ -128,10 +129,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Start here.md"
+                "file": "START HERE.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Start here"
+              "title": "Outline of START HERE"
             }
           },
           {
@@ -185,35 +186,38 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "5560f5a984307e38",
+  "active": "cc6ef487d4973ad2",
   "lastOpenFiles": [
+    "INFLATES/QuickAdd/New Task Note/New Task Note.md",
+    "GRAPH.md",
+    "START HERE.md",
+    "INFLATES/QuickAdd/New Task Note/DEMO/Parent note.md",
+    "INFLATES/QuickAdd/New Task Note/DEMO/202411222240 - My new task.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/Kobo Highlights Importer.md",
+    "TEMPLATES/QuickAdd Macro.md",
+    "INFLATES/QuickAdd/New Task Note/TEMPLATES/Task.md",
+    "INFLATES/QuickAdd/New Task Note/202411222232 - My new task.md",
+    "INFLATES/QuickAdd/New Task Note/Untitled.md",
+    "INFLATES/QuickAdd/New Task Note/DEMO",
+    "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Livre.md",
+    "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Person.md",
+    "INFLATES/QuickAdd/New Task Note/TEMPLATES",
+    "TEMPLATES/QuickAdd Script.md",
+    "INFLATES/QuickAdd/New Task Note",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/Eric Jorgenson.md",
     "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411222154 - The Almanack of Naval Ravikant- A Guide to Wealth and Happiness.md",
-    "GRAPH.md",
     "INFLATES/QuickAdd/File Name Sanitizer.md",
     "Untitled.md",
     "INFLATES/QuickAdd/Kobo Highlights Extractor.md",
     "INFLATES/QuickAdd/Note Property Updater.md",
     "INFLATES/QuickAdd/Variable Formatter.md",
-    "START HERE.md",
     "INFLATES/QuickAdd/Variables Mapper.md",
     "INFLATES/QuickAdd/Guideline/Keep your macros clean.md",
     "INFLATES/QuickAdd/Guideline",
-    "TEMPLATES/QuickAdd Script.md",
     "INFLATES/QuickAdd/String Variable Setter.md",
     "INFLATES/QuickAdd/Files Suggester.md",
     "INFLATES/QuickAdd/Active File Infos.md",
     "TEMPLATES/Inflate.md",
-    "TEMPLATES/Command.md",
-    "TEMPLATES/Plugin.md",
-    "INFLATES/UserPlugins/Commands/New Unique Note.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411132047 - L’ art subtil de s’ en foutre.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/Mark Manson.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/GARDEN/202411132040 - L’ art subtil de s’ en foutre.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Person.md",
-    "INFLATES/QuickAdd/Kobo Highlights Importer/TEMPLATES/Livre.md",
-    "INFLATES/UserPlugins/Commands/Commands.md",
     "SCRIPTS/quick-add/kobo-highlights-extractor.js",
     "SCRIPTS/user-plugins/commands.js",
     "INFLATES/UserPlugins/Commands",
@@ -221,9 +225,6 @@
     "RESOURCES",
     "PLUGINS",
     "TEMPLATES",
-    "INFLATES",
-    "INFLATES/Dataview",
-    "INFLATES/UserPlugins",
     "resources/Pasted image 20240920222408.png",
     "resources/Pasted image 20240920222247.png",
     "resources/Pasted image 20240920222201.png",
