@@ -1,4 +1,4 @@
-import { INoticer, Noticer } from '@obsinflate/api/obsidian/noticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { AbstractSettingableScript } from '@obsinflate/api/quick-add/abstractSettingableScript';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { SettingsDefinitionBuilder } from '@obsinflate/core/quick-add/settingsDefinitionBuilder';
@@ -26,7 +26,7 @@ class HelloWorld extends AbstractSettingableScript<HelloWorldSettings> {
     constructor(
         errorNoticer: ErrorNoticer,
         settings: HelloWorldSettings,
-        private noticer: INoticer
+        private noticer: Noticer
     ) {
         super(errorNoticer, settings);
     }

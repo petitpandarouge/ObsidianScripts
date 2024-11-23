@@ -1,10 +1,10 @@
 ﻿import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
 import { AbstractCommand } from '@obsinflate/core/obsidian/abstractCommand';
-import { IAppExtension } from '@obsinflate/api/obsidian/appExtension';
+import { AppExtension } from '@obsinflate/api/obsidian/appExtension';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { OpenViewStateBuilder } from '@obsinflate/api/obsidian/openViewStateBuilder';
 import {
-    IUniqueNoteCreator,
+    UniqueNoteCreator,
     NO_BASENAME,
     NO_CONTENT
 } from '@obsinflate/core/uniqueNoteCreator';
@@ -13,8 +13,8 @@ export class NewUniqueNote extends AbstractCommand<UserPlugins> {
     constructor(
         plugin: UserPlugins,
         errorNoticer: ErrorNoticer,
-        private noteCreator: IUniqueNoteCreator,
-        private app: IAppExtension
+        private noteCreator: UniqueNoteCreator,
+        private app: AppExtension
     ) {
         super(plugin, errorNoticer);
     }

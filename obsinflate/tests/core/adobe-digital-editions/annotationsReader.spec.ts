@@ -1,7 +1,7 @@
 import { File } from '@obsinflate/infrastructure/fileSystem';
 import { mock } from 'jest-mock-extended';
 import Chance from 'chance';
-import { IXmlParser } from '@obsinflate/infrastructure/xmlParser';
+import { XmlParser } from '@obsinflate/infrastructure/xmlParser';
 import { Annotations } from '@obsinflate/core/adobe-digital-editions/annotations';
 import {
     ANNOTATION_TAG_NAME,
@@ -28,7 +28,7 @@ describe('AnnotationsReader', () => {
             extension: `.${mockExtension}`,
             read: jest.fn().mockResolvedValue(PREVENT_CRASH_STRING)
         });
-        const mockXmlParser = mock<IXmlParser<Annotations>>();
+        const mockXmlParser = mock<XmlParser<Annotations>>();
         const annotationsReader = new AnnotationsReader(mockXmlParser);
         // Act
         const action = async () => await annotationsReader.read(mockFile);
@@ -44,7 +44,7 @@ describe('AnnotationsReader', () => {
             extension: ANNOTATIONS_FILE_EXTENSION,
             read: jest.fn().mockResolvedValue(mockContent)
         });
-        const mockXmlParser = mock<IXmlParser<Annotations>>();
+        const mockXmlParser = mock<XmlParser<Annotations>>();
         const annotationsReader = new AnnotationsReader(mockXmlParser);
         // Act
         await annotationsReader.read(mockFile);

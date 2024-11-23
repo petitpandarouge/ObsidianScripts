@@ -1,4 +1,4 @@
-import { INoticer } from '@obsinflate/api/obsidian/noticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import Chance from 'chance';
@@ -12,7 +12,7 @@ import { ActiveFileInfosSettings } from '@obsinflate/inflates/quick-add/active-f
 describe('ActiveFileInfos', () => {
     it('should raise an error if there is no active file in the workspace', async () => {
         // Arrange
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings: ActiveFileInfosSettings = {
             basenameVariableName: PREVENT_CRASH_STRING,
@@ -34,7 +34,7 @@ describe('ActiveFileInfos', () => {
     it('should set the active file basename and path into the "Settings.basenameVariableName" and "Settings.pathVariableName" variables', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings: ActiveFileInfosSettings = {
             basenameVariableName: chance.word(),

@@ -1,14 +1,10 @@
-﻿import { IDateTime } from '@obsinflate/infrastructure/dateTimeProvider';
+﻿import { DateTime } from '@obsinflate/infrastructure/dateTimeProvider';
 
 export const UNIQUE_NAME_DATETIME_FORMAT = 'yyyyMMddHHmm';
 export const ONE_MINUTE = { minutes: 1 };
 
-export interface IUniqueNameGeneratorSeed {
-    next: () => string;
-}
-
-export class UniqueNameGeneratorSeed implements IUniqueNameGeneratorSeed {
-    constructor(private dateTime: IDateTime) {}
+export class UniqueNameGeneratorSeed {
+    constructor(private dateTime: DateTime) {}
 
     next() {
         const result = this.dateTime.toFormat(UNIQUE_NAME_DATETIME_FORMAT);

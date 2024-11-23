@@ -1,15 +1,8 @@
-﻿import {
-    IUniqueNameGeneratorSeed,
-    UniqueNameGeneratorSeed
-} from '@obsinflate/core/uniqueNameGeneratorSeed';
-import { IDateTimeProvider } from '@obsinflate/infrastructure/dateTimeProvider';
+﻿import { UniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
+import { DateTimeProvider } from '@obsinflate/infrastructure/dateTimeProvider';
 
-export interface IUniqueNameGenerator {
-    generateNewSeed(): IUniqueNameGeneratorSeed;
-}
-
-export class UniqueNameGenerator implements IUniqueNameGenerator {
-    constructor(private dateTimeProvider: IDateTimeProvider) {}
+export class UniqueNameGenerator {
+    constructor(private dateTimeProvider: DateTimeProvider) {}
 
     generateNewSeed() {
         return new UniqueNameGeneratorSeed(this.dateTimeProvider.now());

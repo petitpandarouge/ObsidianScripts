@@ -2,7 +2,7 @@ import { mock, mockDeep } from 'jest-mock-extended';
 import Chance from 'chance';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { INoticer } from '@obsinflate/api/obsidian/noticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { VariableNotDefinedError } from '@obsinflate/api/quick-add/variableNotDefinedError';
 import { VariablesFormatter } from '@obsinflate/inflates/quick-add/variable-formatter/script';
 import { VariableFormatterSettings } from '@obsinflate/inflates/quick-add/variable-formatter/settings';
@@ -14,7 +14,7 @@ describe('VariablesFormatter', () => {
     it('should raise an EmptyFormatError if "Settings.format" is empty', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings: VariableFormatterSettings = {
             valueVariableName: chance.word(),
@@ -35,7 +35,7 @@ describe('VariablesFormatter', () => {
     it('should raise a VariableNotDefinedError is the input variable is not set', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings: VariableFormatterSettings = {
             valueVariableName: chance.word(),
@@ -52,7 +52,7 @@ describe('VariablesFormatter', () => {
     it('should format the "Settings.valueVariableName" value into the "Settings.formattedValueVariableName" variable using the "Settings.format" if it is set', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings: VariableFormatterSettings = {
             valueVariableName: chance.word(),

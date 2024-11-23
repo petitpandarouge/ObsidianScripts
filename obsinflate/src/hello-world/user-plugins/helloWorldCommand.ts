@@ -1,13 +1,13 @@
 ﻿import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
 import { AbstractCommand } from '@obsinflate/core/obsidian/abstractCommand';
-import { INoticer } from '@obsinflate/api/obsidian/noticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 
 export class HelloWorldCommand extends AbstractCommand<UserPlugins> {
     constructor(
         plugin: UserPlugins,
         errorNoticer: ErrorNoticer,
-        private noticer: INoticer
+        private noticer: Noticer
     ) {
         super(plugin, errorNoticer);
     }

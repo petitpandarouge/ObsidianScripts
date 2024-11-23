@@ -3,16 +3,7 @@ import { Notice } from 'obsidian';
 
 export const OBSINFLATE_NOTICE_PREFIX = 'Obsinflate 📢 ';
 
-// TODO use Duration
-export interface INoticer {
-    notice(
-        message: string | DocumentFragment,
-        duration?: number,
-        color?: Color
-    ): void;
-}
-
-export class Noticer implements INoticer {
+export class Noticer {
     notice(
         message: string | DocumentFragment,
         duration?: number,

@@ -1,17 +1,12 @@
-﻿import { DateTime, DurationLike, LocaleOptions } from 'luxon';
+﻿import { DateTime as LuxonDateTime, DurationLike, LocaleOptions } from 'luxon';
 
-export interface IDateTime {
+export interface DateTime {
     toFormat(fmt: string, opts?: LocaleOptions): string;
     plus(duration: DurationLike): this;
 }
 
-// TODO : Delete the interfaces ?
-export interface IDateTimeProvider {
-    now(): IDateTime;
-}
-
-export class DateTimeProvider implements IDateTimeProvider {
+export class DateTimeProvider {
     now(): DateTime {
-        return DateTime.now();
+        return LuxonDateTime.now();
     }
 }

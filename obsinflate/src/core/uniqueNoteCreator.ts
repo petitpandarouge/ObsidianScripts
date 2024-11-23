@@ -1,5 +1,5 @@
 import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
-import { IUniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
+import { UniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
 import { MaxNoteCreationAttemptsReachedError } from '@obsinflate/core/maxNoteCreationAttemptsReachedError';
 import { App, TFile } from 'obsidian';
 import path from 'path';
@@ -12,17 +12,9 @@ export const MAX_NOTE_CREATION_ATTEMPTS = 10;
 export const NOTE_NAME_SEPARATOR = ' - ';
 export const FILE_ALREADY_EXISTS_ERROR_MESSAGE = 'File already exists.';
 
-export interface IUniqueNoteCreator {
-    create(
-        folderPath: string,
-        basename: string,
-        content: string
-    ): Promise<TFile>;
-}
-
-export class UniqueNoteCreator implements IUniqueNoteCreator {
+export class UniqueNoteCreator {
     constructor(
-        private nameGenerator: IUniqueNameGenerator,
+        private nameGenerator: UniqueNameGenerator,
         private fileNameSanitizer: FileNameSanitizer,
         private app: App
     ) {}

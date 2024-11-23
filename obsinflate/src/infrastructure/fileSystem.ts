@@ -36,11 +36,7 @@ export class File {
     };
 }
 
-export interface IFileSystem {
-    getFiles(directoryPath: string): Promise<File[]>;
-}
-
-export class FileSystem implements IFileSystem {
+export class FileSystem {
     async getFiles(directoryPath: string): Promise<File[]> {
         const fileNames = await fs.promises.readdir(directoryPath);
 

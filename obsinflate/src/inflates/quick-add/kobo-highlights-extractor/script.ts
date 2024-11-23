@@ -1,9 +1,9 @@
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { IAnnotationsReader } from '@obsinflate/core/adobe-digital-editions/annotationsReader';
-import { IFormatter } from '@obsinflate/infrastructure/formatter';
+import { AnnotationsReader } from '@obsinflate/core/adobe-digital-editions/annotationsReader';
+import { Formatter } from '@obsinflate/infrastructure/formatter';
 import { EpubFiles } from '@obsinflate/core/adobe-digital-editions/epubFile';
-import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
+import { AnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { KoboHighlightsImporterSettings } from '@obsinflate/inflates/quick-add/kobo-highlights-extractor/settings';
 import { AbstractSettingableScript } from '@obsinflate/api/quick-add/abstractSettingableScript';
 import { File } from '@obsinflate/infrastructure/fileSystem';
@@ -14,9 +14,9 @@ export class KoboHighlightsExtractor extends AbstractSettingableScript<KoboHighl
     constructor(
         errorNoticer: ErrorNoticer,
         settings: KoboHighlightsImporterSettings,
-        private annotationsReader: IAnnotationsReader,
-        private annotationsMerger: IAnnotationsMerger,
-        private annotationsFormatter: IFormatter<EpubFiles>
+        private annotationsReader: AnnotationsReader,
+        private annotationsMerger: AnnotationsMerger,
+        private annotationsFormatter: Formatter<EpubFiles>
     ) {
         super(errorNoticer, settings);
     }

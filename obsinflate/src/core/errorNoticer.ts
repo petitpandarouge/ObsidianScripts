@@ -1,5 +1,5 @@
 ﻿import { Action } from '@obsinflate/core/action';
-import { INoticer } from '@obsinflate/api/obsidian/noticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { Duration } from 'luxon';
 import {
     BUSINESS_ERROR_COLOR,
@@ -12,7 +12,7 @@ export const DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS = 20000;
 
 export class ErrorNoticer {
     constructor(
-        private noticer: INoticer,
+        private noticer: Noticer,
         private noticeTimeout: Duration = Duration.fromMillis(
             DEFAULT_ERROR_NOTICE_TIMEOUT_IN_MS
         )

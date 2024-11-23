@@ -10,19 +10,13 @@ import {
 import { NoActiveFileFoundError } from '@obsinflate/api/obsidian/noActiveFileFoundError';
 import { TFile, Workspace } from 'obsidian';
 
-export interface IWorkspaceExtension {
-    native: Workspace;
-    getCenterPanelMarkdownActiveLeaf: () => MarkdownViewLeafExtension;
-    getActiveFile: () => TFile;
-}
-
-export class WorkspaceExtension implements IWorkspaceExtension {
+export class WorkspaceExtension {
     private constructor(workspace: Workspace) {
         this.native = workspace;
     }
     native: Workspace;
 
-    static extends(workspace: Workspace): IWorkspaceExtension {
+    static extends(workspace: Workspace): WorkspaceExtension {
         return new WorkspaceExtension(workspace);
     }
 

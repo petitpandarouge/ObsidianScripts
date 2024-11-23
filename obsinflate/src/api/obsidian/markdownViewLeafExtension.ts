@@ -1,17 +1,12 @@
 ﻿import { MarkdownViewLeafRuntime } from '@obsinflate/api/obsidian/markdownViewLeafRuntime';
 
-export interface IMarkdownViewLeafExtension {
-    native: MarkdownViewLeafRuntime;
-    getFolderPath: () => string;
-}
-
-export class MarkdownViewLeafExtension implements IMarkdownViewLeafExtension {
+export class MarkdownViewLeafExtension {
     private constructor(leaf: MarkdownViewLeafRuntime) {
         this.native = leaf;
     }
     native: MarkdownViewLeafRuntime;
 
-    static extends(leaf: MarkdownViewLeafRuntime): IMarkdownViewLeafExtension {
+    static extends(leaf: MarkdownViewLeafRuntime): MarkdownViewLeafExtension {
         return new MarkdownViewLeafExtension(leaf);
     }
 

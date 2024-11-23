@@ -1,4 +1,4 @@
-﻿import { IDateTimeProvider } from '@obsinflate/infrastructure/dateTimeProvider';
+﻿import { DateTimeProvider } from '@obsinflate/infrastructure/dateTimeProvider';
 import { UniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
 import { mock } from 'jest-mock-extended';
 import Chance from 'chance';
@@ -8,7 +8,7 @@ describe('UniqueNameGenerator', () => {
         // Arrange
         const chance = new Chance();
         const seedsCount = chance.integer({ min: 1, max: 30 });
-        const mockDateTimeProvider = mock<IDateTimeProvider>({
+        const mockDateTimeProvider = mock<DateTimeProvider>({
             now: jest.fn()
         });
         const generator = new UniqueNameGenerator(mockDateTimeProvider);

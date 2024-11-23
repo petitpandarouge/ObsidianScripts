@@ -2,18 +2,18 @@
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
 import { TFile } from 'obsidian';
-import { IUniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
+import { UniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
 import { UserPlugins } from '@obsinflate/api/user-plugins/userPlugins';
-import { IAppExtension } from '@obsinflate/api/obsidian/appExtension';
+import { AppExtension } from '@obsinflate/api/obsidian/appExtension';
 import path from 'path';
 import { NoActiveNoteFoundError } from '@obsinflate/api/obsidian/noActiveNoteFoundError';
 import { PanelPosition } from '@obsinflate/api/obsidian/panelPosition';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { INoticer } from '@obsinflate/api/obsidian/noticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
 import { MarkdownViewLeafExtension } from '@obsinflate/api/obsidian/markdownViewLeafExtension';
 import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
-import { IUniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
+import { UniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
 import {
     FILE_ALREADY_EXISTS_ERROR_MESSAGE,
     MAX_NOTE_CREATION_ATTEMPTS,
@@ -29,16 +29,16 @@ describe('NewUniqueNoteCommand', () => {
     it('should call at least once plugin.app.vault.create', async () => {
         // Arrange
         const mockPlugin = mockDeep<UserPlugins>();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockNameGenerator = mock<IUniqueNameGenerator>({
+        const mockNameGenerator = mock<UniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
-                return mock<IUniqueNameGeneratorSeed>({
+                return mock<UniqueNameGeneratorSeed>({
                     next: jest.fn().mockReturnValue(EMPTY_NAME)
                 });
             })
         });
-        const mockApp = mockDeep<IAppExtension>({
+        const mockApp = mockDeep<AppExtension>({
             workspace: {
                 getCenterPanelMarkdownActiveLeaf: jest
                     .fn()
@@ -78,21 +78,21 @@ describe('NewUniqueNoteCommand', () => {
     it('should create a "YYYYMMDDHHmm.md" note', async () => {
         // Arrange
         const mockPlugin = mockDeep<UserPlugins>();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const chance = new Chance();
         const mockNowResult = chance
             .integer({ min: 100000000000, max: 900000000000 })
             .toString();
-        const mockSeed = mock<IUniqueNameGeneratorSeed>({
+        const mockSeed = mock<UniqueNameGeneratorSeed>({
             next: jest.fn().mockReturnValue(mockNowResult)
         });
-        const mockNameGenerator = mock<IUniqueNameGenerator>({
+        const mockNameGenerator = mock<UniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
                 return mockSeed;
             })
         });
-        const mockApp = mockDeep<IAppExtension>({
+        const mockApp = mockDeep<AppExtension>({
             workspace: {
                 getCenterPanelMarkdownActiveLeaf: jest
                     .fn()
@@ -146,11 +146,11 @@ describe('NewUniqueNoteCommand', () => {
         const existingFilesCount = chance.integer({ min: 1, max: 9 });
         const createdFileName = (mockNowResult + existingFilesCount).toString();
         const mockPlugin = mockDeep<UserPlugins>();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
-        const mockNameGenerator = mock<IUniqueNameGenerator>({
+        const mockNameGenerator = mock<UniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
-                return mock<IUniqueNameGeneratorSeed>({
+                return mock<UniqueNameGeneratorSeed>({
                     next: jest.fn().mockImplementation(() => {
                         const result = mockNameGeneratorResult.toString();
                         mockNameGeneratorResult++;
@@ -159,7 +159,7 @@ describe('NewUniqueNoteCommand', () => {
                 });
             })
         });
-        const mockApp = mockDeep<IAppExtension>({
+        const mockApp = mockDeep<AppExtension>({
             native: {
                 vault: {
                     create: jest.fn().mockImplementation((path: string) => {
@@ -215,12 +215,12 @@ describe('NewUniqueNoteCommand', () => {
         // Arrange
         const chance = new Chance();
         const mockPlugin = mockDeep<UserPlugins>();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockNoteName = chance.word();
-        const mockNameGenerator = mock<IUniqueNameGenerator>({
+        const mockNameGenerator = mock<UniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
-                return mock<IUniqueNameGeneratorSeed>({
+                return mock<UniqueNameGeneratorSeed>({
                     next: jest.fn().mockImplementation(() => {
                         return mockNoteName;
                     })
@@ -234,7 +234,7 @@ describe('NewUniqueNoteCommand', () => {
                 openFile: jest.fn()
             }
         });
-        const mockApp = mockDeep<IAppExtension>({
+        const mockApp = mockDeep<AppExtension>({
             workspace: {
                 getCenterPanelMarkdownActiveLeaf: jest
                     .fn()
@@ -274,19 +274,19 @@ describe('NewUniqueNoteCommand', () => {
     it('should notice if there is no active note in the center panel', async () => {
         // Arrange
         const mockPlugin = mockDeep<UserPlugins>();
-        const noticer = mock<INoticer>();
+        const noticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(noticer);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
-        const mockNameGenerator = mock<IUniqueNameGenerator>({
+        const mockNameGenerator = mock<UniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
-                return mock<IUniqueNameGeneratorSeed>({
+                return mock<UniqueNameGeneratorSeed>({
                     next: jest.fn().mockReturnValue(EMPTY_NAME)
                 });
             })
         });
         const error = new NoActiveNoteFoundError(PanelPosition.Center);
-        const mockApp = mockDeep<IAppExtension>({
+        const mockApp = mockDeep<AppExtension>({
             workspace: {
                 getCenterPanelMarkdownActiveLeaf: jest
                     .fn()
@@ -323,18 +323,18 @@ describe('NewUniqueNoteCommand', () => {
         // Arrange
         const chance = new Chance();
         const mockPlugin = mockDeep<UserPlugins>();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
-        const mockNameGenerator = mock<IUniqueNameGenerator>({
+        const mockNameGenerator = mock<UniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
-                return mock<IUniqueNameGeneratorSeed>({
+                return mock<UniqueNameGeneratorSeed>({
                     next: jest.fn().mockReturnValue(chance.word())
                 });
             })
         });
-        const mockApp = mockDeep<IAppExtension>({
+        const mockApp = mockDeep<AppExtension>({
             native: {
                 vault: {
                     create: jest.fn().mockImplementation(() => {
@@ -389,12 +389,12 @@ describe('NewUniqueNoteCommand', () => {
         const chance = new Chance();
         const mockNote = mock<TFile>();
         const mockPlugin = mockDeep<UserPlugins>();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockNoteName = chance.word();
-        const mockNameGenerator = mock<IUniqueNameGenerator>({
+        const mockNameGenerator = mock<UniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
-                return mock<IUniqueNameGeneratorSeed>({
+                return mock<UniqueNameGeneratorSeed>({
                     next: jest.fn().mockImplementation(() => {
                         return mockNoteName;
                     })
@@ -407,7 +407,7 @@ describe('NewUniqueNoteCommand', () => {
                 openFile: jest.fn()
             }
         });
-        const mockApp = mockDeep<IAppExtension>({
+        const mockApp = mockDeep<AppExtension>({
             native: {
                 vault: {
                     create: jest.fn().mockImplementation(() => {

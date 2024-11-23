@@ -1,17 +1,13 @@
 import { EpubRange } from '@obsinflate/core/adobe-digital-editions/epubRange';
-import { IAnnotationsSorter } from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
+import { AnnotationsSorter } from '@obsinflate/core/adobe-digital-editions/annotationsSorter';
 import {
     EpubFile,
     EpubFiles
 } from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { Annotation } from '@obsinflate/core/adobe-digital-editions/annotations';
 
-export interface IAnnotationsMerger {
-    merge(annotations: Annotation[]): EpubFiles;
-}
-
-export class AnnotationsMerger implements IAnnotationsMerger {
-    constructor(private sorter: IAnnotationsSorter) {}
+export class AnnotationsMerger {
+    constructor(private sorter: AnnotationsSorter) {}
 
     merge(annotations: Annotation[]): EpubFiles {
         const epubFiles = this.sorter.sort(annotations);

@@ -3,7 +3,7 @@
     ErrorNoticer
 } from '@obsinflate/core/errorNoticer';
 import Chance from 'chance';
-import { INoticer } from '@obsinflate/api/obsidian/noticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { mock } from 'jest-mock-extended';
 import { Duration } from 'luxon';
 import {
@@ -17,7 +17,7 @@ describe('ErrorNoticer', () => {
         // Arrange
         const chance = new Chance();
         const errorMessage = chance.string();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const duration = Duration.fromMillis(chance.integer());
         const errorNoticer = new ErrorNoticer(mockNoticer, duration);
         const wrappedAction = jest.fn(() => {
@@ -36,7 +36,7 @@ describe('ErrorNoticer', () => {
     });
     it('should not notice Obsidian if no exception is thrown by the inner execution', async () => {
         // Arrange
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const wrappedAction = jest.fn();
         // Act
@@ -47,7 +47,7 @@ describe('ErrorNoticer', () => {
     it('should notice Obsidian for the given duration and rethrow if an error that is not an instance of Error is thrown by the inner execution', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const duration = Duration.fromMillis(chance.integer());
         const errorNoticer = new ErrorNoticer(mockNoticer, duration);
         const unknownError = { whateverMessage: chance.string() };
@@ -69,7 +69,7 @@ describe('ErrorNoticer', () => {
     });
     it('should notice Obsidian for 5 seconds if no duration is provided when Error is thrown by the inner execution', async () => {
         // Arrange
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const chance = new Chance();
         const errorMessage = chance.word();
@@ -89,7 +89,7 @@ describe('ErrorNoticer', () => {
     });
     it('should notice Obsidian for 5 seconds if no duration is provided when an error that is not an instance of Error is thrown by the inner execution', async () => {
         // Arrange
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const unknownError = {};
         const wrappedAction = jest.fn(() => {
@@ -109,7 +109,7 @@ describe('ErrorNoticer', () => {
     });
     it('should notice Obsidian for the given duration if business Error is thrown by the inner execution', async () => {
         // Arrange
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const chance = new Chance();
         const errorMessage = chance.word();

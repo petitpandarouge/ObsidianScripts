@@ -5,11 +5,11 @@ import {
 } from '@obsinflate/core/uniqueNameGeneratorSeed';
 import {
     DateTimeProvider,
-    IDateTime
+    DateTime
 } from '@obsinflate/infrastructure/dateTimeProvider';
 import { mock } from 'jest-mock-extended';
 import Chance from 'chance';
-import { DateTime } from 'luxon';
+import { DateTime as LuxonDateTime } from 'luxon';
 
 describe('UniqueNameGeneratorSeed', () => {
     it('should generate a twelve numbers formated name', async () => {
@@ -24,7 +24,7 @@ describe('UniqueNameGeneratorSeed', () => {
     });
     it('should use DateTime.format to generate the name', async () => {
         // Arrange
-        const mockDateTime = mock<IDateTime>({
+        const mockDateTime = mock<DateTime>({
             toFormat: jest.fn()
         });
         const seed = new UniqueNameGeneratorSeed(mockDateTime);
@@ -47,7 +47,7 @@ describe('UniqueNameGeneratorSeed', () => {
             minute: chance.integer({ min: 0, max: 59 })
         };
         const mockDateTimeResult = `${mockDateTimeObject.year.toString().padStart(4, '0')}${mockDateTimeObject.month.toString().padStart(2, '0')}${mockDateTimeObject.day.toString().padStart(2, '0')}${mockDateTimeObject.hour.toString().padStart(2, '0')}${mockDateTimeObject.minute.toString().padStart(2, '0')}`;
-        const mockDateTime = DateTime.fromObject(mockDateTimeObject);
+        const mockDateTime = LuxonDateTime.fromObject(mockDateTimeObject);
         const seed = new UniqueNameGeneratorSeed(mockDateTime);
         // Act
         const name = seed.next();
@@ -64,13 +64,13 @@ describe('UniqueNameGeneratorSeed', () => {
             hour: chance.integer({ min: 0, max: 23 }),
             minute: chance.integer({ min: 0, max: 59 })
         };
-        const mockDateTime = DateTime.fromObject(mockDateTimeObject);
+        const mockDateTime = LuxonDateTime.fromObject(mockDateTimeObject);
         const seed = new UniqueNameGeneratorSeed(mockDateTime);
         const nextCount = chance.integer({ min: 1, max: 30 });
         // Act
         const names = Array.from({ length: nextCount }, () => seed.next());
         // Assert
-        const result = DateTime.fromObject(mockDateTimeObject);
+        const result = LuxonDateTime.fromObject(mockDateTimeObject);
         names.forEach((name, index) => {
             const expectedDateTime = result.plus({ minutes: index });
             const expectedName = expectedDateTime.toFormat(

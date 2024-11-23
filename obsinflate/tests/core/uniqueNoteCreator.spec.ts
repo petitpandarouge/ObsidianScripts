@@ -1,7 +1,7 @@
 import { MARKDOWN_FILE_EXTENSION } from '@obsinflate/core/fileExtensions';
 import { FileNameSanitizer } from '@obsinflate/core/fileNameSanitizer';
-import { IUniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
-import { IUniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
+import { UniqueNameGenerator } from '@obsinflate/core/uniqueNameGenerator';
+import { UniqueNameGeneratorSeed } from '@obsinflate/core/uniqueNameGeneratorSeed';
 import {
     NO_BASENAME,
     NO_CONTENT,
@@ -22,10 +22,10 @@ describe('UniqueNoteCreator', () => {
         const mockNowResult = chance
             .integer({ min: 100000000000, max: 900000000000 })
             .toString();
-        const mockSeed = mock<IUniqueNameGeneratorSeed>({
+        const mockSeed = mock<UniqueNameGeneratorSeed>({
             next: jest.fn().mockReturnValue(mockNowResult)
         });
-        const mockNameGenerator = mock<IUniqueNameGenerator>({
+        const mockNameGenerator = mock<UniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
                 return mockSeed;
             })
@@ -54,10 +54,10 @@ describe('UniqueNoteCreator', () => {
     it('should throw if any other error than "file already exists" occurs', async () => {
         // Arrange
         const chance = new Chance();
-        const mockSeed = mock<IUniqueNameGeneratorSeed>({
+        const mockSeed = mock<UniqueNameGeneratorSeed>({
             next: jest.fn().mockReturnValue(NO_SEED)
         });
-        const mockNameGenerator = mock<IUniqueNameGenerator>({
+        const mockNameGenerator = mock<UniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
                 return mockSeed;
             })
@@ -89,10 +89,10 @@ describe('UniqueNoteCreator', () => {
     it('should sanitizes the basename for it to be a valid note title', async () => {
         // Arrange
         const chance = new Chance();
-        const mockSeed = mock<IUniqueNameGeneratorSeed>({
+        const mockSeed = mock<UniqueNameGeneratorSeed>({
             next: jest.fn().mockReturnValue(NO_SEED)
         });
-        const mockNameGenerator = mock<IUniqueNameGenerator>({
+        const mockNameGenerator = mock<UniqueNameGenerator>({
             generateNewSeed: jest.fn().mockImplementation(() => {
                 return mockSeed;
             })

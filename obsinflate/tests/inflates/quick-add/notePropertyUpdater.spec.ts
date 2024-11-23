@@ -1,4 +1,4 @@
-import { INoticer } from '@obsinflate/api/obsidian/noticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
@@ -13,7 +13,7 @@ describe('NotePropertyUpdater', () => {
     it('should set the input "Settings.valueVariableName" into the "Settings.propertyNameVariableName" of the "Settings.notePathVariableName" note', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings: NotePropertyUpdaterSettings = {
             propertyValueVariableName: chance.word(),
@@ -52,7 +52,7 @@ describe('NotePropertyUpdater', () => {
     it('should throw an error if the MetaEdit plugin is not installed or enabled', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings: NotePropertyUpdaterSettings = {
             propertyValueVariableName: chance.word(),

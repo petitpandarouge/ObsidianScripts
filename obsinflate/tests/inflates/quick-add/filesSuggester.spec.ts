@@ -1,9 +1,9 @@
 import Chance from 'chance';
 import { mock, mockDeep } from 'jest-mock-extended';
-import { File, IFileSystem } from '@obsinflate/infrastructure/fileSystem';
+import { File, FileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { INoticer } from '@obsinflate/api/obsidian/noticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { BUSINESS_ERROR_COLOR } from '@obsinflate/api/obsidian/color';
 import { FilesSuggester } from '@obsinflate/inflates/quick-add/files-suggester/script';
 import { FilesSuggesterSettings } from '@obsinflate/inflates/quick-add/files-suggester/settings';
@@ -12,7 +12,7 @@ describe('FilesSuggester', () => {
     it('should suggest the files directly contained into the settings directoryPath property', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings = mock<FilesSuggesterSettings>({
             directoryPath: chance.sentence()
@@ -22,7 +22,7 @@ describe('FilesSuggester', () => {
         for (let i = 0; i < filesCount; i++) {
             files.push(mock<File>());
         }
-        const mockFileSystem = mockDeep<IFileSystem>({
+        const mockFileSystem = mockDeep<FileSystem>({
             getFiles: jest.fn().mockReturnValue(files)
         });
         const suggester = new FilesSuggester(
@@ -44,12 +44,12 @@ describe('FilesSuggester', () => {
     });
     it('should notice a NoFileSelectedError error if no file is selected from the suggestions', async () => {
         // Arrange
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const noticeSpy = jest.spyOn(errorNoticer as any, 'notice');
         const mockSettings = mock<FilesSuggesterSettings>();
-        const mockFileSystem = mockDeep<IFileSystem>({
+        const mockFileSystem = mockDeep<FileSystem>({
             getFiles: jest.fn().mockReturnValue([])
         });
         const suggester = new FilesSuggester(
@@ -71,11 +71,11 @@ describe('FilesSuggester', () => {
     it('should set the selected file into the "Settings.selectedFileVariableName" property', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings = mock<FilesSuggesterSettings>();
         const selectedFileName = chance.sentence();
-        const mockFileSystem = mockDeep<IFileSystem>({
+        const mockFileSystem = mockDeep<FileSystem>({
             getFiles: jest.fn().mockReturnValue([
                 mock<File>({
                     name: selectedFileName

@@ -6,20 +6,13 @@ import { WorkspaceParentRuntime } from '@obsinflate/api/obsidian/workspaceParent
 import { isWorkspaceRootRuntime } from '@obsinflate/api/obsidian/workspaceRootExtension';
 import { WorkspaceLeaf } from 'obsidian';
 
-export interface IWorkspaceLeafExtension {
-    native: WorkspaceLeafRuntime;
-    isInCenterPanel(): boolean;
-    hasTabActive(): boolean;
-    hasMarkdownFile(): boolean;
-}
-
-export class WorkspaceLeafExtension implements IWorkspaceLeafExtension {
+export class WorkspaceLeafExtension {
     private constructor(leaf: WorkspaceLeafRuntime) {
         this.native = leaf;
     }
     native: WorkspaceLeafRuntime;
 
-    static extends(leaf: WorkspaceLeafRuntime): IWorkspaceLeafExtension {
+    static extends(leaf: WorkspaceLeafRuntime): WorkspaceLeafExtension {
         return new WorkspaceLeafExtension(leaf);
     }
 

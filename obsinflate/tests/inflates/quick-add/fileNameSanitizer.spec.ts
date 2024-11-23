@@ -1,4 +1,4 @@
-import { INoticer } from '@obsinflate/api/obsidian/noticer';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { FileNameSanitizer } from '@obsinflate/inflates/quick-add/file-name-sanitizer/script';
@@ -11,7 +11,7 @@ describe('FileNameSanitizer', () => {
     it('should sanitize the "Settings.fileNameVariableName" variable and put the result in "Settings.sanitizedFileNameVariableName" variable', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings: FileNameSanitizerSettings = {
             fileNameVariableName: chance.word(),

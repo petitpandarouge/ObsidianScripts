@@ -6,10 +6,10 @@ import { ANNOTATIONS_FILE_EXTENSION } from '@obsinflate/core/adobe-digital-editi
 import Chance from 'chance';
 import { File } from '@obsinflate/infrastructure/fileSystem';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { INoticer } from '@obsinflate/api/obsidian/noticer';
-import { IAnnotationsReader } from '@obsinflate/core/adobe-digital-editions/annotationsReader';
+import { Noticer } from '@obsinflate/api/obsidian/noticer';
+import { AnnotationsReader } from '@obsinflate/core/adobe-digital-editions/annotationsReader';
 import { Annotations } from '@obsinflate/core/adobe-digital-editions/annotations';
-import { IFormatter } from '@obsinflate/infrastructure/formatter';
+import { Formatter } from '@obsinflate/infrastructure/formatter';
 import { StubAnnotation } from '@obsinflate/tests/doubles/stubAnnotation';
 import { EpubPoint } from '@obsinflate/core/adobe-digital-editions/epubPoint';
 import { EpubPointGenerator } from '@obsinflate/tests/data/epubPointGenerator';
@@ -17,17 +17,17 @@ import {
     EpubFile,
     EpubFiles
 } from '@obsinflate/core/adobe-digital-editions/epubFile';
-import { IAnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
+import { AnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { PREVENT_CRASH_STRING } from '@obsinflate/tests/data/constants';
 
 describe('KoboHighlightsExtractor', () => {
     it('should deserialize the content of the input "Settings.annotationsFileVariableName" variable ".annot" file', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings = mock<KoboHighlightsImporterSettings>();
-        const mockAnnotationsReader = mock<IAnnotationsReader>({
+        const mockAnnotationsReader = mock<AnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
                     publication: {
@@ -38,8 +38,8 @@ describe('KoboHighlightsExtractor', () => {
                 }
             })
         });
-        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
+        const mockAnnotationsMerger = mock<AnnotationsMerger>();
+        const mockMarkdownQuoteFormatter = mock<Formatter<EpubFiles>>();
         const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
@@ -63,7 +63,7 @@ describe('KoboHighlightsExtractor', () => {
     it('should merge the deserialized annotations', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings = mock<KoboHighlightsImporterSettings>();
         const annotations: Annotations = {
@@ -85,11 +85,11 @@ describe('KoboHighlightsExtractor', () => {
                 )
             );
         }
-        const mockAnnotationsReader = mock<IAnnotationsReader>({
+        const mockAnnotationsReader = mock<AnnotationsReader>({
             read: jest.fn().mockResolvedValue(annotations)
         });
-        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
+        const mockAnnotationsMerger = mock<AnnotationsMerger>();
+        const mockMarkdownQuoteFormatter = mock<Formatter<EpubFiles>>();
         const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
@@ -114,10 +114,10 @@ describe('KoboHighlightsExtractor', () => {
     it('should format the annotations in markdown', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings = mock<KoboHighlightsImporterSettings>();
-        const mockAnnotationsReader = mock<IAnnotationsReader>({
+        const mockAnnotationsReader = mock<AnnotationsReader>({
             read: jest.fn().mockResolvedValue({
                 annotationSet: {
                     publication: {
@@ -151,10 +151,10 @@ describe('KoboHighlightsExtractor', () => {
             }
             files.push(file);
         }
-        const mockAnnotationsMerger = mock<IAnnotationsMerger>({
+        const mockAnnotationsMerger = mock<AnnotationsMerger>({
             merge: jest.fn().mockReturnValue({ files })
         });
-        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
+        const mockMarkdownQuoteFormatter = mock<Formatter<EpubFiles>>();
         const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
@@ -179,7 +179,7 @@ describe('KoboHighlightsExtractor', () => {
     it('should set the title of the book in the "Settings.bookTitleVariableName" variable', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings = mock<KoboHighlightsImporterSettings>({
             bookTitleVariableName: chance.word()
@@ -194,11 +194,11 @@ describe('KoboHighlightsExtractor', () => {
                 annotations: []
             }
         };
-        const mockAnnotationsReader = mock<IAnnotationsReader>({
+        const mockAnnotationsReader = mock<AnnotationsReader>({
             read: jest.fn().mockResolvedValue(annotations)
         });
-        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
+        const mockAnnotationsMerger = mock<AnnotationsMerger>();
+        const mockMarkdownQuoteFormatter = mock<Formatter<EpubFiles>>();
         const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
@@ -222,7 +222,7 @@ describe('KoboHighlightsExtractor', () => {
     it('should set the author of the book in the "Settings.bookAuthorVariableName" variable', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings = mock<KoboHighlightsImporterSettings>({
             bookAuthorVariableName: chance.word()
@@ -237,11 +237,11 @@ describe('KoboHighlightsExtractor', () => {
                 annotations: []
             }
         };
-        const mockAnnotationsReader = mock<IAnnotationsReader>({
+        const mockAnnotationsReader = mock<AnnotationsReader>({
             read: jest.fn().mockResolvedValue(annotations)
         });
-        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>();
+        const mockAnnotationsMerger = mock<AnnotationsMerger>();
+        const mockMarkdownQuoteFormatter = mock<Formatter<EpubFiles>>();
         const extractor = new KoboHighlightsExtractor(
             errorNoticer,
             mockSettings,
@@ -265,7 +265,7 @@ describe('KoboHighlightsExtractor', () => {
     it('should set the formatted annotations in the "Settings.bookAnnotationsVariableName" variable', async () => {
         // Arrange
         const chance = new Chance();
-        const mockNoticer = mock<INoticer>();
+        const mockNoticer = mock<Noticer>();
         const errorNoticer = new ErrorNoticer(mockNoticer);
         const mockSettings = mock<KoboHighlightsImporterSettings>({
             bookAnnotationsVariableName: chance.word()
@@ -280,11 +280,11 @@ describe('KoboHighlightsExtractor', () => {
                 annotations: []
             }
         };
-        const mockAnnotationsReader = mock<IAnnotationsReader>({
+        const mockAnnotationsReader = mock<AnnotationsReader>({
             read: jest.fn().mockResolvedValue(annotations)
         });
-        const mockAnnotationsMerger = mock<IAnnotationsMerger>();
-        const mockMarkdownQuoteFormatter = mock<IFormatter<EpubFiles>>({
+        const mockAnnotationsMerger = mock<AnnotationsMerger>();
+        const mockMarkdownQuoteFormatter = mock<Formatter<EpubFiles>>({
             format: jest.fn().mockReturnValue(mockContent)
         });
         const extractor = new KoboHighlightsExtractor(

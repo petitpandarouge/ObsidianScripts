@@ -1,7 +1,7 @@
 import { AbstractSettingableScript } from '@obsinflate/api/quick-add/abstractSettingableScript';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { NoFileSelectedError } from '@obsinflate/inflates/quick-add/files-suggester/noFileSelectedError';
-import { IFileSystem } from '@obsinflate/infrastructure/fileSystem';
+import { FileSystem } from '@obsinflate/infrastructure/fileSystem';
 import { FilesSuggesterSettings } from './settings';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 
@@ -9,7 +9,7 @@ export class FilesSuggester extends AbstractSettingableScript<FilesSuggesterSett
     constructor(
         errorNoticer: ErrorNoticer,
         settings: FilesSuggesterSettings,
-        private fileSystem: IFileSystem
+        private fileSystem: FileSystem
     ) {
         super(errorNoticer, settings);
     }

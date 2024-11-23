@@ -6,11 +6,7 @@ import {
     EpubFile
 } from '@obsinflate/core/adobe-digital-editions/epubFile';
 
-export interface IAnnotationsSorter {
-    sort(annotations: Annotation[]): EpubFiles;
-}
-
-export class AnnotationsSorter implements IAnnotationsSorter {
+export class AnnotationsSorter {
     sort(annotations: Annotation[]): EpubFiles {
         const groupedAnnotations = this.groupByFilePath(annotations);
         groupedAnnotations.forEach((file) => {
