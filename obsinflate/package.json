@@ -70,6 +70,7 @@
     "@types/eslint__js": "^8.42.3",
     "@types/jest": "^29.5.12",
     "@types/luxon": "^3.4.2",
+    "brandi": "^5.0.0",
     "chance": "^1.1.11",
     "chardet": "^2.0.0",
     "eslint": "^9.11.0",
