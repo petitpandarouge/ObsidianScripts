@@ -3,7 +3,7 @@ import Chance from 'chance';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Noticer } from '@obsinflate/api/obsidian/noticer';
-import { VariableNotDefinedError } from '@obsinflate/api/quick-add/variableNotDefinedError';
+import { VariableNotDefinedError } from '@obsinflate/core/quick-add/variableNotDefinedError';
 import { VariablesFormatter } from '@obsinflate/inflates/quick-add/variable-formatter/script';
 import { VariableFormatterSettings } from '@obsinflate/inflates/quick-add/variable-formatter/settings';
 import { EmptyFormatError } from '@obsinflate/inflates/quick-add/variable-formatter/emptyFormatError';

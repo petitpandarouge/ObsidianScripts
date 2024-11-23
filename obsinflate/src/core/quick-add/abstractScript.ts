@@ -1,7 +1,7 @@
 import { Script } from '@obsinflate/api/quick-add/script';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
-import { VariableNotDefinedError } from '@obsinflate/api/quick-add/variableNotDefinedError';
+import { VariableNotDefinedError } from '@obsinflate/core/quick-add/variableNotDefinedError';
 
 export abstract class AbstractScript implements Script {
     constructor(private errorNoticer: ErrorNoticer) {}

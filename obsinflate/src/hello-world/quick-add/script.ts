@@ -1,5 +1,5 @@
 ﻿import { Noticer } from '@obsinflate/api/obsidian/noticer';
-import { AbstractScript } from '@obsinflate/api/quick-add/abstractScript';
+import { AbstractScript } from '@obsinflate/core/quick-add/abstractScript';
 import { ScriptEntryPoint } from '@obsinflate/api/quick-add/scriptEntryPoint';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';

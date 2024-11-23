@@ -5,7 +5,7 @@ import { Formatter } from '@obsinflate/infrastructure/formatter';
 import { EpubFiles } from '@obsinflate/core/adobe-digital-editions/epubFile';
 import { AnnotationsMerger } from '@obsinflate/core/adobe-digital-editions/annotationsMerger';
 import { KoboHighlightsImporterSettings } from '@obsinflate/inflates/quick-add/kobo-highlights-extractor/settings';
-import { AbstractSettingableScript } from '@obsinflate/api/quick-add/abstractSettingableScript';
+import { AbstractSettingableScript } from '@obsinflate/core/quick-add/abstractSettingableScript';
 import { File } from '@obsinflate/infrastructure/fileSystem';
 
 export const ANNOTATIONS_FILES_DIR_PATH = 'D:/Digital Editions/Annotations';

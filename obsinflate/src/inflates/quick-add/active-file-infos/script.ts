@@ -1,7 +1,7 @@
 import { AppExtension } from '@obsinflate/api/obsidian/appExtension';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
-import { AbstractSettingableScript } from '@obsinflate/api/quick-add/abstractSettingableScript';
+import { AbstractSettingableScript } from '@obsinflate/core/quick-add/abstractSettingableScript';
 import { ActiveFileInfosSettings } from '@obsinflate/inflates/quick-add/active-file-infos/settings';
 
 export class ActiveFileInfos extends AbstractSettingableScript<ActiveFileInfosSettings> {

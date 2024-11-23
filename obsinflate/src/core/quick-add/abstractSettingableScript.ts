@@ -1,4 +1,4 @@
-import { AbstractScript } from '@obsinflate/api/quick-add/abstractScript';
+import { AbstractScript } from '@obsinflate/core/quick-add/abstractScript';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 
 export abstract class AbstractSettingableScript<

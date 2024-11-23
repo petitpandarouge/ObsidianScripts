@@ -1,4 +1,4 @@
-import { AbstractSettingableScript } from '@obsinflate/api/quick-add/abstractSettingableScript';
+import { AbstractSettingableScript } from '@obsinflate/core/quick-add/abstractSettingableScript';
 import { ErrorNoticer } from '@obsinflate/core/errorNoticer';
 import { VariableFormatterSettings } from '@obsinflate/inflates/quick-add/variable-formatter/settings';
 import { Parameters } from '@obsinflate/api/quick-add/parameters';
